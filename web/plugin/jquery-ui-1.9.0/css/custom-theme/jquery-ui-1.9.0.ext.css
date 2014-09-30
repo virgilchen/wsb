@@ -1,0 +1,101 @@
+.ui-combobox {
+    width:100%;
+    position: relative;
+    display: inline-block;
+    left: 0;
+    text-align: right;
+}
+.ui-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right:-10px;
+    /*margin-left: 0px;*/
+    padding: 0;
+    /* adjust styles for IE 6/7 */
+    *height: 1.7em;
+    *top: 0.1em;
+}
+.ui-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+    background: #ffffff;
+    width: 98%;
+}
+
+.ui-autocomplete { max-height: 250px; overflow-y: auto; overflow-x: hidden;}
+
+.ui-autocomplete-loading {
+    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.noTitleStuff .ui-dialog-titlebar {display:none;}
+
+
+.gui-markit {
+  position: absolute;
+  right:0px;
+  padding: 2px 1px 0px;
+  background-color: #C9E1F8;
+  vertical-align:middle;
+  /*filter:alpha(Opacity=90);-moz-opacity:0.8;opacity: 0.8;*/
+}
+
+.gui-markit li{
+     margin: 0 2px 0;
+     padding:0px 5px 2px;
+     display: inline-block;
+     font-size: 12px;
+     height: 14px;
+     vertical-align: top;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; 
+}
+  
+.gui-markit .ui-icon{
+	height: 14px;
+
+	}
+.colorSelector {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+.colorSelector div {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border: 2px #000000 groove ;
+}
+
+/*
+.ui-widget-header {
+	background:url(../../../../css/admin_title.png) left top no-repeat;
+	height:28px;
+	line-height:28px;
+	text-indent:2em;
+	color:#ffffff;
+	font-size:14px;}
+
+.ui-dialog .ui-dialog-title {
+float: left;
+margin: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+padding: 3px 0px;
+}
+
+.ui-dialog .ui-widget-content {
+border: 1px solid #ffffff;
+color: #222222;
+padding: 0;
+}
+
+.ui-dialog .ui-dialog-content {
+background: #EAF4FB url(../../../../css/admin_bg.png) left bottom no-repeat;
+	
+}*/
+
+
+.ui-widget-header-v { border: 1px solid #4297d7; background: #5c9ccc url(images/title-bg.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
