@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="make" name="common">
+	  <property file="build.properties"/>
+
+	  <path id="project.class.path">
+	  	<pathelement location="${dest}/classes"/>
+	    <fileset dir="${lib}" includes="**/*.jar"/>
+	    <fileset dir="lib" includes="**/*.jar"/>
+	  </path>
+	
+	  <target name="cleanup">
+	    <delete failonerror="false" includeemptydirs="true">
+	      <fileset dir="${dest}"/>
+	    </delete>
+	  </target>
+	
+	  <target name="init">
+	    <mkdir dir="${dest}"/>
+	  	<mkdir dir="${dest}/classes"/>
+	  	<mkdir dir="${dest}/src"/>
+	  </target>
+	
+	  <target name="make" depends="cleanup,init">
+	  	<copy todir="${dest}/src">
+	  	  <fileset dir="${common.src}" includes="**/*.java" />
+	  	  <fileset dir="${system.src}" includes="**/*.java" />
+	  	  <fileset dir="${biz.src}" includes="**/*.java" />
+	    </copy>
+	    <javac encoding="utf-8" srcdir="${dest}/src" destdir="${dest}/classes" includes="**/*.java" debug="on" source="${jdk.version}">
+	      <classpath refid="project.class.path"/>
+	    </javac>
+	    <copy todir="${dest}/classes">
+	    	<fileset dir="${common.src}" includes="**/*.properties,**/*.xml" />
+	      <fileset dir="${system.src}" includes="**/*.properties,**/*.xml" />
+	      <fileset dir="${biz.src}" includes="**/*.properties,**/*.xml" />
+	      <fileset dir="${resource.src}" includes="**/*.properties,**/*.xml" />
+	      <fileset dir="${template.src}" includes="**/*.xls" />
+	    </copy>
+	  </target>
+	
+	  <target name="jar" depends="make">
+	  	<delete failonerror="false" includeemptydirs="true">
+	  	  <fileset dir="${dest}/*.jar"/>
+	    </delete>
+		<jar destfile="${dest}/${project.name}.jar">
+		  <fileset dir="${dest}/classes" includes="**/*.class,**/*.properties,**/*.xml*,**/*.xls*" excludes="**/log4j*,**/*hibernate.xml" />
+		</jar>
+	  	
+	  	<copy todir="${lib}">
+	  	  <fileset dir="${dest}" includes="*.jar" />
+	    </copy>
+	  	
+	  	<delete failonerror="false" includeemptydirs="true">
+	  		 <fileset dir="${classes}"/>
+	    </delete>
+	  	<mkdir dir="${classes}"/>
+	  	<copy todir="${classes}">
+	  		 <fileset dir="${resource.src}" includes="applicationContext-hibernate.xml,log4j.properties" />
+	  	</copy>	
+	  		
+	  </target>
+
+	  <target name="war" depends="jar">
+	  	<delete failonerror="false" includeemptydirs="true">
+	  		 <fileset dir="${war}"/>
+	    </delete>
+	  	<mkdir dir="${war}"/>
+	  	<copy todir="${war}">
+	  		 <fileset dir="${web}" includes="**/*.js*,**/*.css,**/*.gif,**/*.jpg,**/*.JPG,**/*.png,**/*.jar,**/*.xml,**/*.ftl,**/*.html" />
+	  	</copy>	
+	  		
+	  </target>
+	
+	  <target name="jar-common" depends="make">
+	  	<delete failonerror="false" includeemptydirs="true">
+	  	  <fileset dir="${dest}/*.jar"/>
+	    </delete>
+		<jar destfile="${dest}/${project.name}-common.jar">
+		  <fileset dir="${dest}/classes" includes="com/globalwave/**/*.class" excludes="com/globalwave/system/**,com/globalwave/wf/**" />
+		</jar>
+	  </target>
+
+	  <target name="ftp.upload" depends="cleanup,jar">   
+	    <scp todir="${server.user}:${server.password}@${server.host}:${server.web.path}/WEB-INF/lib" port="${server.port}" trust="true">
+	      <fileset dir="${dest}">
+	        <include name="${project.name}.jar"/>
+	      </fileset>
+	    </scp>    
+	  </target>
+	  
+	  <target name="ftp">      
+	    <property name="server.host" value="${system.host}"/>
+	    <property name="server.user" value="${system.user}"/>
+	    <property name="server.password" value="${system.password}"/>
+	    <property name="server.port" value="${system.port}"/>
+	    <property name="server.web.path" value="${system.web.path}"/>
+	    <antcall target="ftp.upload"/>
+	  </target>
+
+</project>
