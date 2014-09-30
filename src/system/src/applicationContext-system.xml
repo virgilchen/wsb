@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+	
+    <bean id="systemSQLs" class="com.globalwave.common.db.BaseSQLs">
+      <property name="sqls">
+        <map>
+          <entry key="privilegeChildrenCount">
+            <value>
+              <![CDATA[
+select count(1) from sys_privilege where pro_privilege_id=[pro_privilege_id]
+              ]]>
+            </value>
+          </entry>           
+          
+          <entry key="organizationChildrenCount">
+            <value>
+              <![CDATA[
+select count(1) from sys_organization where pro_organization_id=[pro_organization_id]
+              ]]>
+            </value>
+          </entry>        
+          
+          <entry key="roleChildrenCount">
+            <value>
+              <![CDATA[
+select count(1) from sys_role where pro_role_id=[pro_role_id]
+              ]]>
+            </value>
+          </entry>
+        
+          
+          <entry key="hasRetainRoles">
+            <value>
+              <![CDATA[
+select count(1) from sys_role where version_id is null and id in ([ids])
+              ]]>
+            </value>
+          </entry>
+          
+          <entry key="privilegeProsessedByOrganization">
+            <value>
+              <![CDATA[
+select p.id id,
+       p.pro_privilege_id pro_privilege_id,
+       p.code_ code_ ,
+       p.name_ name_ ,
+       p.url_ url_ ,
+       p.desc_ desc_ , 
+       op.organization_id organization_id 
+  from sys_privilege p left join sys_organization_privilege op 
+        on p.id = op.privilege_id 
+       and op.organization_id=[organization_id] 
+              ]]>
+            </value>
+          </entry>    
+        
+          
+          <entry key="privilegeProsessedByRole">
+            <value>
+              <![CDATA[
+select p.id id,
+       p.pro_privilege_id pro_privilege_id,
+       p.code_ code_ ,
+       p.name_ name_ ,
+       p.url_ url_ ,
+       p.desc_ desc_ , 
+       rp.role_id role_id 
+  from sys_privilege p left join sys_role_privilege rp 
+        on p.id = rp.privilege_id 
+       and rp.role_id=[role_id] 
+ where p.pro_privilege_id<>0
+              ]]>
+            </value>
+          </entry>    
+          
+          
+          
+             
+          
+          <entry key="user_belong_to_organization">
+            <value>
+              <![CDATA[
+  select org.id id, 
+         org.pro_organization_id pro_organization_id, 
+         org.name_ name_, 
+         org.desc_ desc_, 
+         uo.user_id user_id
+    from sys_organization org left join sys_user_organization uo 
+                on org.id = uo.organization_id and uo.user_id=[user_id] 
+order by org.id
+              ]]>
+            </value>
+          </entry>    
+          
+          <entry key="queryUsers">
+            <value>
+              <![CDATA[
+select 
+    u.*, 
+    oo.name_ as organization_name
+  from sys_user u left join sys_organization oo on oo.id=u.organization_id
+ where 1=1
+  {and name_cn like [name_cn]}
+  {and login_id like [login_id_like]}  
+  {and organization_id = [organization_id]} 
+  {and terminal_agent_id = [terminal_agent_id]}  
+  {and type_ = [type_]}  
+  {and type_ <> [type_not]}
+  {and mobile like [mobile]}  
+  
+  {and exists(select 1 from sys_organization o 
+               where o.id=u.organization_id
+                 and (o.id=[limited_organization_id] or o.pro_organization_id=[limited_organization_id]))}
+ order by organization_name, name_cn
+              ]]>
+            </value>
+          </entry> 
+          
+          <entry key="queryCustomers">
+            <value>
+              <![CDATA[
+select 
+    u.*, 
+    oo.name_ as organization_name, 
+    (select name_cn from sys_user tu where tu.id=u.terminal_agent_id) as terminal_agent_name
+  from sys_user u left join sys_organization oo on oo.id=u.organization_id
+ where 1=1
+  {and name_cn like [name_cn]}
+  {and login_id like [login_id_like]}  
+  {and organization_id = [organization_id]} 
+  {and terminal_agent_id = [terminal_agent_id]}  
+  {and type_ = [type_]}  
+  {and type_ <> [type_not]}
+  {and mobile like [mobile]}  
+  
+  {and exists(select 1 from sys_organization o 
+               where o.id=u.organization_id
+                 and (o.id=[limited_organization_id] or o.pro_organization_id=[limited_organization_id]))}
+ order by organization_name, terminal_agent_name, name_cn
+              ]]>
+            </value>
+          </entry> 
+          
+          <entry key="queryUserByRole">
+            <value>
+              <![CDATA[
+select  * from sys_user u where u.status_='A' and exists (
+  select 1 from sys_user_role ur where ur.user_id=u.id and exists (
+    select 1 from sys_role r 
+     where r.id = ur.role_id 
+      {and r.name_=[name_]} 
+      {and r.code_=[code_]}
+      {and r.code_ in ([codes])}
+  )
+) order by name_cn
+              ]]>
+            </value>
+          </entry>    
+          
+          
+          <entry key="user_belong_to_role">
+            <value>
+              <![CDATA[
+  select r.id id, 
+         r.pro_role_id pro_role_id, 
+         r.code_,
+         r.name_ name_, 
+         r.desc_ desc_, 
+         ro.user_id user_id
+    from sys_role r left join sys_user_role ro on r.id = ro.role_id and ro.user_id=[user_id]
+   where 1=1
+    {and exists(select 1 from cfg_dict d where d.domain_ = 'ROLE.AV.ORG-AD' and d.code_=r.code_ and 0 <> [limited_user_id])}
+order by r.id
+              ]]>
+            </value>
+          </entry>    
+          
+          
+          <entry key="user_has_roles">
+            <value>
+              <![CDATA[
+  select r.id id, 
+         r.pro_role_id pro_role_id, 
+         r.code_,
+         r.name_ name_, 
+         r.desc_ desc_, 
+         ro.user_id user_id
+    from sys_role r left join sys_user_role ro 
+                on r.id = ro.role_id
+   where ro.user_id=[user_id] 
+order by r.id
+              ]]>
+            </value>
+          </entry>   
+          
+          
+          <entry key="countUserRolesExcluded">
+            <value>
+              <![CDATA[
+  select count(1)
+    from sys_role r 
+   where not exists(select 1 from sys_user_role ur where ur.user_id=[user_id] and r.id = ur.role_id)
+     and r.id in ([role_ids])
+              ]]>
+            </value>
+          </entry>  
+          <entry key="queryUserRolesExcluded">
+            <value>
+              <![CDATA[
+  select *
+    from sys_role r 
+   where not exists(select 1 from cfg_dict d where d.domain_='ROLE.AV.ORG-AD' and d.code_ = r.code_)
+     and r.id in ([role_ids])
+              ]]>
+            </value>
+          </entry>    
+
+          <entry key="user_all_privilege">
+            <value>
+              <![CDATA[        
+select * from (  
+
+ select p.id id,
+        p.pro_privilege_id pro_privilege_id,
+        p.code_ code_ ,
+        p.name_ name_ ,
+        p.url_ url_ ,
+        p.desc_ desc_ 
+   from sys_user_organization uo , 
+        sys_organization o , 
+        sys_organization_privilege op , 
+        sys_privilege p 
+  where uo.user_id = [user_id]
+    and uo.organization_id = o.id
+    and o.id = op.organization_id
+    and op.privilege_id = p.id
+
+union 
+
+ select p.id id,
+        p.pro_privilege_id pro_privilege_id,
+        p.code_ code_ ,
+        p.name_ name_ ,
+        p.url_ url_ ,
+        p.desc_ desc_ 
+   from sys_user_role ur , 
+        sys_role r , 
+        sys_role_privilege rp , 
+        sys_privilege p 
+  where ur.user_id = [user_id]
+    and ur.role_id = r.id
+    and r.id = rp.role_id
+    and rp.privilege_id = p.id
+
+) p order by id
+              ]]>
+            </value>
+          </entry>    
+
+          <!-- 逻辑删除country --> 
+          <entry key="deleteConfItems">
+            <value>
+              <![CDATA[
+update cfg_items
+   set record_status='C'
+ where id in ([ids])
+              ]]>
+            </value>
+          </entry>
+
+          <!-- 逻辑删除country --> 
+          <entry key="countryOptions">
+            <value>
+              <![CDATA[
+select * from cfg_country {where name like [term] or ename like [term] or code like [term]}
+              ]]>
+            </value>
+          </entry>
+
+        </map>
+        
+      </property>
+    </bean>
+      
+</beans>

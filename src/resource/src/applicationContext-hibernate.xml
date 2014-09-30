@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+    <!-- 数据源定义,使用Apache DBCP 连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <!-- 
+         -->
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/wsbd001?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull" />
+        <property name="user" value="root" />
+        <property name="password" value="root" />
+         
+        <!-- 
+        <property name="properties" ref="dataSourceProperties"/>
+         -->
+        
+        <property name="maxPoolSize" value="30" />
+        <property name="minPoolSize" value="10" /> 
+        <property name="initialPoolSize" value="10" />
+        
+        <property name="maxIdleTime" value="600" />
+        
+        
+        <property name="breakAfterAcquireFailure" value="true" /> 
+        <property name="testConnectionOnCheckout" value="true" />
+        <property name="testConnectionOnCheckin" value="true" /> 
+
+        
+        <!-- 
+        <property name="username" value="system"/>
+        <property name="password" value="admin"/>
+        <property name="hibernate.default_schema" value=""/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+        <property name="show_sql" value="true"/>
+         -->
+    </bean>
+  
+      
+    <bean id="dataSourceProperties" class="com.globalwave.common.PropertiesEncryptFactoryBean">  
+        <property name="properties">  
+            <props>  
+                <prop key="isEncrypte">false</prop>  
+                <prop key="user">root</prop>  
+                <prop key="password">root</prop>  
+            </props>  
+        </property>  
+    </bean>
+    
+    <!--Hibernate SessionFatory-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 
+        <property name="annotatedClasses">
+            <list>
+                <value>com.globalwave.diy.system.entity.User</value>
+            </list>
+        </property>
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>
+                    classpath*:/org/springside/bookstore/components/acegi/domain/hbm/
+                </value>
+            </list>
+        </property>
+        <property name="configLocations">
+            <list><value>classpath:hibernate-jbpm.cfg.xml</value></list>
+        </property>
+         -->
+
+         
+        <property name="hibernateProperties">
+            <props>
+                <!-- 
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                 -->
+                <prop key="hibernate.c3p0.timeout">600</prop> 
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <!-- 
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                 -->
+            </props>
+        </property>
+    </bean>
+
+    <!--Hibernate TransactionManager-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
+</beans>

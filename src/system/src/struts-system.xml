@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.custom.i18n.resources" value="com.globalwave.diy.system.i18n.system"/>
+    <package name="system" namespace="/system" extends="global-default">	
+        <action name="*_*" method="{2}" class="system_{1}Action">
+            <result name="jsp">/WEB-INF/pages/system/{1}/{2}.jsp</result>   
+            <interceptor-ref name="bizDefaultStack"/>   
+        </action>
+    </package>
+</struts>

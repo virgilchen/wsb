@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+    <bean id="bizSQLs" class="com.globalwave.common.db.BaseSQLs" >
+      <property name="sqls">
+        <map>
+
+          <entry key="promotions">
+            <value>
+              <![CDATA[
+select p.* from biz_promotion p where p.status=1   
+   {and (
+   (p.begin_date is null and p.end_date is null) or 
+   (p.begin_date is not null and p.end_date is null and p.begin_date <= [checkTime]) or 
+   (p.begin_date is null and p.end_date is not null and p.end_date >= [checkTime]) or 
+   (p.begin_date is not null and p.end_date is not null and p.begin_date <= [checkTime] and p.end_date >= [checkTime])
+   )} 
+order by weight desc
+              ]]>
+            </value>
+          </entry>
+
+          
+        </map>
+      </property>
+    </bean>
+      
+</beans>

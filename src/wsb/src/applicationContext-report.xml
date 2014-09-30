@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName" default-lazy-init="true">
+
+    <bean id="reportSQLs" class="com.globalwave.common.db.BaseSQLs">
+      <property name="sqls">
+        <map>
+          <!-- 订单统计 -->
+          <entry key="orderStat">
+            <value>
+              <![CDATA[
+              .......
+              ]]>
+            </value>
+          </entry>
+
+
+          <!-- distinctOrder + distinctOrderWhere  -->
+          <entry key="distinctOrder">
+            <value>
+              <![CDATA[
+select distinct <<distinct_column>> as id
+ from biz_order_sale o 
+where o.status_checkout<>'0'
+              ]]>
+            </value>
+          </entry>
+
+          
+
+        </map>
+      </property>
+    </bean>
+      
+</beans>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+	   default-autowire="byName" default-lazy-init="true">
+
+	<!-- 属性文件读入
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:config/jdbc.properties</value>
+				<value>classpath*:config/mail.properties</value>
+			</list>  
+		</property>
+	</bean> -->
+	
+    <context:component-scan base-package="com.globalwave.**.service,com.globalwave.**.web,com.wsb.**.service,com.wsb.**.web" />
+
+	<!-- 支持 @Transactional 标记 -->
+	<tx:annotation-driven/>
+
+	<!-- 支持 @AspectJ 标记 -->
+	<aop:aspectj-autoproxy/>
+	
+	
+	
+	<!-- 以AspectJ方式 定义 AOP -->
+	<aop:config proxy-target-class="true">
+		<!-- 
+		<aop:advisor pointcut="execution(* com.rong.demodoc.service.*Service.*(..))" advice-ref="txAdvice"/>
+		<aop:advisor pointcut="execution(* com.rong.jbpm.service.*Service.*(..))" advice-ref="txAdvice"/>
+		 -->
+		<aop:advisor pointcut="execution(* com.globalwave.*.service.*Service.*(..))" advice-ref="txAdvice"/>
+		<!-- 
+		<aop:advisor pointcut="execution(* org.springside.bookstore..*Manager.*(..))" advice-ref="txAdvice"/>
+		 -->
+		<aop:advisor pointcut="execution(* org.springside.core.dao.*Dao.*(..))" advice-ref="txAdvice"/>
+	</aop:config>
+
+	<!-- 基本事务定义,使用transactionManager作事务管理,默认get*方法的事务为readonly,其余方法按默认设置.
+			 默认的设置请参考Spring文档事务一章.-->
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+			<tx:method name="*"  />
+		</tx:attributes>
+	</tx:advice> 
+	
+	
+	<import resource="classpath*:applicationContext-hibernate.xml"/>
+	
+	<!-- import resource="classpath*:applicationContext-jbpm.xml"/-->
+	
+	<import resource="classpath*:applicationContext-common.xml"/>
+    
+    <import resource="classpath*:applicationContext-system.xml"/>
+
+    <import resource="classpath*:applicationContext-biz.xml"/>
+
+    <import resource="classpath*:applicationContext-report.xml"/>
+	
+	
+	
+	<!-- common bean -->
+	<bean id="jdbcDao" scope="prototype" class="com.globalwave.common.db.SimpleJDBCDAO"/>	
+		
+</beans>

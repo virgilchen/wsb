@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.multipart.maxSize" value="5000000" />
+	
+	<!-- include file="struts-jbpm.xml" /-->
+	<!-- 请配置Web.xml -->
+	<include file="struts-system.xml" />
+    <include file="struts-biz.xml" />
+	
+	<include file="struts-common.xml" />
+	 
+	<!-- Add packages here -->
+
+    <package name="global-default" extends="struts-default">
+		 
+        <interceptors>
+            <interceptor name="privilegeCheckInterceptor" 
+                         class="com.globalwave.system.web.PrivilegeCheckInterceptor" />
+                   
+            <interceptor-stack name="bizDefaultStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="privilegeCheckInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+        
+		<global-results>
+			<result name="login" type="redirect">/Login.action</result>
+			<result name="exception">/WEB-INF/pages/exception/exception.jsp</result>
+			<result name="input">/WEB-INF/pages/exception/exception_input.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+		    <!-- 
+			<exception-mapping exception="java.sql.SQLException" result="SQLException" />
+			 -->
+			<exception-mapping exception="java.lang.Exception" result="exception" />
+		</global-exception-mappings>
+        <!-- 
+        <action name="User" class="example.HelloWorld">
+            <result>/example/HelloWorld.jsp</result>
+        </action>
+
+        <action name="Login_*" method="{1}" class="example.Login">
+            <result name="input">/example/Login.jsp</result>
+            <result type="redirect-action">Menu</result>
+        </action>
+
+        <action name="*" class="example.ExampleSupport">
+            <result>/example/{1}.jsp</result>
+        </action>
+Add actions here -->
+    </package>
+</struts>
