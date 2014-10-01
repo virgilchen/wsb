@@ -1,4 +1,4 @@
-html,body{height:100%}
+html,body{height:100%;width: 100%;}
 
 body{ margin:0; padding:0; font-size:12px; }
 body.login{min-width:890px;}
@@ -58,14 +58,14 @@ body.FrameMiddle #mid_img{ cursor:pointer; width:3px; height:47px; position:abso
 body.FrameMiddle .middel_bg{ position:absolute; top:0; left:0; width:6px; height:100%;background:#f2f2f2;border-left:1px solid #e4e4e4; border-right:1px solid #e4e4e4;}
 
 /*内容管理操作*/
-body.FrameMain{ padding:10px; line-height:20px;}
-body.FrameMain .main_title,.pop_title{border:1px #cedde7 solid;background:#e0e8ed;padding:0 10px;  height:38px; line-height:38px; font-size:16px; position:relative;}
-body.FrameMain .main_tt_right{ position:absolute; right:0px; top:5px; font-size:14px; padding-right:10px;}
-body.FrameMain .main_tt_right li{ float:left; padding:0 40px; margin-right:10px;cursor:pointer; height:32px; line-height:32px;}
-body.FrameMain .main_tt_right li.selected{ background:#fff;border:1px #cedde7 solid; border-bottom:1px solid #fff; }
-body.FrameMain .main_tt_right a{ display:block; height:28px; line-height:28px; margin-left:10px; text-align:center; float:left; color:#fff; padding:0 30px; font-weight:bold;}
-body.FrameMain .main_tt_right a.orange{ background:#f6ab00;}
-body.FrameMain .main_tt_right a.blue{ background:#74acc4;}
+.FrameMain{ padding:10px; line-height:20px;}
+.FrameMain .main_title,.pop_title{border:1px #cedde7 solid;background:#e0e8ed;padding:0 10px;  height:38px; line-height:38px; font-size:16px; position:relative;}
+.FrameMain .main_tt_right{ position:absolute; right:0px; top:5px; font-size:14px; padding-right:10px;}
+.FrameMain .main_tt_right li{ float:left; padding:0 40px; margin-right:10px;cursor:pointer; height:32px; line-height:32px;}
+.FrameMain .main_tt_right li.selected{ background:#fff;border:1px #cedde7 solid; border-bottom:1px solid #fff; }
+.FrameMain .main_tt_right a{ display:block; height:28px; line-height:28px; margin-left:10px; text-align:center; float:left; color:#fff; padding:0 30px; font-weight:bold;}
+.FrameMain .main_tt_right a.orange{ background:#f6ab00;}
+.FrameMain .main_tt_right a.blue{ background:#74acc4;}
 
 
 .main_list table,.main_table table,.border_table{border: 1px #cedde7 solid;border-collapse: collapse;}

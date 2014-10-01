@@ -3,7 +3,7 @@ $(function() {
 	__clientHeight = window.innerHeight||document.documentElement.clientHeight ;
     $("#adminSystem").height((__clientHeight - 120) + "px") ;
 
-	refreshPage(user) ;
+	//refreshPage(user) ;
 	
 	loadMenuLevel1(menu) ;
 
@@ -20,34 +20,7 @@ $(function() {
         });
     }) ;
 	
-	if(isReportView) {
-	    openView(401, '/biz/report_view.action', '综合报表查询');
-	} else if(isDocumentView) {
-	    openView(501, '/fm/document_view.action', '上传下载');
-	} else if(isCustomerView) {
-		openView(601, '/biz/customer_view.action', '客户管理');
-	}
 
-
-    $('#adminNav').delegate('span','click', function(){
-
-        var isAction = $(this).parent().hasClass('active') ;
-        $('#adminNav li').removeClass('active');
-        if (!isAction) {
-            $(this).parent().addClass('active') ;
-        }
-        $('#myWorkSpace').parent().addClass('active');
-    });
-    
-    $('#adminNav li').each(function(i, elem) {
-    	if (i < 2) {
-    		return ;
-    	}
-    	
-        if($('div', elem).children().length == 0) {
-        	$(elem).hide();
-        }
-    });
 });
 
 var g$views = [] ;
@@ -65,7 +38,7 @@ function openView(id, url_, title, params) {
 function addView(id, url_, title, params) {
 	g$views[id] = {id:id, title:title} ;
 	
-    $("#adminSystem").append('<div id="view_'+id+'"><img src="'+root+'/images/loading.gif" /></div>') ;
+    $("#viewContentDiv").append('<div id="view_'+id+'"><img src="'+root+'/images/loading.gif" /></div>') ;
     g$views[id].view="#view_" + id ;
     
     $("#myWorkSpace").append('<a href="javascript:showView('+id+');" id="a_'+id+'" tabindex="-1">'+title+'</a>'); 

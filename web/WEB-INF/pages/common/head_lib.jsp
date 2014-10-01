@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=100">
 <meta charset="utf-8" />
 
-<%@include file="/WEB-INF/pages/common/head_session_check.jsp" %>
+<%--@include file="/WEB-INF/pages/common/head_session_check.jsp" --%>
 
 <%
 final String root = request.getContextPath() ;
 final String context = root ;
 final String contextPath = root ;
-final String company_name = i18n.html("CompanyName") ;
+final String company_name = "";//i18n.html("CompanyName") ;
 
 String js_min = CodeHelper.getString("DEV.js.config", "name_", "min_mode") ;
 if (js_min == null) {
@@ -20,9 +20,13 @@ if (js_min == null) {
 }js_min = "" ;
 %>
 
-
+<script>
+var root = "<%=root%>";
+var language = "cn";
+</script>
 <!-- base lib -->
-<script type="text/javascript" src="<%=root%>/script/jquery-1.8.0.<%=js_min %>js"></script>
+<script type="text/javascript" src="<%=root%>/script/jquery-1.11.1.<%=js_min %>js"></script>
+<script type="text/javascript" src="<%=root%>/script/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="<%=root%>/script/core.js"></script>
 
 <!-- template lib -->

@@ -16,6 +16,7 @@
           $(this).next("dd").toggle();
       });
   
+      openView(120001, '/biz/notice_view.action', '公告管理');
   })
 
 </script>
@@ -69,8 +70,9 @@
             <ul>
                 <li><a href="#" target="mainFrame">组织结构管理</a></li>
                 <li><a href="#" target="mainFrame">角色配置</a></li>
-                <li><a href="javascript:openView(12, '/biz/boatCompany_view.action', '员工管理')">员工管理</a></li>
+                <li><a href="#">员工管理</a></li>
                 <li><a href="#" target="mainFrame">客户资料字段配置</a></li>
+                <li><a href="javascript:openView(120001, '/biz/notice_view.action', '公告管理')">公告管理</a></li>
             </ul>
         </dd>
     </dl>

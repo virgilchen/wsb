@@ -18,3 +18,16 @@ create table cfg_dict  (
    ext_s5               varchar(250),
    constraint PK_CFG_DICT primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+/*==============================================================*/
+/* Table: CFG_Message                                         */
+/*==============================================================*/
+create table cfg_message  (
+   ID                   bigint(12)                      not null AUTO_INCREMENT,
+   CODE_                bigint(12)                     default 0,
+   VALUE_               VARCHAR(1024),
+   VALUE_en               VARCHAR(1024),
+   constraint PK_CFG_MESSAGE primary key (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
