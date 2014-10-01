@@ -56,7 +56,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <input name="noticeSO.pageSize" id="noticeSO.pageSize" value="50" type="hidden" />
         <table width="100%" >
           <tr>
-           <td style="width:60px;" >编码：</td>
+           <td style="width:60px;" >标题：</td>
            <td style="width:100px;">
              <input class=mg_r name="noticeSO.notice_subject" value="" type="text" />
            </td>
