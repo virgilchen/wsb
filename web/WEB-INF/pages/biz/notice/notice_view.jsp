@@ -25,6 +25,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         //this.initDataGrid("noticeTB", {height:"400px"}) ;
         
+        E$("notice.notice_timestamp").datetimepicker({
+            timeFormat: "HH:mm:ss"
+        });
+        
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
@@ -147,7 +151,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
               </tr>
               <tr>
                 <th>发表时间：</th>
-                <td><input type="text" name="notice.notice_timestamp" required="required" maxlength="12"/></td>
+                <td><input type="text" id="notice.notice_timestamp" name="notice.notice_timestamp" required="required" maxlength="19"/></td>
               </tr>
             </table> 
           </td>
