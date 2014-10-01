@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=100">
 <meta charset="utf-8" />
 
-<%--@include file="/WEB-INF/pages/common/head_session_check.jsp" --%>
+<%@include file="/WEB-INF/pages/common/head_session_check.jsp" %>
 
 <%
 final String root = request.getContextPath() ;
@@ -22,7 +22,6 @@ if (js_min == null) {
 
 <script>
 var root = "<%=root%>";
-var language = "cn";
 </script>
 <!-- base lib -->
 <script type="text/javascript" src="<%=root%>/script/jquery-1.11.1.<%=js_min %>js"></script>

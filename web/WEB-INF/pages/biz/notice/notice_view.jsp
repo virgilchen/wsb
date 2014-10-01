@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@include file="/WEB-INF/pages/common/head_session_check.jsp" %>
 <%
 String view_id=request.getParameter("view_id");
 %>
@@ -53,7 +53,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <DIV class="main_search">
       <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
         <input name="noticeSO.pageIndex" id="noticeSO.pageIndex" value="1" type="hidden" />
-        <input name="noticeSO.pageSize" id="noticeSO.pageSize" value="50" type="hidden" />
+        <input name="noticeSO.pageSize" id="noticeSO.pageSize" value="10" type="hidden" />
         <table width="100%" >
           <tr>
            <td style="width:60px;" >标题：</td>
@@ -106,25 +106,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
 
 
-
-
-    <DIV class="page_wrap clearfix">
-      <DIV class=paginator>
-        <SPAN class=page-start>＜上一页</SPAN> 
-        <SPAN class=page-this>1</SPAN> 
-        <A href="#">2</A> 
-        <A href="#">3</A> 
-        <A href="#">4</A> 
-        <A href="#">5</A> 
-        <A href="#">6</A> 
-        <A href="#">7</A> 
-        <A href="#">8</A> 
-        <SPAN>...</SPAN> 
-        <A href="#">20</A> 
-        <A class=page-next href="#">下一页＞</A> 
-      </DIV>第1/3页，共30条记录 
-    </DIV>
-
+    <%@include file="/WEB-INF/pages/frame/pagination.jsp" %>
     
   </div>
     
