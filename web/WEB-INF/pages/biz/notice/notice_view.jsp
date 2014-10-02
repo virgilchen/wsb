@@ -57,7 +57,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <DIV class="main_search">
       <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
         <input name="noticeSO.pageIndex" id="noticeSO.pageIndex" value="1" type="hidden" />
-        <input name="noticeSO.pageSize" id="noticeSO.pageSize" value="10" type="hidden" />
+        <input name="noticeSO.pageSize" id="noticeSO.pageSize" value="1" type="hidden" />
         <table width="100%" >
           <tr>
            <td style="width:60px;" >标题：</td>

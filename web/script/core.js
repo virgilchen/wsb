@@ -1040,6 +1040,11 @@ var baseView_af24332idihy00p2jww = {
         this.list() ;
     },
     
+    toPageList:function(pageIndex) {
+    	this.pageIndex.value = pageIndex;
+        this.list() ;
+    },
+    
     changePageSize:function() {
     	V("pageSize", V("pagination.pageSize")) ;
         this.first() ;
@@ -1056,6 +1061,47 @@ var baseView_af24332idihy00p2jww = {
     		pager = E$("paginationInfo") ; 
     	}
     	pager.html(i18n.msg("paginationInfo", total, index, last)) ;
+    	
+    	var paginationNumbers = $("#paginationNumbers");
+    	
+    	paginationNumbers.html("");
+    	if (paginationNumbers.length > 0) {
+    		var start = 1;
+    		var end = last;
+    		if (last > 5) {
+    			if (last - index < 3) {
+    				start = last - 5;
+    			} else if (index - start < 3){
+    				end = start + 5;
+    			} else {
+    				start = index - 2;
+    				end = index + 2;
+    			} 
+    		}
+    		
+    		if (start != 1) {
+    			paginationNumbers.append("<a href='javascript:viewJs.toPageList(1)'>1</a>");
+    			if (start != 2) {    				
+    				paginationNumbers.append("<SPAN>...</SPAN>");
+    			}
+    		}
+    		 
+    		while (start <= end) {
+    			if (start == index) {
+        			paginationNumbers.append("<a class='page-this'>" + start + "</a>");
+    			} else {
+        			paginationNumbers.append("<a href='javascript:viewJs.toPageList(" + start + ")'>" + start + "</a>");	
+    			}
+    			start ++ ;
+    		}
+
+    		if (end != last) {
+    			if (end != last - 1) {    				
+    				paginationNumbers.append("<SPAN>...</SPAN>");
+    			}
+    			paginationNumbers.append("<a href='javascript:viewJs.toPageList(" + last + ")'>" + last + "</a>");	
+    		}
+    	}
     },
     
     resetForm:function(formName) {

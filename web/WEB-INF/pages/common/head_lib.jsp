@@ -12,12 +12,12 @@
 final String root = request.getContextPath() ;
 final String context = root ;
 final String contextPath = root ;
-final String company_name = "";//i18n.html("CompanyName") ;
+//final String company_name = "";//i18n.html("CompanyName") ;
 
 String js_min = CodeHelper.getString("DEV.js.config", "name_", "min_mode") ;
 if (js_min == null) {
     js_min = "" ;
-}js_min = "" ;
+} ;
 %>
 
 <script>
@@ -25,7 +25,9 @@ var root = "<%=root%>";
 </script>
 <!-- base lib -->
 <script type="text/javascript" src="<%=root%>/script/jquery-1.11.1.<%=js_min %>js"></script>
+<%--
 <script type="text/javascript" src="<%=root%>/script/jquery-migrate-1.2.1.min.js"></script>
+ --%>
 <script type="text/javascript" src="<%=root%>/script/core.js"></script>
 
 <!-- template lib -->
@@ -35,7 +37,10 @@ var root = "<%=root%>";
 <%if(request.getAttribute("_noJqueryUI") == null) { %>
 <!-- jquery ui -->
 <link rel="stylesheet" type="text/css" href="<%=root%>/plugin/jquery-ui-1.9.0/css/custom-theme/jquery-ui-1.9.0.custom.<%=js_min %>css">
+<%--
 <script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.9.0/js/jquery-ui-1.9.0.custom.<%=js_min %>js"></script>
+ --%>
+<script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.11.1/jquery-ui.<%=js_min %>js"></script>
 <link rel="stylesheet" type="text/css" href="<%=root%>/plugin/jquery-ui-1.9.0/css/custom-theme/jquery-ui-1.9.0.ext.css">
 <script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.9.0/js/jquery-ui-1.9.0.ext.js"></script>
 
