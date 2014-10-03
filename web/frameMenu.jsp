@@ -51,7 +51,7 @@
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_business.png" />业务管理</a></dt>
         <dd>
             <ul>
-                <li><a href="#" target="mainFrame">业务管理</a></li>
+                <li><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '公告管理');">业务管理</a></li>
                 <li><a href="#" target="mainFrame">基础商品管理</a></li>
                 <li><a href="#" target="mainFrame">商品包销售管理</a></li>
             </ul>
@@ -72,7 +72,7 @@
                 <li><a href="#" target="mainFrame">角色配置</a></li>
                 <li><a href="#">员工管理</a></li>
                 <li><a href="#" target="mainFrame">客户资料字段配置</a></li>
-                <li><a href="javascript:openView(120001, '/biz/notice_view.action', '公告管理')">公告管理</a></li>
+                <li><a href="javascript:removeAll();openView(120001, '/biz/notice_view.action', '公告管理');">公告管理</a></li>
             </ul>
         </dd>
     </dl>

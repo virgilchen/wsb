@@ -7,30 +7,32 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
-import com.wsb.biz.entity.Notice;
-import com.wsb.biz.entity.NoticeSO;
-import com.wsb.biz.service.NoticeBO;
+import com.wsb.biz.entity.Business;
+import com.wsb.biz.entity.BusinessSO;
+import com.wsb.biz.service.BusinessBO;
 import com.opensymphony.xwork2.Preparable;
 
-@Service("biz_noticeAction")
+@Service("biz_businessAction")
 @Scope("prototype")
-public class NoticeAction extends BaseAction implements Preparable {
+public class BusinessAction extends BaseAction implements Preparable {
 
     private static final long serialVersionUID = 7244882365197775441L;
     
-    private NoticeBO noticeBO ;
-    private Notice notice ;
-    private NoticeSO noticeSO ; 
+    private BusinessBO businessBO ;
+    private Business business ;
+    private BusinessSO businessSO ; 
     
-    public String execute() throws Exception { 
-        return this.list(); 
+    public String execute() throws Exception {        
+        
+        return this.list();        
+        
     }
     
 
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String list() throws Exception {  
 
-        ArrayPageList<Notice> pageList = noticeBO.query(noticeSO) ;
+        ArrayPageList<Business> pageList = businessBO.query(businessSO) ;
 
         renderList(pageList) ; 
         
@@ -41,7 +43,7 @@ public class NoticeAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String get() throws Exception {  
 
-    	Notice org = noticeBO.get(this.id) ;
+    	Business org = businessBO.get(this.id) ;
 
     	renderObject(org, null) ; 
         return null ;  
@@ -50,9 +52,9 @@ public class NoticeAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK)
     public String create()  throws Exception {        
 
-        Object newNotice = noticeBO.create(notice) ;
+        Object newBusiness = businessBO.create(business) ;
 
-        renderObject(newNotice, ResponseMessage.KEY_CREATE_OK) ;
+        renderObject(newBusiness, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
         
     }
@@ -61,9 +63,9 @@ public class NoticeAction extends BaseAction implements Preparable {
     public String update()  throws Exception {     
 
             	
-        noticeBO.update(notice) ;
+        businessBO.update(business) ;
 
-        renderObject(notice, ResponseMessage.KEY_UPDATE_OK) ;
+        renderObject(business, ResponseMessage.KEY_UPDATE_OK) ;
         
         return null;    
         
@@ -73,37 +75,37 @@ public class NoticeAction extends BaseAction implements Preparable {
     public String delete()  throws Exception {
 
         if (this.ids == null) { 
-            noticeBO.delete(notice) ;
+            businessBO.delete(business) ;
         } else {
-            noticeBO.deleteAll(ids) ;
+            businessBO.deleteAll(ids) ;
         }
 
         
-        renderObject(notice, ResponseMessage.KEY_DELETE_OK) ;
+        renderObject(business, ResponseMessage.KEY_DELETE_OK) ;
         
         return null;    
         
     }
 
 
-    public void setNoticeBO(NoticeBO noticeBO) {
-		this.noticeBO = noticeBO;
+    public void setBusinessBO(BusinessBO businessBO) {
+		this.businessBO = businessBO;
 	}
 
-    public Notice getNotice() {
-        return notice;
+    public Business getBusiness() {
+        return business;
     }
 
-    public void setNotice(Notice notice) {
-        this.notice = notice;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
-    public NoticeSO getNoticeSO() {
-        return noticeSO;
+    public BusinessSO getBusinessSO() {
+        return businessSO;
     }
 
-    public void setNoticeSO(NoticeSO noticeSO) {
-        this.noticeSO = noticeSO;
+    public void setBusinessSO(BusinessSO businessSO) {
+        this.businessSO = businessSO;
     }
 
 }
