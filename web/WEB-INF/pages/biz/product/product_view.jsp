@@ -21,7 +21,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.initSelect() ;
         this.pageIndex = E("productSO.pageIndex") ;
         
-        //fillOptions({id:"product.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
+        fillOptions({id:"product.prod_unit", dictName:"product.unit", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"productSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("productTB", {height:"400px"}) ;
@@ -142,7 +142,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		          <TR>
 		            <TH width="20px"></TH>
 		            <TH>商品名称</TH>
-		            <TH width="200px">商品描述</TH>
+                    <TH>商品描述</TH>
+                    <TH width="80px">单位</TH>
 		          <TR>
 		        </thead>
 		        
@@ -159,7 +160,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		                      <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
 		                    </td>
 		                    <td>{$T.prod_name}</td>
-		                    <td>{$T.prod_desc}</td>
+                            <td>{$T.prod_desc}</td>
+                            <td>{dVal("product.unit", "name_", {PK_ID:$T.prod_unit})}</td>
 		                  </tr>
 		              </textarea>
 		            </td>
@@ -216,6 +218,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <textarea name="product.prod_desc"  style="width: 100%;height: 80px;"></textarea>
                 </td>
               </tr>
+              <tr>
+                <th>描述：</th>
+                <td>
+                  <select name="product.prod_unit" id="product.prod_unit">
+			      </select>
+                </td>
+              </tr>
+              
+              
+              
               <!-- 
               <tr>
                 <th>发表时间：</th>
