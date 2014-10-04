@@ -131,7 +131,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <table width="100%" border="0">
               <tr>
                 <th width="25%">业务名称：</th>
-                <td><input type="text" name="business.business_name" id="business.name_cn" maxlength="50"/></td>
+                <td><input type="text" name="business.business_name" id="business.business_name" maxlength="50"/></td>
               </tr>
             </table> 
           </td>

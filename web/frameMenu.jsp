@@ -16,7 +16,7 @@
           $(this).next("dd").toggle();
       });
   
-      openView(120001, '/biz/notice_view.action', '公告管理');
+      openView(110003, '/biz/product_view.action', '基础商品管理');
   })
 
 </script>
@@ -52,8 +52,8 @@
         <dd>
             <ul>
                 <li><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '公告管理');">业务管理</a></li>
-                <li><a href="#" target="mainFrame">基础商品管理</a></li>
-                <li><a href="#" target="mainFrame">商品包销售管理</a></li>
+                <li><a href="javascript:removeAll();openView(110003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
+                <li><a href="#">商品包销售管理</a></li>
             </ul>
         </dd>
     </dl>

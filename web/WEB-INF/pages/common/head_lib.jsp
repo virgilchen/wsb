@@ -25,9 +25,8 @@ var root = "<%=root%>";
 </script>
 <!-- base lib -->
 <script type="text/javascript" src="<%=root%>/script/jquery-1.11.1.<%=js_min %>js"></script>
-<%--
 <script type="text/javascript" src="<%=root%>/script/jquery-migrate-1.2.1.min.js"></script>
- --%>
+
 <script type="text/javascript" src="<%=root%>/script/core.js"></script>
 
 <!-- template lib -->
