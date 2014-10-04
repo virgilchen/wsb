@@ -15,9 +15,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     get_url:root + "/biz/business_get.action" ,
     delete_url:root + "/biz/business_delete.action" ,
     entityName:"business",
+    proIdName:"business_id_upper", 
     
     init:function (){
-        //this.initSelect() ;
         this.pageIndex = E("businessSO.pageIndex") ;
         
         //fillOptions({id:"business.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
@@ -29,6 +29,40 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E$("sForm").validator();
         E("sForm").setFirstFocus();
         
+    },
+    
+    get:function(id) {
+        
+        var optionParams = {
+            id:"business.business_id_upper", 
+            dictName:"BusinessUpper", 
+            firstLabel:"[顶级业务类型]", 
+            textProperty:"business_name", 
+            titleProperty:"business_name"} ;
+        
+        E("business.business_id_upper").isEdit = (id != -1);
+        
+        if (id == -1) {
+            fillOptions(optionParams) ;
+            formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
+            return ;
+        }
+        
+        ajax(
+            this.get_url + "?id="+id, 
+            null,
+            function(data, textStatus){
+                if (data.business_id_upper != null && data.business_id_upper > 0) {
+                    delete optionParams["firstLabel"] ;
+                }
+                var filterValues = {} ;
+                filterValues[data.business_id_upper] = true ;
+                optionParams["filter"] = filterValues ;
+                fillOptions(optionParams) ;
+                
+                formDeserialize("eForm", data, {}) ;
+            }
+        );
     }
 }) ;
 
@@ -72,7 +106,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     
     <DIV class=main_list>
-      <TABLE border=0 width="100%" id="businessTB" title="通知列表">
+      <TABLE border=0 width="100%" id="businessTB" title="业务列表">
         <thead>
           <TR>
 			<TH width="20px"></TH>
@@ -92,7 +126,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
-                    <td style="text-align: left;">{$T.business_name}</td>
+                    <td style="text-align: left;padding-left: {#if $T.business_id_upper == null}5{#else}25{#/if}px;">{$T.business_name}</td>
                   </tr>
               </textarea>
             </td>
@@ -129,6 +163,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
           </td>
           <td width="45%">
             <table width="100%" border="0">
+              <tr>
+                <td width="25%" class="label">上级业务：</td>
+                <td>
+                 <select name="business.business_id_upper" id="business.business_id_upper" >
+                 </select>
+                </td>
+              </tr>
               <tr>
                 <th width="25%">业务名称：</th>
                 <td><input type="text" name="business.business_name" id="business.business_name" maxlength="50"/></td>
