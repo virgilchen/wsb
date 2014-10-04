@@ -13,7 +13,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/loss/template"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/wsb/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/wsb/template"/>
-        <property name="context-root" value="easyframe"/>
+        <property name="context-root" value="wsb"/>
         <property name="java-output-path"/>
     </wb-module>
 </project-modules>
