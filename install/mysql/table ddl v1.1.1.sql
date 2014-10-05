@@ -3,11 +3,13 @@ CREATE SCHEMA `wsbd001` DEFAULT CHARACTER SET utf8 ;
 
 SHOW CREATE DATABASE;
 
+use `wsbd001`;
 
--- DROP TABLE `wsbd001`.`cust_demo_rt`;
+
+-- DROP TABLE `cust_demo_rt`;
 
 --`wsbd001`.`cust_demo_rt`
-CREATE TABLE `wsbd001`.`cust_demo_rt` (
+CREATE TABLE `cust_demo_rt` (
   `psdo_cust_id` INT NOT NULL,
   `cust_phone_no` BIGINT NOT NULL,
   `cust_name` VARCHAR(20) NULL,
@@ -32,7 +34,7 @@ CREATE TABLE `wsbd001`.`cust_demo_rt` (
     -- INDEX `member_id_fk_idx` (`member_id` ASC),
     -- CONSTRAINT `member_id_fk`
     -- FOREIGN KEY (`member_id`)
-    -- REFERENCES `wsbd001`.`business_rt` (`business_id`)
+    -- REFERENCES `business_rt` (`business_id`)
     -- ON DELETE NO ACTION
     -- ON UPDATE NO ACTION,
   UNIQUE INDEX `cust_key` (`psdo_cust_id` ASC))
@@ -43,10 +45,10 @@ ENGINE = InnoDB;
 
 
 
--- DROP TABLE `wsbd001`.`car_info_rt`
+-- DROP TABLE `car_info_rt`;
 -- `wsbd001`.`car_info_rt`
 
-CREATE TABLE `wsbd001`.`car_info_rt` (
+CREATE TABLE `car_info_rt` (
   `psdo_cust_id` INT NOT NULL,
   `car_no` VARCHAR(10) NOT NULL,
   `car_district` VARCHAR(20) NULL,
@@ -62,7 +64,7 @@ CREATE TABLE `wsbd001`.`car_info_rt` (
     -- INDEX `psdo_cust_id_fk_idx` (`member_id` ASC),
     -- CONSTRAINT `psdo_cust_id_fk`
     -- FOREIGN KEY (`psdo_cust_id`)
-    -- REFERENCES `wsbd001`.`cust_demo_rt` (`psdo_cust_id`)
+    -- REFERENCES `cust_demo_rt` (`psdo_cust_id`)
     -- ON DELETE NO ACTION
     -- ON UPDATE NO ACTION,
   INDEX `cust_key` (`psdo_cust_id` ASC),
@@ -70,10 +72,10 @@ CREATE TABLE `wsbd001`.`car_info_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`order_rt`
+-- drop table `order_rt`;
 -- `wsbd001`.`order_rt`
-CREATE TABLE `wsbd001`.`order_rt` (
-  `order_id` BIGINT NOT NULL,
+CREATE TABLE `order_rt` (
+  `order_id` BIGINT NOT NULL AUTO_INCREMENT,
   `order_init_time_stamp` TIMESTAMP NOT NULL,
   `order_init_staff_id` INT NULL,
   `psdo_cust_id` INT NULL,
@@ -84,10 +86,10 @@ CREATE TABLE `wsbd001`.`order_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`order_prod_pack_rt`
+-- drop table `order_prod_pack_rt`;
 -- `wsbd001`.`order_prod_pack_rt`
-CREATE TABLE `wsbd001`.`order_prod_pack_rt` (
-  `order_id` BIGINT NOT NULL,
+CREATE TABLE `order_prod_pack_rt` (
+  `order_id` BIGINT NOT NULL AUTO_INCREMENT,
   `order_prod_pack_id` BIGINT NULL,
   `no_of_order_prod_pack` SMALLINT NULL,
   `order_prod_pack_purchase_date` DATE NULL,
@@ -100,10 +102,10 @@ CREATE TABLE `wsbd001`.`order_prod_pack_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`order_prod_pack_event_rt`
+-- drop table `order_prod_pack_event_rt`;
 -- `wsbd001`.`order_prod_pack_event_rt`
-CREATE TABLE `wsbd001`.`order_prod_pack_event_rt` (
-  `event_id` BIGINT NOT NULL,
+CREATE TABLE `order_prod_pack_event_rt` (
+  `event_id` BIGINT NOT NULL AUTO_INCREMENT,
   `event_time_stamp` TIMESTAMP NOT NULL,
   `order_id` BIGINT NULL,
   `prod_pack_id` BIGINT NULL,
@@ -125,9 +127,9 @@ CREATE TABLE `wsbd001`.`order_prod_pack_event_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`staff_demo_rt`
+-- drop table `staff_demo_rt`;
 -- `wsbd001`.`staff_demo_rt`
-CREATE TABLE `wsbd001`.`staff_demo_rt` (
+CREATE TABLE `staff_demo_rt` (
   `staff_id` INT NOT NULL,
   `staff_status` VARCHAR(5) NULL,
   `staff_login_profile` VARCHAR(20) NOT NULL,
@@ -147,9 +149,9 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
--- drop table `wsbd001`.`staff_role_demo_rt`
+-- drop table `staff_role_demo_rt`;
 -- `wsbd001`.`staff_role_demo_rt`
-CREATE TABLE `wsbd001`.`staff_role_demo_rt` (
+CREATE TABLE `staff_role_demo_rt` (
   `staff_role_id` INT NOT NULL,
   `staff_role_page_id` VARCHAR(100) NOT NULL,
   `staff_role_status` VARCHAR(5) NULL,
@@ -164,9 +166,9 @@ CREATE TABLE `wsbd001`.`staff_role_demo_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`company_org_rt`
+-- drop table `company_org_rt`;
 -- `wsbd001`.`company_org_rt` 
-CREATE TABLE `wsbd001`.`company_org_rt` (
+CREATE TABLE `company_org_rt` (
   `org_id` INT NOT NULL,
   `org_id_upper` INT NOT NULL,
   `org_level` SMALLINT NULL,
@@ -181,10 +183,10 @@ CREATE TABLE `wsbd001`.`company_org_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`product_rt`
+-- drop table `product_rt`;
 -- `wsbd001`.`product_rt`
-CREATE TABLE `wsbd001`.`product_rt` (
-  `prod_id` INT NOT NULL,
+CREATE TABLE `product_rt` (
+  `prod_id` INT NOT NULL AUTO_INCREMENT,
   `prod_name` VARCHAR(50) NULL,
   `prod_desc` VARCHAR(1000) NULL,
   `business_id` INT NULL,
@@ -203,9 +205,9 @@ CREATE TABLE `wsbd001`.`product_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`product_pack_rt`
+-- drop table `product_pack_rt`;
 -- `wsbd001`.`product_pack_rt`
-CREATE TABLE `wsbd001`.`product_pack_rt` (
+CREATE TABLE `product_pack_rt` (
   `prod_pack_id` INT NOT NULL,
   `prod_id` INT NOT NULL,
   `prod_pack_name` VARCHAR(50) NULL,
@@ -219,9 +221,9 @@ CREATE TABLE `wsbd001`.`product_pack_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`recommendation_inventory_dt`
+-- drop table `recommendation_inventory_dt`;
 -- `wsbd001`.`recommendation_inventory_dt`
-CREATE TABLE `wsbd001`.`recommendation_inventory_dt` (
+CREATE TABLE `recommendation_inventory_dt` (
   `recmdt_id` BIGINT NOT NULL,
   `recmdt_name` VARCHAR(30) NULL,
   `recmdt_status` VARCHAR(10) NULL,
@@ -238,9 +240,9 @@ CREATE TABLE `wsbd001`.`recommendation_inventory_dt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`recommendation_engine_dt`
+-- drop table `recommendation_engine_dt`;
 -- `wsbd001`.`recommendation_engine_dt`
-CREATE TABLE `wsbd001`.`recommendation_engine_dt` (
+CREATE TABLE `recommendation_engine_dt` (
   `recmdt_engine_id` BIGINT NOT NULL,
   `recmdt_psdo_cust_id` INT NOT NULL,
   `recmdt_engine_priority` SMALLINT NOT NULL,
@@ -252,9 +254,9 @@ CREATE TABLE `wsbd001`.`recommendation_engine_dt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`order_procs_rt` 
+-- drop table `order_procs_rt` ;
 -- `wsbd001`.`order_procs_rt` 
-CREATE TABLE `wsbd001`.`order_procs_rt` (
+CREATE TABLE `order_procs_rt` (
   `business_id` INT NOT NULL,
   `procs_step_no` SMALLINT NOT NULL,
   `procs_step_name` VARCHAR(10) NULL,
@@ -265,9 +267,9 @@ CREATE TABLE `wsbd001`.`order_procs_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`member_info_rt`
+-- drop table `member_info_rt`;
 -- `wsbd001`.`member_info_rt`
-CREATE TABLE `wsbd001`.`member_info_rt` (
+CREATE TABLE `member_info_rt` (
   `member_id` INT NOT NULL,
   `psdo_cust_id` INT NULL,
   `member_login_id` VARCHAR(50) NOT NULL,
@@ -284,8 +286,8 @@ CREATE TABLE `wsbd001`.`member_info_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`member_appl_form_rt`
-CREATE TABLE `wsbd001`.`member_appl_form_rt` (
+-- drop table `member_appl_form_rt`;
+CREATE TABLE `member_appl_form_rt` (
   `member_id` INT NOT NULL,
   `member_appl_form_type` VARCHAR(20) NOT NULL,
   `member_appl_form_question_id` SMALLINT NOT NULL,
@@ -293,8 +295,8 @@ CREATE TABLE `wsbd001`.`member_appl_form_rt` (
   PRIMARY KEY (`member_id`, `member_appl_form_type`, `member_appl_form_question_id`),
   INDEX `member_id_key` (`member_id` ASC));
   
--- drop table `wsbd001`.`appl_form_dim`
-CREATE TABLE `wsbd001`.`appl_form_dim` (
+-- drop table `appl_form_dim`;
+CREATE TABLE `appl_form_dim` (
   `appl_form_type` VARCHAR(20) NOT NULL,
   `appl_form_question_id` SMALLINT NULL,
   `appl_form_question_name` VARCHAR(500) NULL,
@@ -305,9 +307,9 @@ CREATE TABLE `wsbd001`.`appl_form_dim` (
 
 
 
--- drop table `wsbd001`.`page_id_dim`
+-- drop table `page_id_dim`;
 -- `wsbd001`.`page_id_dim`
-CREATE TABLE `wsbd001`.`page_id_dim` (
+CREATE TABLE `page_id_dim` (
   `page_id` VARCHAR(100) NOT NULL,
   `page_name` VARCHAR(100) NULL,
   PRIMARY KEY (`page_id`),
@@ -315,10 +317,10 @@ CREATE TABLE `wsbd001`.`page_id_dim` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`business_rt`
+-- drop table `business_rt`;
 -- `wsbd001`.`business_rt` 
-CREATE TABLE `wsbd001`.`business_rt` (
-  `business_id` INT NOT NULL,
+CREATE TABLE `business_rt` (
+  `business_id` INT NOT NULL AUTO_INCREMENT,
   `business_name` VARCHAR(20) NULL,
   `business_id_upper` INT NULL,
   `business_name_upper` VARCHAR(20) NULL,
@@ -327,9 +329,9 @@ CREATE TABLE `wsbd001`.`business_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- drop table `wsbd001`.`member_need_rt` 
+-- drop table `member_need_rt` ;
 -- `wsbd001`.`member_need_rt` 
-CREATE TABLE `wsbd001`.`member_need_rt` (
+CREATE TABLE `member_need_rt` (
   `member_need_id` INT NOT NULL,
   `member_id` INT NULL,
   `member_need_name` VARCHAR(20) NULL,
@@ -341,8 +343,8 @@ CREATE TABLE `wsbd001`.`member_need_rt` (
 
 
 
-CREATE TABLE `wsbd001`.`notice_rt` (
-  `notice_id` INT NOT NULL,
+CREATE TABLE `notice_rt`(
+  `notice_id` INT NOT NULL AUTO_INCREMENT,
   `notice_subject` VARCHAR(100) NULL,
   `notice_timestamp` TIMESTAMP NULL,
   `notice_content` VARCHAR(2000) NULL,
