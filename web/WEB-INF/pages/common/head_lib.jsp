@@ -28,6 +28,7 @@ var root = "<%=root%>";
 <script type="text/javascript" src="<%=root%>/script/jquery-migrate-1.2.1.min.js"></script>
 
 <script type="text/javascript" src="<%=root%>/script/core.js"></script>
+<script type="text/javascript" src="<%=root%>/script/script.js"></script>
 
 <!-- template lib -->
 <script type="text/javascript" src="<%=root%>/plugin/jTemplates/jquery-jtemplates.<%=js_min %>js"></script>

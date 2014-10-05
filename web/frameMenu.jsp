@@ -16,7 +16,7 @@
           $(this).next("dd").toggle();
       });
   
-      openView(110003, '/biz/product_view.action', '基础商品管理');
+      openView(100003, '/biz/order_orderOpenView.action', '业务发起');
   })
 
 </script>
@@ -35,7 +35,8 @@
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_ordermanege.png" />业务单管理</a></dt>
         <dd>
             <ul>
-                <li><a href="列表页.html" target="mainFrame">业务单处理<b><span>32</span></b></a></li>
+                <li><a href="javascript:removeAll();openView(100003, '/biz/order_orderOpenView.action', '业务发起');">业务发起</a></li>
+                <li><a href="#">业务单处理<b><span>32</span></b></a></li>
                 <li><a href="#">业务单流查看</a></li>
             </ul>
         </dd>
