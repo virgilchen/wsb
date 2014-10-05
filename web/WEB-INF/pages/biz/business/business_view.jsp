@@ -29,6 +29,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E$("sForm").validator();
         E("sForm").setFirstFocus();
         
+        this.first();
     },
     
     get:function(id) {
@@ -63,6 +64,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 formDeserialize("eForm", data, {}) ;
             }
         );
+    }, 
+    
+    openOrderProcessView:function(business_id, business_name) {
+        //var business_id = V("business.id") ;
+        //var business_name = V("business.business_name") ;
+        var _id = 11 * 1000000000 +  parseInt(business_id);
+        var _url = '/biz/orderProcess_view.action' ;
+        var _title = '流程节点@' + business_name  ;
+        openView(_id, _url, _title, {business_id:business_id, business_name:business_name}) ;
     }
 }) ;
 
@@ -111,6 +121,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <TR>
 			<TH width="20px"></TH>
 			<TH>业务名称</TH>
+			<TH>操作</TH>
 		  <TR>
         </thead>
         
@@ -127,6 +138,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
                     <td style="text-align: left;padding-left: {#if $T.business_id_upper == null}5{#else}25{#/if}px;">{$T.business_name}</td>
+                    <td><a href="javascript:viewJs.openOrderProcessView({$T.id}, '{$T.business_name}')">流程配置</a></td>
                   </tr>
               </textarea>
             </td>
@@ -164,7 +176,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <td width="45%">
             <table width="100%" border="0">
               <tr>
-                <td width="25%" class="label">上级业务：</td>
+                <th width="25%">上级业务：</th>
                 <td>
                  <select name="business.business_id_upper" id="business.business_id_upper" >
                  </select>

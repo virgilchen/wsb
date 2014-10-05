@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Business;
 import com.wsb.biz.entity.BusinessSO;
@@ -54,6 +55,8 @@ public class BusinessAction extends BaseAction implements Preparable {
 
         Object newBusiness = businessBO.create(business) ;
 
+        CodeHelper.reload("BusinessUpper");
+        
         renderObject(newBusiness, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
         
@@ -64,6 +67,8 @@ public class BusinessAction extends BaseAction implements Preparable {
 
             	
         businessBO.update(business) ;
+        
+        CodeHelper.reload("BusinessUpper");
 
         renderObject(business, ResponseMessage.KEY_UPDATE_OK) ;
         
@@ -79,7 +84,8 @@ public class BusinessAction extends BaseAction implements Preparable {
         } else {
             businessBO.deleteAll(ids) ;
         }
-
+        
+        CodeHelper.reload("BusinessUpper");
         
         renderObject(business, ResponseMessage.KEY_DELETE_OK) ;
         

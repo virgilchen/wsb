@@ -43,7 +43,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         	root+"/biz/business_list.action?businessSO.pageIndex=-2",//PAGEINDEX_NO_PAGE 
             null,
             function(data, textStatus){
-                viewJs.addRows("businessTB", data.list) ;
+                viewJs.addRows("businessTB", data.list, {pro_id_name:"business_id_upper"}) ;
             }
         );
     },
@@ -85,7 +85,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	                    <td>
 	                      <textarea id="templateBody" jTemplate="yes">
 			                  <tr id="{$T.id}" onclick="viewJs.toListProduct({$T.id});">
-			                    <td style="text-align: left;">{$T.business_name}</td>
+			                    <td style="text-align: left;padding-left: {#if $T.business_id_upper == null}5{#else}25{#/if}px;">{$T.business_name}</td>
 			                  </tr>
 	                      </textarea>
 	                    </td>

@@ -771,7 +771,7 @@ var baseView_af24332idihy00p2jww = {
             }
         );
     },
-    save:function (fun) {
+    save:function () {
     	var frm = E("eForm") ;
         if(typeof(frm.checkValidity) != "undefined" && !frm.checkValidity()) {
             alert("请正确填写表单！") ;
@@ -809,9 +809,9 @@ var baseView_af24332idihy00p2jww = {
             E$("eForm").serialize(),
             function(data, textStatus){
                 if (data.code == "0") {
-                    if (fun) {
-                      fun(data.data);
-                      return;
+                    if (viewJs.onSaveOk) {
+                    	viewJs.onSaveOk(data.data);
+                        return;
                     }
                     //viewJs.toSearchView();
                 	viewJs.toPage('s') ;
