@@ -1,5 +1,7 @@
 package com.wsb.biz.web;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Order;
+import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.OrderBO;
 import com.opensymphony.xwork2.Preparable;
@@ -20,9 +23,19 @@ public class OrderAction extends BaseAction implements Preparable {
     
     private OrderBO orderBO ;
     private Order order ;
+    private List<OrderProdPack> orderProdPacks ;
     private OrderSO orderSO ; 
+    private Long customer_id;
     
-    public String execute() throws Exception { 
+    public Long getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(Long customer_id) {
+		this.customer_id = customer_id;
+	}
+
+	public String execute() throws Exception { 
         return this.list(); 
     }
     
@@ -32,6 +45,23 @@ public class OrderAction extends BaseAction implements Preparable {
     
     public String orderFollowUpView() throws Exception {
     	return "jsp";
+    }
+
+    public String getOpenInfo () throws Exception {
+
+        Object newOrder = orderBO.getOpenInfo(customer_id) ;
+
+        renderObject(newOrder, null) ;
+        return null;  
+    }
+    
+    public String open () throws Exception {
+
+
+        Object newOrder = orderBO.open(order, orderProdPacks) ;
+
+        renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
+        return null;  
     }
     
 
@@ -113,5 +143,13 @@ public class OrderAction extends BaseAction implements Preparable {
     public void setOrderSO(OrderSO orderSO) {
         this.orderSO = orderSO;
     }
+
+	public List<OrderProdPack> getOrderProdPacks() {
+		return orderProdPacks;
+	}
+
+	public void setOrderProdPacks(List<OrderProdPack> orderProdPacks) {
+		this.orderProdPacks = orderProdPacks;
+	}
 
 }

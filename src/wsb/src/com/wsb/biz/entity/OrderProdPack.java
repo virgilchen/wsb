@@ -26,7 +26,7 @@ public class OrderProdPack extends BaseEntity {
 	private Long id;
 
 	private Long order_id;
-	private Long order_prod_pack_id;
+	private Long prod_pack_id;
 	private Integer no_of_order_prod_pack;
 	
 	private Timestamp order_prod_pack_purchase_date;	
@@ -46,11 +46,11 @@ public class OrderProdPack extends BaseEntity {
 	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
 	}
-	public Long getOrder_prod_pack_id() {
-		return order_prod_pack_id;
+	public Long getProd_pack_id() {
+		return prod_pack_id;
 	}
-	public void setOrder_prod_pack_id(Long order_prod_pack_id) {
-		this.order_prod_pack_id = order_prod_pack_id;
+	public void setProd_pack_id(Long prod_pack_id) {
+		this.prod_pack_id = prod_pack_id;
 	}
 	public Integer getNo_of_order_prod_pack() {
 		return no_of_order_prod_pack;

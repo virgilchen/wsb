@@ -10,11 +10,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     view:document.getElementById("view_<%=view_id%>"), 
     id:<%=view_id%>,
     list_url:root+"/biz/order_list.action" ,
-    create_url:root + "/biz/order_create.action" ,
-    update_url:root + "/biz/order_update.action" ,
+    create_url:root + "/biz/order_open.action" ,
+    update_url:root + "/biz/order_open.action" ,
     get_url:root + "/biz/order_get.action" ,
     delete_url:root + "/biz/order_delete.action" ,
     entityName:"order",
+    size:0,
     
     init:function (){
         //this.initSelect() ;
@@ -29,105 +30,185 @@ var g$v<%=view_id%> = $.extend(newView(), {
             timeFormat: "HH:mm:ss"
         });
         */
-        //E$("eForm").validator();
+        E$("eForm").validator();
         //E$("sForm").validator();
-        //E("sForm").setFirstFocus();
-        
+        E("eForm").setFirstFocus();
+        this.size = 0;
+        this.getOpenInfo();
+    },
+    
+    getOpenInfo:function() {
+        var params = {} ;
+        params.customer_id = 1 ;
+        ajax(
+        	root+"/biz/order_getOpenInfo.action", 
+            params,
+            function(data, textStatus){
+                viewJs.entity = data;
+                formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
+                formDeserialize("eForm", data, {}) ;
+            }
+        );
+    },
+    
+    onSaveOk:function(data) {
+    	//alert(data.id);
+    	V("order.id", data.id)
+    },
+    
+    add:function() {
+        this.addRows ("orderProdPacksTB", [{index:this.size, textarea_tagName:"textarea" }], {deep:1});
+        this.size ++;
+        this.refreshTableList();
+    },
+    
+    refreshTableList:function() {
+        var $packageIndexNames = $("#orderProdPacksTB #listBody #packageIndexName", viewJs.view); 
+
+        $packageIndexNames.each(function(i, elem) {
+            $(elem).html("商品包" + (i + 1));
+        });
     }
+    
+    
+    
 }) ;
 
 
 </script>
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
-
-	<div class="main_title">
-	    <b>发起“王小明”的业务单</b>
-	    <div class="main_tt_right fr">
-	        <a href="#" class="orange">保存并发起业务</a><a href="#" class="orange">保存</a><a href="#" class="blue">返回</a>
-	    </div>
-	</div>
-	 
-	 
-	<div class="main_userinfo">
-	    <div class="title"><a href="#" class="btn_blue">360视图</a>客户信息</div>
-	    <table width="50%" border="0">
+    <div id="customerInfoDiv" >
+		<div class="main_title">
+		    <b>发起“<label id="customer.cust_name">王小明</label>”的业务单</b>
+		    <div class="main_tt_right fr">
+		        <a href="javascript:viewJs.save();" class="orange">保存并发起业务</a>
+		        <a href="javascript:viewJs.save();" class="orange">保存</a>
+		        <a href="#" class="blue">返回</a>
+		    </div>
+		</div>
+		 
+		 
+		<div class="main_userinfo">
+		  <div class="title">
+		    <a href="#" class="btn_blue">360视图</a>客户信息
+		  </div>
+		  <table width="80%" border="0">
 	        <tr>
-	        <td>客户号：xcyz_001</td>
-	        <td>客户姓名：王小明</td>
+	          <td width="20%" style="text-align: right;">客户号：</td>
+	          <td width="30%" style="text-align: left;"><label id="customer.id">xcyz_001</label></td>
+	          <td width="20%" style="text-align: right;">客户姓名：</td>
+	          <td width="30%" style="text-align: left;"><label id="customer.cust_name">王小明</label></td>
 	        </tr>
 	        <tr>
-	        <td>性别：男</td>
-	        <td>年龄：28</td>
+	          <td style="text-align: right;">性别：</td>
+	          <td style="text-align: left;"><label id="customer.cust_gender">男</label></td>
+	          <td style="text-align: right;">年龄：</td>
+	          <td style="text-align: left;"><label id="customer.cust_age">28</label></td>
 	        </tr>
 	        <tr>
-	        <td>电话号码：186888888</td>
-	        <td></td>
+	          <td style="text-align: right;">电话号码：</td>
+	          <td style="text-align: left;"><label id="customer.cust_phone_no">186888888</label></td>
+	          <td></td>
+	          <td></td>
 	        </tr>
-	    </table>
+		  </table>
+		</div>
 	</div>
 	 
 	<div class="order_launched">
-	        <table width="100%" border="0">
-	            <tr>
-	            <th>业务单单号：</th>
-	            <td><input type="text" /><span class="c_red"></span>业务单发起时间：<input type="text" disabled="disabled" value="2013-12-01 13:22" /><span class="c_red"></span>业务处理人：<input type="text"  /> <a href="" class="link_blue">选择</a></td>
-	            </tr>
-	            <th>业务单备注：</th>
-	            <td><textarea name="" cols="55" rows="3"></textarea></td>
-	            </tr>
-	        </table>
-	        
-	    <div class="goods_bag clearfix">
-	        <div>商品包1</div>
-	        <table width="80%" border="0" class="fl">
-	            <tr>
-	            <th>商品包名称：</th>
-	            <td><input type="text" value="车险A套餐(0192847)" /> <a href="javascript:showCL('test_condition')" class="link_blue">选择</a><span class="c_red"></span>
-	            数量：<input type="text" style=" width:50px;" /> 份<span class="c_red">*</span></td>
-	            </tr>
-	            <tr>
-	            <th>业务类型：</th>
-	            <td><input type="text" disabled="disabled" value="车险,意外险" /></td>
-	            </tr>
-	            <tr>
-	            <th>购买日期：</th>
-	            <td><input type="text" class="ipt_date" /><span class="c_red">*</span>
-	            起效日期：<input type="text" class="ipt_date" /><span class="c_red">*</span></td>
-	            </tr>
-	            <tr>
-	            <th>备注：</th>
-	            <td><textarea name="" cols="55" rows="3"></textarea></td>
-	            </tr>
-	        </table>
-	    </div>
+	  <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
+        <input type="hidden" name="order.id" id="order.id"/>
+        <input type="hidden" name="order.version_id" id="order.version_id"/>
+        <input type="hidden" name="order.psdo_cust_id" id="order.psdo_cust_id"/>
+        
+	    <table width="100%" border="0">
+	      <tr>
+            <th>业务单单号：</th>
+            <td><input type="text"  name="order.idxx"/><span class="c_red">*</span></td>
+            <th>业务单发起时间：</th>
+            <td><input type="text"  name="order.order_init_time_stamp" /><span class="c_red">*</span></td>
+            <th>业务处理人：</th>
+            <td><input type="text"  name="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
+          </tr>
+          <tr>
+            <th>业务单备注：</th>
+            <td colspan="5"><textarea  name="order.order_remark" cols="55" rows="3"></textarea></td>
+          </tr>
+	    </table>
+
+        <table width="100%" border="0" id="orderProdPacksTB">
+	      <tbody id="listBody">
+	      </tbody>
+	      
+
+	      <tbody style="display:none;visibility: false;" disabled="true">
+	          <tr>
+	            <td>
+	              <textarea id="templateBody" jTemplate="yes">
+            
+			        <div class="goods_bag clearfix">
+			            <div id="packageIndexName">商品包1</div>
+			            <table width="80%" border="0" class="fl">
+			              <tr>
+			                <th width="15%">商品包名称：</th>
+			                <td width="25%">
+                              <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
+                              <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_id" value="车险A套餐(0192847)" /> 
+			                  <a href="javascript:showCL('test_condition')" class="link_blue">选择</a>
+			                  <span class="c_red"></span>
+			                </td>
+			                <th width="10%">数量：</th>
+			                <td width="25%">
+			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" /> 份<span class="c_red">*</span>
+			                </td>
+			                <td width="25%"></td>
+			              </tr>
+			              <tr>
+			                <th>业务类型：</th>
+			                <td><input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" /></td>
+			              </tr>
+			              <tr>
+			                <th>购买日期：</th>
+			                <td>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" class="ipt_date" /><span class="c_red">*</span>
+			                </td>
+			                <th>起效日期：</th>
+			                <td>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" class="ipt_date" /><span class="c_red">*</span>
+			                </td>
+                            <td></td>
+			              </tr>
+			              <tr>
+			                <th>备注：</th>
+			                <td colspan="3"><{$T.textarea_tagName}  name="orderProdPacks[{$T.index}].order_prod_pack_remark" cols="55" rows="3"></{$T.textarea_tagName}></td>
+                            <td></td>
+			              </tr>
+			          
+			            </table>
+			        </div>
+	              </textarea>
+	            </td>
+	          </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <tr>
+            <td>
+              <a href="javascript:viewJs.add();" class="link_blue">+新增商品包</a>
+            </td>
+          </tr>
+        </table>
 	    
-	    <div class="goods_bag clearfix">
-	        <div>商品包2</div>
-	        <table width="80%" border="0" class="fl">
-	            <tr>
-	            <th>商品包名称：</th>
-	            <td><input type="text" value="车险A套餐(0192847)" /> <a href="javascript:showCL('test_condition')" class="link_blue">选择</a><span class="c_red"></span>
-	            数量：<input type="text" style=" width:50px;" /> 份<span class="c_red">*</span></td>
-	            </tr>
-	            <tr>
-	            <th>业务类型：</th>
-	            <td><input type="text" disabled="disabled" value="车险,意外险" /></td>
-	            </tr>
-	            <tr>
-	            <th>购买日期：</th>
-	            <td><input type="text" class="ipt_date" /><span class="c_red">*</span>
-	            起效日期：<input type="text" class="ipt_date" /><span class="c_red">*</span></td>
-	            </tr>
-	            <tr>
-	            <th>备注：</th>
-	            <td><textarea name="" cols="55" rows="3"></textarea></td>
-	            </tr>
-	        </table>
-	    </div>
-	    <a href="#" class="link_blue">+新增商品包</a>
+	  </form>
 	</div>
+	
 	<a href="#" class="btn_orange mg_r">保存并发起业务</a><a href="#" class="btn_orange">保存</a><a href="#" class="btn_blue">返回</a>
+	 
+	 
+	 
+	 
 	 
 	 
 	<div id="test_condition" style="display:none;">

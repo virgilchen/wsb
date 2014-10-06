@@ -89,16 +89,16 @@ DEFAULT CHARACTER SET = utf8;
 -- drop table `order_prod_pack_rt`;
 -- `wsbd001`.`order_prod_pack_rt`
 CREATE TABLE `order_prod_pack_rt` (
-  `order_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `order_prod_pack_id` BIGINT NULL,
+  `order_prod_pack_id` BIGINT NULL AUTO_INCREMENT,
+  `order_id` BIGINT NOT NULL ,
+  `prod_pack_id` BIGINT NULL,
   `no_of_order_prod_pack` SMALLINT NULL,
   `order_prod_pack_purchase_date` DATE NULL,
   `order_prod_pack_effect_date` DATE NULL,
   `order_prod_pack_expire_date` DATE NULL,
   `order_prod_pack_remark` VARCHAR(1000) NULL,
-  PRIMARY KEY (`order_id`),
-  INDEX `order_key` (`order_id` ASC),
-  INDEX `prod_pack_key` (`order_prod_pack_id` ASC))
+  PRIMARY KEY (`order_prod_pack_id`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

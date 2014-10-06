@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -30,6 +31,9 @@ public class Order extends BaseEntity {
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
     private String order_remark  ;
+    
+    @Transient
+    private Customer customer ;
     
 	public Long getId() {
 		return id;
@@ -66,6 +70,12 @@ public class Order extends BaseEntity {
 	}
 	public void setOrder_remark(String order_remark) {
 		this.order_remark = order_remark;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }
