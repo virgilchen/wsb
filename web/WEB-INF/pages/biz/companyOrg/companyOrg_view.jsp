@@ -30,9 +30,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //});
         
         E$("eForm").validator();
-        E$("sForm").validator();
-        E("sForm").setFirstFocus();
-        
+        //E$("sForm").validator();
+        //E("sForm").setFirstFocus();
+        this.first();
     }
 }) ;
 
@@ -77,7 +77,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     
     <DIV class=main_list>
-      <TABLE border=0 width="100%" id="noticeTB" title="组织列表">
+      <TABLE border=0 width="100%" id="companyOrgTB" title="组织列表">
         <thead>
           <TR>
 			<TH width="20px"></TH>
@@ -98,6 +98,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <td>
               <textarea id="templateBody" jTemplate="yes">
                   <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
+                    <td></td>
                     <td>{$T.org_name}</td>
                     <td>{$T.org_id}</td>
                     <td>{$T.org_owner_staff_id}</td>

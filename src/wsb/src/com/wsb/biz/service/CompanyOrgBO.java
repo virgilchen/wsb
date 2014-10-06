@@ -13,7 +13,7 @@ import com.wsb.biz.entity.CompanyOrgSO;
 
 
 
-@Service("CompanyOrgBO")
+@Service("companyOrgBO")
 @Scope("prototype")
 @Transactional
 public class CompanyOrgBO extends BaseServiceImpl {
