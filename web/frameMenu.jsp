@@ -69,7 +69,7 @@
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_setup.png" />系统设置</a></dt>
         <dd>
             <ul>
-                <li><a href="#" target="mainFrame">组织结构管理</a></li>
+                <li><a href="javascript:removeAll();openView(120002, '/biz/companyOrg_view.action', '组织结构管理');">组织结构管理</a></li>
                 <li><a href="#" target="mainFrame">角色配置</a></li>
                 <li><a href="#">员工管理</a></li>
                 <li><a href="#" target="mainFrame">客户资料字段配置</a></li>
