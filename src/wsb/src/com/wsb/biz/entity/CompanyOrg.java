@@ -27,6 +27,7 @@ public class CompanyOrg extends BaseEntity {
 	private String org_city;
 	private Long org_owner_phone_no;
 	private String org_remark;
+	
 	public Long getOrg_id() {
 		return org_id;
 	}
