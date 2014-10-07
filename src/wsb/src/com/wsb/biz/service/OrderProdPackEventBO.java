@@ -1,5 +1,7 @@
 package com.wsb.biz.service;
 
+import java.util.Set;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,15 @@ import com.wsb.biz.entity.OrderProdPackEventSO;
 @Transactional
 public class OrderProdPackEventBO extends BaseServiceImpl {
 
+	public void saveOpenOrderEvents(Set<Long> prod_pack_ids, Long orderId) {
+		OrderProdPackEventSO so = new OrderProdPackEventSO();
+		so.setProd_pack_ids(prod_pack_ids);
+		so.setOrder_id(orderId);
+		
+		jdbcDao.executeName("bizSQLs:saveOpenOrderEvents", so);
+		
+	}
+	
     public OrderProdPackEvent create(OrderProdPackEvent orderProdPackEvent) {  
 
     	OrderProdPackEvent newItem = (OrderProdPackEvent) jdbcDao.insert(orderProdPackEvent) ;

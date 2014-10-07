@@ -2,6 +2,7 @@
 
 <%
 String view_id=request.getParameter("view_id");
+String order_id=request.getParameter("order.id");
 %>
 
 <script>
@@ -39,14 +40,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     getOrderInfo:function() {
         var params = {} ;
-        params["order.id"] = 1 ;
+        params["order.id"] = <%=order_id%> ;
         ajax(
         	root+"/biz/order_getOrderInfo.action", 
             params,
             function(data, textStatus){
                 viewJs.entity = data;
-                formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
-                formDeserialize("eForm", data, {}) ;
+                formDeserializeText("customerInfoDetailDiv", "label", data.customer, {}) ;
+                formDeserializeText("orderInfoDiv", "label", data, {}) ;
+                //formDeserialize("eForm", data, {}) ;
             }
         );
     },
@@ -82,36 +84,24 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    <b>业务单业务处理：201407120001</b>
 	</div>
 	 
-	<div class="main_infomation">
+	<div class="main_infomation" id="orderInfoDiv">
 	    <table width="100%" border="0">
-	        <tr>
-	        <td>业务单单号：201407120001</td>
-	        <td>业务单发起时间：2013-12-01 13:22</td>
-	        <td>业务单发起人：启动业务人员</td>
-	        </tr>
-	        <tr>
-	        <td colspan="3">业务单备注：备注备注备注备注备注</td>
-	        </tr>
+	      <tr>
+		    <td width="10%" style="text-align: right;">业务单单号：</td>
+		    <td width="20%" style="text-align: left;"><label id="order.id">201407120001</label></td>
+		    <td width="10%" style="text-align: right;">业务单发起时间：</td>
+            <td width="20%" style="text-align: left;"><label id="customer.order_init_time_stamp">2013-12-01 13:22</label></td>
+            <td width="10%" style="text-align: right;">业务单发起人：</td>
+            <td width="30%" style="text-align: left;"><label id="customer.order_init_staff_id">启动业务人员</label></td>
+	      </tr>
+	      <tr>
+            <td width="10%" style="text-align: right;">业务单备注：</td>
+            <td width="20%" style="text-align: left;" colspan="5"><label id="order.order_remark">备注备注备注备注备注</label></td>
+	      </tr>
 	    </table>
 	</div>
 	 
-	<div class="main_userinfo">
-	    <div class="title"><a href="#" class="btn_blue">360视图</a>客户信息</div>
-	    <table width="50%" border="0">
-	        <tr>
-	        <td>客户号：xcyz_001</td>
-	        <td>客户姓名：王小明</td>
-	        </tr>
-	        <tr>
-	        <td>性别：男</td>
-	        <td>年龄：28</td>
-	        </tr>
-	        <tr>
-	        <td>电话号码：186888888</td>
-	        <td></td>
-	        </tr>
-	    </table>
-	</div>
+	<%@include file="/WEB-INF/pages/biz/order/customerInfo.jsp" %>
 	 
 	<div class="main_order_detail">
 	    <div class="title">业务信息
@@ -173,35 +163,49 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	                <td>客户满意</td>
 	              </tr>
 	            </table>
-	            <div class="order_result">
-	                <p><b>处理结果记录</b></p>
-	                <table width="80%" border="0">
-	                <tr>
-	                <th>处理结果：</th>
-	                <td><select name="select">
-	                  <option>继续跟进</option>
-	                  <option>回退跟单</option>
-	                  <option>是</option>
-	                  <option>否</option>
-	                </select>
-	                  业务处理人：
-	                  <input name="Input" type="text"> <a href="#" class="link_blue">选择</a></td>
-	                </tr>
-	                <tr>
-	                <th>备注：</th>
-	                <td><textarea name="textarea" cols="46" rows="5"></textarea> <span class="c_red">*</span></td>
-	                </tr>
-	                <tr>
-	                <th>&nbsp;</th>
-	                <td><a href="#" class="btn_orange">保存</a></td>
-	                </tr>
-	            </table>
-	            </div>
 	        </div>
 	        <div id="con2_2" style="display:none;" >我是 道路救援 的内容</div>
 	    </div>
 	    <div class="content" id="con1_2" style="display:none;">我是 洗车B套餐（1份）的内容</div>
 	    
+	    
+	    
+	    <div class="content" >
+	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
+	        <input type="hidden" name="order.id" id="order.id"/>
+	        <input type="hidden" name="order.version_id" id="order.version_id"/>
+              <div class="order_result">
+                <p><b>处理结果记录</b></p>
+                <table width="80%" border="0">
+                  <tr>
+                    <th>处理结果：</th>
+                    <td>
+                      <select name="select">
+                        <option>继续跟进</option>
+                        <option>回退跟单</option>
+                        <option>是</option>
+                        <option>否</option>
+                      </select>
+                    </td>
+                    <th> 业务处理人：</th>
+                    <td>
+                      <input name="Input" type="text"> <a href="#" class="link_blue">选择</a>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <th>备注：</th>
+                    <td colspan="5"><textarea name="textarea" cols="46" rows="5"></textarea> <span class="c_red">*</span></td>
+                  </tr>
+                  
+                  <tr>
+                    <th>&nbsp;</th>
+                    <td><a href="#" class="btn_orange">保存</a></td>
+                  </tr>
+                </table>
+            </div>
+          </form>
+        </div>
 	</div>
 
 </div>

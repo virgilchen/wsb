@@ -34,6 +34,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //E("sForm").setFirstFocus();
         this.first();
         
+    },
+    
+    toFollowUpView:function(order_id) {
+    	openView(100701, '/biz/order_followUpView.action?order.id=' + order_id, '业务单业务处理');
     }
 }) ;
 
@@ -107,7 +111,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td>{$T.order_init_time_stamp}</td>
 				    <td>{$T.event_staff_id}</td>
 				    <td><span class="c_orange">{$T.procs_step_name}</span></td>
-				    <td><a href="javascript:viewJs.toFollowUpView({$T.id});">查看</a> | <a href="#">催单</a></td>
+				    <td><a href="javascript:viewJs.toFollowUpView({$T.order_id});">查看</a> | <a href="#">催单</a></td>
                   </tr>
               </textarea>
             </td>

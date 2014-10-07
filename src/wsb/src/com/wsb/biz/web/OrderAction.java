@@ -59,6 +59,15 @@ public class OrderAction extends BaseAction implements Preparable {
         return null;  
     }
     
+    public String save() throws Exception {
+
+
+        Object newOrder = orderBO.save(order, orderProdPacks) ;
+
+        renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
+        return null;  
+    }
+    
     public String open() throws Exception {
 
 
@@ -67,10 +76,11 @@ public class OrderAction extends BaseAction implements Preparable {
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  
     }
+    
 
     public String getOrderInfo() throws Exception {
 
-        Object newOrder = orderBO.getOpenInfo(customer_id) ;
+        Object newOrder = orderBO.getOrderInfo(order.getId()) ;
 
         renderObject(newOrder, null) ;
         return null;  
@@ -88,9 +98,8 @@ public class OrderAction extends BaseAction implements Preparable {
 
     public String getMyTasks() throws Exception {
 
-        Object newOrder = orderBO.getMyTasks() ;
-
-        renderObject(newOrder, null) ;
+        renderList(orderBO.getMyTasks()) ;
+        
         return null;  
     }
 

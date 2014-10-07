@@ -212,16 +212,26 @@ DEFAULT CHARACTER SET = utf8;
 -- drop table `product_pack_rt`;
 -- `wsbd001`.`product_pack_rt`
 CREATE TABLE `product_pack_rt` (
-  `prod_pack_id` INT NOT NULL,
-  `prod_id` INT NOT NULL,
+  `prod_pack_id` INT NOT NULL AUTO_INCREMENT,
   `prod_pack_name` VARCHAR(50) NULL,
   `prod_pack_owner` VARCHAR(20) NULL,
   `prod_pack_picture` VARCHAR(100) NULL,
   `prod_pack_orignal_price` DECIMAL(12,2) NULL,
   `prod_pack_selling_price` DECIMAL(12,2) NULL,
-  PRIMARY KEY (`prod_pack_id`,`prod_id`),
-  INDEX `prod_pack_id_key` (`prod_pack_id` ASC),
-  INDEX `prod_id_key` (`prod_id` ASC))
+  PRIMARY KEY (`prod_pack_id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- drop table `product_pack_detail_rt`;
+-- `wsbd001`.`product_pack_detail_rt`
+CREATE TABLE `product_pack_detail_rt` (
+  `prod_pack_id` INT NOT NULL ,
+  `prod_id` INT NOT NULL ,
+  `quantity` INT NULL,
+  PRIMARY KEY (`prod_pack_id`, `prod_id`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

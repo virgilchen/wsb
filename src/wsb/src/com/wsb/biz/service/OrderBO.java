@@ -1,7 +1,9 @@
 package com.wsb.biz.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,7 @@ public class OrderBO extends BaseServiceImpl {
     	return result;
     }
     
-    public Order open(Order order, List<OrderProdPack> orderProdPacks) {
+    public Order save(Order order, List<OrderProdPack> orderProdPacks) {
 
     	Order result = null;
         
@@ -68,13 +70,27 @@ public class OrderBO extends BaseServiceImpl {
         return result;
     }
     
-    public Order getOrderInfo(Long customerId) {
+    public Order open(Order order, List<OrderProdPack> orderProdPacks) {
+    	Order newItem = this.save(order, orderProdPacks);
     	
-    	Order result = new Order();
-    	result.setCustomer(getCustomerBO().get(customerId));
+    	Set<Long> productPackageIds = new HashSet<Long>();
     	
-    	result.setOrder_init_time_stamp(U.currentTimestamp());
-    	result.setPsdo_cust_id(result.getCustomer().getId());
+    	for (OrderProdPack opp : orderProdPacks) {
+    		productPackageIds.add(opp.getProd_pack_id());
+    	}
+    	
+    	this.getOrderProdPackEventBO().saveOpenOrderEvents(productPackageIds, order.getId());
+    	
+    	return newItem;
+    }
+    
+    public Order getOrderInfo(Long orderId) {
+    	
+    	Order result = this.get(orderId);
+    	result.setCustomer(getCustomerBO().get(result.getPsdo_cust_id()));
+    	
+    	//result.setOrder_init_time_stamp(U.currentTimestamp());
+    	//result.setPsdo_cust_id(result.getCustomer().getId());
     	
     	return result;
     }

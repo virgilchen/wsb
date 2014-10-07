@@ -27,6 +27,26 @@ order by o.order_id
             </value>
           </entry>
 
+
+          <entry key="saveOpenOrderEvents">
+            <value>
+              <![CDATA[
+insert into order_prod_pack_event_rt(
+  event_time_stamp, order_id, business_id, procs_step_no, event_status
+) 
+select 
+  sysdate(), [order_id] , business_id, procs_step_no, 'S'
+ from order_procs_rt op
+where exists(
+  select 1 from product_rt p left join product_pack_detail_rt ppd on p.prod_id=ppd.prod_id
+   where ppd.prod_pack_id in ([prod_pack_ids]) and p.business_id=op.business_id
+)
+and procs_step_no=0
+              ]]>
+            </value>
+          </entry>
+
+
           
         </map>
       </property>

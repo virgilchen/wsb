@@ -10,8 +10,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     view:document.getElementById("view_<%=view_id%>"), 
     id:<%=view_id%>,
     list_url:root+"/biz/order_list.action" ,
-    create_url:root + "/biz/order_open.action" ,
-    update_url:root + "/biz/order_open.action" ,
+    create_url:root + "/biz/order_save.action" ,
+    update_url:root + "/biz/order_save.action" ,
     get_url:root + "/biz/order_get.action" ,
     delete_url:root + "/biz/order_delete.action" ,
     entityName:"order",
@@ -68,6 +68,35 @@ var g$v<%=view_id%> = $.extend(newView(), {
         $packageIndexNames.each(function(i, elem) {
             $(elem).html("商品包" + (i + 1));
         });
+    },
+    
+    open:function () {
+        var frm = E("eForm") ;
+        if(!frm.checkValidity()) {
+            alert("请正确填写表单！") ;
+            if (typeof(frm.setErrorFocus) != "undefined") {
+                frm.setErrorFocus() ;
+            }
+            return ;
+        }
+        
+        if (!this.checkEditForm(frm)) {
+            return ;
+        }
+        
+        if (!window.confirm("是否确定要保存？")) {
+            return ;
+        }
+        
+        ajax(
+        	root + "/biz/order_open.action", 
+            E$("eForm").serialize(),
+            function(data, textStatus){
+                if (data.code == "0") {
+                	removeView(<%=view_id%>);
+                }
+            }
+        );
     }
     
     
@@ -82,38 +111,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		<div class="main_title">
 		    <b>发起“<label id="customer.cust_name">王小明</label>”的业务单</b>
 		    <div class="main_tt_right fr">
-		        <a href="javascript:viewJs.save();" class="orange">保存并发起业务</a>
+		        <a href="javascript:viewJs.open();" class="orange">保存并发起业务</a>
 		        <a href="javascript:viewJs.save();" class="orange">保存</a>
 		        <a href="#" class="blue">返回</a>
 		    </div>
 		</div>
-		 
-		 
-		<div class="main_userinfo">
-		  <div class="title">
-		    <a href="#" class="btn_blue">360视图</a>客户信息
-		  </div>
-		  <table width="80%" border="0">
-	        <tr>
-	          <td width="20%" style="text-align: right;">客户号：</td>
-	          <td width="30%" style="text-align: left;"><label id="customer.id">xcyz_001</label></td>
-	          <td width="20%" style="text-align: right;">客户姓名：</td>
-	          <td width="30%" style="text-align: left;"><label id="customer.cust_name">王小明</label></td>
-	        </tr>
-	        <tr>
-	          <td style="text-align: right;">性别：</td>
-	          <td style="text-align: left;"><label id="customer.cust_gender">男</label></td>
-	          <td style="text-align: right;">年龄：</td>
-	          <td style="text-align: left;"><label id="customer.cust_age">28</label></td>
-	        </tr>
-	        <tr>
-	          <td style="text-align: right;">电话号码：</td>
-	          <td style="text-align: left;"><label id="customer.cust_phone_no">186888888</label></td>
-	          <td></td>
-	          <td></td>
-	        </tr>
-		  </table>
-		</div>
+
+		<%@include file="/WEB-INF/pages/biz/order/customerInfo.jsp" %>
+		
 	</div>
 	 
 	<div class="order_launched">
@@ -154,7 +159,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			                <th width="15%">商品包名称：</th>
 			                <td width="25%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
-                              <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_id" value="车险A套餐(0192847)" /> 
+                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_id" value="车险A套餐(0192847)" /> 
 			                  <a href="javascript:showCL('test_condition')" class="link_blue">选择</a>
 			                  <span class="c_red"></span>
 			                </td>
