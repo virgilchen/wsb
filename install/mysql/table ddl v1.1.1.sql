@@ -166,6 +166,10 @@ CREATE TABLE `staff_role_demo_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- ALTER TABLE `wsbd001`.`staff_role_demo_rt` 
+CHANGE COLUMN `staff_role_id` `staff_role_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
 -- drop table `company_org_rt`;
 -- `wsbd001`.`company_org_rt` 
 CREATE TABLE `company_org_rt` (
