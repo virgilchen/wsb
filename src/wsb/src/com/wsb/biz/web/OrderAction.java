@@ -39,15 +39,19 @@ public class OrderAction extends BaseAction implements Preparable {
         return this.list(); 
     }
     
-    public String orderOpenView() throws Exception {
+    public String openView() throws Exception {
     	return "jsp";
     }
     
-    public String orderFollowUpView() throws Exception {
+    public String followUpView() throws Exception {
+    	return "jsp";
+    }
+    
+    public String myTasksView() throws Exception {
     	return "jsp";
     }
 
-    public String getOpenInfo () throws Exception {
+    public String getOpenInfo() throws Exception {
 
         Object newOrder = orderBO.getOpenInfo(customer_id) ;
 
@@ -55,7 +59,7 @@ public class OrderAction extends BaseAction implements Preparable {
         return null;  
     }
     
-    public String open () throws Exception {
+    public String open() throws Exception {
 
 
         Object newOrder = orderBO.open(order, orderProdPacks) ;
@@ -63,7 +67,32 @@ public class OrderAction extends BaseAction implements Preparable {
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  
     }
+
+    public String getOrderInfo() throws Exception {
+
+        Object newOrder = orderBO.getOpenInfo(customer_id) ;
+
+        renderObject(newOrder, null) ;
+        return null;  
+    }
+
     
+    public String followUp() throws Exception {
+
+
+        Object newOrder = orderBO.open(order, orderProdPacks) ;
+
+        renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
+        return null;  
+    }
+
+    public String getMyTasks() throws Exception {
+
+        Object newOrder = orderBO.getMyTasks() ;
+
+        renderObject(newOrder, null) ;
+        return null;  
+    }
 
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String list() throws Exception {  

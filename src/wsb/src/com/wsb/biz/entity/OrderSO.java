@@ -10,6 +10,8 @@ public class OrderSO extends BaseSO {
     @Column(name="order_id")
     private Long[] ids ;
  
+    private Long event_staff_id;
+    
 	public Long[] getIds() {
 		return ids;
 	}
@@ -18,6 +20,13 @@ public class OrderSO extends BaseSO {
 		this.ids = ids;
 	}
 
+	public Long getEvent_staff_id() {
+		return event_staff_id;
+	}
+
+	public void setEvent_staff_id(Long event_staff_id) {
+		this.event_staff_id = event_staff_id;
+	}
 
 	@Override
 	public Class<?> getTableClass() {

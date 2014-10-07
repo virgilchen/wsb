@@ -1054,7 +1054,7 @@ var baseView_af24332idihy00p2jww = {
     	if (typeof(total) == "undefined") {
     		total = 0 ;
     		index = 1 ;
-    		total = 0 ;
+    		last = 0 ;
     	}
     	//E$("paginationInfo").html("总记录数为"+total+"条，当前为第"+index+"页，共"+last+"页&nbsp;&nbsp;&nbsp;&nbsp;") ;
     	if (typeof(pager) == "undefined") {

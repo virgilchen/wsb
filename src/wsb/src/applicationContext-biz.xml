@@ -6,17 +6,23 @@
       <property name="sqls">
         <map>
 
-          <entry key="promotions">
+          <entry key="myTasks">
             <value>
               <![CDATA[
-select p.* from biz_promotion p where p.status=1   
-   {and (
-   (p.begin_date is null and p.end_date is null) or 
-   (p.begin_date is not null and p.end_date is null and p.begin_date <= [checkTime]) or 
-   (p.begin_date is null and p.end_date is not null and p.end_date >= [checkTime]) or 
-   (p.begin_date is not null and p.end_date is not null and p.begin_date <= [checkTime] and p.end_date >= [checkTime])
-   )} 
-order by weight desc
+select
+  o.*,
+  e.*,
+  c.*,
+  b.business_name,
+  p.procs_step_name
+ from order_rt o, order_prod_pack_event_rt e, cust_demo_rt c, business_rt b, order_procs_rt p
+where o.order_id=e.order_id
+  and o.psdo_cust_id=c.psdo_cust_id
+  and b.business_id=e.business_id
+  and p.business_id=e.business_id
+  and p.procs_step_no=e.procs_step_no
+ {and e.event_staff_id=[event_staff_id]}
+order by o.order_id
               ]]>
             </value>
           </entry>

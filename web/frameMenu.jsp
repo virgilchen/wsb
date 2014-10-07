@@ -16,8 +16,8 @@
           $(this).next("dd").toggle();
       });
   
-      openView(100003, '/biz/order_orderOpenView.action', '业务发起');
-  })
+      openView(100001, '/biz/order_myTasksView.action', '业务单处理');
+  });
 
 </script>
 <!--[if IE 6]><script src="images/iepng.js" type="text/javascript"></script> <script type="text/javascript">
@@ -35,8 +35,8 @@
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_ordermanege.png" />业务单管理</a></dt>
         <dd>
             <ul>
-                <li><a href="javascript:removeAll();openView(100003, '/biz/order_orderOpenView.action', '业务发起');">业务发起</a></li>
-                <li><a href="#">业务单处理<b><span>32</span></b></a></li>
+                <li><a href="javascript:removeAll();openView(100001, '/biz/order_myTasksView.action', '业务单处理');">业务单处理<b><span>32</span></b></a></li>
+                <li><a href="javascript:removeAll();openView(100003, '/biz/order_openView.action', '业务发起');">业务发起</a></li>
                 <li><a href="#">业务单流查看</a></li>
             </ul>
         </dd>

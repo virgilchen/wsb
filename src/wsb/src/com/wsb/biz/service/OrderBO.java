@@ -1,5 +1,6 @@
 package com.wsb.biz.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -67,6 +68,28 @@ public class OrderBO extends BaseServiceImpl {
         return result;
     }
     
+    public Order getOrderInfo(Long customerId) {
+    	
+    	Order result = new Order();
+    	result.setCustomer(getCustomerBO().get(customerId));
+    	
+    	result.setOrder_init_time_stamp(U.currentTimestamp());
+    	result.setPsdo_cust_id(result.getCustomer().getId());
+    	
+    	return result;
+    }
+    
+    public Order followUp(Order order, List<OrderProdPack> orderProdPacks) {
+    	return null;
+    }
+    
+    
+    public ArrayPageList<HashMap> getMyTasks() {
+    	OrderSO orderSO = new OrderSO() ;
+        
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:myTasks", orderSO, HashMap.class);
+    }
+    
     public void update(Order order) {
     	
         jdbcDao.update(order) ;
@@ -111,5 +134,9 @@ public class OrderBO extends BaseServiceImpl {
     
     public CustomerBO getCustomerBO() {
     	return (CustomerBO)CodeHelper.getAppContext().getBean("customerBO");
+    }
+    
+    public OrderProdPackEventBO getOrderProdPackEventBO() {
+    	return (OrderProdPackEventBO)CodeHelper.getAppContext().getBean("orderProdPackEventBO");
     }
 }
