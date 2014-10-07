@@ -97,7 +97,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
+                  <tr id="{$T.org_id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
                     <td></td>
                     <td>{$T.org_name}</td>
                     <td>{$T.org_id}</td>
