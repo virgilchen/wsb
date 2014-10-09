@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
+import com.globalwave.common.ArrayPageList;
 
 /**
  * 
@@ -34,6 +35,9 @@ public class Order extends BaseEntity {
     
     @Transient
     private Customer customer ;
+    
+    @Transient
+    private ArrayPageList<OrderProdPack> orderProdPacks;
     
 	public Long getId() {
 		return id;
@@ -76,6 +80,12 @@ public class Order extends BaseEntity {
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public ArrayPageList<OrderProdPack> getOrderProdPacks() {
+		return orderProdPacks;
+	}
+	public void setOrderProdPacks(ArrayPageList<OrderProdPack> orderProdPacks) {
+		this.orderProdPacks = orderProdPacks;
 	}
 
 }

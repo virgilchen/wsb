@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -33,6 +34,9 @@ public class OrderProdPack extends BaseEntity {
 	private Timestamp order_prod_pack_effect_date;	
 	private Timestamp order_prod_pack_expire_date;
 	private String order_prod_pack_remark;
+
+	@Transient
+	private String prod_pack_name;
     
 	public Long getId() {
 		return id;
@@ -82,6 +86,12 @@ public class OrderProdPack extends BaseEntity {
 	}
 	public void setOrder_prod_pack_remark(String order_prod_pack_remark) {
 		this.order_prod_pack_remark = order_prod_pack_remark;
+	}
+	public String getProd_pack_name() {
+		return prod_pack_name;
+	}
+	public void setProd_pack_name(String prod_pack_name) {
+		this.prod_pack_name = prod_pack_name;
 	}
     
 	

@@ -47,6 +47,14 @@ and procs_step_no=0
           </entry>
 
 
+
+          <entry key="queryOrderProdPackByOrderId">
+            <value>
+              <![CDATA[
+select op.*, p.prod_pack_name from order_prod_pack_rt op left join product_pack_rt p on op.prod_pack_id=p.prod_pack_id where op.order_id=[order_id]
+              ]]>
+            </value>
+          </entry>
           
         </map>
       </property>

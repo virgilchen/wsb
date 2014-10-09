@@ -49,13 +49,38 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 formDeserializeText("customerInfoDetailDiv", "label", data.customer, {}) ;
                 formDeserializeText("orderInfoDiv", "label", data, {}) ;
                 //formDeserialize("eForm", data, {}) ;
+                
+                var orderProdPacks = data.orderProdPacks;
+                
+                var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
+                var contentTemplate = "<div id=\"con{$T._name_}_{$T._index_}\" ></div>";
+
+                $("#productPackTitlesDiv").html("");
+                $("#productPackContentsDiv").html("");
+                
+                var prodLen = orderProdPacks.length;
+                
+                for(var i = 0 ; i < prodLen ; i ++) {
+                    var orderProdPack = orderProdPacks[i];
+
+                    orderProdPack._name_ = "OrderProduct";
+                    orderProdPack._index_ = (i + 1);
+                    orderProdPack._length_ = prodLen;
+
+                    $("#productPackTitlesDiv").append(parse(titleTemplate, orderProdPack));
+                    $("#productPackContentsDiv").append(parse(contentTemplate, orderProdPack));
+                }
+
+                if (prodLen != 0) {
+                    tabShow('menuOrderProduct_', 'conOrderProduct_', 1, prodLen);
+                }
             }
         );
     },
     
     onSaveOk:function(data) {
     	//alert(data.id);
-    	V("order.id", data.id)
+    	V("order.id", data.id);
     },
     
     add:function() {
@@ -81,7 +106,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
 	<div class="main_title">
-	    <b>业务单业务处理：201407120001</b>
+	  <b>业务单业务处理：201407120001</b>
+	  <DIV class="main_tt_right fr">
+        <A class=blue href="javascript:removeView(<%=view_id%>);">返回</A>
+      </DIV>
 	</div>
 	 
 	<div class="main_infomation" id="orderInfoDiv">
@@ -104,13 +132,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<%@include file="/WEB-INF/pages/biz/order/customerInfo.jsp" %>
 	 
 	<div class="main_order_detail">
-	    <div class="title">业务信息
-	        <ul class="title_right">
-	            <li class="selected" onclick="tabShow('menu1_','con1_',1,2);" id="menu1_1">车险A餐（1份）</li>
-	            <li onclick="tabShow('menu1_','con1_',2,2);" id="menu1_2">洗车B套餐（1份）</li>
+	    <div class="title">
+	        <b>业务信息</b>
+	        <ul class="title_right" id="productPackTitlesDiv">
+	            <li class="selected" onclick="tabShow('menu1_','con1_',1,3);" id="menu1_1">车险A餐（1份）</li>
+                <li onclick="tabShow('menu1_','con1_',2,3);" id="menu1_2">洗车B套餐（1份）</li>
+                <li onclick="tabShow('menu1_','con1_',3,3);" id="menu1_3">洗车C套餐（1份）</li>
 	        </ul>
 	    </div>
-	    <div class="content" id="con1_1" style="display:block;">
+	    
+        <div id="productPackContentsDiv">
+	      <div class="content" id="con1_1" style="display:block;">
 	        <ul>
 	            <li class="selected" onclick="tabShow('menu2_','con2_',1,2);" id="menu2_1">保险</li>
 	            <li onclick="tabShow('menu2_','con2_',2,2);" id="menu2_2">道路救援</li>
@@ -165,9 +197,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	            </table>
 	        </div>
 	        <div id="con2_2" style="display:none;" >我是 道路救援 的内容</div>
+	      </div>
+          <div class="content" id="con1_2" style="display:none;">我是 洗车B套餐（1份）的内容</div>
+          <div class="content" id="con1_3" style="display:none;">我是 洗车C套餐（1份）的内容</div>
 	    </div>
-	    <div class="content" id="con1_2" style="display:none;">我是 洗车B套餐（1份）的内容</div>
-	    
 	    
 	    
 	    <div class="content" >
