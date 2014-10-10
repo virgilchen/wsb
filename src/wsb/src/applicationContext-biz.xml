@@ -55,6 +55,21 @@ select op.*, p.prod_pack_name from order_prod_pack_rt op left join product_pack_
               ]]>
             </value>
           </entry>
+
+
+          <entry key="queryOrderProdByOrderId">
+            <value>
+              <![CDATA[
+select ppd.prod_pack_id, p.prod_name, b.business_name, b.business_id
+ from order_prod_pack_rt opp , product_pack_detail_rt ppd, product_rt p, business_rt b
+where opp.prod_pack_id=ppd.prod_pack_id
+  and ppd.prod_id=p.prod_id
+  and p.business_id=b.business_id
+  and opp.order_id=[order_id]
+              ]]>
+            </value>
+          </entry>
+          
           
         </map>
       </property>

@@ -65,6 +65,16 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
         
         return (ArrayPageList<OrderProdPackEvent>)jdbcDao.query(orderProdPackEventSO, OrderProdPackEvent.class);
     }
+    
+    
+    public ArrayPageList<OrderProdPackEvent> queryByOrderId(Long order_id) {
+
+    	OrderProdPackEventSO orderProdPackEventSO = new OrderProdPackEventSO() ;
+
+        orderProdPackEventSO.setOrder_id(order_id);
+        
+        return (ArrayPageList<OrderProdPackEvent>)jdbcDao.query(orderProdPackEventSO, OrderProdPackEvent.class);
+    }
 
 
 

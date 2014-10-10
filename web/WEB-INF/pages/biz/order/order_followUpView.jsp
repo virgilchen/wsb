@@ -40,6 +40,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     getOrderInfo:function() {
         var params = {} ;
+        var _this = this;
         params["order.id"] = <%=order_id%> ;
         ajax(
         	root+"/biz/order_getOrderInfo.action", 
@@ -51,9 +52,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 //formDeserialize("eForm", data, {}) ;
                 
                 var orderProdPacks = data.orderProdPacks;
+                var products = data.products;
+                var orderProdPackEvents = data.orderProdPackEvents;
                 
                 var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
-                var contentTemplate = "<div id=\"con{$T._name_}_{$T._index_}\" ></div>";
+                var buinessTitleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+                var contentTemplate = "<div class=\"content\" id=\"con{$T._name_}_{$T._index_}\" ><ul id='businessTabs'></ul><div id='businessContents'></div></div>";
 
                 $("#productPackTitlesDiv").html("");
                 $("#productPackContentsDiv").html("");
@@ -68,14 +72,81 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     orderProdPack._length_ = prodLen;
 
                     $("#productPackTitlesDiv").append(parse(titleTemplate, orderProdPack));
-                    $("#productPackContentsDiv").append(parse(contentTemplate, orderProdPack));
+                    var $productPackContents = $("#productPackContentsDiv").append(parse(contentTemplate, orderProdPack));
+
+                    var businesses = _this.getBusiness(products, orderProdPack.prod_pack_id);
+
+                    var buinessLen = businesses.length;
+                    for (var j = 0 ; j < buinessLen ; j ++) {
+                    	var business = businesses[j];
+                        var $businessTabs = $("#businessTabs", $productPackContents);
+                        var $businessContents = $("#businessContents", $productPackContents);
+                    	
+                    	business._name_ = "OrderBusiness" + i;
+                    	business._index_ = (j + 1);
+                    	business._length_ = buinessLen;
+
+                        $businessTabs.append(parse(buinessTitleTemplate, business));
+                        
+                        orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
+                        orderProdPack.businessEvents = _this.getBusinessEvents(orderProdPackEvents, business.business_id);
+                        orderProdPack._name_ = business._name_ ;
+                        
+                        $businessContents.append(parse(V("orderBusinessTemplate"), orderProdPack));
+                    }
+                    
+                    if (buinessLen > 0) {
+                        tabShow('menuOrderBusiness0_', 'conOrderBusiness0_', 1, buinessLen);
+                    }
                 }
 
-                if (prodLen != 0) {
+                if (prodLen > 0) {
                     tabShow('menuOrderProduct_', 'conOrderProduct_', 1, prodLen);
                 }
             }
         );
+    },
+    
+    getBusiness:function (products, productPackId) {
+        var ret = [] ;
+        for(var i = 0 ; i < products.length ; i ++) {
+            var product = products[i];
+            if (product.prod_pack_id == productPackId) {
+                if (typeof(ret["K_" + product.business_id]) == "undefined") {
+                    ret["K_" + product.business_id] = product ;
+                    ret[ret.length] = product ;
+                }
+            }
+        }
+        
+        return ret ;
+    },
+    
+    getProductNames:function (products, productPackId, businessId) {
+        var ret = "" ;
+        for(var i = 0 ; i < products.length ; i ++) {
+            var product = products[i];
+            if (product.prod_pack_id == productPackId && product.business_id == businessId) {
+                if ( ret != "") {
+                    ret += ", ";
+                }
+                ret += product.prod_name ;
+            }
+        }
+        
+        return ret ;
+    },
+    
+    getBusinessEvents:function (businessEvents, businessId) {
+        var ret = [] ;
+        for(var i = 0 ; i < businessEvents.length ; i ++) {
+            var event = businessEvents[i];
+            if (event.business_id == businessId) {
+            	ret[ret.length] = event ;
+            }
+        }
+        
+        return ret ;
     },
     
     onSaveOk:function(data) {
@@ -148,11 +219,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	            <li onclick="tabShow('menu2_','con2_',2,2);" id="menu2_2">道路救援</li>
 	        </ul>
 	        <div id="con2_1" style="display:block;" >
-	            <p>基础商品：车损险、车上司机险</p>
-	            <p>购买日期：2013-12-01</p>
-	            <p>起效日期：2013-12-01</p>
-	            <p>备注：备注备注备注备注备注</p>
-	            <b>流程处理记录：</b>
+                <p>基础商品：车损险、车上司机险</p>
+                <p>购买日期：2013-12-01</p>
+                <p>起效日期：2013-12-01</p>
+                <p>备注：备注备注备注备注备注</p>
+                <b>流程处理记录：</b>
 	            <table width="100%" border="0">
 	              <tr>
 	                <th>流程</th>
@@ -202,6 +273,40 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <div class="content" id="con1_3" style="display:none;">我是 洗车C套餐（1份）的内容</div>
 	    </div>
 	    
+        <textarea id="orderBusinessTemplate" style="display:none;" >
+            <div id="con{$T._name_}_{$T._index_}" style="display:block;" >
+                <p>基础商品：{$T.product_names}</p>
+                <p>购买日期：{$T.order_prod_pack_purchase_date}</p>
+                <p>起效日期：{$T.order_prod_pack_effect_date}</p>
+                <p>备注：{$T.order_prod_pack_remark}</p>
+                <p></p>
+                <b>流程处理记录：</b>
+                <table width="100%" border="0">
+                  <tr>
+                    <th>流程</th>
+                    <th>处理人</th>
+                    <th>处理人角色</th>
+                    <th>处理环节</th>
+                    <th >处理时间</th>
+                    <th >处理结果</th>
+                    <th >用时</th>
+                    <th>备注</th>
+                  </tr>
+                  {#foreach $T.businessEvents as record}
+                  <tr>
+                    <td>1</td>
+                    <td>张小明</td>
+                    <td>保险销售员角色</td>
+                    <td>业务受理</td>
+                    <td>{$T.record.event_time_stamp}</td>
+                    <td class="c_green">成功</td>
+                    <td>13分钟</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  {#/for}
+                </table>
+            </div>
+        </textarea>
 	    
 	    <div class="content" >
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >

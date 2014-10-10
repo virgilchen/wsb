@@ -1,6 +1,7 @@
 package com.wsb.biz.entity;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,12 @@ public class Order extends BaseEntity {
     
     @Transient
     private ArrayPageList<OrderProdPack> orderProdPacks;
+    
+    @Transient
+    private ArrayPageList<OrderProdPackEvent> orderProdPackEvents;
+
+    @Transient
+    private ArrayPageList<HashMap> products ;
     
 	public Long getId() {
 		return id;
@@ -86,6 +93,19 @@ public class Order extends BaseEntity {
 	}
 	public void setOrderProdPacks(ArrayPageList<OrderProdPack> orderProdPacks) {
 		this.orderProdPacks = orderProdPacks;
+	}
+	public ArrayPageList<OrderProdPackEvent> getOrderProdPackEvents() {
+		return orderProdPackEvents;
+	}
+	public void setOrderProdPackEvents(
+			ArrayPageList<OrderProdPackEvent> orderProdPackEvents) {
+		this.orderProdPackEvents = orderProdPackEvents;
+	}
+	public ArrayPageList<HashMap> getProducts() {
+		return products;
+	}
+	public void setProducts(ArrayPageList<HashMap> products) {
+		this.products = products;
 	}
 
 }

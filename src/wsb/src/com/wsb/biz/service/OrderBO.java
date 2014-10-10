@@ -89,7 +89,13 @@ public class OrderBO extends BaseServiceImpl {
     	Order result = this.get(orderId);
     	result.setCustomer(getCustomerBO().get(result.getPsdo_cust_id()));
     	
-    	result.setOrderProdPacks(getOrderProdPackBO().queryByOrderId(orderId));
+    	OrderProdPackBO orderProdPackBO = getOrderProdPackBO();
+    	
+    	result.setOrderProdPacks(orderProdPackBO.queryByOrderId(orderId));
+    	result.setProducts(orderProdPackBO.queryOrderProdByOrderId(orderId));
+    	
+    	result.setOrderProdPackEvents(getOrderProdPackEventBO().queryByOrderId(orderId));
+    	
     	
     	return result;
     }
@@ -158,4 +164,7 @@ public class OrderBO extends BaseServiceImpl {
     public OrderProdPackBO getOrderProdPackBO() {
     	return (OrderProdPackBO)CodeHelper.getAppContext().getBean("orderProdPackBO");
     }
+    
+    
+    
 }

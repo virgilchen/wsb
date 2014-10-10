@@ -1,5 +1,7 @@
 package com.wsb.biz.service;
 
+import java.util.HashMap;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +56,7 @@ public class OrderProdPackBO extends BaseServiceImpl {
         return (ArrayPageList<OrderProdPack>)jdbcDao.query(orderProdPackSO, OrderProdPack.class);
     }
     
-    
+
     public ArrayPageList<OrderProdPack> queryByOrderId(Long order_id) {
 
     	OrderProdPackSO orderProdPackSO = new OrderProdPackSO() ;
@@ -63,8 +65,15 @@ public class OrderProdPackBO extends BaseServiceImpl {
         
         return (ArrayPageList<OrderProdPack>)jdbcDao.queryName("bizSQLs:queryOrderProdPackByOrderId", orderProdPackSO, OrderProdPack.class);
     }
+    public ArrayPageList<HashMap> queryOrderProdByOrderId(Long order_id) {
 
+    	OrderProdPackSO orderProdPackSO = new OrderProdPackSO() ;
+    	orderProdPackSO.setOrder_id(order_id);
+        
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderProdByOrderId", orderProdPackSO, HashMap.class);
+    }
 
+    
 
     public OrderProdPack get(Long id) {  
     	OrderProdPack org = new OrderProdPack() ;
