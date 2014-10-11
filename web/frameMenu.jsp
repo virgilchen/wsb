@@ -54,7 +54,7 @@
             <ul>
                 <li><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '公告管理');">业务管理</a></li>
                 <li><a href="javascript:removeAll();openView(110003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
-                <li><a href="#">商品包销售管理</a></li>
+                <li><a href="javascript:removeAll();openView(110004, '/biz/productPack_view.action', '商品包管理');">商品包管理</a></li>
             </ul>
         </dd>
     </dl>

@@ -11,6 +11,7 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
+import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.OrderBO;
 import com.opensymphony.xwork2.Preparable;
@@ -26,6 +27,8 @@ public class OrderAction extends BaseAction implements Preparable {
     private List<OrderProdPack> orderProdPacks ;
     private OrderSO orderSO ; 
     private Long customer_id;
+    private OrderProdPackEvent orderProdPackEvent;
+   
     
     public Long getCustomer_id() {
 		return customer_id;
@@ -161,6 +164,16 @@ public class OrderAction extends BaseAction implements Preparable {
         
     }
 
+    @Pid(value=Pid.DO_NOT_CHECK)
+    public String addOrderProdPackEvent() throws Exception {
+    	
+        orderBO.addOrderProdPackEvent(orderProdPackEvent) ;
+        
+        renderObject(order, ResponseMessage.KEY_UPDATE_OK) ;
+        
+        return null;    
+    }
+
 
     public void setOrderBO(OrderBO orderBO) {
 		this.orderBO = orderBO;
@@ -188,6 +201,14 @@ public class OrderAction extends BaseAction implements Preparable {
 
 	public void setOrderProdPacks(List<OrderProdPack> orderProdPacks) {
 		this.orderProdPacks = orderProdPacks;
+	}
+
+	public OrderProdPackEvent getOrderProdPackEvent() {
+		return orderProdPackEvent;
+	}
+
+	public void setOrderProdPackEvent(OrderProdPackEvent orderProdPackEvent) {
+		this.orderProdPackEvent = orderProdPackEvent;
 	}
 
 }

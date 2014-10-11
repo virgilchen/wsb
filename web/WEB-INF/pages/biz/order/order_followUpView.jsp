@@ -56,7 +56,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var orderProdPackEvents = data.orderProdPackEvents;
                 
                 var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
-                var buinessTitleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.order_id}, {$T.business_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
                 var contentTemplate = "<div class=\"content\" id=\"con{$T._name_}_{$T._index_}\" ><ul id='businessTabs'></ul><div id='businessContents'></div></div>";
 
                 $("#productPackTitlesDiv").html("");
@@ -82,6 +82,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         var $businessTabs = $("#businessTabs", $productPackContents);
                         var $businessContents = $("#businessContents", $productPackContents);
                     	
+                        business.order_id = orderProdPack.order_id;
                     	business._name_ = "OrderBusiness" + i;
                     	business._index_ = (j + 1);
                     	business._length_ = buinessLen;
@@ -147,6 +148,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
         }
         
         return ret ;
+    },
+    
+    setEventEditForm:function(order_id, business_id) {
+        V("orderProdPackEvent.order_id", order_id);
+        V("orderProdPackEvent.business_id", business_id);
     },
     
     onSaveOk:function(data) {
@@ -301,7 +307,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{$T.record.event_time_stamp}</td>
                     <td class="c_green">成功</td>
                     <td>13分钟</td>
-                    <td>&nbsp;</td>
+                    <td>{$T.record.event_remark}</td>
                   </tr>
                   {#/for}
                 </table>
@@ -310,15 +316,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    
 	    <div class="content" >
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
-	        <input type="hidden" name="order.id" id="order.id"/>
-	        <input type="hidden" name="order.version_id" id="order.version_id"/>
+              <input type="hidden" name="orderProdPackEvent.event_id" id="orderProdPackEvent.event_id"/>
+              <input type="hidden" name="orderProdPackEvent.business_id" id="orderProdPackEvent.business_id"/>
+              <input type="hidden" name="orderProdPackEvent.order_id" id="orderProdPackEvent.order_id"/>
+	          <input type="hidden" name="orderProdPackEvent.version_id" id="orderProdPackEvent.version_id"/>
+	          
+	          
               <div class="order_result">
                 <p><b>处理结果记录</b></p>
                 <table width="80%" border="0">
                   <tr>
                     <th>处理结果：</th>
                     <td>
-                      <select name="select">
+                      <select name="orderProdPackEvent.event_status">
                         <option>继续跟进</option>
                         <option>回退跟单</option>
                         <option>是</option>
@@ -327,13 +337,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <th> 业务处理人：</th>
                     <td>
-                      <input name="Input" type="text"> <a href="#" class="link_blue">选择</a>
+                      <input name="orderProdPackEvent.event_staff_id" type="text"> <a href="#" class="link_blue">选择</a>
                     </td>
                   </tr>
                   
                   <tr>
                     <th>备注：</th>
-                    <td colspan="5"><textarea name="textarea" cols="46" rows="5"></textarea> <span class="c_red">*</span></td>
+                    <td colspan="5"><textarea name="orderProdPackEvent.event_remark" cols="46" rows="5"></textarea> <span class="c_red">*</span></td>
                   </tr>
                   
                   <tr>

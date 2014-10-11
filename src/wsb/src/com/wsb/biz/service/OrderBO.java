@@ -16,6 +16,7 @@ import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
+import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackSO;
 import com.wsb.biz.entity.OrderSO;
 
@@ -131,6 +132,12 @@ public class OrderBO extends BaseServiceImpl {
         
     }
     
+    
+    public void addOrderProdPackEvent(OrderProdPackEvent orderProdPackEvent) {
+    	
+        
+        
+    }
     
     public ArrayPageList<Order> query(OrderSO orderSO) {
 
