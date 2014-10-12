@@ -184,7 +184,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
         </tr>
     </table>
     -->
-     --%>
-    
   </div>
+     --%>
 </div>
