@@ -10,9 +10,6 @@ public class StaffRoleSO extends BaseSO {
 	@Column(name="staff_role_id")
     private Long[] ids ;
 	
-	@Column(name="staff_role_id")
-	private Long id;
-	
 	private String staff_role_name;
 	private String staff_role_status;
 	
@@ -23,12 +20,7 @@ public class StaffRoleSO extends BaseSO {
 	public void setIds(Long[] ids) {
 		this.ids = ids;
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public String getStaff_role_name() {
 		return staff_role_name;
 	}
