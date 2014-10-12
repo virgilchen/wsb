@@ -21,6 +21,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.pageIndex = E("staffRoleSO.pageIndex") ;
         
         fillOptions({id:"staffRole.staff_role_status", dictName:"staffRole.status", firstLabel:"不限"}) ;// 改为字典取值
+        fillOptions({id:"statusSelection", dictName:"staffRole.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"noticeSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("noticeTB", {height:"400px"}) ;
@@ -40,9 +41,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
             titleProperty:"org_name"
         });
         
-        E("orgSelection").onSelected = function (event, elem) {
-        	_this.addProduct(elem);
-        };
         
         E$("eForm").validator();
         E$("sForm").validator();
@@ -85,7 +83,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            </td>
            <td style="width:60px;" >当前状态：</td>
            <td style="width:100px;">
-             <select name="staffRole.staff_role_status" id="staffRole.staff_role_status"></select>
+             <select name="staffRoleSO.staff_role_status" id="staffRole.staff_role_status"></select>
            </td>
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
@@ -167,7 +165,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 <td><input type="text" name="staffRole.staff_role_name" maxlength="50"  required="required"/></td>
                 <th>状态：</th>
                 <td>
-             	  <select name="staffRole.staff_role_status" id="staffRole.staff_role_status"></select>
+             	  <select name="staffRole.staff_role_status" id="statusSelection"></select>
            		</td>
               </tr>
               <tr>
