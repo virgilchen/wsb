@@ -71,7 +71,7 @@
             <ul>
                 <li><a href="javascript:removeAll();openView(120002, '/biz/companyOrg_view.action', '组织结构管理');">组织结构管理</a></li>
                 <li><a href="javascript:removeAll();openView(120003, '/biz/staffRole_view.action', '角色配置');">角色配置</a></li>
-                <li><a href="#">员工管理</a></li>
+                <li><a href="javascript:removeAll();openView(120004, '/biz/staff_view.action', '员工管理');">员工管理</a></li>
                 <li><a href="#" target="mainFrame">客户资料字段配置</a></li>
                 <li><a href="javascript:removeAll();openView(120001, '/biz/notice_view.action', '公告管理');">公告管理</a></li>
             </ul>

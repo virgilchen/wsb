@@ -148,6 +148,11 @@ CREATE TABLE `staff_demo_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+ALTER TABLE `wsbd001`.`staff_demo_rt` 
+CHANGE COLUMN `staff_id` `staff_id` INT(11) NOT NULL AUTO_INCREMENT ;
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`staff_id`);
+
 
 -- drop table `staff_role_demo_rt`;
 -- `wsbd001`.`staff_role_demo_rt`
