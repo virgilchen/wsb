@@ -30,8 +30,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //});
         
         E$("eForm").validator();
-        E$("sForm").validator();
-        E("sForm").setFirstFocus();
+        //E$("sForm").validator();
+        //E("sForm").setFirstFocus();
         this.first();
     }
 }) ;
