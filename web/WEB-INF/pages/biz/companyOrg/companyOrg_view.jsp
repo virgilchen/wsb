@@ -97,8 +97,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.org_id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
-                    <td></td>
+                  <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
+                    <td>
+                      <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
+                    </td>
                     <td>{$T.org_name}</td>
                     <td>{$T.org_id}</td>
                     <td>{$T.org_owner_staff_id}</td>
