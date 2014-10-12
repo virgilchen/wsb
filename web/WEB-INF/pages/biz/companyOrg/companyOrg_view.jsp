@@ -26,12 +26,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.initDataGrid("noticeTB", {height:"400px"}) ;
         
         //E$("notice.notice_timestamp").datetimepicker({
-          //  timeFormat: "HH:mm:ss"
+          // 	timeFormat: "HH:mm:ss"
         //});
         
         E$("eForm").validator();
-        //E$("sForm").validator();
-        //E("sForm").setFirstFocus();
+        E$("sForm").validator();
+        E("sForm").setFirstFocus();
         this.first();
     }
 }) ;
