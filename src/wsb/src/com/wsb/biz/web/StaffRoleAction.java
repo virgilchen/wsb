@@ -6,10 +6,15 @@ import org.springframework.stereotype.Service;
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.web.annotations.Pid;
+import com.globalwave.util.GsonUtil;
+import com.wsb.biz.entity.CompanyOrgSO;
 import com.wsb.biz.entity.StaffRole;
 import com.wsb.biz.entity.StaffRoleSO;
+import com.wsb.biz.service.ProductBO;
 import com.wsb.biz.service.StaffRoleBO;
+import com.wsb.biz.service.CompanyOrgBO;
 import com.opensymphony.xwork2.Preparable;
 
 
@@ -28,8 +33,19 @@ public class StaffRoleAction extends BaseAction implements Preparable {
         return this.list(); 
     }
 	
-	
-    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+	public String view() throws Exception { 
+    	
+		CompanyOrgSO companyOrgSO = new CompanyOrgSO();
+		
+    	this.getRequest().setAttribute(
+    			"orgJson", 
+    			GsonUtil.getGson().toJson(getCompanyOrgBO().query(companyOrgSO)));
+    	
+        return super.view(); 
+    }
+    
+
+	@Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String list() throws Exception {  
 
         ArrayPageList<StaffRole> pageList = staffRoleBO.query(staffRoleSO) ;
@@ -120,5 +136,9 @@ public class StaffRoleAction extends BaseAction implements Preparable {
 	public void setStaffRoleBO(StaffRoleBO staffRoleBO) {
 		this.staffRoleBO = staffRoleBO;
 	}    
+	
+    private CompanyOrgBO getCompanyOrgBO() {
+    	return (CompanyOrgBO)CodeHelper.getAppContext().getBean("companyOrgBO");
+	}
 	
 }
