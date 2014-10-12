@@ -99,7 +99,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     
     <DIV class=main_list>
-      <TABLE border=0 width="100%" id="noticeTB" title="角色列表">
+      <TABLE border=0 width="100%" id="staffRoleTB" title="角色列表">
         <thead>
           <TR>
 			<TH width="20px"></TH>
