@@ -38,7 +38,7 @@ public class CompanyOrgBO extends BaseServiceImpl {
 	public void deleteAll(Long[] orgIds) {
     	
 		CompanyOrgSO criterion = new CompanyOrgSO() ;
-        criterion.setOrg_ids(orgIds);
+        criterion.setIds(orgIds);
         jdbcDao.delete(CompanyOrg.class, criterion) ;
     }
 	
@@ -54,7 +54,7 @@ public class CompanyOrgBO extends BaseServiceImpl {
 	
 	public CompanyOrg get(Long orgId) {  
 		   CompanyOrg org = new CompanyOrg() ;
-	    	org.setOrg_id(orgId) ;
+	    	org.setId(orgId) ;
 	        org = (CompanyOrg) jdbcDao.get(org) ;
 	        
 	        return org;
