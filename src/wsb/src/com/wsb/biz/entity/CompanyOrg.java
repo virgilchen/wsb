@@ -1,6 +1,10 @@
 package com.wsb.biz.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.globalwave.base.BaseEntity;
@@ -14,11 +18,11 @@ import com.globalwave.base.BaseEntity;
 @Table(name = "company_org_rt")
 public class CompanyOrg extends BaseEntity {
 	
-	//@Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    //@Column(name="org_id")
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="org_id")
+	private Long id;
 	
-	private Long org_id;
 	private Long org_id_upper;
 	private Long org_level;
 	private String org_name;
@@ -28,11 +32,12 @@ public class CompanyOrg extends BaseEntity {
 	private Long org_owner_phone_no;
 	private String org_remark;
 	
-	public Long getOrg_id() {
-		return org_id;
+
+	public Long getId() {
+		return id;
 	}
-	public void setOrg_id(Long org_id) {
-		this.org_id = org_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public Long getOrg_id_upper() {
 		return org_id_upper;
