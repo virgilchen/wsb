@@ -7,25 +7,23 @@ import com.globalwave.base.BaseSO;
 public class CompanyOrgSO extends BaseSO {
 	
 	@Column(name="org_id")
-	private Long org_id;
-	private Long[] org_ids;
+	private Long[] ids;
 
-	public Long getOrg_id() {
-		return org_id;
-	}
 
-	public Long[] getOrg_ids() {
-		return org_ids;
-	}
 
-	public void setOrg_ids(Long[] org_ids) {
-		this.org_ids = org_ids;
-	}
-
-	public void setOrg_id(Long org_id) {
-		this.org_id = org_id;
-	}
 	
+	public Long[] getIds() {
+		return ids;
+	}
+
+
+	public void setIds(Long[] ids) {
+		this.ids = ids;
+	}
+
+
+
+
 	@Override
 	public Class<?> getTableClass() {
 		return CompanyOrg.class;
