@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.web.annotations.Pid;
+import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.ProductPack;
 import com.wsb.biz.entity.ProductPackSO;
+import com.wsb.biz.service.ProductBO;
 import com.wsb.biz.service.ProductPackBO;
 import com.opensymphony.xwork2.Preparable;
 
@@ -22,8 +25,20 @@ public class ProductPackAction extends BaseAction implements Preparable {
     private ProductPack productPack ;
     private ProductPackSO productPackSO ; 
     
+    private Long[] product_ids;
+    private Integer[] product_quantitys;
+
     public String execute() throws Exception { 
         return this.list(); 
+    }
+
+    public String view() throws Exception { 
+    	
+    	this.getRequest().setAttribute(
+    			"productsJson", 
+    			GsonUtil.getGson().toJson(getProductBO().queryAllSelectableProducts()));
+    	
+        return super.view(); 
     }
     
 
@@ -41,16 +56,16 @@ public class ProductPackAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String get() throws Exception {  
 
-    	ProductPack org = productPackBO.get(this.id) ;
+    	ProductPack productPack = productPackBO.getWithDetail(this.id) ;
 
-    	renderObject(org, null) ; 
+    	renderObject(productPack, null) ; 
         return null ;  
     }
 
     @Pid(value=Pid.DO_NOT_CHECK)
-    public String create()  throws Exception {        
+    public String create() throws Exception {        
 
-        Object newProductPack = productPackBO.create(productPack) ;
+        Object newProductPack = productPackBO.create(productPack, product_ids, product_quantitys) ;
 
         renderObject(newProductPack, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
@@ -61,7 +76,7 @@ public class ProductPackAction extends BaseAction implements Preparable {
     public String update()  throws Exception {     
 
             	
-        productPackBO.update(productPack) ;
+        productPackBO.update(productPack, product_ids, product_quantitys) ;
 
         renderObject(productPack, ResponseMessage.KEY_UPDATE_OK) ;
         
@@ -89,6 +104,10 @@ public class ProductPackAction extends BaseAction implements Preparable {
     public void setProductPackBO(ProductPackBO productPackBO) {
 		this.productPackBO = productPackBO;
 	}
+    
+    public ProductBO getProductBO() {
+        return (ProductBO)CodeHelper.getAppContext().getBean("productBO");
+    }
 
     public ProductPack getProductPack() {
         return productPack;
@@ -105,5 +124,21 @@ public class ProductPackAction extends BaseAction implements Preparable {
     public void setProductPackSO(ProductPackSO productPackSO) {
         this.productPackSO = productPackSO;
     }
+
+	public Long[] getProduct_ids() {
+		return product_ids;
+	}
+
+	public void setProduct_ids(Long[] product_ids) {
+		this.product_ids = product_ids;
+	}
+
+	public Integer[] getProduct_quantitys() {
+		return product_quantitys;
+	}
+
+	public void setProduct_quantitys(Integer[] product_quantitys) {
+		this.product_quantitys = product_quantitys;
+	}
 
 }

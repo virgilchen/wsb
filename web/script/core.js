@@ -741,6 +741,7 @@ var baseView_af24332idihy00p2jww = {
             params,
             function(data, textStatus){
                 viewJs.entity = data;
+                if(viewJs.onGet != undefined && viewJs.onGet) viewJs.onGet(data);
                 if(prefun != undefined && prefun) prefun(data);
                 formDeserialize("eForm", data, {}) ;
                 if(postfun != undefined && postfun) postfun(data);

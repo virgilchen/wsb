@@ -37,10 +37,10 @@ var root = "<%=root%>";
 <%if(request.getAttribute("_noJqueryUI") == null) { %>
 <!-- jquery ui -->
 <link rel="stylesheet" type="text/css" href="<%=root%>/plugin/jquery-ui-1.9.0/css/custom-theme/jquery-ui-1.9.0.custom.<%=js_min %>css">
-<%--
+
 <script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.9.0/js/jquery-ui-1.9.0.custom.<%=js_min %>js"></script>
- --%>
-<script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.11.1/jquery-ui.<%=js_min %>js"></script>
+<%--
+<script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.11.1/jquery-ui.<%=js_min %>js"></script> --%>
 <link rel="stylesheet" type="text/css" href="<%=root%>/plugin/jquery-ui-1.9.0/css/custom-theme/jquery-ui-1.9.0.ext.css">
 <script type="text/javascript" src="<%=root%>/plugin/jquery-ui-1.9.0/js/jquery-ui-1.9.0.ext.js"></script>
 

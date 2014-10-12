@@ -48,7 +48,7 @@ public class BusinessBO extends BaseServiceImpl {
         if (businessSO == null) {
         	businessSO = new BusinessSO() ;
         }
-        businessSO.addDesc("business_name") ;
+        businessSO.addAsc("business_id") ;
         
         return (ArrayPageList<Business>)jdbcDao.query(businessSO, Business.class);
     }

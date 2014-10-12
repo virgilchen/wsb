@@ -17,7 +17,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     entityName:"productPack",
     
     init:function (){
-        //this.initSelect() ;
+        var _this = this ;
         this.pageIndex = E("productPackSO.pageIndex") ;
         
         //fillOptions({id:"productPack.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
@@ -25,14 +25,61 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         //this.initDataGrid("productPackTB", {height:"400px"}) ;
         
-        E$("productPack.productPack_timestamp").datetimepicker({
-            timeFormat: "HH:mm:ss"
+        var productsJson = <%=request.getAttribute("productsJson")%>;
+        
+        E$("productSelection").combobox2({id:"productSelection", 
+            data:productsJson, 
+            firstLabel:"请选择", 
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["prod_name"], 
+            titleProperty:"prod_name"
         });
+        
+        E("productSelection").onSelected = function (event, elem) {
+        	_this.addProduct(elem);
+        };
         
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
         
+        this.first();
+    },
+    
+    addProduct:function (product) {
+    	if (typeof(product.id) == "undefined" 
+    			|| product.id == null 
+    			|| product.id == "") {
+    		return ;
+    	}
+    	
+    	if ($("#productsSelectedTB #" + product.id).length <= 0) {
+            this.addRows ("productsSelectedTB", [product], {deep:1});
+    	}
+    },
+    
+    get:function(id, prefun, postfun) {
+        if (id == -1) {
+             viewJs.entity = this.eFormInitData;
+             formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
+             this.addRows ("productsSelectedTB", []);
+             return ;
+        }
+        
+        var _this = this;
+        var idProperty = (this.idName==null?"id":this.idName) ;
+        var params = {} ;
+        params[idProperty] = id ;
+        ajax(
+            this.get_url, 
+            params,
+            function(data, textStatus){
+                viewJs.entity = data;
+                formDeserialize("eForm", data, {}) ;
+                _this.addRows ("productsSelectedTB", data.productPackDetails);
+            }
+        );
     }
 }) ;
 
@@ -119,7 +166,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <div id="editDiv" style="display:none;" >
     
     <DIV class=main_title>
-      <B>商品包公告</B> 
+      <B>商品包编辑</B> 
       <DIV class="main_tt_right fr">
         <A class=orange href="javascript:viewJs.save();">保存</A>
         <A class=blue href="javascript:viewJs.toSearch();">取消</A>
@@ -133,12 +180,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
   
       <table width="100%" border="0">
         <tr valign="top">
-          <td valign="top" width="15%">
+          <td valign="top" width="5%">
           </td>
-          <td width="45%">
+          <td width="90%">
             <table width="100%" border="0">
               <tr>
-                <th width="25%">商品包名称：</th>
+                <th width="15%">商品包名称：</th>
                 <td><input type="text" name="productPack.prod_pack_name" id="productPack.prod_pack_name" maxlength="50"/></td>
               </tr>
               <tr>
@@ -147,19 +194,68 @@ var g$v<%=view_id%> = $.extend(newView(), {
               </tr>
               <tr>
                 <th>选择基础商品：</th>
-                <td><input type="text" name="productPack.prod_pack_owner" maxlength="50"/></td>
+                <td>
+                  
+                  <DIV class=main_list>
+                      <TABLE border=0 width="100%" id="productsSelectedTB">
+                        <thead>
+                          <TR>
+                            <TH style="text-align: center;">基础商品</TH>
+                            <TH style="text-align: center;">业务类型</TH>
+                            <TH style="text-align: center;" width="100px">数量</TH>
+                            <TH style="text-align: center;" width="100px">价格</TH>
+                            <TH style="text-align: center;" width="100px">操作</TH>
+                          <TR>
+                        </thead>
+                        
+                        <tbody id="listBody" class="main_form">
+                        </tbody>
+                        
+                        <tr>
+                          <td colspan="2">
+                            <div style="width: 230px;"><input id="productSelection"/></div>
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                         
+                        <tbody style="display:none;visibility: false;" disabled="true">
+                          <tr>
+                            <td>
+                              <textarea id="templateBody" jTemplate="yes">
+                                  <tr id="{$T.id}">
+                                    <td>{$T.prod_name}</td>
+                                    <td>{$T.business_name}</td>
+                                    <td>
+                                      <input type="hidden" name="product_ids" value="{$T.id}"/>
+                                      <input type="text" name="product_quantitys" value="{$T.quantity}" maxlength="5" style="width: 100px;"/>
+                                    </td>
+                                    <td>{$T.product_selling_price}</td>
+                                    <td>
+                                      <a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
+                                    </td>
+                                  </tr>
+                              </textarea>
+                            </td>
+                          </tr>
+                        </tbody>
+                
+                      </TABLE>
+                  </DIV>
+                </td>
               </tr>
               <tr>
                 <th>原始价格：</th>
                 <td><input type="text" name="productPack.prod_pack_orignal_price" required="required" maxlength="19"/></td>
               </tr>
               <tr>
-                <th>原始价格：</th>
+                <th> 销售价格：</th>
                 <td><input type="text" name="productPack.prod_pack_selling_price" required="required" maxlength="19"/></td>
               </tr>
             </table> 
           </td>
-          <td valign="top" width="25%">
+          <td valign="top" width="5%">
           </td>
         </tr>
         <tr height="20"><td colspan="2"></td></tr>

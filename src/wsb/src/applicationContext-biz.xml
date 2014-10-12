@@ -70,6 +70,29 @@ where opp.prod_pack_id=ppd.prod_pack_id
             </value>
           </entry>
           
+
+
+          <entry key="queryAllSelectableProducts">
+            <value>
+              <![CDATA[
+select p.prod_id as id, p.*,b.business_name, 1 as quantity from product_rt p inner join business_rt b on p.business_id=b.business_id
+              ]]>
+            </value>
+          </entry>
+          
+
+
+          <entry key="queryAllSelectedProductDetails">
+            <value>
+              <![CDATA[
+select p.prod_id as id, p.*,b.business_name, d.quantity 
+  from product_rt p 
+              inner join business_rt b on p.business_id=b.business_id
+              inner join product_pack_detail_rt d on d.prod_id=p.prod_id
+where d.prod_pack_id=[id]
+              ]]>
+            </value>
+          </entry>
           
         </map>
       </property>

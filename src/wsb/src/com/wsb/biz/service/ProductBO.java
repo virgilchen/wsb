@@ -1,5 +1,7 @@
 package com.wsb.biz.service;
 
+import java.util.HashMap;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +45,7 @@ public class ProductBO extends BaseServiceImpl {
         
     }
     
-    
+
     public ArrayPageList<Product> query(ProductSO productSO) {
 
         if (productSO == null) {
@@ -53,16 +55,24 @@ public class ProductBO extends BaseServiceImpl {
         
         return (ArrayPageList<Product>)jdbcDao.query(productSO, Product.class);
     }
+    
+    public ArrayPageList<HashMap> queryAllSelectableProducts() {
+
+    	//ProductSO productSO = new ProductSO() ;
+
+        
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryAllSelectableProducts", null, HashMap.class);
+    }
 
 
 
     public Product get(Long id) {  
-    	Product org = new Product() ;
-    	org.setId(id) ;
-        org = (Product) jdbcDao.get(org) ;
+    	Product product = new Product() ;
+    	product.setId(id) ;
+        product = (Product) jdbcDao.get(product) ;
         
         
-        return org;
+        return product;
     }
     
 }

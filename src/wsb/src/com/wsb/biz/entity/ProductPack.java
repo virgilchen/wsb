@@ -1,13 +1,17 @@
 package com.wsb.biz.entity;
 
+import java.util.HashMap;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
+import com.globalwave.common.ArrayPageList;
 
 /**
  * 
@@ -28,6 +32,9 @@ public class ProductPack extends BaseEntity {
     private String prod_pack_picture;
     private Double prod_pack_orignal_price;
     private Double prod_pack_selling_price;
+
+    @Transient
+    private ArrayPageList<HashMap> productPackDetails;
     
 	public Long getId() {
 		return id;
@@ -64,6 +71,13 @@ public class ProductPack extends BaseEntity {
 	}
 	public void setProd_pack_selling_price(Double prod_pack_selling_price) {
 		this.prod_pack_selling_price = prod_pack_selling_price;
+	}
+	public ArrayPageList<HashMap> getProductPackDetails() {
+		return productPackDetails;
+	}
+	public void setProductPackDetails(
+			ArrayPageList<HashMap> productPackDetails) {
+		this.productPackDetails = productPackDetails;
 	}
  
     

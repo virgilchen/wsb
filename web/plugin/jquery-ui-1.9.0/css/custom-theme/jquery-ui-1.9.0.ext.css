@@ -23,7 +23,11 @@
     width: 98%;
 }
 
+.ui-combobox .ui-icon-triangle-1-s {width: 2px;}
+
 .ui-autocomplete { max-height: 250px; overflow-y: auto; overflow-x: hidden;}
+
+
 
 .ui-autocomplete-loading {
     background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;

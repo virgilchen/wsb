@@ -157,7 +157,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			            <table width="80%" border="0" class="fl">
 			              <tr>
 			                <th width="15%">商品包名称：</th>
-			                <td width="25%">
+			                <td width="35%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
                               <input type="text" name="orderProdPacks[{$T.index}].prod_pack_id" value="车险A套餐(0192847)" /> 
 			                  <a href="javascript:showCL('test_condition')" class="link_blue">选择</a>
@@ -167,11 +167,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			                <td width="25%">
 			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" /> 份<span class="c_red">*</span>
 			                </td>
-			                <td width="25%"></td>
+			                <td width="15%"></td>
 			              </tr>
 			              <tr>
 			                <th>业务类型：</th>
 			                <td><input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
 			              </tr>
 			              <tr>
 			                <th>购买日期：</th>
@@ -184,9 +187,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			                </td>
                             <td></td>
 			              </tr>
-			              <tr>
+			              <tr height="70px">
 			                <th>备注：</th>
-			                <td colspan="3"><{$T.textarea_tagName}  name="orderProdPacks[{$T.index}].order_prod_pack_remark" cols="55" rows="3"></{$T.textarea_tagName}></td>
+			                <td colspan="3"><{$T.textarea_tagName}  name="orderProdPacks[{$T.index}].order_prod_pack_remark" style="width:400px;height:50px;"></{$T.textarea_tagName}></td>
                             <td></td>
 			              </tr>
 			          

@@ -183,7 +183,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <div id="editDiv" style="display:none;" >
     
     <DIV class=main_title>
-      <B>新增基础商品</B> 
+      <B>基础商品编辑</B> 
       <DIV class="main_tt_right fr">
         <A class=orange href="javascript:viewJs.save();">保存</A>
         <A class=blue href="javascript:viewJs.toSearch();">取消</A>
