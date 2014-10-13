@@ -29,6 +29,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
           // 	timeFormat: "HH:mm:ss"
         //});
         
+         var orgJson = <%=request.getAttribute("orgJson")%>;
+        
+        E$("orgSelection").combobox2({id:"orgSelection", 
+            data:orgJson, 
+            firstLabel:"请选择", 
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["org_name"], 
+            titleProperty:"org_name"
+        });
+        
         E$("eForm").validator();
         //E$("sForm").validator();
         //E("sForm").setFirstFocus();
@@ -102,7 +113,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
                     <td>{$T.org_name}</td>
-                    <td>{$T.org_id}</td>
+                    <td>{$T.id}</td>
                     <td>{$T.org_owner_staff_id}</td>
                     <td>{$T.org_owner_phone_no}</td>
                     <td>{$T.org_city}</td>
@@ -141,13 +152,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <table width="100%" border="0">
               <tr>
                 <th width="25%">上级机构：</th>
-                <td><input type="text" name="companyOrg.org_id_upper" id="companyOrg.org_id_upper" maxlength="50"/></td>
+                <td><input id="orgSelection" name="companyOrg.org_id_upper"/></td>
               </tr>
               <tr>
                 <th>机构名称：</th>
                 <td><input type="text" name="companyOrg.org_name" maxlength="50"/></td>
                 <th>机构ID：</th>
-                <td><input type="text" name="companyOrg.org_id" maxlength="50"/></td>
+                <td><input type="text" name="companyOrg.id" maxlength="50"/></td>
               </tr>
               <tr>
                 <th>负责人：</th>
