@@ -7,6 +7,7 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
+import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.CompanyOrg;
 import com.wsb.biz.entity.CompanyOrgSO;
 import com.wsb.biz.service.CompanyOrgBO;
@@ -25,6 +26,18 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
 	public String execute() throws Exception { 
 		return this.list(); 
 	}
+	
+	public String view() throws Exception { 
+    	
+		CompanyOrgSO companyOrgSO = new CompanyOrgSO();
+		
+    	this.getRequest().setAttribute(
+    			"orgJson", 
+    			GsonUtil.getGson().toJson(getCompanyOrgBO().query(companyOrgSO)));
+    	
+        return super.view(); 
+    }
+	
 	
 	@Pid(value=Pid.DO_NOT_CHECK,log=false)
 	public String list() throws Exception {
