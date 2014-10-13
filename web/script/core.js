@@ -1051,19 +1051,25 @@ var baseView_af24332idihy00p2jww = {
         this.first() ;
     },
     
-    setPaginationInfo:function(total, index, last, pager) {
+    setPaginationInfo:function(total, index, last, pagerId) {
     	if (typeof(total) == "undefined") {
     		total = 0 ;
     		index = 1 ;
     		last = 0 ;
     	}
-    	//E$("paginationInfo").html("总记录数为"+total+"条，当前为第"+index+"页，共"+last+"页&nbsp;&nbsp;&nbsp;&nbsp;") ;
-    	if (typeof(pager) == "undefined") {
-    		pager = E$("paginationInfo") ; 
-    	}
-    	pager.html(i18n.msg("paginationInfo", total, index, last)) ;
+    	var pager = null ;
     	
-    	var paginationNumbers = $("#paginationNumbers");
+    	//E$("paginationInfo").html("总记录数为"+total+"条，当前为第"+index+"页，共"+last+"页&nbsp;&nbsp;&nbsp;&nbsp;") ;
+    	if (typeof(pagerId) == "undefined") {
+    		pagerId = "" ;
+    		pager = E$("pagination") ; 
+    	} else {
+    		pagerId = "." + pagerId ;
+    		pager = E$("pagination" + pagerId) ;
+    	}
+    	$("#paginationInfo", pager).html(i18n.msg("paginationInfo", total, index, last)) ;
+    	
+    	var paginationNumbers = $("#paginationNumbers", pager);
     	
     	paginationNumbers.html("");
     	if (paginationNumbers.length > 0) {
@@ -1081,7 +1087,7 @@ var baseView_af24332idihy00p2jww = {
     		}
     		
     		if (start != 1) {
-    			paginationNumbers.append("<a href='javascript:viewJs.toPageList(1)'>1</a>");
+    			paginationNumbers.append("<a href='javascript:viewJs"+pagerId+".toPageList(1)'>1</a>");
     			if (start != 2) {    				
     				paginationNumbers.append("<SPAN>...</SPAN>");
     			}
@@ -1091,7 +1097,7 @@ var baseView_af24332idihy00p2jww = {
     			if (start == index) {
         			paginationNumbers.append("<a class='page-this'>" + start + "</a>");
     			} else {
-        			paginationNumbers.append("<a href='javascript:viewJs.toPageList(" + start + ")'>" + start + "</a>");	
+        			paginationNumbers.append("<a href='javascript:viewJs"+pagerId+".toPageList(" + start + ")'>" + start + "</a>");	
     			}
     			start ++ ;
     		}
@@ -1100,7 +1106,7 @@ var baseView_af24332idihy00p2jww = {
     			if (end != last - 1) {    				
     				paginationNumbers.append("<SPAN>...</SPAN>");
     			}
-    			paginationNumbers.append("<a href='javascript:viewJs.toPageList(" + last + ")'>" + last + "</a>");	
+    			paginationNumbers.append("<a href='javascript:viewJs"+pagerId+".toPageList(" + last + ")'>" + last + "</a>");	
     		}
     	}
     },

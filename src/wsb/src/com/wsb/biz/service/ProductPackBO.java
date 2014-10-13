@@ -85,7 +85,7 @@ public class ProductPackBO extends BaseServiceImpl {
         if (productPackSO == null) {
         	productPackSO = new ProductPackSO() ;
         }
-        productPackSO.addDesc("prod_pack_name") ;
+        productPackSO.addAsc("prod_pack_name") ;
         
         return (ArrayPageList<ProductPack>)jdbcDao.query(productPackSO, ProductPack.class);
     }

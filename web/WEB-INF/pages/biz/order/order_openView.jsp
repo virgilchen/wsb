@@ -58,6 +58,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     add:function() {
         this.addRows ("orderProdPacksTB", [{index:this.size, textarea_tagName:"textarea" }], {deep:1});
+
+        E$("purchase_date" + this.size).datepicker();
+        E$("effect_date" + this.size).datepicker();
+        
         this.size ++;
         this.refreshTableList();
     },
@@ -97,9 +101,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
             }
         );
+    },
+    
+    selectProdPack:function(id, name) {
+        E$("prod_pack_id" + this.selectedIndex).val(id);
+        E$("prod_pack_name" + this.selectedIndex).val(name);
+    },
+    
+    openProductSearchView:function(index) {
+    	this.selectedIndex = index ;
+    	this.productSearchView.open();
     }
-    
-    
     
 }) ;
 
@@ -159,8 +171,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			                <th width="15%">商品包名称：</th>
 			                <td width="35%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
-                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_id" value="车险A套餐(0192847)" /> 
-			                  <a href="javascript:showCL('test_condition')" class="link_blue">选择</a>
+                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="" /> 
+                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="" readonly="readonly"/> 
+			                  <a href="javascript:viewJs.openProductSearchView({$T.index});" class="link_blue">选择</a>
 			                  <span class="c_red"></span>
 			                </td>
 			                <th width="10%">数量：</th>
@@ -179,11 +192,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			              <tr>
 			                <th>购买日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" class="ipt_date" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" class="ipt_date" /><span class="c_red">*</span>
 			                </td>
 			                <th>起效日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" class="ipt_date" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" class="ipt_date" /><span class="c_red">*</span>
 			                </td>
                             <td></td>
 			              </tr>
@@ -214,73 +227,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	
 	<a href="#" class="btn_orange mg_r">保存并发起业务</a><a href="#" class="btn_orange">保存</a><a href="#" class="btn_blue">返回</a>
 	 
+    <%@include file="/WEB-INF/pages/biz/productPack/productPack_SearchView.jsp" %>
 	 
-	 
-	 
-	 
-	 
-	<div id="test_condition" style="display:none;">
-	  <div class="pop_box">
-	    <div class="pop_title"><a href="javascript:closeCL('test_condition')" class="fr">[关闭]</a>选择商品</div>
-	        <div class="main_list pop_content">
-	            <div class="pop_search">
-	            <select name="">
-	                  <option selected="selected">商品包名称</option>
-	                  <option>商品包编号</option><option>销售价格</option><option>所属业务</option>
-	                </select>
-	                <input type="text" /><a href="#" class="btn_blue">搜索</a>
-	            </div>
-	            <table width="100%" border="0">
-	              <tr>
-	                <th><input name="" type="checkbox" value=""> 商品包编号</th>
-	                <th>商品包名称</th>
-	                <th>所属业务</th>
-	                <th>售价</th>
-	                <th>操作</th>
-	              </tr>
-	              <tr>
-	                <td><input name="" type="checkbox" value=""> yw1001_1_p001</td>
-	                <td>车险A餐</td>
-	                <td>车险</td>
-	                <td>￥1,999.00</td>
-	                <td><a href="#">查看</a> | <a href="#">选择</a></td>
-	              </tr>
-	              <tr>
-	                <td><input name="" type="checkbox" value=""> yw1001_1_p002</td>
-	                <td>车险A餐</td>
-	                <td>车险</td>
-	                <td>￥1,999.00</td>
-	                <td><a href="#">查看</a> | <a href="#">选择</a></td>
-	              </tr>
-	              <tr>
-	                <td><input name="" type="checkbox" value=""> yw1001_1_p003</td>
-	                <td>轮胎</td>
-	                <td>配件</td>
-	                <td>￥899.00</td>
-	                <td><a href="#">查看</a> | <a href="#">选择</a></td>
-	              </tr>
-	            </table>
-	            <div class="page_wrap clearfix">
-	                <div class="paginator">
-	                    <span class="page-start">＜上一页</span>
-	                    <span class="page-this">1</span>
-	                    <a href="#">2</a>
-	                    <a href="#">3</a>
-	                    <a href="#">4</a>
-	                    <a href="#">5</a>
-	                    <a href="#">6</a>
-	                    <a href="#">7</a>
-	                    <a href="#">8</a>
-	                    <span>...</span>
-	                    <a href="#">20</a>
-	                    <a href="#" class="page-next">下一页＞</a>
-	                </div>
-	                第1/3页，共30条记录
-	            </div>
-	        </div>
-	 
-	  </div>
-	  <div class="pop_bg_500"></div>
-	</div>
-
 </div>
