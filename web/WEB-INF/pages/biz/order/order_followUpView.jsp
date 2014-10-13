@@ -72,7 +72,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     orderProdPack._length_ = prodLen;
 
                     $("#productPackTitlesDiv").append(parse(titleTemplate, orderProdPack));
-                    var $productPackContents = $("#productPackContentsDiv").append(parse(contentTemplate, orderProdPack));
+                    var $productPackContents = $(parse(contentTemplate, orderProdPack));
+                    $("#productPackContentsDiv").append($productPackContents);
 
                     var businesses = _this.getBusiness(products, orderProdPack.prod_pack_id);
 
@@ -92,12 +93,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
                         orderProdPack.businessEvents = _this.getBusinessEvents(orderProdPackEvents, business.business_id);
                         orderProdPack._name_ = business._name_ ;
+                        orderProdPack._index_ = business._index_ ;
+                        orderProdPack._length_ = business._length_ ;
                         
                         $businessContents.append(parse(V("orderBusinessTemplate"), orderProdPack));
                     }
                     
                     if (buinessLen > 0) {
-                        tabShow('menuOrderBusiness0_', 'conOrderBusiness0_', 1, buinessLen);
+                        tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", 1, buinessLen);
                     }
                 }
 
