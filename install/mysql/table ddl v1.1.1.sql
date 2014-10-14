@@ -40,6 +40,10 @@ CREATE TABLE `cust_demo_rt` (
   UNIQUE INDEX `cust_key` (`psdo_cust_id` ASC))
 ENGINE = InnoDB;
 
+--modified in 2014.10.14
+ALTER TABLE `wsbd001`.`cust_demo_rt` 
+CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL AUTO_INCREMENT ;
+
 
 -- SELECT * FROM wsbd001.cust_demo_rt LIMIT 0, 1000
 

@@ -8,6 +8,7 @@
     <package name="biz" namespace="/biz" extends="global-default">	
         <action name="*_*" method="{2}" class="biz_{1}Action">
             <result name="jsp">/WEB-INF/pages/biz/{1}/{1}_{2}.jsp</result>
+            <result name="login_success">/WEB-INF/index.jsp</result>
             <interceptor-ref name="bizDefaultStack"/>   
         </action>
     </package>
