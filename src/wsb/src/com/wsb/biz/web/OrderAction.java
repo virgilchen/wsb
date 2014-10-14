@@ -43,6 +43,7 @@ public class OrderAction extends BaseAction implements Preparable {
     }
     
     public String openView() throws Exception {
+
     	return "jsp";
     }
     

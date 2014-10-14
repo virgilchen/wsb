@@ -30,6 +30,7 @@ public class Order extends BaseEntity {
 
     private Timestamp order_init_time_stamp  ;
     private Long order_init_staff_id  ;
+    private String order_no;
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
     private String order_remark  ;
@@ -106,6 +107,12 @@ public class Order extends BaseEntity {
 	}
 	public void setProducts(ArrayPageList<HashMap> products) {
 		this.products = products;
+	}
+	public String getOrder_no() {
+		return order_no;
+	}
+	public void setOrder_no(String order_no) {
+		this.order_no = order_no;
 	}
 
 }

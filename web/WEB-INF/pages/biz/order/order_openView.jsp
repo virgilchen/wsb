@@ -142,9 +142,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    <table width="100%" border="0">
 	      <tr>
             <th>业务单单号：</th>
-            <td><input type="text"  name="order.idxx"/><span class="c_red">*</span></td>
+            <td><input type="text"  name="order.order_no" readonly="readonly"/><span class="c_red">*</span></td>
             <th>业务单发起时间：</th>
-            <td><input type="text"  name="order.order_init_time_stamp" /><span class="c_red">*</span></td>
+            <td><input type="text"  name="order.order_init_time_stamp" readonly="readonly" /><span class="c_red">*</span></td>
             <th>业务处理人：</th>
             <td><input type="text"  name="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
           </tr>

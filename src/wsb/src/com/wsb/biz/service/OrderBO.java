@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
+import com.globalwave.system.service.SequenceBO;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
@@ -37,6 +39,11 @@ public class OrderBO extends BaseServiceImpl {
     	
     	Order result = new Order();
     	result.setCustomer(getCustomerBO().get(customerId));
+    	
+    	String orderPrefix = U.yyyyMMdd(U.currentDate());
+    	result.setOrder_no(
+    			orderPrefix + 
+    			StringUtils.leftPad(String.valueOf(SequenceBO.getSequenceBO().nextValue("Ord$" + orderPrefix.substring(0,6))), 4, '0'));
     	
     	result.setOrder_init_time_stamp(U.currentTimestamp());
     	result.setPsdo_cust_id(result.getCustomer().getId());

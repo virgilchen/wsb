@@ -76,6 +76,7 @@ DEFAULT CHARACTER SET = utf8;
 -- `wsbd001`.`order_rt`
 CREATE TABLE `order_rt` (
   `order_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `order_no` VARCHAR(20),
   `order_init_time_stamp` TIMESTAMP NOT NULL,
   `order_init_staff_id` INT NULL,
   `psdo_cust_id` INT NULL,
