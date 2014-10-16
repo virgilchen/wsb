@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import com.globalwave.base.BaseSO;
 
 public class CarSO extends BaseSO {
-	@Column(name="psdo_cust_id")
+	@Column(name="car_id")
     private Long[] ids ;
 
 	public Long[] getIds() {

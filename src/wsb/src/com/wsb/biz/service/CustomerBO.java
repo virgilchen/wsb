@@ -37,9 +37,9 @@ public class CustomerBO extends BaseServiceImpl {
 
     public void deleteAll(Long[] customerIds) {
     	
-        CustomerSO criterion = new CustomerSO() ;
-        criterion.setIds(customerIds) ;
-        jdbcDao.delete(Customer.class, criterion) ;
+        CustomerSO customer = new CustomerSO() ;
+        customer.setIds(customerIds) ;
+        jdbcDao.delete(Customer.class, customer) ;
         
     }
     
@@ -49,7 +49,7 @@ public class CustomerBO extends BaseServiceImpl {
         if (customerSO == null) {
         	customerSO = new CustomerSO() ;
         }
-        customerSO.addDesc("customer_timestamp") ;
+        //customerSO.addDesc("customer_timestamp") ;
         
         return (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
     }
@@ -57,12 +57,12 @@ public class CustomerBO extends BaseServiceImpl {
 
 
     public Customer get(Long id) {  
-    	Customer org = new Customer() ;
-    	org.setId(id) ;
-        org = (Customer) jdbcDao.get(org) ;
+    	Customer customer = new Customer() ;
+    	customer.setId(id) ;
+    	customer = (Customer) jdbcDao.get(customer) ;
         
         
-        return org;
+        return customer;
     }
     
 }

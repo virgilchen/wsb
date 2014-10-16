@@ -36,9 +36,9 @@ public class StaffBO extends BaseServiceImpl {
 
     public void deleteAll(Long[] staffIds) {
     	
-        StaffSO criterion = new StaffSO() ;
-        criterion.setIds(staffIds) ;
-        jdbcDao.delete(Staff.class, criterion) ;
+        StaffSO staff = new StaffSO() ;
+        staff.setIds(staffIds) ;
+        jdbcDao.delete(Staff.class, staff) ;
         
     }
     
@@ -56,12 +56,12 @@ public class StaffBO extends BaseServiceImpl {
 
 
     public Staff get(Long id) {  
-    	Staff org = new Staff() ;
-    	org.setId(id) ;
-        org = (Staff) jdbcDao.get(org) ;
+    	Staff staff = new Staff() ;
+    	staff.setId(id) ;
+    	staff = (Staff) jdbcDao.get(staff) ;
         
         
-        return org;
+        return staff;
     }
     
     public void updateStatus(Staff staff) {

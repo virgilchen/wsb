@@ -76,6 +76,12 @@ CREATE TABLE `car_info_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+--modified in 2014.10.16
+ALTER TABLE `wsbd001`.`car_info_rt` 
+ADD COLUMN `car_id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`car_id`);
+
 -- drop table `order_rt`;
 -- `wsbd001`.`order_rt`
 CREATE TABLE `order_rt` (

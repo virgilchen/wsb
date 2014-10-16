@@ -16,6 +16,11 @@ import com.globalwave.base.BaseEntity;
 
 public class Car extends BaseEntity {
 	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="car_id")
+	private Long id;
+	
 	private Long psdo_cust_id;
     private String car_no;
     private String car_district;
@@ -92,6 +97,12 @@ public class Car extends BaseEntity {
 	}
 	public void setCar_miles(Double car_miles) {
 		this.car_miles = car_miles;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
     
 }
