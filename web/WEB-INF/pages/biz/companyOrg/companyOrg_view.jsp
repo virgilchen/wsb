@@ -31,6 +31,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
          var orgJson = <%=request.getAttribute("orgJson")%>;
         
+         orgJson = $.merge([{id:0, org_name:'无上级机构'}], orgJson);
+         
         E$("orgSelection").combobox2({id:"orgSelection", 
             data:orgJson, 
             firstLabel:"请选择", 
@@ -93,7 +95,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <TR>
 			<TH width="20px"></TH>
 			<TH>机构名称</TH>
-			<TH>机构ID</TH>
+			<TH>机构编码</TH>
 			<TH>负责人</TH>
 			<TH>联系电话</TH>
 			<TH>所在城市</TH>
@@ -113,8 +115,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
                     <td>{$T.org_name}</td>
-                    <td>{$T.id}</td>
-                    <td>{$T.org_owner_staff_id}</td>
+                    <td>{$T.org_code}</td>
+                    <td>{$T.org_owner_staff}</td>
                     <td>{$T.org_owner_phone_no}</td>
                     <td>{$T.org_city}</td>
                   </tr>
@@ -157,29 +159,20 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th>机构名称：</th>
                 <td><input type="text" name="companyOrg.org_name" maxlength="50"/></td>
-                <th>机构ID：</th>
-                <td><input type="text" name="companyOrg.id" maxlength="50"/></td>
+                <th>机构编码：</th>
+                <td><input type="text" name="companyOrg.org_code" maxlength="50"/></td>
               </tr>
               <tr>
                 <th>负责人：</th>
-                <td><input type="text" name="companyOrg.org_owner_staff_id" maxlength="50"/></td>
+                <td><input type="text" name="companyOrg.org_owner_staff" maxlength="50"/></td>
                 <th>联系电话：</th>
                 <td><input type="text" name="companyOrg.org_owner_phone_no" maxlength="50"/></td>
               </tr>
               <tr>
-                <th>所在城市：</th>
-                <td><select name="companyOrg.org_province">
-						<option>省份</option>
-						<option>广东省</option>
-					</select>
-				</td>
-				<td><select name="companyOrg.org_city">
-						<option>城市</option>
-						<option>广州</option>
-						<option>深圳</option>
-						<option>珠海</option>
-					</select>
-				</td>
+                <th>所在省份：</th>
+                <td><input type="text" name="companyOrg.org_province" maxlength="50"/></td>
+				<th>城市</th>
+				<td><input type="text" name="companyOrg.org_city" maxlength="50"/></td>
               </tr>
               <tr>
               	<th>备注：</th>

@@ -22,11 +22,12 @@ public class CompanyOrg extends BaseEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="org_id")
 	private Long id;
-	
+    
+    private String org_code;
 	private Long org_id_upper;
 	private Long org_level;
 	private String org_name;
-	private Long org_owner_staff_id;
+	private String org_owner_staff;
 	private String org_province;
 	private String org_city;
 	private Long org_owner_phone_no;
@@ -57,12 +58,7 @@ public class CompanyOrg extends BaseEntity {
 	public void setOrg_name(String org_name) {
 		this.org_name = org_name;
 	}
-	public Long getOrg_owner_staff_id() {
-		return org_owner_staff_id;
-	}
-	public void setOrg_owner_staff_id(Long org_owner_staff_id) {
-		this.org_owner_staff_id = org_owner_staff_id;
-	}
+
 	public String getOrg_province() {
 		return org_province;
 	}
@@ -87,6 +83,20 @@ public class CompanyOrg extends BaseEntity {
 	public void setOrg_remark(String org_remark) {
 		this.org_remark = org_remark;
 	}
+	
+	public String getOrg_code() {
+		return org_code;
+	}
+	public void setOrg_code(String org_code) {
+		this.org_code = org_code;
+	}
+	public String getOrg_owner_staff() {
+		return org_owner_staff;
+	}
+	public void setOrg_owner_staff(String org_owner_staff) {
+		this.org_owner_staff = org_owner_staff;
+	}
+	
 	
 	
 }
