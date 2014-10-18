@@ -35,7 +35,7 @@ public class OrderProdPackEvent extends BaseEntity {
 	private Integer procs_step_no;
 	
     private String event_type  ;
-    private String event_staff_id  ;
+    private Long event_staff_id  ;
     private Timestamp event_duration  ;
     private String event_status  ;
     private String event_remark  ;
@@ -88,10 +88,10 @@ public class OrderProdPackEvent extends BaseEntity {
 	public void setEvent_type(String event_type) {
 		this.event_type = event_type;
 	}
-	public String getEvent_staff_id() {
+	public Long getEvent_staff_id() {
 		return event_staff_id;
 	}
-	public void setEvent_staff_id(String event_staff_id) {
+	public void setEvent_staff_id(Long event_staff_id) {
 		this.event_staff_id = event_staff_id;
 	}
 	public Timestamp getEvent_duration() {

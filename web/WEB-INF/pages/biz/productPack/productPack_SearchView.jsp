@@ -32,7 +32,7 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
       <input name="productPackSO.pageIndex" id="productPackSO.pageIndex" value="1" type="hidden" />
       <input name="productPackSO.pageSize" id="productPackSO.pageSize" value="10" type="hidden" />
       
-      <div class="pop_box">
+      <div class="pop_box" style="width: 800px;height: 550px;top:50px;">
         <div class="pop_title">
             <a href="javascript:closeCL('productPack_searchViewDiv')" class="fr">[关闭]</a>选择商品
         </div>

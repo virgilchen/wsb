@@ -9,11 +9,13 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
+import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.OrderBO;
+import com.wsb.biz.service.StaffBO;
 import com.opensymphony.xwork2.Preparable;
 
 @Service("biz_orderAction")
@@ -44,6 +46,10 @@ public class OrderAction extends BaseAction implements Preparable {
     
     public String openView() throws Exception {
 
+    	this.getRequest().setAttribute(
+    			"staffsJson", 
+    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(null)));
+    	
     	return "jsp";
     }
     

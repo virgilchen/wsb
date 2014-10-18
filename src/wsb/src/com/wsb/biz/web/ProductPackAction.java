@@ -24,7 +24,7 @@ public class ProductPackAction extends BaseAction implements Preparable {
     private ProductPackBO productPackBO ;
     private ProductPack productPack ;
     private ProductPackSO productPackSO ; 
-    
+
     private Long[] product_ids;
     private Integer[] product_quantitys;
 
@@ -59,6 +59,14 @@ public class ProductPackAction extends BaseAction implements Preparable {
     	ProductPack productPack = productPackBO.getWithDetail(this.id) ;
 
     	renderObject(productPack, null) ; 
+        return null ;  
+    }
+
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String queryBusinesses() throws Exception {  
+
+    	renderList(productPackBO.queryBusinesses(productPack), null) ; 
+    	
         return null ;  
     }
 

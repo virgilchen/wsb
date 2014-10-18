@@ -16,6 +16,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     delete_url:root + "/biz/order_delete.action" ,
     entityName:"order",
     size:0,
+    staffsJson:<%=request.getAttribute("staffsJson")%>,
     
     init:function (){
         //this.initSelect() ;
@@ -30,6 +31,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
             timeFormat: "HH:mm:ss"
         });
         */
+        
+        
+        /*
+        E$("order.order_init_staff_id").combobox2({id:"order.order_init_staff_id", 
+            data:staffsJson, 
+            firstLabel:"请选择...", 
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["staff_name"], 
+            titleProperty:"staff_name"
+        });
+        */
+        
         E$("eForm").validator();
         //E$("sForm").validator();
         E("eForm").setFirstFocus();
@@ -97,7 +111,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             E$("eForm").serialize(),
             function(data, textStatus){
                 if (data.code == "0") {
-                	removeView(<%=view_id%>);
+                    removeView(<%=view_id%>);
                 }
             }
         );
@@ -106,6 +120,32 @@ var g$v<%=view_id%> = $.extend(newView(), {
     selectProdPack:function(id, name) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
+
+        var _this = this;
+        
+        ajax(
+            root + "/biz/productPack_queryBusinesses.action", 
+            {"productPack.id":id},
+            function(data, textStatus){
+                //viewJs.addRows("businessTB", data.list) ;
+                var $content = $("#businessTB #listBody", viewJs.view);
+                $content.html("");
+                $(data.list).each(function (i, elem) {
+                	elem.index = _this.selectedIndex;
+                	$content.append(parse(V("businessTemplateBody"), elem));
+
+                    E$("event_staff_ids_" + elem.index + "_" + elem.id).combobox2({
+                    	id:"event_staff_ids_" + elem.index + "_" + elem.id, 
+                        data:_this.staffsJson, 
+                        firstLabel:"请选择...", 
+                        valueProperty:"id", 
+                        idProperty:"id", 
+                        textProperty:["staff_name"], 
+                        titleProperty:"staff_name"
+                    });
+                });
+            }
+        );
     },
     
     openProductSearchView:function(index) {
@@ -146,7 +186,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <th>业务单发起时间：</th>
             <td><input type="text"  name="order.order_init_time_stamp" readonly="readonly" /><span class="c_red">*</span></td>
             <th>业务处理人：</th>
-            <td><input type="text"  name="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
+            <td><input type="text"  name="order.order_init_staff_id" id="order.order_init_staff_id"/> <!-- a href="" class="link_blue">选择</a --></td>
           </tr>
           <tr>
             <th>业务单备注：</th>
@@ -184,10 +224,22 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			              </tr>
 			              <tr>
 			                <th>业务类型：</th>
-			                <td><input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+			                <td colspan="4" >
+			                    <!-- 
+			                    <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" />
+			                     -->
+				                <table width="100%" border="0" id="businessTB">
+				                  <thead>
+					                  <tr>
+					                    <th style="text-align: center;">业务类型</th>
+					                    <th style="text-align: center;">业务处理人</th>
+					                  </tr>
+				                  </thead>
+        
+							      <tbody id="listBody" >
+							      </tbody>
+				                </table>
+			                </td>
 			              </tr>
 			              <tr>
 			                <th>购买日期：</th>
@@ -229,4 +281,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	 
     <%@include file="/WEB-INF/pages/biz/productPack/productPack_SearchView.jsp" %>
 	 
+	 
+	 
+
+    <textarea id="businessTemplateBody" jTemplate="yes" style="display: none;">
+        <tr>
+          <td style="text-align: center;">{$T.business_name}</td>
+          <td style="text-align: center;">
+            <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.id}"/>
+            <input type="text" name="orderProdPacks[{$T.index}].event_staff_ids" id="event_staff_ids_{$T.index}_{$T.id}"  />
+          </td>
+        </tr>
+    </textarea>
 </div>

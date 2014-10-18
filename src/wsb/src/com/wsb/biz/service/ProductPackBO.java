@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.exception.BusinessException;
+import com.wsb.biz.entity.Business;
 import com.wsb.biz.entity.ProductPack;
 import com.wsb.biz.entity.ProductPackDetail;
 import com.wsb.biz.entity.ProductPackSO;
@@ -89,9 +90,14 @@ public class ProductPackBO extends BaseServiceImpl {
         
         return (ArrayPageList<ProductPack>)jdbcDao.query(productPackSO, ProductPack.class);
     }
+    
+    
+    public ArrayPageList<HashMap> queryBusinesses(ProductPack productPack) {
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryBusinessesInProductPack", productPack, HashMap.class);
+    }
 
 
-
+    
     public ProductPack get(Long id) {  
     	ProductPack productPack = new ProductPack() ;
     	productPack.setId(id) ;

@@ -13,6 +13,7 @@ public class OrderProdPackEventSO extends BaseSO {
     private Long[] ids ;
     private Set<Long> prod_pack_ids ;
     
+    private Long prod_pack_id ;
     
     private Long order_id ;
  
@@ -40,6 +41,13 @@ public class OrderProdPackEventSO extends BaseSO {
 
 	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
+	}
+	
+	public Long getProd_pack_id() {
+		return prod_pack_id;
+	}
+	public void setProd_pack_id(Long prod_pack_id) {
+		this.prod_pack_id = prod_pack_id;
 	}
 
 	@Override

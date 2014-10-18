@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.exception.BusinessException;
+import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackEventSO;
 
@@ -25,6 +26,26 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 		so.setOrder_id(orderId);
 		
 		jdbcDao.executeName("bizSQLs:saveOpenOrderEvents", so);
+		
+	}
+
+	public void saveOpenOrderEvents(Long orderId, OrderProdPack orderProdPack) {
+		OrderProdPackEventSO so = new OrderProdPackEventSO();
+		so.setOrder_id(orderId);
+		so.setProd_pack_id(orderProdPack.getProd_pack_id());
+		
+		jdbcDao.delete(OrderProdPackEvent.class, so);
+		
+		for (int i = 0 ; i < orderProdPack.getBusiness_ids().length ; i ++) {
+			OrderProdPackEvent event  = new OrderProdPackEvent() ;
+			
+			event.setOrder_id(orderId);
+			event.setProd_pack_id(orderProdPack.getProd_pack_id());
+			event.setBusiness_id(orderProdPack.getBusiness_ids()[i]);
+			event.setEvent_staff_id(orderProdPack.getEvent_staff_ids()[i]);
+			
+			jdbcDao.insert(event);
+		}
 		
 	}
 	

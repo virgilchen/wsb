@@ -65,6 +65,8 @@ public class OrderBO extends BaseServiceImpl {
     		orderProdPackSO.setOrder_id(order.getId());
     		jdbcDao.delete(OrderProdPack.class, orderProdPackSO);
     	}
+
+    	OrderProdPackEventBO eventBO = this.getOrderProdPackEventBO();
     	
     	for (OrderProdPack opp : orderProdPacks) {
     		if (opp == null) {
@@ -73,6 +75,8 @@ public class OrderBO extends BaseServiceImpl {
     		opp.setId(null);
     		opp.setOrder_id(order.getId());
     		jdbcDao.insert(opp);
+
+    		eventBO.saveOpenOrderEvents(order.getId(), opp);
     	}
     	
         return result;
@@ -82,13 +86,15 @@ public class OrderBO extends BaseServiceImpl {
     	Order newItem = this.save(order, orderProdPacks);
     	
     	Set<Long> productPackageIds = new HashSet<Long>();
+
+    	OrderProdPackEventBO eventBO = this.getOrderProdPackEventBO();
     	
     	for (OrderProdPack opp : orderProdPacks) {
     		productPackageIds.add(opp.getProd_pack_id());
+    		eventBO.saveOpenOrderEvents(order.getId(), opp);
     	}
     	
-    	this.getOrderProdPackEventBO().saveOpenOrderEvents(productPackageIds, order.getId());
-    	
+    	//this.getOrderProdPackEventBO().saveOpenOrderEvents(productPackageIds, order.getId());
     	return newItem;
     }
     

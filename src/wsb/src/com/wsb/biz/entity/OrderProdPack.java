@@ -37,6 +37,13 @@ public class OrderProdPack extends BaseEntity {
 
 	@Transient
 	private String prod_pack_name;
+
+	@Transient
+    private Long[] business_ids;
+	
+	@Transient
+    private Long[] event_staff_ids;
+   
     
 	public Long getId() {
 		return id;
@@ -92,6 +99,18 @@ public class OrderProdPack extends BaseEntity {
 	}
 	public void setProd_pack_name(String prod_pack_name) {
 		this.prod_pack_name = prod_pack_name;
+	}
+	public Long[] getBusiness_ids() {
+		return business_ids;
+	}
+	public void setBusiness_ids(Long[] business_ids) {
+		this.business_ids = business_ids;
+	}
+	public Long[] getEvent_staff_ids() {
+		return event_staff_ids;
+	}
+	public void setEvent_staff_ids(Long[] event_staff_ids) {
+		this.event_staff_ids = event_staff_ids;
 	}
     
 	

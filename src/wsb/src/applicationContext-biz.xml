@@ -94,6 +94,22 @@ where d.prod_pack_id=[id]
             </value>
           </entry>
           
+
+
+          <entry key="queryBusinessesInProductPack">
+            <value>
+              <![CDATA[
+select b.business_id as id, b.*
+  from product_rt p 
+              inner join business_rt b on p.business_id=b.business_id
+              inner join product_pack_detail_rt d on d.prod_id=p.prod_id
+where d.prod_pack_id=[id]
+              ]]>
+            </value>
+          </entry>
+          
+          
+          
         </map>
       </property>
     </bean>
