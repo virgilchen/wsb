@@ -259,6 +259,7 @@ DEFAULT CHARACTER SET = utf8;
 -- `wsbd001`.`recommendation_inventory_dt`
 CREATE TABLE `recommendation_inventory_dt` (
   `recmdt_id` BIGINT NOT NULL,
+  `recmdt_code` VARCHAR(30) NULL,
   `recmdt_name` VARCHAR(30) NULL,
   `recmdt_status` VARCHAR(10) NULL,
   `recmdt_remark` VARCHAR(1000) NULL,
