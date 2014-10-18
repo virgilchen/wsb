@@ -37,6 +37,12 @@ values('1000', '未登陆或已经超时，请重新登陆！' );
 insert into cfg_message(code_, value_) 
 values('1001', '当前用户没有操作权限！' );
 
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用户不存在！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');
+
+
+/*  Staff init  */
+INSERT INTO `staff_demo_rt` (`staff_id`, `staff_status`, `staff_login_profile`, `staff_login_pwd`, `staff_name`, `staff_gender`, `staff_id_card`) VALUES ('1', '有效', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '系统管理员', '男', '440181198001010001');
 
 delete from cfg_dict where id<>9898986565104;
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1, 0, 'Cache_Sql', 'Dict', 'subTable=domain_&isSCM=Y', 'select code_ as id, name_ , desc_ , domain_, ext_s1, ext_s2, ext_s3,ext_s4,ext_s5 from cfg_dict where domain_!=''Cache_Sql'' and status_ = ''A'' order by domain_,order_ ', null, 'A', 1, null, null, null, null, null);

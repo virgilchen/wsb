@@ -1,55 +1,65 @@
 package com.wsb.biz.web;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
+import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.Util;
+import com.itextpdf.text.log.SysoLogger;
 import com.wsb.biz.entity.Staff;
+import com.wsb.biz.entity.StaffSO;
+import com.wsb.biz.service.StaffBO;
 
+@Service("biz_loginAction")
+@Scope("prototype")
 public class LoginAction extends BaseAction {
 	private static final long serialVersionUID = 7244882365197775441L;
 	
-private String user_name;//login.jsp in
+	private StaffBO staffBO ;
+    private Staff staff ;
+    private StaffSO staffSO ;
 	
-	private String user_password;//login.jsp in
-	
-	private String user_code;
-	
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
-	public String getUser_password() {
-		return user_password;
-	}
-
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
-	}
-
-	public String getUser_code() {
-		return user_code;
-	}
-
-	public void setUser_code(String user_code) {
-		this.user_code = user_code;
-	}
-
 	@Override
 	public String execute() throws Exception {
-		{System.out.println("进入com.wsb.biz.web.loginAction.java");}
+		//{System.out.println("进入com.wsb.biz.web.loginAction.java");}
 		 /**
 		   * 实施一系列的用户登陆判定功能，若成功就返回一个真正的用户
 		   */
-		Staff staff = new Staff();//这是登陆用户的输入和前面构造性质不同
-		staff.setStaff_login_profile(user_name);
-		staff.setStaff_login_pwd(user_password);
+		System.out.println(Util.hash(staffSO.getStaff_login_pwd()));
+		staff = staffBO.login(staffSO);
 		
-		ServletActionContext.getRequest().getSession().setAttribute("login", staff);
-		System.out.println("=====================user_name is========================"+staff.getStaff_login_profile());
-		return "login_success";
+		this.getSession().setAttribute("Staff", staff);
+		
+		renderObject(staff, 0L) ;
+		
+		return null;
 	}
+
+
+	public StaffBO getStaffBO() {
+		return staffBO;
+	}
+
+	public void setStaffBO(StaffBO staffBO) {
+		this.staffBO = staffBO;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	public StaffSO getStaffSO() {
+		return staffSO;
+	}
+
+	public void setStaffSO(StaffSO staffSO) {
+		this.staffSO = staffSO;
+	}
+	
 }

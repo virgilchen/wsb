@@ -12,6 +12,8 @@ public class StaffSO extends BaseSO {
 	private String staff_login_profile;
 	private String staff_name;
 	private Long staff_role_id;
+	private String staff_login_pwd;
+	private String login_code;
 	
 	
 	public Long[] getIds() {
@@ -52,6 +54,22 @@ public class StaffSO extends BaseSO {
 
 	public void setStaff_role_id(Long staff_role_id) {
 		this.staff_role_id = staff_role_id;
+	}
+	
+	public String getStaff_login_pwd() {
+		return staff_login_pwd;
+	}
+
+	public void setStaff_login_pwd(String staff_login_pwd) {
+		this.staff_login_pwd = staff_login_pwd;
+	}
+
+	public String getLogin_code() {
+		return login_code;
+	}
+
+	public void setLogin_code(String login_code) {
+		this.login_code = login_code;
 	}
 
 	@Override

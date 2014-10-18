@@ -44,7 +44,12 @@
     <div class="menu_line"></div>
     
     <dl>
-        <dt><a href="#" target="mainFrame"><img src="images/menu_clientmanege.png" />客户管理</a></dt>
+        <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_clientmanege.png" />客户管理</a></dt>
+        <dd>
+            <ul>
+                <li><a href="javascript:removeAll();openView(130001, '/biz/customer_view.action', '客户列表');">客户列表</a></li>
+            </ul>
+        </dd>
     </dl>
     <div class="menu_line"></div>
     

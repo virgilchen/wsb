@@ -46,7 +46,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String get() throws Exception {  
 
     	Staff staff = staffBO.get(this.id) ;
-
+    	staff.setStaff_login_pwd("");
     	renderObject(staff, null) ; 
         return null ;  
     }
@@ -66,7 +66,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     @Pid(value=Pid.DO_NOT_CHECK)
     public String update()  throws Exception {     
 
-            	
+        
         staffBO.update(staff) ;
         
 //        CodeHelper.reload("StaffUpper");

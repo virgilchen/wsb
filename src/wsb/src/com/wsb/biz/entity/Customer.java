@@ -24,6 +24,7 @@ public class Customer extends BaseEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="psdo_cust_id")
 	private Long id;
+    private String cust_code;
     private String cust_phone_no;
     private String cust_name;
     private Timestamp cust_birthday;
@@ -49,6 +50,12 @@ public class Customer extends BaseEntity {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getCust_code() {
+		return cust_code;
+	}
+	public void setCust_code(String cust_code) {
+		this.cust_code = cust_code;
 	}
 	public String getCust_phone_no() {
 		return cust_phone_no;

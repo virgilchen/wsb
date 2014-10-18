@@ -43,6 +43,8 @@ ENGINE = InnoDB;
 --modified in 2014.10.14
 ALTER TABLE `wsbd001`.`cust_demo_rt` 
 CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL AUTO_INCREMENT ;
+ALTER TABLE `wsbd001`.`cust_demo_rt` 
+ADD COLUMN `cust_code` VARCHAR(100) NULL AFTER `psdo_cust_id`;
 
 
 -- SELECT * FROM wsbd001.cust_demo_rt LIMIT 0, 1000
