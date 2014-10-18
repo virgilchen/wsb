@@ -191,9 +191,10 @@ CHANGE COLUMN `staff_role_id` `staff_role_id` INT(11) NOT NULL AUTO_INCREMENT ;
 CREATE TABLE `company_org_rt` (
   `org_id` INT NOT NULL,
   `org_id_upper` INT NOT NULL,
+  `org_code` VARCHAR(20) NULL,
   `org_level` SMALLINT NULL,
   `org_name` VARCHAR(20) NULL,
-  `org_owner_staff_id` INT NULL,
+  `org_owner_staff` VARCHAR(10) NULL,
   `org_province` VARCHAR(10) NULL,
   `org_city` VARCHAR(10) NULL,
   `org_owner_phone_no` BIGINT NULL,
@@ -201,6 +202,7 @@ CREATE TABLE `company_org_rt` (
   PRIMARY KEY (`org_id`),
   INDEX `org_id_key` (`org_id` ASC))
 ENGINE = InnoDB
+-- CHANGE COLUMN `org_id` `org_id` INT(11) NOT NULL AUTO_INCREMENT ;
 DEFAULT CHARACTER SET = utf8;
 
 -- drop table `product_rt`;
