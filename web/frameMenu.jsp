@@ -66,7 +66,7 @@
     <div class="menu_line"></div>
     
     <dl>
-        <dt><a href="#" target="mainFrame"><img src="images/menu_information.png" />决策信息管理</a></dt>
+        <dt><a href="javascript:removeAll();openView(130001, '/biz/recmdtInventory_view.action', '决策信息管理');"><img src="images/menu_information.png" />决策信息管理</a></dt>
     </dl>
     <div class="menu_line"></div>
     
