@@ -903,10 +903,11 @@ var baseView_af24332idihy00p2jww = {
         } else {
         	template = template.html() ;
         }
-        
+
+        var forceClear = typeof(conf.forceClear) == "undefined"?true:conf.forceClear ;
         var deep = typeof(conf.deep) == "undefined"?null:conf.deep ;
         
-        if (deep == null || deep == 0) {
+        if (forceClear && (deep == null || deep == 0)) {
             listBody.html("") ;
         }
         

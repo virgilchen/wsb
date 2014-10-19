@@ -220,9 +220,10 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 /*业务发起*/
 .order_launched,.user_suggest{ margin:10px 0; padding:15px; border:1px #cedde7 solid;}
 .order_launched input{ height:25px; line-height:25px;  width:150px;}
-.goods_bag{border:1px #cedde7 solid; margin:15px 0; height:218px;}
+.goods_bag{border:1px #cedde7 solid; margin:15px 0;}
 .goods_bag div{ float:left; border-right:1px solid #cedde7; background:#edf7fc; width:70px; text-align:center; line-height:218px;}
-.goods_bag table{ padding:10px;}
+.goods_bag .title{ border-right:1px solid #cedde7; background:#edf7fc; width:70px; text-align:center; line-height:218px;}
+.goods_bag table{ padding:0px;}
 .goods_bag table th{ font-weight:normal; text-align:right; width:100px; color:#666;}
 .order_launched td{padding:8px 0;color:#666;}
 

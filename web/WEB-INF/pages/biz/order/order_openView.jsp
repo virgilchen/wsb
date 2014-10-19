@@ -71,7 +71,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     add:function() {
-        this.addRows ("orderProdPacksTB", [{index:this.size, textarea_tagName:"textarea" }], {deep:1});
+        this.addRows ("orderProdPacksTB", [{index:this.size, textarea_tagName:"textarea" }], {forceClear:false});
 
         E$("purchase_date" + this.size).datepicker();
         E$("effect_date" + this.size).datepicker();
@@ -128,7 +128,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             {"productPack.id":id},
             function(data, textStatus){
                 //viewJs.addRows("businessTB", data.list) ;
-                var $content = $("#businessTB #listBody", viewJs.view);
+                var $content = $("#business" + _this.selectedIndex + "TB #listBusinessBody", viewJs.view);
                 $content.html("");
                 $(data.list).each(function (i, elem) {
                 	elem.index = _this.selectedIndex;
@@ -157,6 +157,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
 
 </script>
+
+<style>
+.ui-combobox-toggle {
+right: -1px;
+}
+
+.ui-combobox input {
+width: 92%;
+}
+</style>
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
     <div id="customerInfoDiv" >
@@ -185,8 +195,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <td><input type="text"  name="order.order_no" readonly="readonly"/><span class="c_red">*</span></td>
             <th>业务单发起时间：</th>
             <td><input type="text"  name="order.order_init_time_stamp" readonly="readonly" /><span class="c_red">*</span></td>
+            <td></td>
+            <td></td>
+            <!-- 
             <th>业务处理人：</th>
-            <td><input type="text"  name="order.order_init_staff_id" id="order.order_init_staff_id"/> <!-- a href="" class="link_blue">选择</a --></td>
+            <td><input type="text"  name="order.order_init_staff_id" id="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
+             -->
           </tr>
           <tr>
             <th>业务单备注：</th>
@@ -203,13 +217,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	          <tr>
 	            <td>
 	              <textarea id="templateBody" jTemplate="yes">
-            
+                    <tr><td>
 			        <div class="goods_bag clearfix">
-			            <div id="packageIndexName">商品包1</div>
-			            <table width="80%" border="0" class="fl">
+			            
+			            <table width="100%" border="0" >
 			              <tr>
+			                <td rowspan="4" width="10%" id="packageIndexName" class="title">商品包1</td>
+			                
 			                <th width="15%">商品包名称：</th>
-			                <td width="35%">
+			                <td width="30%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
                               <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="" /> 
                               <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="" readonly="readonly"/> 
@@ -217,18 +233,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			                  <span class="c_red"></span>
 			                </td>
 			                <th width="10%">数量：</th>
-			                <td width="25%">
+			                <td width="20%">
 			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" /> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
 			              <tr>
 			                <th>业务类型：</th>
-			                <td colspan="4" >
+			                <td colspan="4" class="main_order_detail" style="border: 0;margin: 0;">
 			                    <!-- 
 			                    <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" />
 			                     -->
-				                <table width="100%" border="0" id="businessTB">
+				                <table width="60%" border="0" id="business{$T.index}TB">
 				                  <thead>
 					                  <tr>
 					                    <th style="text-align: center;">业务类型</th>
@@ -236,7 +252,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					                  </tr>
 				                  </thead>
         
-							      <tbody id="listBody" >
+							      <tbody id="listBusinessBody" >
 							      </tbody>
 				                </table>
 			                </td>
@@ -260,6 +276,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			          
 			            </table>
 			        </div>
+			        </td></tr>
 	              </textarea>
 	            </td>
 	          </tr>
@@ -286,8 +303,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
     <textarea id="businessTemplateBody" jTemplate="yes" style="display: none;">
         <tr>
-          <td style="text-align: center;">{$T.business_name}</td>
-          <td style="text-align: center;">
+          <td style="text-align: left;">&nbsp;{$T.business_name}</td>
+          <td style="padding-right: 5px;">
             <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].event_staff_ids" id="event_staff_ids_{$T.index}_{$T.id}"  />
           </td>
