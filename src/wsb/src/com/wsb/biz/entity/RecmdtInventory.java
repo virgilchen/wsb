@@ -15,7 +15,7 @@ import com.globalwave.base.BaseEntity;
  *
  */
 @Entity
-@Table(name = "recmdt_inventory_dt")
+@Table(name = "recommendation_inventory_dt")
 public class RecmdtInventory extends BaseEntity {
 	
 	@Id
@@ -23,6 +23,7 @@ public class RecmdtInventory extends BaseEntity {
     @Column(name="recmdt_id")
 	private Long id;
 	
+	private String recmdt_code;
 	private String recmdt_name;
 	private String recmdt_status;
 	private String recmdt_remark;
@@ -101,7 +102,12 @@ public class RecmdtInventory extends BaseEntity {
 	public void setRecmdt_value(String recmdt_value) {
 		this.recmdt_value = recmdt_value;
 	}
-	
+	public String getRecmdt_code() {
+		return recmdt_code;
+	}
+	public void setRecmdt_code(String recmdt_code) {
+		this.recmdt_code = recmdt_code;
+	}
 	
 	
 }
