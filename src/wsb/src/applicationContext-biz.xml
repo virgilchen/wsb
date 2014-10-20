@@ -14,12 +14,16 @@ select
   e.*,
   c.*,
   b.business_name,
-  p.procs_step_name
+  p.procs_step_name,
+  (select staff_name from staff_demo_rt s where s.staff_id=o.order_init_staff_id) as order_init_staff_name,
+  (select staff_name from staff_demo_rt s where s.staff_id=e.event_staff_id) as event_staff_name
  from order_rt o, order_prod_pack_event_rt e, cust_demo_rt c, business_rt b, order_procs_rt p
 where o.order_id=e.order_id
   and o.psdo_cust_id=c.psdo_cust_id
   and b.business_id=e.business_id
   and p.business_id=e.business_id
+  and o.order_cur_status='S'
+  and e.event_status='R'
   and p.procs_step_no=e.procs_step_no
  {and e.event_staff_id=[event_staff_id]}
 order by o.order_id

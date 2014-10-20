@@ -22,6 +22,10 @@ import com.globalwave.common.ArrayPageList;
 @Entity
 @Table(name = "order_rt")
 public class Order extends BaseEntity {
+
+	final public static String STATUS_CANCEL = "C";
+	final public static String STATUS_START = "S";
+	final public static String STATUS_INIT = "I";
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

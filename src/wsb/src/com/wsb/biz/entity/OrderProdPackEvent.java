@@ -19,6 +19,12 @@ import com.globalwave.base.BaseEntity;
 @Entity
 @Table(name = "order_prod_pack_event_rt")
 public class OrderProdPackEvent extends BaseEntity {
+
+	final public static String STATUS_CONTINUE = "C";
+	final public static String STATUS_BACK = "B";
+	final public static String STATUS_YES = "Y";
+	final public static String STATUS_NO = "N";
+	final public static String STATUS_READY = "R";
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

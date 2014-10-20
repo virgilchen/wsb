@@ -56,6 +56,9 @@ public class OrderBO extends BaseServiceImpl {
     	Order result = null;
         
     	if (order.getId() == null) {
+    		if (order.getOrder_cur_status() == null) {
+    		    order.setOrder_cur_status(Order.STATUS_INIT);
+    		}
     		result = (Order) jdbcDao.insert(order) ;
     	} else {
     		jdbcDao.update(order) ;
@@ -83,6 +86,9 @@ public class OrderBO extends BaseServiceImpl {
     }
     
     public Order open(Order order, List<OrderProdPack> orderProdPacks) {
+    	
+    	order.setOrder_cur_status(Order.STATUS_START);
+    	
     	Order newItem = this.save(order, orderProdPacks);
     	
     	Set<Long> productPackageIds = new HashSet<Long>();
@@ -113,9 +119,13 @@ public class OrderBO extends BaseServiceImpl {
     	
     	return result;
     }
-    
-    public Order followUp(Order order, List<OrderProdPack> orderProdPacks) {
-    	return null;
+
+    public OrderProdPackEvent followUp(OrderProdPackEvent event) {
+    	return this.getOrderProdPackEventBO().followUp(event);
+    }
+
+    public OrderProdPackEvent pickTask(Long eventId) {
+    	return null;//this.getOrderProdPackEventBO().followUp(event);
     }
     
     

@@ -100,7 +100,7 @@ public class OrderAction extends BaseAction implements Preparable {
     public String followUp() throws Exception {
 
 
-        Object newOrder = orderBO.open(order, orderProdPacks) ;
+    	OrderProdPackEvent newOrder = orderBO.followUp(orderProdPackEvent) ;
 
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  

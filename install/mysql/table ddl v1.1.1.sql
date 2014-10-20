@@ -92,7 +92,7 @@ CREATE TABLE `order_rt` (
   `order_init_time_stamp` TIMESTAMP NOT NULL,
   `order_init_staff_id` INT NULL,
   `psdo_cust_id` INT NULL,
-  `order_cur_status` VARCHAR(10) NULL,
+  `order_cur_status` VARCHAR(10) NULL COMMENT 'C:Cancel/S:Started/I:Init',
   `order_remark` VARCHAR(1000) NULL,
   PRIMARY KEY (`order_id`),
   INDEX `order_key` (`order_id` ASC))

@@ -56,7 +56,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var orderProdPackEvents = data.orderProdPackEvents;
                 
                 var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
-                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.order_id}, {$T.business_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.last_event_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
                 var contentTemplate = "<div class=\"content\" id=\"con{$T._name_}_{$T._index_}\" ><ul id='businessTabs'></ul><div id='businessContents'></div></div>";
 
                 $("#productPackTitlesDiv").html("");
@@ -80,6 +80,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     var buinessLen = businesses.length;
                     for (var j = 0 ; j < buinessLen ; j ++) {
                     	var business = businesses[j];
+                    	var businessEvents = _this.getBusinessEvents(orderProdPackEvents, orderProdPack.prod_pack_id, business.business_id);
                         var $businessTabs = $("#businessTabs", $productPackContents);
                         var $businessContents = $("#businessContents", $productPackContents);
                     	
@@ -87,11 +88,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     	business._name_ = "OrderBusiness" + i;
                     	business._index_ = (j + 1);
                     	business._length_ = buinessLen;
+                    	business.last_event_id = businessEvents[businessEvents.length - 1].id;
 
                         $businessTabs.append(parse(buinessTitleTemplate, business));
                         
                         orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
-                        orderProdPack.businessEvents = _this.getBusinessEvents(orderProdPackEvents, business.business_id);
+                        orderProdPack.businessEvents = businessEvents ;
                         orderProdPack._name_ = business._name_ ;
                         orderProdPack._index_ = business._index_ ;
                         orderProdPack._length_ = business._length_ ;
@@ -100,6 +102,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     }
                     
                     if (buinessLen > 0) {
+                    	var business = businesses[0];
+                    	_this.setEventEditForm(business.last_event_id);
                         tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", 1, buinessLen);
                     }
                 }
@@ -141,11 +145,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
         return ret ;
     },
     
-    getBusinessEvents:function (businessEvents, businessId) {
+    getBusinessEvents:function (businessEvents, prodPackId, businessId) {
         var ret = [] ;
         for(var i = 0 ; i < businessEvents.length ; i ++) {
             var event = businessEvents[i];
-            if (event.business_id == businessId) {
+            if (event.business_id == businessId && event.prod_pack_id == prodPackId) {
             	ret[ret.length] = event ;
             }
         }
@@ -153,9 +157,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         return ret ;
     },
     
-    setEventEditForm:function(order_id, business_id) {
-        V("orderProdPackEvent.order_id", order_id);
-        V("orderProdPackEvent.business_id", business_id);
+    setEventEditForm:function(lastEventId) {
+        V("orderProdPackEvent.id", lastEventId);
     },
     
     onSaveOk:function(data) {
@@ -175,6 +178,36 @@ var g$v<%=view_id%> = $.extend(newView(), {
         $packageIndexNames.each(function(i, elem) {
             $(elem).html("商品包" + (i + 1));
         });
+    },
+    
+    followUp:function() {
+
+        var frm = E("eForm") ;
+        if(typeof(frm.checkValidity) != "undefined" && !frm.checkValidity()) {
+            alert("请正确填写表单！") ;
+            if (typeof(frm.setErrorFocus) != "undefined") {
+                frm.setErrorFocus() ;
+            }
+            return ;
+        }
+        
+        if (!this.checkEditForm(frm)) {
+            return ;
+        }
+        
+        if (!window.confirm("是否确定要保存？")) {
+            return ;
+        }
+        
+        ajax(
+            this.create_url, 
+            E$("eForm").serialize(),
+            function(data, textStatus){
+                if (data.code == "0") {
+                	alert("OK");
+                }
+            }
+        );
     }
     
     
@@ -319,9 +352,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    
 	    <div class="content" >
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
-              <input type="hidden" name="orderProdPackEvent.event_id" id="orderProdPackEvent.event_id"/>
+              <input type="hidden" name="orderProdPackEvent.id" id="orderProdPackEvent.id"/>
               <input type="hidden" name="orderProdPackEvent.business_id" id="orderProdPackEvent.business_id"/>
               <input type="hidden" name="orderProdPackEvent.order_id" id="orderProdPackEvent.order_id"/>
+              <input type="hidden" name="orderProdPackEvent.prod_pack_id" id="orderProdPackEvent.prod_pack_id"/>
 	          <input type="hidden" name="orderProdPackEvent.version_id" id="orderProdPackEvent.version_id"/>
 	          
 	          
@@ -332,10 +366,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <th>处理结果：</th>
                     <td>
                       <select name="orderProdPackEvent.event_status">
-                        <option>继续跟进</option>
-                        <option>回退跟单</option>
-                        <option>是</option>
-                        <option>否</option>
+                        <option value="C">继续跟进</option>
+                        <option value="B">回退跟单</option>
+                        <option value="Y">是</option>
+                        <option value="N">否</option>
                       </select>
                     </td>
                     <th> 业务处理人：</th>
@@ -351,7 +385,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   
                   <tr>
                     <th>&nbsp;</th>
-                    <td><a href="#" class="btn_orange">保存</a></td>
+                    <td><a href="javascript:viewJs.followUp();" class="btn_orange">保存</a></td>
                   </tr>
                 </table>
             </div>

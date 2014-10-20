@@ -103,13 +103,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <td>
               <textarea id="templateBody" jTemplate="yes">
                   <tr id="{$T.id}" ondblclick="viewJs.toFollowUpView({$T.id});">
-                    <td>{$T.order_id}</td>
+                    <td>{$T.order_no}</td>
                     <td>{$T.business_name}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
-				    <td>{$T.order_init_staff_id}</td>
+				    <td>{$T.order_init_staff_name}</td>
 				    <td>{$T.order_init_time_stamp}</td>
-				    <td>{$T.event_staff_id}</td>
+				    <td>{$T.event_staff_name}</td>
 				    <td><span class="c_orange">{$T.procs_step_name}</span></td>
 				    <td><a href="javascript:viewJs.toFollowUpView({$T.order_id});">查看</a> | <a href="#">催单</a></td>
                   </tr>
