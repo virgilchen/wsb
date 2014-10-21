@@ -21,7 +21,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.pageIndex = E("recmdtInventorySO.pageIndex") ;
         
         fillOptions({id:"recmdtStatusSelection", dictName:"staffRole.status", firstLabel:"不限"}) ;// 改为字典取值
-        //fillOptions({id:"statusSelection", dictName:"staffRole.status", firstLabel:"请选择..."}) ;// 改为字典取值
+        fillOptions({id:"statusSelection", dictName:"staffRole.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"noticeSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("noticeTB", {height:"400px"}) ;
@@ -29,18 +29,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //E$("notice.notice_timestamp").datetimepicker({
           //  timeFormat: "HH:mm:ss"
         //});
-        <%--
-        var orgJson = <%=request.getAttribute("orgJson")%>;
-        
-        E$("orgSelection").combobox2({id:"orgSelection", 
-            data:orgJson, 
-            firstLabel:"请选择", 
-            valueProperty:"id", 
-            idProperty:"id", 
-            textProperty:["org_name"], 
-            titleProperty:"org_name"
-        });
-        --%>
+
         
         E$("eForm").validator();
         E$("sForm").validator();
@@ -128,13 +117,79 @@ var g$v<%=view_id%> = $.extend(newView(), {
       </TABLE>
     </DIV>
 
-
-
     <%@include file="/WEB-INF/pages/frame/pagination.jsp" %>
     
   </div>
 
+  <div id="editDiv" style="display:none;" >
+    
+    <DIV class=main_title>
+      <B>添加决策信息</B> 
+      
+      <%-- 
+      <DIV class="main_tt_right fr">
+        <A class=orange href="javascript:viewJs.save();">保存</A>
+        <A class=blue href="javascript:viewJs.toSearch();">取消</A>
+      </DIV>
+      --%>
+    </DIV>
+    
+    <div class="step_01">
+	<span>第1步</span><span>第2步</span>
+    </div>
+    
 
+    <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
+      <input type="hidden" name="recmdtInventory.id" id="recmdtInventory.id"/>
+      <input type="hidden" name="recmdtInventory.version_id" id="recmdtInventory.version_id"/>
+  
+      <table width="100%" border="0">
+        <tr valign="top">
+          <td valign="top" width="15%">
+          </td>
+          <td width="45%">
+            <table width="100%" border="0">
+              <tr>
+                <th>决策编码：</th>
+                <td><input type="text" name="recmdtInventory.recmdt_code" maxlength="50"  required="required"/></td>
+              </tr>
+              <tr>
+                <th>决策名称：</th>
+                <td><input type="text" name="recmdtInventory.recmdt_name" maxlength="50"  required="required"/></td>
+              </tr>
+              <tr>
+                <th>决策备注：</th>
+                <td>
+                  <textarea name="recmdtInventory.recmdt_remark"  style="width: 100%;height: 80px;"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th>状态：</th>
+                <td>
+                  <select name="recmdtInventory.recmdt_status" id="statusSelection"></select>
+                </td>
+              </tr>
+
+            </table> 
+          </td>
+          <td valign="top" width="25%">
+          </td>
+        </tr>
+        <tr height="20"><td colspan="2"></td></tr>
+      </table>
+    </form>
+     <!-- 
+    <table cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+          <td colspan="2" align="center" class="tx_center">
+            <button onclick="viewJs.save()" tabindex="-1">保存(S)</button>
+          </td>
+        </tr>
+    </table>
+    -->
+    
+    
+  </div>
 
 
 
