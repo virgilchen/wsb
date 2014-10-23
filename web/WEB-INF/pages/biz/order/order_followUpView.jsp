@@ -17,6 +17,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     delete_url:root + "/biz/order_delete.action" ,
     entityName:"order",
     size:0,
+    staffsJson:<%=request.getAttribute("staffsJson")%>,
     
     init:function (){
         //this.initSelect() ;
@@ -26,11 +27,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"orderSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
-        /*
-        E$("order.order_timestamp").datetimepicker({
-            timeFormat: "HH:mm:ss"
+        
+        E$("orderProdPackEvent.event_staff_id").combobox2({
+            id:"orderProdPackEvent.event_staff_id", 
+            data:this.staffsJson, 
+            firstLabel:"请选择...", 
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["staff_name"], 
+            titleProperty:"staff_name"
         });
-        */
+        
         E$("eForm").validator();
         //E$("sForm").validator();
         E("eForm").setFirstFocus();
@@ -49,6 +56,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 viewJs.entity = data;
                 formDeserializeText("customerInfoDetailDiv", "label", data.customer, {}) ;
                 formDeserializeText("orderInfoDiv", "label", data, {}) ;
+                E$("order.order_no").html(data.order_no);
                 //formDeserialize("eForm", data, {}) ;
                 
                 var orderProdPacks = data.orderProdPacks;
@@ -219,7 +227,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
 	<div class="main_title">
-	  <b>业务单业务处理：201407120001</b>
+	  <b>业务单业务处理：<label id="order.order_no">xxxxxxxxxxxxxxxxxx</label></b>
 	  <DIV class="main_tt_right fr">
         <A class=blue href="javascript:removeView(<%=view_id%>);">返回</A>
       </DIV>
@@ -229,9 +237,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    <table width="100%" border="0">
 	      <tr>
 		    <td width="10%" style="text-align: right;">业务单单号：</td>
-		    <td width="20%" style="text-align: left;"><label id="order.id">201407120001</label></td>
+		    <td width="20%" style="text-align: left;"><label id="order.order_no">xxxxxxxxxxxxxxxxxxx</label></td>
 		    <td width="10%" style="text-align: right;">业务单发起时间：</td>
-            <td width="20%" style="text-align: left;"><label id="customer.order_init_time_stamp">2013-12-01 13:22</label></td>
+            <td width="20%" style="text-align: left;"><label id="customer.order_init_time_stamp">2010-12-01 13:22</label></td>
             <td width="10%" style="text-align: right;">业务单发起人：</td>
             <td width="30%" style="text-align: left;"><label id="customer.order_init_staff_id">启动业务人员</label></td>
 	      </tr>
@@ -374,7 +382,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <th> 业务处理人：</th>
                     <td>
-                      <input name="orderProdPackEvent.event_staff_id" type="text"> <a href="#" class="link_blue">选择</a>
+                      <input name="orderProdPackEvent.event_staff_id" id="orderProdPackEvent.event_staff_id" type="text">
+                      <!-- 
+                        <a href="#" class="link_blue">选择</a>
+                       -->
                     </td>
                   </tr>
                   

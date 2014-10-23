@@ -54,6 +54,10 @@ public class OrderAction extends BaseAction implements Preparable {
     }
     
     public String followUpView() throws Exception {
+    	this.getRequest().setAttribute(
+    			"staffsJson", 
+    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(null)));
+    	
     	return "jsp";
     }
     
