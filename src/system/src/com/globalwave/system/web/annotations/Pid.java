@@ -21,6 +21,11 @@ public @interface Pid {
     public final static short LOGINED = -2 ;
     
     /**
+     * N/A
+     */
+    public final static short NA = -3 ;
+    
+    /**
      * 用于二次登录
      */
     public final static short LOGIN_FORWARD = 9999 ;
@@ -28,10 +33,15 @@ public @interface Pid {
     public boolean ignore() default false ;
     
     public boolean log() default true ;
-    
+
     /**
      * Max Value is 32767 
      * @return
      */
-    public short value() ;
+    public short value() default NA;
+    /**
+     * Max Value is 32767 
+     * @return
+     */
+    public short[] values() default {};
 }

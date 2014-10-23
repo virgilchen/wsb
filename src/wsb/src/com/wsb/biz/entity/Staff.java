@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -33,6 +34,11 @@ public class Staff extends BaseEntity {
 	private String staff_id_card;
 	private Long staff_role_id;
 	private Timestamp staff_last_login_time;
+	
+
+	@Transient
+	private String old_password;
+	
 	public Long getId() {
 		return id;
 	}
@@ -93,5 +99,10 @@ public class Staff extends BaseEntity {
 	public void setStaff_last_login_time(Timestamp staff_last_login_time) {
 		this.staff_last_login_time = staff_last_login_time;
 	}
-    
+    public String getOld_password() {
+		return old_password;
+	}
+    public void setOld_password(String old_password) {
+		this.old_password = old_password;
+	}
 }

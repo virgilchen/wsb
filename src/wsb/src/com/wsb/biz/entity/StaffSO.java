@@ -3,12 +3,15 @@ package com.wsb.biz.entity;
 import javax.persistence.Column;
 
 import com.globalwave.base.BaseSO;
+import com.globalwave.base.annotations.Comparison;
 
 public class StaffSO extends BaseSO {
 	@Column(name="staff_id")
 	private Long[] ids ;
 	
 	private String staff_status;
+	
+	@Comparison(operator=Comparison.EQ)
 	private String staff_login_profile;
 	private String staff_name;
 	private Long staff_role_id;

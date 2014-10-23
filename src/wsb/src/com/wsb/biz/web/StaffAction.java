@@ -30,6 +30,18 @@ private static final long serialVersionUID = 7244882365197775441L;
         
     }
     
+    public String changePasswordView() throws Exception {
+    	return "jsp";
+    }
+    
+    
+    public String changePassword() throws Exception {
+    	staffBO.changePassword(staff);
+        
+    	renderObject(staff, 1107L) ;//'1107', '用户已经成功更改密码！'
+        
+    	return null;
+    }
 
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String list() throws Exception {  

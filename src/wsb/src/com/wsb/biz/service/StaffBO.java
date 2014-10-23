@@ -1,5 +1,8 @@
 package com.wsb.biz.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +12,9 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.Util;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.common.cache.CodeHelper;
+import com.globalwave.system.entity.Privilege;
+import com.globalwave.system.entity.SessionUser;
+import com.wsb.biz.entity.Page;
 import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffSO;
 
@@ -61,7 +67,9 @@ public class StaffBO extends BaseServiceImpl {
         return (ArrayPageList<Staff>)jdbcDao.query(staffSO, Staff.class);
     }
     
-    public Staff login(StaffSO staffSO) {
+    public SessionUser login(StaffSO staffSO) {
+    	SessionUser result = new SessionUser();
+    	
     	String password = staffSO.getStaff_login_pwd();
     	staffSO.setStaff_login_pwd(null);
     	
@@ -76,9 +84,33 @@ public class StaffBO extends BaseServiceImpl {
         	throw new BusinessException(1006L);// password is wrong
         }
         
-        return staff;
+        result.setStaff(staff);
+        
+        ArrayPageList<Page> privileges =
+        		PageBO.getPageBO().queryByRole(staff.getStaff_role_id()) ;
+            
+        Set<Short> privilegeIds = new HashSet<Short>(privileges.size()) ;
+        for (int i = privileges.size() - 1 ; i >= 0 ; i --) {
+            privilegeIds.add(privileges.get(i).getId().shortValue()) ;
+        }
+        
+        result.setPrivilege_ids(privilegeIds) ;
+        
+        return result;
     }
 
+    public void changePassword(Staff staff) {
+    	Staff oldStaff = this.get(SessionUser.get().getStaff().getId());
+
+        if (!oldStaff.getStaff_login_pwd().equals(Util.hash(staff.getOld_password()))){
+        	throw new BusinessException(1109L);//'1109', '原密码不正确，更改密码失败！' );
+        }
+        
+        oldStaff.setStaff_login_pwd(Util.hash(staff.getStaff_login_pwd()));
+        oldStaff.addInclusions("staff_login_pwd");
+        
+        jdbcDao.update(oldStaff);
+    }
 
 
     public Staff get(Long id) {  

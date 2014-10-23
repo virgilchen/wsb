@@ -4,17 +4,14 @@
 <%@page import="com.globalwave.system.entity.SessionUser"%>
 
 <%
-Locale locale = Locale.CHINA ;
-I18N i18n = new I18N(locale) ;
 
-/*
 Locale locale = null ;
 I18N i18n = null ;
 
-if (request.getServletPath().indexOf("logon.jsp") == -1) {
+if (request.getServletPath().indexOf("login.jsp") == -1) {
 	SessionUser sessionUser = (SessionUser)session.getAttribute(SessionUser.SESSION_PK) ;
     if (sessionUser == null) {
-	     response.sendRedirect(request.getContextPath()+"/logon.jsp");
+	     response.sendRedirect(request.getContextPath()+"/login.jsp");
 	     return;
     }
     locale = sessionUser.getUserLocale() ;
@@ -28,7 +25,7 @@ if (request.getServletPath().indexOf("logon.jsp") == -1) {
         locale = Locale.CHINA ;
     }
     i18n = new I18N(locale) ;
-}*/
+}
 %>
 
 <script>var language = "<%=locale == null ?"cn":locale.getLanguage()%>" ;</script>

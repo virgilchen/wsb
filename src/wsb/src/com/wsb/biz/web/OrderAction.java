@@ -65,6 +65,7 @@ public class OrderAction extends BaseAction implements Preparable {
     	return "jsp";
     }
 
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String getOpenInfo() throws Exception {
 
         Object newOrder = orderBO.getOpenInfo(customer_id) ;

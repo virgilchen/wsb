@@ -37,6 +37,33 @@ values('1000', '未登陆或已经超时，请重新登陆！' );
 insert into cfg_message(code_, value_) 
 values('1001', '当前用户没有操作权限！' );
 
+
+
+insert into cfg_message(code_, value_) 
+values('1106', '用户已经成功登录！' );
+
+insert into cfg_message(code_, value_) 
+values('1107', '用户已经成功更改密码！' );
+
+insert into cfg_message(code_, value_) 
+values('1108', '密码为空，更改密码失败！' );
+
+insert into cfg_message(code_, value_) 
+values('1109', '原密码不正确，更改密码失败！' );
+
+insert into cfg_message(code_, value_) 
+values('1110', '用户登录标识已经被使用，请使用其它登录标识！' );
+
+insert into cfg_message(code_, value_) 
+values('1111', '用户被冻结，不能进行任何操作！' );
+
+insert into cfg_message(code_, value_) 
+values('1112', '用户非激活状态，不能登录！' );
+
+insert into cfg_message(code_, value_) 
+values('1113', '用户已经成功登出！' );
+
+
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用户不存在！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');
 

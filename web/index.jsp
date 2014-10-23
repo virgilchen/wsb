@@ -11,6 +11,21 @@
   <link href="<%=root %>/css/style.css" rel="stylesheet" type="text/css" />
   
   <script type="text/javascript" src="<%=root %>/script/system.js"></script>
+  <script>
+  function logout() {
+	    ajax(
+	            root + "/biz/login_logout.action", 
+	            null,
+	            function(data, textStatus){
+	                if (data.code == "0") {
+	                    user = null ;
+	                    //refreshPage(user) ;
+	                    window.location=root+"/login.jsp" ;
+	                }
+	            }
+	        );
+	}
+  </script>
 </head>
 
 <!--

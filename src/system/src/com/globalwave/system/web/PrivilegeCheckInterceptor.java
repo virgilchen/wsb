@@ -54,7 +54,11 @@ public class PrivilegeCheckInterceptor extends AbstractInterceptor {
         final Pid pid = method.getAnnotation(Pid.class) ;
         
         if (pid !=null && pid.log()) {
-        	log(actionInvocation, user, pid.value()) ;
+    		if (pid.value() == Pid.NA) {
+        	    log(actionInvocation, user, pid.values()[0]) ;
+    		} else {
+        	    log(actionInvocation, user, pid.value()) ;
+    		}
         }
         
         if(pid == null || pid.ignore() || pid.value() == Pid.DO_NOT_CHECK) {// 无需要作权限验证
@@ -70,13 +74,19 @@ public class PrivilegeCheckInterceptor extends AbstractInterceptor {
         		    return null;
         		}
         	}
-        	if(pid.value() == Pid.LOGINED || user.hasPrivilege(pid.value())) {
+        	if(pid.value() == Pid.LOGINED 
+        			|| pid.value() != Pid.NA && user.hasPrivilege(pid.value()) 
+        			|| pid.value() == Pid.NA && user.hasPrivilege(pid.values())) {
         		String result = actionInvocation.invoke() ;
         		SessionUser.remove() ;
                 return result ;
 	        } else {
 	    		log.warn("can't visite : " + actionProxy.getActionName()) ;
-	        	throw new BusinessException(1001L, CodeHelper.getString("Privilege", "name_", new Long(pid.value()))) ;// 当前用户没有操作权限！
+	    		if (pid.value() == Pid.NA) {
+	    			throw new BusinessException(1001L, CodeHelper.getString("Privilege", "name_", new Long(pid.values()[0]))) ;// 当前用户没有操作权限！
+	    		} else {	    			
+	    			throw new BusinessException(1001L, CodeHelper.getString("Privilege", "name_", new Long(pid.value()))) ;// 当前用户没有操作权限！
+	    		}
 	        }
         }
     }

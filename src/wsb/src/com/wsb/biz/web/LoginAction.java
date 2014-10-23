@@ -1,13 +1,13 @@
 package com.wsb.biz.web;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
-import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.Util;
-import com.itextpdf.text.log.SysoLogger;
+import com.globalwave.common.cache.CodeHelper;
+import com.globalwave.system.entity.SessionUser;
+import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffSO;
 import com.wsb.biz.service.StaffBO;
@@ -23,20 +23,33 @@ public class LoginAction extends BaseAction {
 	
 	@Override
 	public String execute() throws Exception {
-		//{System.out.println("进入com.wsb.biz.web.loginAction.java");}
 		 /**
 		   * 实施一系列的用户登陆判定功能，若成功就返回一个真正的用户
 		   */
-		System.out.println(Util.hash(staffSO.getStaff_login_pwd()));
-		staff = staffBO.login(staffSO);
+		//System.out.println(Util.hash(staffSO.getStaff_login_pwd()));
+		SessionUser sessionUser = staffBO.login(staffSO);
+
+    	sessionUser.setVersionId(CodeHelper.getVersionId()) ;
+        
+        this.getSession().setAttribute(SessionUser.SESSION_PK, sessionUser);
+        
+		//this.getSession().setAttribute("Staff", staff);
 		
-		this.getSession().setAttribute("Staff", staff);
-		
-		renderObject(staff, 0L) ;
+		renderObject(staff, 1106L) ;
 		
 		return null;
 	}
 
+
+    @Pid(value=Pid.DO_NOT_CHECK)
+    public String logout() throws Exception {
+
+        this.getSession().removeAttribute(SessionUser.SESSION_PK);
+        
+    	renderObject(null, 1113L) ;// 1113', '用户已经成功登出！
+        
+        return null;
+    }
 
 	public StaffBO getStaffBO() {
 		return staffBO;

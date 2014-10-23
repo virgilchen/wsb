@@ -1,8 +1,6 @@
 package com.globalwave.system.entity;
 
-import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import org.dom4j.Document;
@@ -11,10 +9,9 @@ import org.dom4j.Element;
 
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.Convertor;
-import com.globalwave.common.U;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
-import com.globalwave.util.TimerTaskUtil;
+import com.wsb.biz.entity.Staff;
 
 public class SessionUser {
 
@@ -22,16 +19,13 @@ public class SessionUser {
     final public static boolean IS_VALIDE_PRIVILEGE = true ;
     
     private User user ;
+    private Staff staff ;
     private long[] organization_ids ;
     private Set<Short> privilege_ids ;
     private Set<String> role_codes ;
     
     private ArrayPageList<Privilege> privileges ;
 
-	private Integer sale_date ;
-    private String terminal_code ;
-    private Integer comany_type;
-    private String qq_account ;
     
     private Locale locale ;
     
@@ -109,101 +103,6 @@ public class SessionUser {
     	return role_codes != null && role_codes.contains("CUSTOMER");
     }
     
-    //是否是店铺管理员
-    public boolean isSalesAdmin() {
-    	return role_codes != null && role_codes.contains("ORG-AD");
-    }
-    
-    //是否是店员
-    public boolean isSales() {
-    	return (role_codes != null && role_codes.contains("SALES")) || isSalesAdmin();
-    }
-    
-    //是否是省级店员
-    public boolean isProvinceSales() {
-    	return isSales() && (CodeHelper.getInteger("Organization", "level_", user.getOrganization_id()).intValue() == 1);
-    }
-    
-    //是否是市级店员
-    public boolean isCitySales() {
-    	return isSales() && (CodeHelper.getInteger("Organization", "level_", user.getOrganization_id()).intValue() == 2);
-    }
-    
-    //是否是区级店员
-    public boolean isAreaSales() {
-    	return isSales() && (CodeHelper.getInteger("Organization", "level_", user.getOrganization_id()).intValue() == 3);
-    }
-    
-    //是否是终端代理
-    public boolean isAgentSales() {
-    	return role_codes != null && role_codes.contains("Teminal");
-    }
-    
-    //是否是系统用户
-//    public boolean isOperator() {
-//    	return User.TYPE_OTHER.equals(user.getType_());
-//    }
-    
-    //是否是订单管理员
-    public boolean isOrderAdmin() {
-    	return role_codes != null && role_codes.contains("ORDER");
-    }
-    
-    /*
-    //获取下属用户id
-    public Set<Long> getUnderlings() {
-    	if (underLines != null) {
-    		return underLines;
-    	}
-    	Set<Long> result = new HashSet<Long>() ;
-    	Set<Long> ids = new HashSet<Long>() ;
-    	ids.add(this.user.getId()) ;
-    	List<Organization> orgs = (List<Organization>)CodeHelper.query("Organization", "leader_id", ids, Organization.class) ;
-    	if (orgs == null || orgs.size() == 0) {
-    		return result ;
-    	}
-    	
-    	orgs.addAll(this.subOrganization(orgs)) ;
-    	
-    	for (Organization org:orgs) {
-    		ids.clear() ;
-    		ids.add(org.getId()) ;
-    		List<User> users = (List<User>)CodeHelper.query("Sales", "organization_id", ids, User.class) ;
-    		for (User user:users) {
-    			result.add(user.getId()) ;
-    		}
-    	}
-    	
-    	underLines = result;
-		return underLines;
-	}
-
-    private List<Organization> subOrganization(List<Organization> orgs) {
-    	List<Organization> result = new ArrayList<Organization>() ;
-    	for (Organization org:orgs) {
-    		result.addAll(this.subOrganization(org.getId())) ;
-    	}
-    	return result ;
-    }
-
-    private List<Organization> subOrganization(Long proId) {
-    	Set<Long> ids = new HashSet<Long>() ;
-    	ids.add(proId) ;
-    	List<Organization> orgs = (List<Organization>)CodeHelper.query("Organization", "pro_organization_id", ids, Organization.class) ;
-
-    	for (int i = orgs.size() - 1 ; i >= 0 ; i --) {
-    		Organization org = orgs.get(i) ;
-    		if (proId.equals(org.getId())) {
-    			orgs.remove(i) ;
-    		} else {
-    			if (orgs.size() < 20) {// 防止死循环    				
-    				orgs.addAll(this.subOrganization(org.getId())) ;
-    			}
-    		}
-    	}
-    	
-    	return orgs ;
-    }*/
     
     public long[] getOrganization_ids() {
         return organization_ids;
@@ -252,20 +151,13 @@ public class SessionUser {
 	public String getLogin_id() {
    	    return getUser().getLogin_id() ;  
     }
-   
-	public Integer getSale_date() {
-		return sale_date;
+   public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
-	public void setSale_date(Date sale_date) {
-		this.sale_date = Long.valueOf(U.date2int(sale_date)/1000000).intValue();
+	   public Staff getStaff() {
+		return staff;
 	}
-	public String getTerminal_code() {
-		return terminal_code;
-	}
-	public void setTerminal_code(String terminal_code) {
-		this.terminal_code = terminal_code;
-	}
-    
+
     public ArrayPageList<Privilege> getPrivileges() {
 		return privileges;
 	}
@@ -291,8 +183,6 @@ public class SessionUser {
         try {
         	root.add(Convertor.object2Xml(user)) ;
 
-        	Convertor.addProperty(root, "sale_date", sale_date == null?"":sale_date) ;
-        	Convertor.addProperty(root, "terminal_code", terminal_code == null?"":terminal_code) ;
         	
             root.add(Convertor.list2Xml(privilege_ids,"privilege_ids")) ;
             //root.add(Convertor.list2Xml(organization_ids,"organization_ids")) ;
@@ -310,6 +200,22 @@ public class SessionUser {
         } else {
             return true ;
         }
+    }
+    
+    /**
+     * 只需要含其中一个，即为有权限
+     * 
+     * @param pids
+     * @return
+     */
+    public boolean hasPrivilege(short[] pids) {
+        for (short pid : pids){
+            if (hasPrivilege(pid)) {
+            	return true ;
+            } 
+        }
+        
+        return false;
     }
     
     //是否可购买商品
@@ -332,17 +238,5 @@ public class SessionUser {
 		this.versionId = versionId;
 	}
 	
-	public Integer getComany_type() {
-		return comany_type;
-	}
-	public void setComany_type(Integer comany_type) {
-		this.comany_type = comany_type;
-	}
-	public String getQq_account() {
-		return qq_account;
-	}
-	public void setQq_account(String qq_account) {
-		this.qq_account = qq_account;
-	}
     
 }
