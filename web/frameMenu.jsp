@@ -25,7 +25,7 @@
     </script><![endif]-->
 
 
-<div class="FrameMenu" style="width: 180px;">
+<div class="FrameMenu">
     <dl>
         <dt><a href="FrameMain.html" target="mainFrame"><img src="images/menu_home.png" />首页</a></dt>
     </dl>
@@ -57,7 +57,7 @@
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_business.png" />业务管理</a></dt>
         <dd>
             <ul>
-                <li><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '公告管理');">业务管理</a></li>
+                <li><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '业务管理');">业务管理</a></li>
                 <li><a href="javascript:removeAll();openView(110003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
                 <li><a href="javascript:removeAll();openView(110004, '/biz/productPack_view.action', '商品包管理');">商品包管理</a></li>
             </ul>

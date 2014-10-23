@@ -26,6 +26,7 @@ where o.order_id=e.order_id
   and e.event_status='R'
   and p.procs_step_no=e.procs_step_no
  {and e.event_staff_id=[event_staff_id]}
+ {and p.procs_staff_role_id=[procs_staff_role_id]}
 order by o.order_id
               ]]>
             </value>
@@ -108,6 +109,19 @@ select b.business_id as id, b.*
               inner join business_rt b on p.business_id=b.business_id
               inner join product_pack_detail_rt d on d.prod_id=p.prod_id
 where d.prod_pack_id=[id]
+              ]]>
+            </value>
+          </entry>
+          
+
+
+          <entry key="pickUpTask">
+            <value>
+              <![CDATA[
+update order_prod_pack_event_rt
+   set event_staff_id=[event_staff_id] 
+ where event_staff_id is null 
+   and event_id=[event_id]
               ]]>
             </value>
           </entry>

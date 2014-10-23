@@ -96,13 +96,22 @@ public class OrderAction extends BaseAction implements Preparable {
         return null;  
     }
 
-    
+
     public String followUp() throws Exception {
 
 
     	OrderProdPackEvent newOrder = orderBO.followUp(orderProdPackEvent) ;
 
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
+        return null;  
+    }
+    
+    public String pickUp() throws Exception {
+
+
+    	orderBO.pickUp(orderProdPackEvent) ;
+
+        renderObject(null, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  
     }
 

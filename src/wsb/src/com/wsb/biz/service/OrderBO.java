@@ -124,10 +124,10 @@ public class OrderBO extends BaseServiceImpl {
     	return this.getOrderProdPackEventBO().followUp(event);
     }
 
-    public OrderProdPackEvent pickTask(Long eventId) {
-    	return null;//this.getOrderProdPackEventBO().followUp(event);
+    public void pickUp(OrderProdPackEvent event) {
+    	this.getOrderProdPackEventBO().pickUp(event);
     }
-    
+
     
     public ArrayPageList<HashMap> getMyTasks() {
     	OrderSO orderSO = new OrderSO() ;

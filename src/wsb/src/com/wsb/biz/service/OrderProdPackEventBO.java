@@ -149,4 +149,11 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	return event;
     }
+
+    public void pickUp(OrderProdPackEvent event) {
+        int count = jdbcDao.executeName("bizSQLs:pickUpTask", event) ;
+        if (count == 0) {
+        	throw new BusinessException(22222222L);// task has been picked up by other people.
+        }
+    }
 }

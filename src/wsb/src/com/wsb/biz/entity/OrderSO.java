@@ -11,6 +11,7 @@ public class OrderSO extends BaseSO {
     private Long[] ids ;
  
     private Long event_staff_id;
+    private Long procs_staff_role_id;
     
 	public Long[] getIds() {
 		return ids;
@@ -26,6 +27,14 @@ public class OrderSO extends BaseSO {
 
 	public void setEvent_staff_id(Long event_staff_id) {
 		this.event_staff_id = event_staff_id;
+	}
+	
+	public Long getProcs_staff_role_id() {
+		return procs_staff_role_id;
+	}
+
+	public void setProcs_staff_role_id(Long procs_staff_role_id) {
+		this.procs_staff_role_id = procs_staff_role_id;
 	}
 
 	@Override

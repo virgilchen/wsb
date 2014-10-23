@@ -31,14 +31,16 @@
     </tr>
     <tr>
       <td width="180px" valign="top">
+        <div id="menuDiv" style="height: 100%; width: 197px; overflow: auto;">
         <%@include file="frameMenu.jsp" %>
+        </div>
       </td>
       <!-- for IE, set big width -->
-      <td width="100000px" valign="top" style="padding: 5px;">
+      <td width="100000px" valign="top" style="padding: 0px 0px 0px 0px;">
         <!-- 
         <div style="background-color: red;height: 100%; width: 100%;">x</div>
          -->
-        <div style="height: 100%; width: 100%; " id="viewContentDiv"></div>
+        <div style="height: 100%; width: 100%;overflow: auto; " id="viewContentDiv"></div>
       </td>
     </tr>
   </table>

@@ -19,9 +19,22 @@ $(function() {
             }
         });
     }) ;
+    
+    
+    $(window).resize(function () {
+    	setFrameHeight();
+    }) ;
 	
+    setFrameHeight();
 
 });
+
+function setFrameHeight() {
+	var __clientHeight = window.innerHeight||document.documentElement.clientHeight ;
+	var _height = (__clientHeight - 80) + "px";
+    $("#menuDiv").height(_height) ;
+    $("#viewContentDiv").height(_height) ;
+}
 
 var g$views = [] ;
 var viewJs = null ;
