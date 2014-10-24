@@ -11,6 +11,7 @@ import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
 import com.globalwave.common.exception.BusinessException;
+import com.globalwave.system.entity.SessionUser;
 import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
@@ -121,7 +122,14 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
      */
     public OrderProdPackEvent followUp(OrderProdPackEvent event) {
     	
+    	Long staffId = SessionUser.get().getStaff().getId();
+    	
     	OrderProdPackEvent oldEvent = this.get(event.getId());
+    	
+    	if (!staffId.equals(oldEvent.getEvent_staff_id())) {
+    		throw new BusinessException(11003L);//11003 当前环节由其业务员处理
+    	}
+    	
     	event.setOrder_id(oldEvent.getOrder_id());
     	
     	String event_status = event.getEvent_status();
