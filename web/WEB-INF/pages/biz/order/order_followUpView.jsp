@@ -359,7 +359,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       {#/if}
                     </td>
                     <td>{#if $T.record.event_duration != null}{fmt.maxlen($T.record.minute_duration, 10)}分钟{#/if}</td>
-                    <td>{fmt.maxlen($T.record.event_remark， 1000)}</td>
+                    <td>{fmt.maxlen($T.record.event_remark, 1000)}</td>
                   </tr>
                   {#/for}
                 </table>
