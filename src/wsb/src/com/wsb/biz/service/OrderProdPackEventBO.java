@@ -1,5 +1,6 @@
 package com.wsb.biz.service;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.U;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.OrderProdPack;
@@ -91,13 +93,13 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     }
     
     
-    public ArrayPageList<OrderProdPackEvent> queryByOrderId(Long order_id) {
+    public ArrayPageList<HashMap> queryByOrderId(Long order_id) {
 
     	OrderProdPackEventSO orderProdPackEventSO = new OrderProdPackEventSO() ;
 
         orderProdPackEventSO.setOrder_id(order_id);
         
-        return (ArrayPageList<OrderProdPackEvent>)jdbcDao.query(orderProdPackEventSO, OrderProdPackEvent.class);
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderEvents", orderProdPackEventSO, HashMap.class);
     }
 
 
@@ -111,37 +113,51 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
         return org;
     }
     
+    /**
+     * 
+     * @param event
+     * @return next event, if null(current step successfully), then no next step
+     */
     public OrderProdPackEvent followUp(OrderProdPackEvent event) {
     	
     	OrderProdPackEvent oldEvent = this.get(event.getId());
-    	oldEvent.setEvent_status(event.getEvent_status());
+    	event.setOrder_id(oldEvent.getOrder_id());
+    	
+    	String event_status = event.getEvent_status();
+    	
+		oldEvent.setEvent_status(event_status);
     	oldEvent.addInclusions("event_status");
     	oldEvent.setEvent_remark(event.getEvent_remark());
     	oldEvent.addInclusions("event_remark");
+    	oldEvent.setEvent_duration(U.currentTimestamp());
+    	oldEvent.addInclusions("event_duration");
     	
     	jdbcDao.update(oldEvent);
+    	
+    	if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
+    	    return null;
+    	}
     	
     	OrderProcess so = new OrderProcess();
     	so.setBusiness_id(event.getBusiness_id());
     	
-    	if (OrderProdPackEvent.STATUS_CONTINUE.equals(event.getEvent_status())) {
+    	if (OrderProdPackEvent.STATUS_CONTINUE.equals(event_status)) {
     	    so.setProcs_step_no(oldEvent.getProcs_step_no());
-    	} else if (OrderProdPackEvent.STATUS_BACK.equals(event.getEvent_status())) {
+    	} else if (OrderProdPackEvent.STATUS_BACK.equals(event_status)) {
     		so.setProcs_step_no(oldEvent.getProcs_step_no() - 1);
-    	} else {
+    	} else {// if (OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
     		so.setProcs_step_no(oldEvent.getProcs_step_no() + 1);
     	}
     	
     	OrderProcess process = (OrderProcess)jdbcDao.find(so);
     	if (process == null) {
-    		throw new BusinessException("");
+    		throw new BusinessException(11001L);//11001 本环节为业务最终环节，未能找到下一环节
     	}
     	event.setProcs_step_no(process.getProcs_step_no());
     	
     	event.setId(null);
     	event.setEvent_remark("");
     	
-    	event.setOrder_id(oldEvent.getOrder_id());
     	event.setProd_pack_id(oldEvent.getProd_pack_id());
     	event.setBusiness_id(oldEvent.getBusiness_id());
     	event.setEvent_status(OrderProdPackEvent.STATUS_READY);
@@ -153,7 +169,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     public void pickUp(OrderProdPackEvent event) {
         int count = jdbcDao.executeName("bizSQLs:pickUpTask", event) ;
         if (count == 0) {
-        	throw new BusinessException(22222222L);// task has been picked up by other people.
+        	throw new BusinessException(11002L);// 11002Ltask has been picked up by other people.
         }
     }
 }

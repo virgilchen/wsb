@@ -22,8 +22,8 @@ public class OrderProdPackEvent extends BaseEntity {
 
 	final public static String STATUS_CONTINUE = "C";
 	final public static String STATUS_BACK = "B";
-	final public static String STATUS_YES = "Y";
-	final public static String STATUS_NO = "N";
+	final public static String STATUS_SUCCESSFULLY = "S";
+	final public static String STATUS_FAIL = "F";
 	final public static String STATUS_READY = "R";
 	
     @Id

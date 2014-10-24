@@ -68,6 +68,9 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');
 
 
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11001', '11001', '本环节为业务最终环节，未能找到下一环节！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11002', '11002', '任务已被其它业务员领取！');
+
 /*  Staff init  */
 INSERT INTO `staff_demo_rt` (`staff_id`, `staff_status`, `staff_login_profile`, `staff_login_pwd`, `staff_name`, `staff_gender`, `staff_id_card`) VALUES ('1', '有效', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '系统管理员', '男', '440181198001010001');
 
@@ -95,4 +98,7 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-901, 0, 'DEV.js.config', 'min_mode', 'min.', '', null, 'A', 1, null, null, null, null, null);
 
 
-
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1300, 0, 'orderEvent.status', 'C', '继续跟进', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1301, 0, 'orderEvent.status', 'B', '回退跟单', '', null, 'A', 2, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1302, 0, 'orderEvent.status', 'S', '成功', '', null, 'A', 3, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1303, 0, 'orderEvent.status', 'F', '失败', '', null, 'A', 4, null, null, null, null, null);

@@ -38,6 +38,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     toFollowUpView:function(order_id) {
     	openView(100701, '/biz/order_followUpView.action?order.id=' + order_id, '业务单业务处理');
+    },
+    
+    pickUp:function(eventId) {
+    	var _this = this ;
+        ajax(
+            root + "/biz/order_pickUp.action", 
+            {"orderProdPackEvent.id":eventId},
+            function(data, textStatus){
+                if (data.code == "0") {
+                    _this.list();
+                }
+            }
+        );
     }
 }) ;
 
@@ -107,11 +120,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{$T.business_name}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
-				    <td>{$T.order_init_staff_name}</td>
+				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
 				    <td>{$T.order_init_time_stamp}</td>
-				    <td>{$T.event_staff_name}</td>
+				    <td>{fmt.maxlen($T.event_staff_name)}</td>
 				    <td><span class="c_orange">{$T.procs_step_name}</span></td>
-				    <td><a href="javascript:viewJs.toFollowUpView({$T.order_id});">查看</a> | <a href="#">催单</a></td>
+				    <td>
+				      {#if $T.event_staff_id == null}
+                      <a href="javascript:viewJs.pickUp({$T.event_id});">领取</a> 
+                      {#else} 
+                      <a href="javascript:viewJs.toFollowUpView({$T.order_id});">查看</a>
+                      {#/if}
+				      | 
+				      <a href="#">催单</a>
+				    </td>
                   </tr>
               </textarea>
             </td>
@@ -127,63 +148,4 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
   </div>
    
-  <%--
-  <div id="editDiv" style="display:none;" >
-    
-    <DIV class=main_title>
-      <B>新增公告</B> 
-      <DIV class="main_tt_right fr">
-        <A class=orange href="javascript:viewJs.save();">保存</A>
-        <A class=blue href="javascript:viewJs.toSearch();">取消</A>
-      </DIV>
-    </DIV>
-
-
-    <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
-      <input type="hidden" name="order.id" id="order.id"/>
-      <input type="hidden" name="order.version_id" id="order.version_id"/>
-  
-      <table width="100%" border="0">
-        <tr valign="top">
-          <td valign="top" width="15%">
-          </td>
-          <td width="45%">
-            <table width="100%" border="0">
-              <tr>
-                <th width="25%">公告编号：</th>
-                <td><input type="text" name="order.name_cn" id="order.name_cn" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <th>标题：</th>
-                <td><input type="text" name="order.order_subject" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <th>内容：</th>
-                <td>
-                  <textarea name="order.order_content" required="required"  style="width: 100%;height: 80px;"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <th>发表时间：</th>
-                <td><input type="text" id="order.order_timestamp" name="order.order_timestamp" required="required" maxlength="19"/></td>
-              </tr>
-            </table> 
-          </td>
-          <td valign="top" width="25%">
-          </td>
-        </tr>
-        <tr height="20"><td colspan="2"></td></tr>
-      </table>
-    </form>
-     <!-- 
-    <table cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-          <td colspan="2" align="center" class="tx_center">
-            <button onclick="viewJs.save()" tabindex="-1">保存(S)</button>
-          </td>
-        </tr>
-    </table>
-    -->
-  </div>
-     --%>
 </div>

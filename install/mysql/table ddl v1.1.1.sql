@@ -130,7 +130,7 @@ CREATE TABLE `order_prod_pack_event_rt` (
   `event_duration` DATETIME NULL,
   `event_status` VARCHAR(10) NULL,
   `event_remark` VARCHAR(1000) NULL,
-  PRIMARY KEY (`event_id`, `event_time_stamp`),
+  PRIMARY KEY (`event_id`),
   INDEX `event_key` (`event_id` ASC),
   INDEX `order_key` (`order_id` ASC),
   INDEX `prod_pack_key` (`prod_pack_id` ASC),

@@ -15,6 +15,7 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
+import com.globalwave.system.entity.SessionUser;
 import com.globalwave.system.service.SequenceBO;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
@@ -88,6 +89,7 @@ public class OrderBO extends BaseServiceImpl {
     public Order open(Order order, List<OrderProdPack> orderProdPacks) {
     	
     	order.setOrder_cur_status(Order.STATUS_START);
+    	order.setOrder_init_staff_id(SessionUser.get().getStaff().getId());
     	
     	Order newItem = this.save(order, orderProdPacks);
     	
@@ -121,10 +123,27 @@ public class OrderBO extends BaseServiceImpl {
     }
 
     public OrderProdPackEvent followUp(OrderProdPackEvent event) {
-    	return this.getOrderProdPackEventBO().followUp(event);
+    	OrderProdPackEvent result = this.getOrderProdPackEventBO().followUp(event);
+    	
+    	if (result == null) {
+    		Long orderId = event.getOrder_id();
+    	    
+    	    String sql = "select count(1) from order_prod_pack_event_rt where order_id=? and event_status='R'";
+    	    if (jdbcDao.getLong(sql, new Object[]{orderId}) <= 0) {
+        	    Order order = new Order();
+        	    order.setId(orderId);
+        	    order.setOrder_cur_status(Order.STATUS_END);
+        	    order.addInclusions("order_cur_status");
+        	    
+        	    jdbcDao.update(order);
+    	    }
+    	}
+    	
+    	return result ;
     }
 
     public void pickUp(OrderProdPackEvent event) {
+    	event.setEvent_staff_id(SessionUser.get().getStaff().getId());
     	this.getOrderProdPackEventBO().pickUp(event);
     }
 

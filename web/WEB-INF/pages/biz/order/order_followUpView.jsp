@@ -23,7 +23,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.initSelect() ;
         this.pageIndex = E("orderSO.pageIndex") ;
         
-        //fillOptions({id:"order.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
+        fillOptions({id:"event_status", dictName:"orderEvent.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"orderSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
@@ -212,7 +212,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             E$("eForm").serialize(),
             function(data, textStatus){
                 if (data.code == "0") {
-                	alert("OK");
+                	removeView(<%=view_id%>);
                 }
             }
         );
@@ -344,13 +344,21 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   </tr>
                   {#foreach $T.businessEvents as record}
                   <tr>
-                    <td>1</td>
-                    <td>张小明</td>
-                    <td>保险销售员角色</td>
-                    <td>业务受理</td>
+                    <td>{$T.record$index + 1}</td>
+                    <td>{$T.record.staff_name}</td>
+                    <td>{$T.record.staff_role_name}</td>
+                    <td>{$T.record.procs_step_name}</td>
                     <td>{$T.record.event_time_stamp}</td>
-                    <td class="c_green">成功</td>
-                    <td>13分钟</td>
+                    <td>
+                      {#if $T.record.event_status == 'R'}
+                        <span>正在处理</span>
+                      {#else}
+                        <span class="{#if $T.record.event_status == 'F'}c_red{#else}c_green{#/if}">
+                        {dVal("orderEvent.status", "name_", {PK_ID:$T.record.event_status})}
+                        </span>
+                      {#/if}
+                    </td>
+                    <td>{#if $T.record.event_duration != null}{fmt.maxlen($T.record.minute_duration, 10)}分钟{#/if}</td>
                     <td>{$T.record.event_remark}</td>
                   </tr>
                   {#/for}
@@ -373,11 +381,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <tr>
                     <th>处理结果：</th>
                     <td>
-                      <select name="orderProdPackEvent.event_status">
-                        <option value="C">继续跟进</option>
-                        <option value="B">回退跟单</option>
-                        <option value="Y">是</option>
-                        <option value="N">否</option>
+                      <select name="orderProdPackEvent.event_status" id="event_status">
                       </select>
                     </td>
                     <th> 业务处理人：</th>

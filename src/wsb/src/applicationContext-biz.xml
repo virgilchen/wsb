@@ -121,11 +121,32 @@ where d.prod_pack_id=[id]
 update order_prod_pack_event_rt
    set event_staff_id=[event_staff_id] 
  where event_staff_id is null 
-   and event_id=[event_id]
+   and event_id=[id]
               ]]>
             </value>
           </entry>
           
+
+          <entry key="queryOrderEvents">
+            <value>
+              <![CDATA[
+select
+  e.* ,
+  e.event_id as id,
+  s.staff_name,
+  r.staff_role_name,
+  p.procs_step_name,
+  timestampdiff(minute, event_time_stamp, event_duration) as minute_duration
+  from order_prod_pack_event_rt e 
+           left join staff_demo_rt s on e.event_staff_id=s.staff_id,
+       order_procs_rt p
+         left join staff_role_demo_rt r on p.procs_staff_role_id=r.staff_role_id
+where e.business_id=p.business_id 
+  and e.procs_step_no=p.procs_step_no  
+  and e.order_id=[order_id]
+              ]]>
+            </value>
+          </entry>
           
           
         </map>

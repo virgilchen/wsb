@@ -26,6 +26,7 @@ public class Order extends BaseEntity {
 	final public static String STATUS_CANCEL = "C";
 	final public static String STATUS_START = "S";
 	final public static String STATUS_INIT = "I";
+	final public static String STATUS_END = "E";
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -46,7 +47,7 @@ public class Order extends BaseEntity {
     private ArrayPageList<OrderProdPack> orderProdPacks;
     
     @Transient
-    private ArrayPageList<OrderProdPackEvent> orderProdPackEvents;
+    private ArrayPageList<HashMap> orderProdPackEvents;
 
     @Transient
     private ArrayPageList<HashMap> products ;
@@ -99,11 +100,11 @@ public class Order extends BaseEntity {
 	public void setOrderProdPacks(ArrayPageList<OrderProdPack> orderProdPacks) {
 		this.orderProdPacks = orderProdPacks;
 	}
-	public ArrayPageList<OrderProdPackEvent> getOrderProdPackEvents() {
+	public ArrayPageList<HashMap> getOrderProdPackEvents() {
 		return orderProdPackEvents;
 	}
 	public void setOrderProdPackEvents(
-			ArrayPageList<OrderProdPackEvent> orderProdPackEvents) {
+			ArrayPageList<HashMap> orderProdPackEvents) {
 		this.orderProdPackEvents = orderProdPackEvents;
 	}
 	public ArrayPageList<HashMap> getProducts() {
