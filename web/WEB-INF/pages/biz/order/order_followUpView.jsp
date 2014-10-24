@@ -326,8 +326,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <textarea id="orderBusinessTemplate" style="display:none;" >
             <div id="con{$T._name_}_{$T._index_}" style="display:block;" >
                 <p>基础商品：{$T.product_names}</p>
-                <p>购买日期：{$T.order_prod_pack_purchase_date}</p>
-                <p>起效日期：{$T.order_prod_pack_effect_date}</p>
+                <p>购买日期：{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}</p>
+                <p>起效日期：{fmt.maxlen($T.order_prod_pack_effect_date, 10)}</p>
                 <p>备注：{$T.order_prod_pack_remark}</p>
                 <p></p>
                 <b>流程处理记录：</b>
@@ -359,7 +359,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       {#/if}
                     </td>
                     <td>{#if $T.record.event_duration != null}{fmt.maxlen($T.record.minute_duration, 10)}分钟{#/if}</td>
-                    <td>{$T.record.event_remark}</td>
+                    <td>{fmt.maxlen($T.record.event_remark， 1000)}</td>
                   </tr>
                   {#/for}
                 </table>

@@ -1,6 +1,6 @@
 package com.wsb.biz.entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,9 +30,9 @@ public class OrderProdPack extends BaseEntity {
 	private Long prod_pack_id;
 	private Integer no_of_order_prod_pack;
 	
-	private Timestamp order_prod_pack_purchase_date;	
-	private Timestamp order_prod_pack_effect_date;	
-	private Timestamp order_prod_pack_expire_date;
+	private Date order_prod_pack_purchase_date;	
+	private Date order_prod_pack_effect_date;	
+	private Date order_prod_pack_expire_date;
 	private String order_prod_pack_remark;
 
 	@Transient
@@ -69,23 +69,23 @@ public class OrderProdPack extends BaseEntity {
 	public void setNo_of_order_prod_pack(Integer no_of_order_prod_pack) {
 		this.no_of_order_prod_pack = no_of_order_prod_pack;
 	}
-	public Timestamp getOrder_prod_pack_purchase_date() {
+	public Date getOrder_prod_pack_purchase_date() {
 		return order_prod_pack_purchase_date;
 	}
 	public void setOrder_prod_pack_purchase_date(
-			Timestamp order_prod_pack_purchase_date) {
+			Date order_prod_pack_purchase_date) {
 		this.order_prod_pack_purchase_date = order_prod_pack_purchase_date;
 	}
-	public Timestamp getOrder_prod_pack_effect_date() {
+	public Date getOrder_prod_pack_effect_date() {
 		return order_prod_pack_effect_date;
 	}
-	public void setOrder_prod_pack_effect_date(Timestamp order_prod_pack_effect_date) {
+	public void setOrder_prod_pack_effect_date(Date order_prod_pack_effect_date) {
 		this.order_prod_pack_effect_date = order_prod_pack_effect_date;
 	}
-	public Timestamp getOrder_prod_pack_expire_date() {
+	public Date getOrder_prod_pack_expire_date() {
 		return order_prod_pack_expire_date;
 	}
-	public void setOrder_prod_pack_expire_date(Timestamp order_prod_pack_expire_date) {
+	public void setOrder_prod_pack_expire_date(Date order_prod_pack_expire_date) {
 		this.order_prod_pack_expire_date = order_prod_pack_expire_date;
 	}
 	public String getOrder_prod_pack_remark() {
