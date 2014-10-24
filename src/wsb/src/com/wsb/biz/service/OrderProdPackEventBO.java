@@ -98,6 +98,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	OrderProdPackEventSO orderProdPackEventSO = new OrderProdPackEventSO() ;
 
         orderProdPackEventSO.setOrder_id(order_id);
+        orderProdPackEventSO.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderEvents", orderProdPackEventSO, HashMap.class);
     }

@@ -1,8 +1,14 @@
+<%@page import="com.globalwave.system.entity.SessionUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+
+SessionUser sessionUser = (SessionUser)session.getAttribute(SessionUser.SESSION_PK) ;
 String view_id=request.getParameter("view_id");
 String order_id=request.getParameter("order.id");
+String event_id=request.getParameter("event_id");
+String myTask_view_id = request.getParameter("myTask_view_id");
+Long staffId=sessionUser.getStaff().getId();
 %>
 
 <script>
@@ -18,6 +24,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     entityName:"order",
     size:0,
     staffsJson:<%=request.getAttribute("staffsJson")%>,
+    staffId:<%=staffId%>,
     
     init:function (){
         //this.initSelect() ;
@@ -64,14 +71,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var orderProdPackEvents = data.orderProdPackEvents;
                 
                 var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
-                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.last_event_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.last_event_id}, {$T.event_staff_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
                 var contentTemplate = "<div class=\"content\" id=\"con{$T._name_}_{$T._index_}\" ><ul id='businessTabs'></ul><div id='businessContents'></div></div>";
 
                 $("#productPackTitlesDiv").html("");
                 $("#productPackContentsDiv").html("");
                 
                 var prodLen = orderProdPacks.length;
-                
+
                 for(var i = 0 ; i < prodLen ; i ++) {
                     var orderProdPack = orderProdPacks[i];
 
@@ -91,12 +98,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     	var businessEvents = _this.getBusinessEvents(orderProdPackEvents, orderProdPack.prod_pack_id, business.business_id);
                         var $businessTabs = $("#businessTabs", $productPackContents);
                         var $businessContents = $("#businessContents", $productPackContents);
+                    	var lastEvent = businessEvents[businessEvents.length - 1];
                     	
                         business.order_id = orderProdPack.order_id;
                     	business._name_ = "OrderBusiness" + i;
                     	business._index_ = (j + 1);
                     	business._length_ = buinessLen;
-                    	business.last_event_id = businessEvents[businessEvents.length - 1].id;
+                        business.last_event_id = lastEvent.id;
+                        business.event_staff_id = lastEvent.event_staff_id;
 
                         $businessTabs.append(parse(buinessTitleTemplate, business));
                         
@@ -107,17 +116,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         orderProdPack._length_ = business._length_ ;
                         
                         $businessContents.append(parse(V("orderBusinessTemplate"), orderProdPack));
+                        
+                        if (lastEvent.id == <%=event_id%>) {
+                        	orderProdPacks.selectedIndex = i;
+                            businesses.selectedIndex = j;
+                        }
                     }
                     
                     if (buinessLen > 0) {
-                    	var business = businesses[0];
-                    	_this.setEventEditForm(business.last_event_id);
-                        tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", 1, buinessLen);
+                    	var selectIndex = businesses.selectedIndex;
+                    	var business = businesses[selectIndex];
+                    	_this.setEventEditForm(business.last_event_id, business.event_staff_id);
+                        tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", selectIndex + 1, buinessLen);
                     }
                 }
 
                 if (prodLen > 0) {
-                    tabShow('menuOrderProduct_', 'conOrderProduct_', 1, prodLen);
+                    tabShow('menuOrderProduct_', 'conOrderProduct_', orderProdPacks.selectedIndex + 1, prodLen);
                 }
             }
         );
@@ -165,7 +180,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
         return ret ;
     },
     
-    setEventEditForm:function(lastEventId) {
+    setEventEditForm:function(lastEventId, eventStaffId) {
+    	if (eventStaffId == this.staffId) {
+    		E$("orderFollowUpContent").show();
+    	} else {
+    		E$("orderFollowUpContent").hide();
+    	}
+    	
         V("orderProdPackEvent.id", lastEventId);
     },
     
@@ -213,6 +234,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             function(data, textStatus){
                 if (data.code == "0") {
                 	removeView(<%=view_id%>);
+                	g$v<%=myTask_view_id%>.list();
                 }
             }
         );
@@ -366,7 +388,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             </div>
         </textarea>
 	    
-	    <div class="content" >
+	    <div class="content" id="orderFollowUpContent">
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
               <input type="hidden" name="orderProdPackEvent.id" id="orderProdPackEvent.id"/>
               <input type="hidden" name="orderProdPackEvent.business_id" id="orderProdPackEvent.business_id"/>
