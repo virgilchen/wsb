@@ -500,7 +500,7 @@
 				return self;
 			},
 			
-			destroy: function() { 
+			destroy: function() {
 				form.unbind(conf.formEvent + ".V").unbind("reset.V"); 
 				inputs.unbind(conf.inputEvent + ".V").unbind("change.V");
 				return self.reset();	
@@ -662,6 +662,7 @@
 			form[0].setErrorFocus = self.setErrorFocus ;
 			form[0].setFirstFocus = self.setFirstFocus ;
 			form[0].resetForm = self.reset ;
+			form[0].$validator = self ;
 		}
 		
 		// input validation               
@@ -684,9 +685,13 @@
 		});
 		
 		// reposition tooltips when window is resized
-		$(window).resize(function() {
-			self.reflow();		
-		});
+		if(typeof(viewJs) == "undefined") {
+			$(window).resize(function() {
+				self.reflow();
+			});	
+		} else {
+			viewJs.validationForms[viewJs.validationForms.length] = self;
+		}
 	}
 
 	

@@ -78,6 +78,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         this.size ++;
         this.refreshTableList();
+        
+        E$("eForm").validator();
     },
     
     refreshTableList:function() {
@@ -120,7 +122,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     selectProdPack:function(id, name) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
-
+        E("eForm").resetForm();
+        
         var _this = this;
         
         ajax(
@@ -228,13 +231,13 @@ width: 92%;
 			                <td width="30%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
                               <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="" /> 
-                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="" readonly="readonly"/> 
+                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="" readonly="readonly" required="required" onclick="viewJs.openProductSearchView({$T.index});"/> 
 			                  <a href="javascript:viewJs.openProductSearchView({$T.index});" class="link_blue">选择</a>
 			                  <span class="c_red"></span>
 			                </td>
 			                <th width="10%">数量：</th>
 			                <td width="20%">
-			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" /> 份<span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" required="required"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
@@ -260,11 +263,11 @@ width: 92%;
 			              <tr>
 			                <th>购买日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" class="ipt_date" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
 			                <th>起效日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" class="ipt_date" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
                             <td></td>
 			              </tr>

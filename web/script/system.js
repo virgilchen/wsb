@@ -23,7 +23,12 @@ $(function() {
     
     $(window).resize(function () {
     	setFrameHeight();
+    	reflowValidationForms();
     }) ;
+
+	$("#viewContentDiv").scroll(function() {
+		reflowValidationForms();
+    });
 	
     setFrameHeight();
 
@@ -34,6 +39,13 @@ function setFrameHeight() {
 	var _height = (__clientHeight - 80) + "px";
     $("#menuDiv").height(_height) ;
     $("#viewContentDiv").height(_height) ;
+}
+
+function reflowValidationForms() {
+
+	for (var index in viewJs.validationForms) {
+		viewJs.validationForms[index].reflow();
+	}
 }
 
 var g$views = [] ;

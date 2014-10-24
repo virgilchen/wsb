@@ -451,6 +451,7 @@ var baseView_af24332idihy00p2jww = {
     idName:null,
     idsName:null,
     entity:null,
+    validationForms:[],
 
     /**
      * 页面元素及切换的控制描述
