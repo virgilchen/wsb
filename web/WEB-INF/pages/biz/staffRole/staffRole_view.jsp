@@ -233,7 +233,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <textarea id="templateBody" jTemplate="yes">
 		                  <tr>
 		                    <td style="padding:0;">
-		                      <input type="checkbox" name="page_ids" value="{$T.id}" {$T.checked} onfocus="$(this).addClass('ui-state-focus');" onblur="$(this).removeClass('ui-state-focus');" style="width:18px;" />
+		                      <input type="checkbox" name="page_ids" value="{$T.page_id}" {$T.checked} onfocus="$(this).addClass('ui-state-focus');" onblur="$(this).removeClass('ui-state-focus');" style="width:18px;" />
 		                    </td>
 		                    <td style="text-align: left;padding:0;">{$T.page_name}</td>
 		                  </tr>

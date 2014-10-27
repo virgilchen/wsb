@@ -24,7 +24,7 @@ public class StaffRole extends BaseEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="staff_role_id")
 	private Long id;
-	
+	@Transient
 	private String staff_role_page_id;
 	private String staff_role_status;
 	private String staff_role_name;

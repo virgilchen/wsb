@@ -166,16 +166,15 @@ DEFAULT CHARACTER SET = utf8;
 -- `wsbd001`.`staff_role_demo_rt`
 CREATE TABLE `staff_role_demo_rt` (
   `staff_role_id` INT NOT NULL AUTO_INCREMENT,
-  `staff_role_page_id` VARCHAR(100) NOT NULL,
+  --`staff_role_page_id` VARCHAR(100) NOT NULL,
   `staff_role_status` VARCHAR(5) NULL,
   `staff_role_name` VARCHAR(20) NULL,
   `staff_role_remark` VARCHAR(500) NULL,
   `staff_role_org_id` INT NOT NULL,
-  PRIMARY KEY (`staff_role_id`, `staff_role_page_id`, `staff_role_org_id`),
+  PRIMARY KEY (`staff_role_id`),
   INDEX `role_id_key` (`staff_role_id` ASC),
-  INDEX `role_page_key` (`staff_role_page_id` ASC),
   INDEX `staff_role_org_key` (`staff_role_org_id` ASC),
-  INDEX `role_page_org_key` (`staff_role_id` ASC, `staff_role_page_id` ASC, `staff_role_org_id` ASC))
+  INDEX `role_page_org_key` (`staff_role_id` ASC, `staff_role_org_id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
