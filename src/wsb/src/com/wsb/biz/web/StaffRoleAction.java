@@ -71,6 +71,8 @@ public class StaffRoleAction extends BaseAction implements Preparable {
 
         Object newRole = staffRoleBO.create(staffRole, page_ids) ;
 
+        CodeHelper.reload("Role");
+        
         renderObject(newRole, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
         
@@ -83,6 +85,8 @@ public class StaffRoleAction extends BaseAction implements Preparable {
             	
     	staffRoleBO.update(staffRole, page_ids) ;
 
+        CodeHelper.reload("Role");
+        
         renderObject(staffRole, ResponseMessage.KEY_UPDATE_OK) ;
         
         return null;    
@@ -99,6 +103,7 @@ public class StaffRoleAction extends BaseAction implements Preparable {
         	staffRoleBO.deleteAll(ids) ;
         }
 
+        CodeHelper.reload("Role");
         
         renderObject(staffRole, ResponseMessage.KEY_DELETE_OK) ;
         

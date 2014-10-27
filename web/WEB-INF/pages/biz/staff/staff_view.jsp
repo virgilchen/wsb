@@ -19,7 +19,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     init:function (){
         this.pageIndex = E("staffSO.pageIndex") ;
         
-        //fillOptions({id:"staff.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
+        fillOptions({id:"staff.staff_role_id", dictName:"Role", firstLabel:"请选择...", textProperty:"staff_role_name",titleProperty:"staff_role_name"}) ;// 改为字典取值
         //fillOptions({id:"staffSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("staffTB", {height:"400px"}) ;
@@ -180,6 +180,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 <th width="25%">身份证号：</th>
                 <td>
                  <input type="text" name="staff.staff_id_card" id="staff.staff_id_card" maxlength="50"/>
+                </td>
+              </tr>
+              <tr>
+                <th width="25%">用户角色：</th>
+                <td>
+                  <select name="staff.staff_role_id" id="staff.staff_role_id"></select>
+                  <!-- 
+                 <input type="text" name="staff.staff_role_id" id="staff.staff_role_id" maxlength="50"/>
+                   -->
                 </td>
               </tr>
               <tr>

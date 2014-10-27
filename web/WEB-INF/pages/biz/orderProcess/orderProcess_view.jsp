@@ -1,3 +1,5 @@
+<%@page import="com.globalwave.common.cache.CodeHelper"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -172,7 +174,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <div id="editDiv" >
     
     <DIV class=main_title>
-      <B><%=business_name %>（??）业务流程配置</B> 
+      <B><%=business_name %>业务流程配置</B> 
       <DIV class="main_tt_right fr">
         <A class=blue href="javascript:viewJs.add();">增加</A>
         <A class=orange href="javascript:viewJs.save();">保存</A>
@@ -233,8 +235,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <td><!--<input type="text" name="orderProcess.procs_staff_role_id" id="orderProcess.procs_staff_role_id" maxlength="50"/>-->
                       <select name="orderProcesses[{$T.procs_step_no}].procs_staff_role_id">
-                        <option value="1" {#if $T.procs_staff_role_id == 1}selected="selected"{#/if}>Role-A</option>
-                        <option value="2" {#if $T.procs_staff_role_id == 2}selected="selected"{#/if}>Role-B</option>
+                        <%List<HashMap<String, Object>> roles = ((List<HashMap<String, Object>>)CodeHelper.query("Role", HashMap.class)) ;%>
+                        <%for (HashMap<String, Object> role : roles) {%>
+                        <option value="<%=role.get("id") %>" {#if $T.procs_staff_role_id == <%=role.get("id") %>}selected="selected"{#/if}><%=role.get("staff_role_name") %></option>
+                        <%}%>
                       </select>
                     </td>
                     <td>
