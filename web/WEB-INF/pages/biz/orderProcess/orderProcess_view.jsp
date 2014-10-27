@@ -25,7 +25,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.pageIndex = E("orderProcessSO.pageIndex") ;
         
         //fillOptions({id:"orderProcess.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
-        //this.initDataGrid("orderProcessTB", {height:"400px"}) ;
+        this.initDataGrid("orderProcessTB") ;
         
         
         //E$("eForm").validator();

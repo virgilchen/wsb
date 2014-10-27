@@ -23,8 +23,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"business.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"businessSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
-        //this.initDataGrid("businessTB", {height:"400px"}) ;
-
+        this.initDataGrid("businessTB") ;
+        
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
@@ -95,9 +95,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     </DIV>
   
     <DIV class="main_search">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="businessSO.pageIndex" id="businessSO.pageIndex" value="1" type="hidden" />
-        <input name="businessSO.pageSize" id="businessSO.pageSize" value="10" type="hidden" />
+        <input name="businessSO.pageSize" id="businessSO.pageSize" value="100" type="hidden" />
         <table width="100%" >
           <tr>
            <td style="width:100px;" >业务名称：</td>
@@ -150,7 +150,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
 
 
-    <%@include file="/WEB-INF/pages/frame/pagination.jsp" %>
+    <%--@include file="/WEB-INF/pages/frame/pagination.jsp" --%>
     
   </div>
     

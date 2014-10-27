@@ -73,6 +73,11 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11002', '11002', '�
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11003', '11003', '当前环节由其业务员处理！');
 
 
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12001', '12001', '父业务不存在，本操作无效！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12002', '12002', '子业务存在，本操作无效！');
+
+
+
 /*  Staff init  */
 INSERT INTO `staff_demo_rt` (`staff_id`, `staff_status`, `staff_login_profile`, `staff_login_pwd`, `staff_name`, `staff_gender`, `staff_id_card`) VALUES ('1', '有效', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '系统管理员', '男', '440181198001010001');
 

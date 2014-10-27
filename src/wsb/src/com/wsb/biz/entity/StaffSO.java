@@ -10,8 +10,11 @@ public class StaffSO extends BaseSO {
 	private Long[] ids ;
 	
 	private String staff_status;
-	
+
 	@Comparison(operator=Comparison.EQ)
+	@Column(name="staff_login_profile")
+	private String staff_login_profile_eq;
+
 	private String staff_login_profile;
 	private String staff_name;
 	private Long staff_role_id;
@@ -41,6 +44,14 @@ public class StaffSO extends BaseSO {
 
 	public void setStaff_login_profile(String staff_login_profile) {
 		this.staff_login_profile = staff_login_profile;
+	}
+
+	public String getStaff_login_profile_eq() {
+		return staff_login_profile_eq;
+	}
+
+	public void setStaff_login_profile_eq(String staff_login_profile_eq) {
+		this.staff_login_profile_eq = staff_login_profile_eq;
 	}
 
 	public String getStaff_name() {

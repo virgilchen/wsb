@@ -614,6 +614,7 @@ var baseView_af24332idihy00p2jww = {
     },
     
     initDataGrid:function (tableName, opts) {
+    	/*
     	if (typeof(opts.height) != "string") {
     		E$(tableName).dataTable(opts) ;
     		return ;
@@ -642,14 +643,15 @@ var baseView_af24332idihy00p2jww = {
         		$(elem).remove();
         	}
         }) ;
-        
         $("th", $newTable).each(function (){
             $(this).css("padding", "0") ;
             $(this).html("") ;
         }) ;
         $table[0].id = $table[0].id + "_head" ;
+        */
         
 
+        var $newTable = E$(tableName) ;
         var $listBody = $("tbody[id='listBody']", $newTable) ;
         
         $listBody.delegate('tr','mouseover mouseleave click', function(e) {

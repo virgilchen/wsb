@@ -255,3 +255,10 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 .notice_box  h2{ border-bottom:1px solid #e7e7eb; line-height:28px; padding-bottom:20px;margin-bottom:5px; font-size:20px;}
 .notice_box .time{ color:#999; margin-bottom:20px;} 
 .notice_box .content p{ text-indent:26px; margin-bottom:15px; font-size:14px; line-height:24px;}
+
+
+
+
+.main_list .even_row td {background:#FFFFDD;}
+.main_list .active_row td {background:#FFFFAA;}
+.main_list .selected_row td {background:#CCFF99;}
