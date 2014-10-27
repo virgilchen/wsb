@@ -17,18 +17,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
     entityName:"staffRole",
     
     init:function (){
-        //this.initSelect() ;
         this.pageIndex = E("staffRoleSO.pageIndex") ;
         
         fillOptions({id:"staffRole.staff_role_status", dictName:"staffRole.status", firstLabel:"不限"}) ;// 改为字典取值
         fillOptions({id:"statusSelection", dictName:"staffRole.status", firstLabel:"请选择..."}) ;// 改为字典取值
-        //fillOptions({id:"noticeSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
-        
-        //this.initDataGrid("noticeTB", {height:"400px"}) ;
-        
-        //E$("notice.notice_timestamp").datetimepicker({
-          //  timeFormat: "HH:mm:ss"
-        //});
+
+        this.initDataGrid("staffRoleTB") ;
+        this.initDataGrid("pageTB") ;
+
         
         var orgJson = <%=request.getAttribute("orgJson")%>;
         
@@ -47,6 +43,24 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E("sForm").setFirstFocus();
         
         this.first();
+    },
+    
+    get:function(id) {
+        ajax(
+            this.get_url + "?id="+id, 
+            null,
+            function(data, textStatus){
+                
+                formDeserialize("eForm", data, {page_ids:true}) ;//以免处理template中的check-box value值
+
+                $(data.rolePages).each(function(i, domEle){
+                    domEle['checked'] = (domEle['staff_role_id'] == 0 || domEle['staff_role_id'] == null)? "":"checked" ;
+                });
+                
+                viewJs.addRows("pageTB", data.rolePages) ;
+                E$("eForm").validator();//为了初始化check box
+            }
+        );
     }
 }) ;
 
@@ -54,6 +68,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
 
+    <style>
+    .ui-combobox-toggle {
+    right: -1px;
+    }
+    
+    .ui-combobox input {
+    width: 96%;
+    }
+    .main_form table td span {
+    padding-left: 0px;
+    }
+    </style>
+    
   <div id="listDiv">
   
     <DIV class=main_title>
@@ -66,7 +93,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     </DIV>
   
     <DIV class="main_search">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="staffRoleSO.pageIndex" id="staffRoleSO.pageIndex" value="1" type="hidden" />
         <input name="staffRoleSO.pageSize" id="staffRoleSO.pageSize" value="10" type="hidden" />
         <table width="100%" >
@@ -77,11 +104,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
              <input class=mg_r name="staffRoleSO.ids" value="" type="text" />
            </td>
            -->
-           <td style="width:60px;" >角色名称：</td>
+           <td style="width:100px;" >角色名称：</td>
            <td style="width:100px;">
              <input class=mg_r name="staffRoleSO.staff_role_name" value="" type="text" />
            </td>
-           <td style="width:60px;" >当前状态：</td>
+           <td style="width:100px;" >当前状态：</td>
            <td style="width:100px;">
              <select name="staffRoleSO.staff_role_status" id="staffRole.staff_role_status"></select>
            </td>
@@ -156,17 +183,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
   
       <table width="100%" border="0">
         <tr valign="top">
-          <td valign="top" width="15%">
+          <td valign="top" width="10%">
           </td>
-          <td width="45%">
+          <td width="40%">
             <table width="100%" border="0">
               <tr>
                 <th>角色名称：</th>
                 <td><input type="text" name="staffRole.staff_role_name" maxlength="50"  required="required"/></td>
-                <th>状态：</th>
-                <td>
-             	  <select name="staffRole.staff_role_status" id="statusSelection"></select>
-           		</td>
               </tr>
               <tr>
                 <th>备注：</th>
@@ -180,24 +203,56 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <input id="orgSelection" name="staffRole.staff_role_org_id"/>
                 </td>
               </tr>
+              <tr>
+                <th>状态：</th>
+                <td>
+                  <select name="staffRole.staff_role_status" id="statusSelection"></select>
+                </td>
+              </tr>
 
             </table> 
           </td>
-          <td valign="top" width="25%">
+          <td valign="top" width="5%">
+          
+          </td>
+          <td valign="top" width="40%" class="main_list">
+            <div style="height: 100%;width: 100%;overflow: auto;">
+              <table id="pageTB" class="datagrid" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th width="10%"></th>
+                    <th width="90%" style="text-align: left;"><b>功能菜单列表</b></th>
+                  </tr>
+                </thead>
+                <tbody id="listBody" >
+                </tbody>
+                 
+                <tbody style="display:none;visibility: false;" disabled="true">
+                  <tr>
+                    <td>
+                      <textarea id="templateBody" jTemplate="yes">
+		                  <tr>
+		                    <td style="padding:0;">
+		                      <input type="checkbox" name="page_ids" value="{$T.id}" {$T.checked} onfocus="$(this).addClass('ui-state-focus');" onblur="$(this).removeClass('ui-state-focus');" style="width:18px;" />
+		                    </td>
+		                    <td style="text-align: left;padding:0;">{$T.page_name}</td>
+		                  </tr>
+                      </textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+          
+          <td valign="top" width="5%">
+          
           </td>
         </tr>
         <tr height="20"><td colspan="2"></td></tr>
       </table>
     </form>
-     <!-- 
-    <table cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-          <td colspan="2" align="center" class="tx_center">
-            <button onclick="viewJs.save()" tabindex="-1">保存(S)</button>
-          </td>
-        </tr>
-    </table>
-    -->
+
     
     
   </div>

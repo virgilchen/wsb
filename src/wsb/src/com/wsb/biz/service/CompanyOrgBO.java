@@ -1,6 +1,5 @@
 package com.wsb.biz.service;
 
-import java.util.HashMap;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -22,22 +21,50 @@ public class CompanyOrgBO extends BaseServiceImpl {
 	
 	public CompanyOrg create(CompanyOrg companyorg) {  
 
+    	Long pid = companyorg.getOrg_id_upper();
+    	if (pid != null && pid != 0 && lock(pid) == 0) {
+    		throw new BusinessException(13001L) ;//13001', '父目录不存在，本操作无效！
+    	}
+    	
+		Long proId = companyorg.getOrg_id_upper();
+		
+		if(proId == null || proId == 0L) {
+			companyorg.setOrg_level(0);
+		} else {
+			CompanyOrg proItem = this.get(proId) ;
+			companyorg.setOrg_level(proItem.getOrg_level() + 1);
+		}
+		
 		CompanyOrg newItem = (CompanyOrg) jdbcDao.insert(companyorg) ;
         
         return newItem;
     }
 	
 	public void update(CompanyOrg companyorg) {
+
+    	lock(companyorg.getOrg_id_upper()) ;
     	
         jdbcDao.update(companyorg) ;
     }
     
 	public void delete(CompanyOrg companyorg) {
+
+    	lock(companyorg.getOrg_id_upper()) ;
+    	
+    	if (hasChildren(companyorg.getId())) {
+    		throw new BusinessException(13002L) ;// 13002', '子目录存在，本操作无效！
+    	}
     	
         jdbcDao.delete(companyorg) ;
     }
 	
 	public void deleteAll(Long[] orgIds) {
+
+    	for (Long oId:orgIds) {
+        	if (hasChildren(oId)) {
+        		throw new BusinessException(13002L) ;// 13002', '子目录存在，本操作无效！
+        	}
+    	}
     	
 		CompanyOrgSO criterion = new CompanyOrgSO() ;
         criterion.setIds(orgIds);
@@ -49,7 +76,9 @@ public class CompanyOrgBO extends BaseServiceImpl {
         if (companyorgSO == null) {
         	companyorgSO = new CompanyOrgSO() ;
         }
-        companyorgSO.addDesc("org_id") ;
+
+        companyorgSO.addAsc("org_level") ;
+        companyorgSO.addAsc("org_name") ;
         
         return (ArrayPageList<CompanyOrg>)jdbcDao.query(companyorgSO, CompanyOrg.class);
     }
@@ -61,4 +90,25 @@ public class CompanyOrgBO extends BaseServiceImpl {
 	        
 	        return org;
 	}
+
+
+    private boolean hasChildren(Long businessId) {
+    	CompanyOrg so = new CompanyOrg() ;
+    	so.setOrg_id_upper(businessId) ;
+    	return jdbcDao.find(so) != null ;
+    }
+
+    private int lock(Long businessId) {
+    	if (businessId == null) {
+    		return 0;
+    	}
+
+    	CompanyOrg o = new CompanyOrg() ;
+    	o.setOperate(CompanyOrg.OPERATE_UPDATE_UNVERSION) ;
+    	o.setId(businessId) ;
+    	o.addInclusions("id") ;
+    	
+    	return jdbcDao.update(o) ;
+    }
+    
 }

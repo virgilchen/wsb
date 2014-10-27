@@ -15,6 +15,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     get_url:root + "/biz/companyOrg_get.action" ,
     delete_url:root + "/biz/companyOrg_delete.action" ,
     entityName:"companyOrg",
+    proIdName:"org_id_upper", 
     
     init:function (){
         //this.initSelect() ;
@@ -23,29 +24,58 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"notice.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"noticeSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
-        //this.initDataGrid("noticeTB", {height:"400px"}) ;
-        
-        //E$("notice.notice_timestamp").datetimepicker({
-          // 	timeFormat: "HH:mm:ss"
-        //});
-        
-         var orgJson = <%=request.getAttribute("orgJson")%>;
-        
-         orgJson = $.merge([{id:0, org_name:'无上级机构'}], orgJson);
-         
-        E$("orgSelection").combobox2({id:"orgSelection", 
-            data:orgJson, 
-            firstLabel:"请选择", 
-            valueProperty:"id", 
-            idProperty:"id", 
-            textProperty:["org_name"], 
-            titleProperty:"org_name"
-        });
+        this.initDataGrid("companyOrgTB") ;
+
         
         E$("eForm").validator();
         //E$("sForm").validator();
         //E("sForm").setFirstFocus();
         this.first();
+    },
+    
+    get:function(id) {
+
+        var orgJson = g$dict.Org;
+        if (typeof(orgJson) == "undefined") {
+        	orgJson = [];
+        }
+        orgJson = $.merge([{PK_ID:0, org_name:'[无上级机构]'}], orgJson);
+         
+        var optionParams = {id:"companyOrg.org_id_upper", 
+                data:orgJson, 
+                //firstLabel:"[无上级机构]", 
+                valueProperty:"PK_ID", 
+                idProperty:"PK_ID", 
+                textProperty:["org_name"], 
+                titleProperty:"org_name"
+            } ;
+        
+        E("companyOrg.org_id_upper").isEdit = (id != -1);
+        
+        if (id == -1) {
+            //fillOptions(optionParams) ;
+            E$("companyOrg.org_id_upper").combobox2(optionParams) ;
+            formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
+            return ;
+        }
+        
+        ajax(
+            this.get_url + "?id="+id, 
+            null,
+            function(data, textStatus){
+                if (data.org_id_upper != null && data.org_id_upper > 0) {
+                    delete optionParams["firstLabel"] ;
+                }
+                //var filterValues = {} ;
+                //filterValues[data.business_id_upper] = true ;
+                //optionParams["filter"] = filterValues ;
+                optionParams.data = filter(optionParams.data, {PK_ID:data.org_id_upper});
+                //fillOptions(optionParams) ;
+                E$("companyOrg.org_id_upper").combobox2(optionParams) ;
+                
+                formDeserialize("eForm", data, {}) ;
+            }
+        );
     }
 }) ;
 
@@ -53,8 +83,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
 </script>
 
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
-
-  <%--@include file="/WEB-INF/pages/frame/navigation.jsp" --%>
+	<style>
+	.ui-combobox-toggle {
+	right: -1px;
+	}
+	
+	.ui-combobox input {
+	width: 96%;
+	}
+	.main_form table td span {
+	padding-left: 0px;
+	}
+	</style>
   
   
     <div id="listDiv">
@@ -68,10 +108,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
       </DIV>
     </DIV>
   
-    <DIV class="main_search">
+    <DIV class="main_search" style="display: none;">
       <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
         <input name="companyOrgSO.pageIndex" id="companyOrgSO.pageIndex" value="1" type="hidden" />
-        <input name="companyOrgSO.pageSize" id="companyOrgSO.pageSize" value="10" type="hidden" />
+        <input name="companyOrgSO.pageSize" id="companyOrgSO.pageSize" value="250" type="hidden" />
         <%-- <table width="100%" >
           <tr>
            <td style="width:60px;" >标题：</td>
@@ -90,7 +130,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     
     <DIV class=main_list>
-      <TABLE border=0 width="100%" id="companyOrgTB" title="组织列表">
+      <TABLE border=0 width="100%" id="companyOrgTB" title="机构列表">
         <thead>
           <TR>
 			<TH width="20px"></TH>
@@ -114,11 +154,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
-                    <td>{$T.org_name}</td>
-                    <td>{$T.org_code}</td>
-                    <td>{$T.org_owner_staff}</td>
-                    <td>{$T.org_owner_phone_no}</td>
-                    <td>{$T.org_city}</td>
+                    <td style="text-align: left;padding-left: {$T.org_level * 20 + 5}px;">{$T.org_name}</td>
+                    <td>{fmt.maxlen($T.org_code,100)}</td>
+                    <td>{fmt.maxlen($T.org_owner_staff,100)}</td>
+                    <td>{fmt.maxlen($T.org_owner_phone_no,100)}</td>
+                    <td>{fmt.maxlen($T.org_city,100)}</td>
                   </tr>
               </textarea>
             </td>
@@ -128,7 +168,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
       </TABLE>
     </DIV>
 
-    <%@include file="/WEB-INF/pages/frame/pagination.jsp" %>
+    <%--@include file="/WEB-INF/pages/frame/pagination.jsp" --%>
     
   </div>
   
@@ -150,17 +190,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <tr valign="top">
           <td valign="top" width="15%">
           </td>
-          <td width="45%">
+          <td width="65%">
             <table width="100%" border="0">
               <tr>
-                <th width="25%">上级机构：</th>
-                <td><input id="orgSelection" name="companyOrg.org_id_upper"/></td>
+                <th width="20%">上级机构：</th>
+                <td class="ui-combobox-td"><input id="companyOrg.org_id_upper" name="companyOrg.org_id_upper"/></td>
               </tr>
               <tr>
-                <th>机构名称：</th>
-                <td><input type="text" name="companyOrg.org_name" maxlength="50"/></td>
-                <th>机构编码：</th>
-                <td><input type="text" name="companyOrg.org_code" maxlength="50"/></td>
+                <th width="20%">机构名称：</th>
+                <td width="30%"><input type="text" name="companyOrg.org_name" maxlength="50"/></td>
+                <th width="20%">机构编码：</th>
+                <td width="30%"><input type="text" name="companyOrg.org_code" maxlength="50"/></td>
               </tr>
               <tr>
                 <th>负责人：</th>
@@ -171,18 +211,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th>所在省份：</th>
                 <td><input type="text" name="companyOrg.org_province" maxlength="50"/></td>
-				<th>城市</th>
+				<th>城市：</th>
 				<td><input type="text" name="companyOrg.org_city" maxlength="50"/></td>
               </tr>
               <tr>
               	<th>备注：</th>
-              	<td>
+              	<td colspan="3">
                   <textarea name="companyOrg.org_remark" style="width: 100%;height: 80px;"></textarea>
                 </td>
               </tr>
             </table> 
           </td>
-          <td valign="top" width="25%">
+          <td valign="top" width="20%">
           </td>
         </tr>
         <tr height="20"><td colspan="2"></td></tr>

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.web.annotations.Pid;
-import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.CompanyOrg;
 import com.wsb.biz.entity.CompanyOrgSO;
 import com.wsb.biz.service.CompanyOrgBO;
@@ -29,12 +29,12 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
 	
 	public String view() throws Exception { 
     	
+		/*
 		CompanyOrgSO companyOrgSO = new CompanyOrgSO();
-		
     	this.getRequest().setAttribute(
     			"orgJson", 
     			GsonUtil.getGson().toJson(getCompanyOrgBO().query(companyOrgSO)));
-    	
+    	*/
         return super.view(); 
     }
 	
@@ -42,7 +42,7 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
 	@Pid(value=Pid.DO_NOT_CHECK,log=false)
 	public String list() throws Exception {
 		ArrayPageList<CompanyOrg> pageList = companyOrgBO.query(companyOrgSO) ;
-        renderList(pageList) ; 
+		renderList(pageList) ; 
         return null ; 
 	}
 	
@@ -56,6 +56,7 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK)
     public String create()  throws Exception {        
         Object newCompanyOrg = companyOrgBO.create(companyOrg) ;
+        CodeHelper.reload("Org");
         renderObject(newCompanyOrg, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
     }
@@ -63,7 +64,8 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK)
     public String update()  throws Exception {         	
     	companyOrgBO.update(companyOrg) ;
-        renderObject(companyOrg, ResponseMessage.KEY_UPDATE_OK) ;
+    	CodeHelper.reload("Org");
+    	renderObject(companyOrg, ResponseMessage.KEY_UPDATE_OK) ;
         return null;    
     }
     
@@ -74,6 +76,7 @@ public class CompanyOrgAction extends BaseAction implements Preparable {
         } else {
         	companyOrgBO.deleteAll(ids) ;
         }
+        CodeHelper.reload("Org");
         renderObject(companyOrg, ResponseMessage.KEY_DELETE_OK) ;       
         return null;        
     }

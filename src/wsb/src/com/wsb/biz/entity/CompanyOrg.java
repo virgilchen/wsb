@@ -25,7 +25,7 @@ public class CompanyOrg extends BaseEntity {
     
     private String org_code;
 	private Long org_id_upper;
-	private Long org_level;
+	private Integer org_level;
 	private String org_name;
 	private String org_owner_staff;
 	private String org_province;
@@ -46,10 +46,10 @@ public class CompanyOrg extends BaseEntity {
 	public void setOrg_id_upper(Long org_id_upper) {
 		this.org_id_upper = org_id_upper;
 	}
-	public Long getOrg_level() {
+	public Integer getOrg_level() {
 		return org_level;
 	}
-	public void setOrg_level(Long org_level) {
+	public void setOrg_level(Integer org_level) {
 		this.org_level = org_level;
 	}
 	public String getOrg_name() {

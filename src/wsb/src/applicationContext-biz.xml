@@ -147,7 +147,17 @@ where e.business_id=p.business_id
               ]]>
             </value>
           </entry>
+
           
+
+          <entry key="queryAccessablePagesByRole">
+            <value>
+              <![CDATA[
+
+select p.*, rp.staff_role_id from page_id_dim p left join role_page_rt rp on p.page_id = rp.page_id and rp.staff_role_id=[staff_role_id]
+              ]]>
+            </value>
+          </entry>
           
         </map>
       </property>

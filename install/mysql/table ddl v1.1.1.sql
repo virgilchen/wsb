@@ -143,7 +143,7 @@ DEFAULT CHARACTER SET = utf8;
 -- drop table `staff_demo_rt`;
 -- `wsbd001`.`staff_demo_rt`
 CREATE TABLE `staff_demo_rt` (
-  `staff_id` INT NOT NULL,
+  `staff_id` INT NOT NULL AUTO_INCREMENT,
   `staff_status` VARCHAR(5) NULL,
   `staff_login_profile` VARCHAR(20) NOT NULL,
   `staff_login_pwd` VARCHAR(100) NOT NULL,
@@ -153,7 +153,7 @@ CREATE TABLE `staff_demo_rt` (
   `staff_id_card` VARCHAR(30) NOT NULL,
   `staff_role_id` INT NULL,
   `staff_last_login_time` DATETIME NULL,
-  PRIMARY KEY (`staff_id`, `staff_login_profile`, `staff_id_card`),
+  PRIMARY KEY (`staff_id`),
   INDEX `staff_ik_key` (`staff_id` ASC),
   INDEX `staff_login_key` (`staff_login_profile` ASC),
   INDEX `staff_id_card_key` (`staff_id_card` ASC),
@@ -161,16 +161,11 @@ CREATE TABLE `staff_demo_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-ALTER TABLE `wsbd001`.`staff_demo_rt` 
-CHANGE COLUMN `staff_id` `staff_id` INT(11) NOT NULL AUTO_INCREMENT ;
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`staff_id`);
-
 
 -- drop table `staff_role_demo_rt`;
 -- `wsbd001`.`staff_role_demo_rt`
 CREATE TABLE `staff_role_demo_rt` (
-  `staff_role_id` INT NOT NULL,
+  `staff_role_id` INT NOT NULL AUTO_INCREMENT,
   `staff_role_page_id` VARCHAR(100) NOT NULL,
   `staff_role_status` VARCHAR(5) NULL,
   `staff_role_name` VARCHAR(20) NULL,
@@ -184,14 +179,19 @@ CREATE TABLE `staff_role_demo_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- ALTER TABLE `wsbd001`.`staff_role_demo_rt` 
-CHANGE COLUMN `staff_role_id` `staff_role_id` INT(11) NOT NULL AUTO_INCREMENT ;
+-- drop table `role_page_rt`;
+CREATE TABLE `role_page_rt` (
+  `staff_role_id` INT NOT NULL ,
+  `page_id` INT NOT NULL ,
+  PRIMARY KEY (`staff_role_id`, `page_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- drop table `company_org_rt`;
 -- `wsbd001`.`company_org_rt` 
 CREATE TABLE `company_org_rt` (
-  `org_id` INT NOT NULL,
+  `org_id` INT NOT NULL AUTO_INCREMENT,
   `org_id_upper` INT NOT NULL,
   `org_code` VARCHAR(20) NULL,
   `org_level` SMALLINT NULL,

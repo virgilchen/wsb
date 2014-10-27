@@ -10,6 +10,7 @@ import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Page;
 import com.wsb.biz.entity.PageSO;
+import com.wsb.biz.entity.RolePage;
 
 
 @Service("pageBO")
@@ -63,6 +64,13 @@ public class PageBO extends BaseServiceImpl {
         return (ArrayPageList<Page>)jdbcDao.query(pageSO, Page.class);
     }
 
+    public ArrayPageList<RolePage> queryAccessablePagesByRole(Long roleId) {
+
+    	PageSO pageSO = new PageSO() ;
+    	pageSO.setStaff_role_id(roleId);
+        
+        return (ArrayPageList<RolePage>)jdbcDao.queryName("bizSQLs:queryAccessablePagesByRole", pageSO, RolePage.class);
+    }
 
 
     public Page get(Long id) {  

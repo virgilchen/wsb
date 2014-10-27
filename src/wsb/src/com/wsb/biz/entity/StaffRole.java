@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
+import com.globalwave.common.ArrayPageList;
 
 /**
  * 
@@ -28,6 +30,9 @@ public class StaffRole extends BaseEntity {
 	private String staff_role_name;
 	private String staff_role_remark;
 	private Long staff_role_org_id;
+	
+	@Transient
+	private ArrayPageList<RolePage> rolePages ;
 	
 	public Long getId() {
 		return id;
@@ -65,6 +70,10 @@ public class StaffRole extends BaseEntity {
 	public void setStaff_role_org_id(Long staff_role_org_id) {
 		this.staff_role_org_id = staff_role_org_id;
 	}
-	
-	
+	public ArrayPageList<RolePage> getRolePages() {
+		return rolePages;
+	}
+	public void setRolePages(ArrayPageList<RolePage> rolePages) {
+		this.rolePages = rolePages;
+	}
 }

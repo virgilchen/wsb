@@ -41,7 +41,7 @@ public class BusinessBO extends BaseServiceImpl {
     	lock(business.getBusiness_id_upper()) ;
     	
     	if (hasChildren(business.getId())) {
-    		throw new BusinessException("12002") ;// 12002', '子目录存在，本操作无效！
+    		throw new BusinessException(12002L) ;// 12002', '子目录存在，本操作无效！
     	}
     	
         jdbcDao.delete(business) ;
@@ -52,7 +52,7 @@ public class BusinessBO extends BaseServiceImpl {
     	
     	for (Long oId:businessIds) {
         	if (hasChildren(oId)) {
-        		throw new BusinessException("12002") ;// 12002', '子目录存在，本操作无效！
+        		throw new BusinessException(12002L) ;// 12002', '子目录存在，本操作无效！
         	}
     	}
     	
