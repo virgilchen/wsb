@@ -1,6 +1,7 @@
 package com.wsb.biz.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
+import com.globalwave.common.ArrayPageList;
 
 /**
  * 
@@ -44,6 +47,9 @@ public class Customer extends BaseEntity {
     private String cust_age;
     private String member_idc;
     private Long member_id;
+    
+    @Transient
+    private ArrayPageList<Car> cars;
 
 	public Long getId() {
 		return id;
@@ -170,6 +176,12 @@ public class Customer extends BaseEntity {
 	}
 	public void setMember_id(Long member_id) {
 		this.member_id = member_id;
+	}
+	public ArrayPageList<Car> getCars() {
+		return cars;
+	}
+	public void setCars(ArrayPageList<Car> cars) {
+		this.cars = cars;
 	}
 	
 }

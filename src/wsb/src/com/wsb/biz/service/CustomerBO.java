@@ -1,5 +1,7 @@
 package com.wsb.biz.service;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.exception.BusinessException;
+import com.wsb.biz.entity.Car;
+import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
 
@@ -16,9 +20,15 @@ import com.wsb.biz.entity.CustomerSO;
 @Transactional
 public class CustomerBO extends BaseServiceImpl {
 
-    public Customer create(Customer customer) {  
+    public Customer create(Customer customer, List<Car> cars) {  
 
     	Customer newItem = (Customer) jdbcDao.insert(customer) ;
+    	for(int i=0;i<cars.size();i++){
+    		if(cars.get(i).getCar_no() != null && !cars.get(i).getCar_no().equalsIgnoreCase("")){
+    			cars.get(i).setPsdo_cust_id(newItem.getId());
+    			jdbcDao.insert(cars.get(i));
+    		}
+    	}
         
         return newItem;
     }
@@ -30,12 +40,19 @@ public class CustomerBO extends BaseServiceImpl {
     
 
     public void delete(Customer customer) {
-    	
+    	CarSO carSO = new CarSO();
+    	carSO.setPsdo_cust_id(customer.getId());
+    	jdbcDao.delete(Car.class, carSO);
         jdbcDao.delete(customer) ;
         
     }
 
     public void deleteAll(Long[] customerIds) {
+    	for(int i=0; i<customerIds.length; i++){
+    		CarSO carSO = new CarSO();
+        	carSO.setPsdo_cust_id(customerIds[i]);
+        	jdbcDao.delete(Car.class, carSO);
+    	}
     	
         CustomerSO customer = new CustomerSO() ;
         customer.setIds(customerIds) ;

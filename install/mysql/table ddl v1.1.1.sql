@@ -45,6 +45,8 @@ ALTER TABLE `wsbd001`.`cust_demo_rt`
 CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL AUTO_INCREMENT ;
 ALTER TABLE `wsbd001`.`cust_demo_rt` 
 ADD COLUMN `cust_code` VARCHAR(100) NULL AFTER `psdo_cust_id`;
+ALTER TABLE `wsbd001`.`cust_demo_rt` 
+CHANGE COLUMN `cust_birthday` `cust_birthday` DATETIME NULL ;
 
 
 -- SELECT * FROM wsbd001.cust_demo_rt LIMIT 0, 1000
@@ -56,7 +58,7 @@ ADD COLUMN `cust_code` VARCHAR(100) NULL AFTER `psdo_cust_id`;
 
 CREATE TABLE `car_info_rt` (
   `psdo_cust_id` INT NOT NULL,
-  `car_no` VARCHAR(10) NOT NULL,
+  `car_no` VARCHAR(10) NULL,
   `car_district` VARCHAR(20) NULL,
   `car_band` VARCHAR(20) NULL,
   `car_type` VARCHAR(20) NULL,
@@ -83,6 +85,10 @@ ALTER TABLE `wsbd001`.`car_info_rt`
 ADD COLUMN `car_id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`car_id`);
+CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL DEFAULT 0 ;
+CHANGE COLUMN `car_framework_no` `car_framework_no` VARCHAR(50) NULL DEFAULT NULL ,
+CHANGE COLUMN `car_engine_no` `car_engine_no` VARCHAR(50) NULL DEFAULT NULL ,
+CHANGE COLUMN `car_miles` `car_miles` DECIMAL(8,2) NULL DEFAULT 0 ;
 
 -- drop table `order_rt`;
 -- `wsbd001`.`order_rt`

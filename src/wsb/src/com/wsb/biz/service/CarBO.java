@@ -50,7 +50,7 @@ public class CarBO extends BaseServiceImpl {
         if (carSO == null) {
         	carSO = new CarSO() ;
         }
-//        carSO.addDesc("car_timestamp") ;
+        carSO.addAsc("car_id") ;
         
         return (ArrayPageList<Car>)jdbcDao.query(carSO, Car.class);
     }

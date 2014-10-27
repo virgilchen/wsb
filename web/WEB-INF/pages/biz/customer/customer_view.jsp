@@ -15,6 +15,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     get_url:root + "/biz/customer_get.action" ,
     delete_url:root + "/biz/customer_delete.action" ,
     entityName:"customer",
+    size:0,
     
     init:function (){
         //this.initSelect() ;
@@ -31,6 +32,44 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E$("sForm").validator();
         E("sForm").setFirstFocus();
         
+    },
+    add:function() {
+        this.addRows ("carInfosTB", [{index:this.size}], {forceClear:false});
+
+        //E$("purchase_date" + this.size).datepicker();
+        
+        this.size ++;
+        this.refreshTableList();
+        
+    },
+    get:function(id) {
+    	if (id == -1) {
+             viewJs.entity = this.eFormInitData;
+    		 formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
+    		 return ;
+    	}
+
+        var _this = this;
+    	this.size = 0;
+
+    	var idProperty = (this.idName==null?"id":this.idName) ;
+    	var params = {} ;
+    	params[idProperty] = id ;
+        ajax(
+            this.get_url, 
+            params,
+            function(data, textStatus){
+                viewJs.entity = data;
+                formDeserialize("eForm", data, {}) ;
+        
+                $(data.cars).each(function (i, elem) {
+            		elem.index = i;
+            		_this.size = i;
+                    _this.addRows ("carInfosTB", elem, {forceClear:i==0?true:false});
+            	});
+
+            }
+        );
     }
 }) ;
 
@@ -116,7 +155,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{$T.cust_code}</td>
                     <td>{$T.cust_name}</td>
                     <td>{$T.cust_gender}</td>
-                    <td>{$T.cust_birthday}</td>
+                    <td>{fmt.maxlen($T.cust_birthday,10)}</td>
                     <td>{$T.cust_phone_no}</td>
                     <td>{$T.member_id}</td>
                   </tr>
@@ -137,7 +176,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <div id="editDiv" style="display:none;" >
     
     <DIV class=main_title>
-      <B>新增客户</B> 
+      <B>客户资料录入</B> 
       <DIV class="main_tt_right fr">
         <A class=orange href="javascript:viewJs.save();">保存</A>
         <A class=blue href="javascript:viewJs.toSearch();">取消</A>
@@ -147,38 +186,139 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
       <input type="hidden" name="customer.id" id="customer.id"/>
-  
-      <table width="100%" border="0">
-        <tr valign="top">
-          <td valign="top" width="15%">
-          </td>
-          <td width="45%">
-            <table width="100%" border="0">
-              <tr>
-                <th width="25%">公告编号：</th>
-                <td><input type="text" name="customer.name_cn" id="customer.name_cn" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <th>标题：</th>
-                <td><input type="text" name="customer.customer_subject" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <th>内容：</th>
-                <td>
-                  <textarea name="customer.customer_content" required="required"  style="width: 100%;height: 80px;"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <th>发表时间：</th>
-                <td><input type="text" id="customer.customer_timestamp" name="customer.customer_timestamp" required="required" maxlength="19"/></td>
-              </tr>
-            </table> 
-          </td>
-          <td valign="top" width="25%">
-          </td>
-        </tr>
-        <tr height="20"><td colspan="2"></td></tr>
-      </table>
+	    <div class="info_entry" id="con1_1" style="display:block;">
+		<p><b>基本资料</b></p>
+		<table width="100%" border="0">
+			<tr>
+			<th>客户号：</th>
+			<td><input name="customer.cust_code" type="text" maxlength="50"/></td>
+			</tr>
+			<tr>
+			<th>姓名：</th>
+			<td><input name="customer.cust_name" type="text" maxlength="20" /><span class="c_red">*</span> 
+			 性别：
+			<select name="customer.cust_gender">
+			  <option selected="selected">男</option>
+			  <option>女</option>
+			</select></td>
+			</tr>
+			<tr>
+			<th>出生年月日：</th>
+			<td><input type="text" class="ipt_date" name="customer.cust_birthday" id="customer.cust_birthday" maxlength="10"/><span class="c_red"></span></td>
+			</tr>
+			<tr>
+			<th>电话号码：</th>
+			<td><input name="customer.cust_phone_no" type="text" maxlength="20" /><span class="c_red">*</span></td>
+			</tr>
+			<tr>
+			<th>其他联系方式：</th>
+			<td><input name="customer.other_contact_way" type="text" maxlength="100" class="long_ipt" /></td>
+			</tr>
+			<tr>
+			<th>家庭地址：</th>
+			<td><input name="customer.cust_home_address" type="text" maxlength="100" class="long_ipt" /></td>
+			</tr>
+		</table>
+		
+		<p><b>扩展资料</b></p>
+		<table width="100%" border="0">
+			<tr>
+			<th>行业背景：</th>
+			<td><textarea name="customer.background" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+			</tr>
+			<tr>
+			<th>企业状况：</th>
+			<td><textarea name="customer.company_info" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+			</tr>
+			<tr>
+			<th>保险资源：</th>
+			<td><input type="text" name="customer.insurance_resource" maxlength="1000" /></td>
+			</tr>
+			<tr>
+			<th>联系人：</th>
+			<td><input name="customer.contact_person" type="text" maxlength="20"/></td>
+			</tr>
+		</table>
+		
+		<p><b>客户资源</b></p>
+		<table width="100%" border="0">
+			<tr>
+			<th>客户来源：</th>
+			<td><select name="customer.cust_src">
+			  <option selected="selected">公司老客户</option>
+			  <option>外来</option><option>朋友</option>
+			</select></td>
+			</tr>
+			<tr>
+			<th>所属行业：</th>
+			<td><input name="customer.cust_industry_type" type="text" maxlength="20" /></td>
+			</tr>
+			<tr>
+			<th>职务：</th>
+			<td><input type="text" name="customer.cust_job_title" maxlength="20"/></td>
+			</tr>
+			<tr>
+			<th>公司名称：</th>
+			<td><input name="customer.company_name" type="text" maxlength="100" /></td>
+			</tr>
+			<tr>
+			<th>公司地址：</th>
+			<td><input name="customer.company_address" type="text" maxlength="100" class="long_ipt" /></td>
+			</tr>
+			<tr>
+			<th>关系网：</th>
+			<td><textarea name="customer.relationship_network" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+			</tr>
+		</table>
+		
+		<p><b>车类资料</b></p>
+		<table width="100%" border="0" id="carInfosTB">
+	      <tbody id="listBody">
+	      </tbody>
+	      
+
+	      <tbody style="display:none;visibility: false;" disabled="true">
+	      	<tr>
+	      		<td>
+	      			<textarea id="templateBody" jTemplate="yes">
+			      	
+					<tr>
+					<th>车牌号码：</th>
+					<td><input name="cars[{$T.index}].car_no" type="text" value="{$T.car_no}" /><input type="hidden" name="cars[{$T.index}].id" value="{$T.id}"/><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" type="text" value="{$T.car_district}"/></td>
+					</tr>
+					<tr>
+					<th>品牌：</th>
+					<td><input name="cars[{$T.index}].car_band" type="text" value="{$T.car_band}" /><span class="c_red"></span>车型：<input name="cars[{$T.index}].car_type" type="text" value="{$T.car_type}" /></td>
+					</tr>
+					<tr>
+					<th>颜色：</th>
+					<td><input name="cars[{$T.index}].car_color" type="text" value="{$T.car_color}"/><span class="c_red"></span>排量：<input name="cars[{$T.index}].car_pai_liang" type="text" value="{$T.car_pai_liang}" /></td>
+					</tr>
+					<tr>
+					<th>车架号码：</th>
+					<td><input name="cars[{$T.index}].car_framework_no" type="text" value="{$T.car_framework_no}" /><span class="c_red"></span>发动机号码：<input name="cars[{$T.index}].car_engine_no" type="text" value="{$T.car_engine_no}" /></td>
+					</tr>
+					<tr>
+					<th>初登日期：</th>
+					<td><input name="cars[{$T.index}].car_init_register_date" type="text" value="{$T.car_init_register_date}"/><span class="c_red"></span>历程数：<input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" /></td>
+					</tr>
+					<tr style="border-top:1px #248cb8 solid;">
+						<td style="border-top:1px #248cb8 solid;" colspan="2"></td>
+					</tr>
+					</textarea>
+	      		</td>
+	      	</tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <tr>
+            <td>
+              <a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a>
+            </td>
+          </tr>
+        </table>
+		<br />
     </form>
      <!-- 
     <table cellspacing="0" cellpadding="0" width="100%">
