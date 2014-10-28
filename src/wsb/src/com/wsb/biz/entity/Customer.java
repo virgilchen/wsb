@@ -1,7 +1,7 @@
 package com.wsb.biz.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +30,7 @@ public class Customer extends BaseEntity {
     private String cust_code;
     private String cust_phone_no;
     private String cust_name;
-    private Timestamp cust_birthday;
+    private Date cust_birthday;
     private String cust_home_address;
     private String cust_gender;
     private String other_contact_way;
@@ -75,10 +75,10 @@ public class Customer extends BaseEntity {
 	public void setCust_name(String cust_name) {
 		this.cust_name = cust_name;
 	}
-	public Timestamp getCust_birthday() {
+	public Date getCust_birthday() {
 		return cust_birthday;
 	}
-	public void setCust_birthday(Timestamp cust_birthday) {
+	public void setCust_birthday(Date cust_birthday) {
 		this.cust_birthday = cust_birthday;
 	}
 	public String getCust_home_address() {

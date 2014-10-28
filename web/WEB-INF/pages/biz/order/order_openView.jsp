@@ -2,6 +2,7 @@
 
 <%
 String view_id=request.getParameter("view_id");
+String customer_id=request.getParameter("customer_id");
 %>
 
 <script>
@@ -53,7 +54,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     getOpenInfo:function() {
         var params = {} ;
-        params.customer_id = 1 ;
+        params.customer_id = <%=customer_id%> ;
         ajax(
         	root+"/biz/order_getOpenInfo.action", 
             params,
@@ -154,6 +155,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     openProductSearchView:function(index) {
     	this.selectedIndex = index ;
     	this.productSearchView.open();
+    },
+    
+    closeView:function() {
+    	if (confirm("你是否需要离开业务发起？")) {
+            removeView(<%=view_id%>);
+    	}
     }
     
 }) ;
@@ -178,7 +185,7 @@ width: 92%;
 		    <div class="main_tt_right fr">
 		        <a href="javascript:viewJs.open();" class="orange">保存并发起业务</a>
 		        <a href="javascript:viewJs.save();" class="orange">保存</a>
-		        <a href="#" class="blue">返回</a>
+		        <a href="javascript:viewJs.closeView();" class="blue">返回</a>
 		    </div>
 		</div>
 

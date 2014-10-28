@@ -18,13 +18,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
     size:0,
     
     init:function (){
-        //this.initSelect() ;
+
         this.pageIndex = E("customerSO.pageIndex") ;
         
         //fillOptions({id:"customer.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"customerSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
-        //this.initDataGrid("customerTB", {height:"400px"}) ;
+        this.initDataGrid("customerTB") ;
         
         E$("customer.cust_birthday").datepicker({});
         
@@ -70,6 +70,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
             }
         );
+    },
+    
+    toOrderOpen:function () {
+
+        var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
+        if (sels.length == 0) {
+            alert("请先选择要发起业务的客户！") ;
+            return ;
+        }
+
+    	openView(100003, '/biz/order_openView.action?customer_id=' + sels[0].value, '业务发起');
     }
 }) ;
 
@@ -87,19 +98,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
       <DIV class="main_tt_right fr">
         <A class=blue href="javascript:viewJs.toAdd();">添加</A>
         <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
-        <A class=blue href="javascript:viewJs.toEdit();">业务发起</A>
+        <A class=blue href="javascript:viewJs.toOrderOpen();">业务发起</A>
         <A class=blue href="javascript:viewJs.toEdit();">发展成会员</A>
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
       </DIV>
     </DIV>
   
     <DIV class="main_search">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="customerSO.pageIndex" id="customerSO.pageIndex" value="1" type="hidden" />
         <input name="customerSO.pageSize" id="customerSO.pageSize" value="10" type="hidden" />
         <table width="100%" >
           <tr>
-           <td style="width:60px;" >姓名：</td>
+           <td style="width:80px;" >姓名：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_name" value="" type="text" />
            </td>
@@ -107,7 +118,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_code" value="" type="text" />
            </td>
-           <td style="width:60px;" >电话：</td>
+           <td style="width:80px;" >电话：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_phone_no" value="" type="text" />
            </td>
@@ -118,7 +129,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
            </td>
-           <td style="width:400px;">
+           <td style="width:100px;">
            </td>
           </tr>
         </table>

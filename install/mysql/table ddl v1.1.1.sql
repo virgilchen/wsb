@@ -10,7 +10,8 @@ use `wsbd001`;
 
 --`wsbd001`.`cust_demo_rt`
 CREATE TABLE `cust_demo_rt` (
-  `psdo_cust_id` INT NOT NULL,
+  `psdo_cust_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cust_code` VARCHAR(100) NULL,
   `cust_phone_no` BIGINT NOT NULL,
   `cust_name` VARCHAR(20) NULL,
   `cust_birthday` DATE NULL,
@@ -40,13 +41,6 @@ CREATE TABLE `cust_demo_rt` (
   UNIQUE INDEX `cust_key` (`psdo_cust_id` ASC))
 ENGINE = InnoDB;
 
---modified in 2014.10.14
-ALTER TABLE `wsbd001`.`cust_demo_rt` 
-CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL AUTO_INCREMENT ;
-ALTER TABLE `wsbd001`.`cust_demo_rt` 
-ADD COLUMN `cust_code` VARCHAR(100) NULL AFTER `psdo_cust_id`;
-ALTER TABLE `wsbd001`.`cust_demo_rt` 
-CHANGE COLUMN `cust_birthday` `cust_birthday` DATETIME NULL ;
 
 
 -- SELECT * FROM wsbd001.cust_demo_rt LIMIT 0, 1000
@@ -57,6 +51,7 @@ CHANGE COLUMN `cust_birthday` `cust_birthday` DATETIME NULL ;
 -- `wsbd001`.`car_info_rt`
 
 CREATE TABLE `car_info_rt` (
+  `car_id` INT(11) NOT NULL AUTO_INCREMENT,
   `psdo_cust_id` INT NOT NULL,
   `car_no` VARCHAR(10) NULL,
   `car_district` VARCHAR(20) NULL,
@@ -64,11 +59,11 @@ CREATE TABLE `car_info_rt` (
   `car_type` VARCHAR(20) NULL,
   `car_color` VARCHAR(5) NULL,
   `car_pai_liang` VARCHAR(10) NULL,
-  `car_framework_no` BIGINT NULL,
-  `car_engine_no` BIGINT NULL,
+  `car_framework_no` VARCHAR(50) NULL,
+  `car_engine_no` VARCHAR(50) NULL,
   `car_init_register_date` DATE NULL,
-  `car_miles` DECIMAL(8,2) NULL,
-  PRIMARY KEY (`psdo_cust_id`,`car_no`),
+  `car_miles` DECIMAL(8,2) NULL DEFAULT 0,
+  PRIMARY KEY (`car_id`),
     -- INDEX `psdo_cust_id_fk_idx` (`member_id` ASC),
     -- CONSTRAINT `psdo_cust_id_fk`
     -- FOREIGN KEY (`psdo_cust_id`)
@@ -80,15 +75,6 @@ CREATE TABLE `car_info_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
---modified in 2014.10.16
-ALTER TABLE `wsbd001`.`car_info_rt` 
-ADD COLUMN `car_id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`car_id`);
-CHANGE COLUMN `psdo_cust_id` `psdo_cust_id` INT(11) NOT NULL DEFAULT 0 ;
-CHANGE COLUMN `car_framework_no` `car_framework_no` VARCHAR(50) NULL DEFAULT NULL ,
-CHANGE COLUMN `car_engine_no` `car_engine_no` VARCHAR(50) NULL DEFAULT NULL ,
-CHANGE COLUMN `car_miles` `car_miles` DECIMAL(8,2) NULL DEFAULT 0 ;
 
 -- drop table `order_rt`;
 -- `wsbd001`.`order_rt`
