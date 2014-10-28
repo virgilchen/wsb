@@ -52,6 +52,9 @@
 	        }
 	    }) ;
     </script>
+    <style>
+    *:focus { outline:none; }
+    </style>
 </head>
 
   
@@ -65,7 +68,9 @@
 			<form id="login">
 			  <input name="staffSO.staff_login_profile_eq" id="login_profile" type="text" class="ipt_txt" />
 			  <input name="staffSO.staff_login_pwd" id="login_pwd" type="password" class="ipt_txt"  />
+			  <!-- 
 			  <input name="staffSO.login_code" type="text" class="ipt_txt ipt_sort" /><img src="images/login_code.jpg" />
+			   -->
 			  <input name="login_OK" type="button" class="ipt_btn" onclick="login_submit();" value="登 录" />
 			</form>
 		  </div>
