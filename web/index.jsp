@@ -39,7 +39,7 @@
  
  -->
 
-<body style="margin: 0;">
+<body style="margin: 0;overflow: hidden;">
   <table style="width: 100%;height: 100%;"  border="0" cellpadding="0" cellspacing="0">
     <tr style="height: 80px;">
       <td colspan="2"><%@include file="frameTitle.jsp" %></td>
