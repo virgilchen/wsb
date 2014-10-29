@@ -102,7 +102,10 @@ public class SessionUser {
     public boolean isCustomer() {
     	return role_codes != null && role_codes.contains("CUSTOMER");
     }
-    
+
+    public boolean isManager() {
+    	return false;
+    }
     
     public long[] getOrganization_ids() {
         return organization_ids;

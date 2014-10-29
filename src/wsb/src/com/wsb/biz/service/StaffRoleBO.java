@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.RolePage;
 import com.wsb.biz.entity.StaffRole;
@@ -108,4 +109,7 @@ public class StaffRoleBO extends BaseServiceImpl {
         return staffRole;
     }
 	
+    public static StaffRoleBO getStaffRoleBO() {
+    	return (StaffRoleBO)CodeHelper.getAppContext().getBean("staffRoleBO");
+    }
 }

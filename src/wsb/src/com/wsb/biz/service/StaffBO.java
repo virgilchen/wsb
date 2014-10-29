@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.U;
 import com.globalwave.common.Util;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.common.cache.CodeHelper;
-import com.globalwave.system.entity.Privilege;
 import com.globalwave.system.entity.SessionUser;
 import com.wsb.biz.entity.Page;
 import com.wsb.biz.entity.Staff;
@@ -26,6 +26,13 @@ import com.wsb.biz.entity.StaffSO;
 public class StaffBO extends BaseServiceImpl {
 	public Staff create(Staff staff) {  
 
+		Staff staffSO = new Staff();
+		staffSO.setStaff_login_profile(staff.getStaff_login_profile());
+		
+		if (this.jdbcDao.find(staffSO) != null) {
+			throw new BusinessException(1110L);//1110', '用户登录账号已经被使用，请使用其它登录账号
+		}
+		
 		staff.setStaff_login_pwd(Util.hash(staff.getStaff_login_pwd()));
     	Staff newItem = (Staff) jdbcDao.insert(staff) ;
         
@@ -43,16 +50,33 @@ public class StaffBO extends BaseServiceImpl {
     
 
     public void delete(Staff staff) {
+    	String sql = "select o.order_id from order_rt o where o.order_init_staff_id = ? " + 
+                           "or exists(select 1 from order_prod_pack_event_rt e where o.order_id=e.order_id and e.event_staff_id=?) limit 0,1";
+    	Long id = jdbcDao.getLong(
+    			sql, 
+    			new Object[]{staff.getId(), staff.getId()});
+    	
+    	if (id != null && id > 0) {
+    		throw new BusinessException(1007L);// '1007', '用户已有业务操作，不能被删除！'
+    	}
     	
         jdbcDao.delete(staff) ;
         
     }
 
     public void deleteAll(Long[] staffIds) {
-    	
+    	/*
         StaffSO staff = new StaffSO() ;
         staff.setIds(staffIds) ;
-        jdbcDao.delete(Staff.class, staff) ;
+        jdbcDao.delete(Staff.class, staff) ;*/
+    	
+    	for (Long staffId : staffIds) {
+    		
+    		Staff staff = new Staff();
+    		staff.setId(staffId);
+    		
+    		this.delete(staff);
+    	}
         
     }
 
@@ -80,6 +104,10 @@ public class StaffBO extends BaseServiceImpl {
         
         Staff staff= staffs.get(0);
         
+        if (!Staff.STATUS_ACTIVE.equals(staff.getStaff_status())) {
+        	throw new BusinessException(1112L);//1112', '用户非激活状态，不能登录！
+        }
+        
         if (!Util.hash(password).equals(staff.getStaff_login_pwd())){
         	throw new BusinessException(1006L);// password is wrong
         }
@@ -95,6 +123,11 @@ public class StaffBO extends BaseServiceImpl {
         }
         
         result.setPrivilege_ids(privilegeIds) ;
+        
+        staff.setStaff_last_login_time(U.currentTimestamp());
+        staff.addInclusions("staff_last_login_time");
+        
+        jdbcDao.update(staff);
         
         return result;
     }

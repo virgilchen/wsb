@@ -52,7 +52,7 @@ insert into cfg_message(code_, value_)
 values('1109', '原密码不正确，更改密码失败！' );
 
 insert into cfg_message(code_, value_) 
-values('1110', '用户登录标识已经被使用，请使用其它登录标识！' );
+values('1110', '用户登录账号已经被使用，请使用其它登录账号！' );
 
 insert into cfg_message(code_, value_) 
 values('1111', '用户被冻结，不能进行任何操作！' );
@@ -66,12 +66,14 @@ values('1113', '用户已经成功登出！' );
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用户不存在！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1007', '1007', '用户已有业务操作，不能被删除！');
 
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11001', '11001', '本环节为业务最终环节，未能找到下一环节！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11002', '11002', '任务已被其它业务员领取！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11003', '11003', '当前环节由其业务员处理！');
-
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11004', '11004', '业务员[{0}]没有业务环节所需要的角色权限[{1}]！');
+ 
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12001', '12001', '父业务不存在，本操作无效！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12002', '12002', '子业务存在，本操作无效！');
@@ -92,6 +94,11 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-6, 0, 'Cache_Sql', 'Role', 'isSCM=Y', 'select staff_role_id as id, staff_role_name from staff_role_demo_rt', null, 'A', 6, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-7, 0, 'Cache_Sql', 'Org', 'isSCM=Y', 'select org_id as id, o.* from company_org_rt o', null, 'A', 7, null, null, null, null, null);
 
+
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-501, 0, 'CM.gender', 'F', '男', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-502, 0, 'CM.gender', 'M', '女', '', null, 'A', 2, null, null, null, null, null);
+
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1001, 0, 'product.unit', 'A', '个', '', null, 'A', 1, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1002, 0, 'product.unit', 'B', '打', '', null, 'A', 2, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1003, 0, 'product.unit', 'C', '箱', '', null, 'A', 3, null, null, null, null, null);
@@ -105,6 +112,9 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1200, 0, 'staffRole.status', 'A', '有效', '', null, 'A', 1, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1201, 0, 'staffRole.status', 'I', '无效', '', null, 'A', 2, null, null, null, null, null);
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1210, 0, 'staff.status', 'A', '有效', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1211, 0, 'staff.status', 'I', '无效', '', null, 'A', 2, null, null, null, null, null);
 
 
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-901, 0, 'DEV.js.config', 'min_mode', 'min.', '', null, 'A', 1, null, null, null, null, null);

@@ -42,3 +42,34 @@ create table cfg_sequence  (
    value        bigint(12)              default 1,
    constraint PK_cfg_sequence primary key (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+/*==============================================================*/
+/* Table: sys_event_log                                       */
+/*==============================================================*/
+create table sys_event_log  (
+   id                 bigint                          not null  auto_increment,
+   event_type_code    VARCHAR(8)                     default '',
+   desc_              VARCHAR(256),
+   user_id            bigint(12)                     default 0,
+   user_name          VARCHAR(250),
+   thread_id          bigint(12)                     default 0,
+   biz_id             bigint(12)                     default 0,
+   biz_data           VARCHAR(2500),
+   version_id         bigint,
+   record_status      char(1),
+   created_by         varchar(50),
+   created_on         datetime,
+   update_by          varchar(50),
+   update_on          datetime,
+   ext_c1             varchar(150),
+   ext_c2             varchar(150),
+   ext_c3             varchar(150),
+   ext_c4             varchar(150),
+   ext_c5             VARCHAR(2500),
+   ext_n1             decimal(12,2),
+   ext_n2             decimal(12,2),
+   constraint PK_SYS_EVENT_LOG primary key (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;

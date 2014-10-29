@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
@@ -82,4 +83,8 @@ public class CustomerBO extends BaseServiceImpl {
         return customer;
     }
     
+
+    public static CustomerBO getCustomerBO() {
+    	return (CustomerBO)CodeHelper.getAppContext().getBean("customerBO");
+    }
 }

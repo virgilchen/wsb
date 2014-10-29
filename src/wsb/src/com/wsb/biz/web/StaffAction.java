@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
-import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.web.annotations.Pid;
-import com.itextpdf.text.log.SysoLogger;
 import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffSO;
 import com.wsb.biz.service.StaffBO;
@@ -107,7 +105,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     }
     
     @Pid(value=Pid.DO_NOT_CHECK)
-    public String updateStatus()  throws Exception {    
+    public String updateStatus()  throws Exception { 
+    	/*
     	if(staff.getStaff_status() != null){
     		if(staff.getStaff_status().equalsIgnoreCase("无效")){
     			staff.setStaff_status("有效");
@@ -116,7 +115,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     		}
     	}else{
     		staff.setStaff_status("无效");
-    	}
+    	}*/
     	
         staffBO.updateStatus(staff) ;
         

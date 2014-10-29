@@ -3,6 +3,7 @@
 <%
 String view_id=request.getParameter("view_id");
 String customer_id=request.getParameter("customer_id");
+String order_id=request.getParameter("order_id");
 %>
 
 <script>
@@ -27,23 +28,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"orderSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
-        /*
-        E$("order.order_timestamp").datetimepicker({
-            timeFormat: "HH:mm:ss"
-        });
-        */
-        
-        
-        /*
-        E$("order.order_init_staff_id").combobox2({id:"order.order_init_staff_id", 
-            data:staffsJson, 
-            firstLabel:"请选择...", 
-            valueProperty:"id", 
-            idProperty:"id", 
-            textProperty:["staff_name"], 
-            titleProperty:"staff_name"
-        });
-        */
+
         
         E$("eForm").validator();
         //E$("sForm").validator();
@@ -54,7 +39,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     getOpenInfo:function() {
         var params = {} ;
+        <%if (order_id != null) {%>
+        params["order.id"] = <%=order_id%> ;
+        <%} else {%>
         params.customer_id = <%=customer_id%> ;
+        <%}%>
+        
+        var _this = this ;
         ajax(
         	root+"/biz/order_getOpenInfo.action", 
             params,
@@ -62,17 +53,49 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 viewJs.entity = data;
                 formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
                 formDeserialize("eForm", data, {}) ;
+
+                $(data.orderProdPacks).each(function (i, elem) {
+                	_this.add(elem);
+                	
+                	var events = [] ;
+                	for (var j = 0 ; j < data.orderProdPackEvents.length ; j ++) {
+                        var oEvent = data.orderProdPackEvents[j];
+                        
+                		if (oEvent.prod_pack_id != elem.prod_pack_id) {
+                			continue;
+                		}
+                		
+                		var event = {
+                                id:oEvent.business_id,
+                                business_name:oEvent.business_name,
+                                index:elem.index,
+                                event_staff_id:oEvent.event_staff_id
+                		};
+                		events[events.length] = event ;
+                	}
+                	_this.addBusinesses(events, _this.size - 1);
+                });
             }
         );
     },
     
     onSaveOk:function(data) {
     	//alert(data.id);
-    	V("order.id", data.id)
+    	V("order.id", data.id);
     },
     
-    add:function() {
-        this.addRows ("orderProdPacksTB", [{index:this.size, textarea_tagName:"textarea" }], {forceClear:false});
+    add:function(data) {
+    	if (typeof(data) == "undefined") {
+    		data = {index:this.size, textarea_tagName:"textarea" };
+    	} else {
+    		data.index = this.size;
+    		data.textarea_tagName = "textarea";
+    	}
+    	
+    	var datas = [];
+    	datas[0] = data;
+    	
+        this.addRows ("orderProdPacksTB", datas, {forceClear:false});
 
         E$("purchase_date" + this.size).datepicker();
         E$("effect_date" + this.size).datepicker();
@@ -132,24 +155,33 @@ var g$v<%=view_id%> = $.extend(newView(), {
             {"productPack.id":id},
             function(data, textStatus){
                 //viewJs.addRows("businessTB", data.list) ;
-                var $content = $("#business" + _this.selectedIndex + "TB #listBusinessBody", viewJs.view);
-                $content.html("");
-                $(data.list).each(function (i, elem) {
-                	elem.index = _this.selectedIndex;
-                	$content.append(parse(V("businessTemplateBody"), elem));
-
-                    E$("event_staff_ids_" + elem.index + "_" + elem.id).combobox2({
-                    	id:"event_staff_ids_" + elem.index + "_" + elem.id, 
-                        data:_this.staffsJson, 
-                        firstLabel:"请选择...", 
-                        valueProperty:"id", 
-                        idProperty:"id", 
-                        textProperty:["staff_name"], 
-                        titleProperty:"staff_name"
-                    });
-                });
+                _this.addBusinesses(data.list, _this.selectedIndex);
             }
         );
+    },
+    
+    addBusinesses:function (datas, index) {
+        var _this = this;
+        var $content = $("#business" + index + "TB #listBusinessBody", viewJs.view);
+        $content.html("");
+        $(datas).each(function (i, elem) {
+            elem.index = index;
+            $content.append(parse(V("businessTemplateBody"), elem));
+
+            E$("event_staff_ids_" + elem.index + "_" + elem.id).combobox2({
+                id:"event_staff_ids_" + elem.index + "_" + elem.id, 
+                data:_this.staffsJson, 
+                firstLabel:"请选择...", 
+                valueProperty:"id", 
+                idProperty:"id", 
+                textProperty:["staff_name"], 
+                titleProperty:"staff_name"
+            });
+            
+            if (typeof(elem.event_staff_id) != "undefined") {
+                setInputValue(E("event_staff_ids_" + elem.index + "_" + elem.id), elem.event_staff_id) ;
+            }
+        });
     },
     
     openProductSearchView:function(index) {
@@ -198,6 +230,7 @@ width: 92%;
         <input type="hidden" name="order.id" id="order.id"/>
         <input type="hidden" name="order.version_id" id="order.version_id"/>
         <input type="hidden" name="order.psdo_cust_id" id="order.psdo_cust_id"/>
+        <input type="hidden" name="order.order_cur_status" id="order.order_cur_status"/>
         
 	    <table width="100%" border="0">
 	      <tr>
@@ -237,14 +270,14 @@ width: 92%;
 			                <th width="15%">商品包名称：</th>
 			                <td width="30%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
-                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="" /> 
-                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="" readonly="readonly" required="required" onclick="viewJs.openProductSearchView({$T.index});"/> 
+                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="{$T.prod_pack_id}" /> 
+                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="{$T.prod_pack_name}" readonly="readonly" required="required" onclick="viewJs.openProductSearchView({$T.index});"/> 
 			                  <a href="javascript:viewJs.openProductSearchView({$T.index});" class="link_blue">选择</a>
 			                  <span class="c_red"></span>
 			                </td>
 			                <th width="10%">数量：</th>
 			                <td width="20%">
-			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" required="required"/> 份<span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
@@ -270,17 +303,17 @@ width: 92%;
 			              <tr>
 			                <th>购买日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" class="ipt_date" required="required" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
 			                <th>起效日期：</th>
 			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" class="ipt_date" required="required" /><span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_effect_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
                             <td></td>
 			              </tr>
 			              <tr height="70px">
 			                <th>备注：</th>
-			                <td colspan="3"><{$T.textarea_tagName}  name="orderProdPacks[{$T.index}].order_prod_pack_remark" style="width:400px;height:50px;"></{$T.textarea_tagName}></td>
+			                <td colspan="3"><{$T.textarea_tagName}  name="orderProdPacks[{$T.index}].order_prod_pack_remark" style="width:400px;height:50px;">{$T.order_prod_pack_remark}</{$T.textarea_tagName}></td>
                             <td></td>
 			              </tr>
 			          
@@ -304,7 +337,9 @@ width: 92%;
 	  </form>
 	</div>
 	
+	<!-- 
 	<a href="#" class="btn_orange mg_r">保存并发起业务</a><a href="#" class="btn_orange">保存</a><a href="#" class="btn_blue">返回</a>
+	 -->
 	 
     <%@include file="/WEB-INF/pages/biz/productPack/productPack_SearchView.jsp" %>
 	 

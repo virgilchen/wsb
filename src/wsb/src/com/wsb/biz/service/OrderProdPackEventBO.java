@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.system.entity.SessionUser;
 import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackEventSO;
+import com.wsb.biz.entity.Staff;
 
 
 
@@ -33,7 +35,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 		
 	}
 
-	public void saveOpenOrderEvents(Long orderId, OrderProdPack orderProdPack) {
+	public void saveOpenOrderEvents(Long orderId, OrderProdPack orderProdPack, String status) {
 		OrderProdPackEventSO so = new OrderProdPackEventSO();
 		so.setOrder_id(orderId);
 		so.setProd_pack_id(orderProdPack.getProd_pack_id());
@@ -48,7 +50,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 			event.setProd_pack_id(orderProdPack.getProd_pack_id());
 			event.setBusiness_id(orderProdPack.getBusiness_ids()[i]);
 			event.setEvent_staff_id(orderProdPack.getEvent_staff_ids()[i]);
-			event.setEvent_status(OrderProdPackEvent.STATUS_READY);
+			event.setEvent_status(status);
 			
 			jdbcDao.insert(event);
 		}
@@ -143,9 +145,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	jdbcDao.update(oldEvent);
     	
-    	if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
-    	    return null;
-    	}
+    	
     	
     	OrderProcess so = new OrderProcess();
     	so.setBusiness_id(event.getBusiness_id());
@@ -154,13 +154,29 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	    so.setProcs_step_no(oldEvent.getProcs_step_no());
     	} else if (OrderProdPackEvent.STATUS_BACK.equals(event_status)) {
     		so.setProcs_step_no(oldEvent.getProcs_step_no() - 1);
-    	} else {// if (OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
+    	} else if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
     		so.setProcs_step_no(oldEvent.getProcs_step_no() + 1);
+    	} else {// if (OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
+    		so.setProcs_step_no(oldEvent.getProcs_step_no());
     	}
     	
     	OrderProcess process = (OrderProcess)jdbcDao.find(so);
     	if (process == null) {
+    		if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
+    			return null;// successfully exists
+    		}
     		throw new BusinessException(11001L);//11001 本环节为业务最终环节，未能找到下一环节
+    	}
+    	
+    	Long newEventStaffId = event.getEvent_staff_id() ;
+    	
+    	if (newEventStaffId != null) {    	
+    		Staff newStaff = StaffBO.getStaffBO().get(newEventStaffId);
+    		Long roleId = newStaff.getStaff_role_id();
+    		if (process.getProcs_staff_role_id() != roleId) {
+    			String roleName = StaffRoleBO.getStaffRoleBO().get(process.getProcs_staff_role_id()).getStaff_role_name();
+    			throw new BusinessException(11004L, newStaff.getStaff_name(), roleName);//11004 业务员[{0}]没有业务环节所需要的角色权限[{1}]!
+    		}
     	}
     	event.setProcs_step_no(process.getProcs_step_no());
     	
@@ -180,5 +196,10 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
         if (count == 0) {
         	throw new BusinessException(11002L);// 11002Ltask has been picked up by other people.
         }
+    }
+    
+
+    public static OrderProdPackEventBO getOrderProdPackEventBO() {
+    	return (OrderProdPackEventBO)CodeHelper.getAppContext().getBean("orderProdPackEventBO");
     }
 }

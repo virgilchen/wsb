@@ -15,12 +15,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
     get_url:root + "/biz/staff_get.action" ,
     delete_url:root + "/biz/staff_delete.action" ,
     entityName:"staff",
+    eFormInitData:{"staff_status":"A"},
     
     init:function (){
         this.pageIndex = E("staffSO.pageIndex") ;
         
         fillOptions({id:"staff.staff_role_id", dictName:"Role", firstLabel:"请选择...", textProperty:"staff_role_name",titleProperty:"staff_role_name"}) ;// 改为字典取值
-        //fillOptions({id:"staffSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
+        fillOptions({id:"staff.staff_status", dictName:"staff.status", firstLabel:"请选择..."}) ;
+        fillOptions({id:"staff.staff_gender", dictName:"CM.gender", firstLabel:"请选择..."}) ;
         
         //this.initDataGrid("staffTB", {height:"400px"}) ;
 
@@ -30,7 +32,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         this.first();
     },
-    foo:function(id,status) {
+    
+    updateStatus:function(id,status) {
 
         ajax(
             root + "/biz/staff_updateStatus.action", 
@@ -41,6 +44,31 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
             }
         );
+    }, 
+    
+    checkEditForm:function() {
+    	if (V("staff.id") != "" && V("staff.staff_login_pwd") == "") {
+    		alert("请输入密码！") ;
+            E("staff.staff_login_pwd").focus();
+    		return false ;
+    	}
+    	if(V("staff.staff_login_pwd2") != V("staff.staff_login_pwd")) {
+    		alert("密码跟确认密码不一致，请重新输入！");
+            V("staff.staff_login_pwd2", "");
+            V("staff.staff_login_pwd", "");
+            E("staff.staff_login_pwd").focus();
+    		return false ;
+    	}
+    	
+    	return true ;
+    },
+    
+    onGet:function(data, event) {
+    	if (typeof(data.id) == "undefined") {
+    		E$("staff.staff_login_profile").removeAttr("readonly");
+    	} else {
+            E$("staff.staff_login_profile").attr("readonly", "readonly") ;
+    	}
     }
 }) ;
 
@@ -58,7 +86,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
       <DIV class="main_tt_right fr">
         <A class=blue href="javascript:viewJs.toAdd();">新增员工</A>
         <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
+        <A class=orange href="javascript:viewJs.toDelete();">删除</A>
+        <!-- 
         <A class=orange href="javascript:viewJs.toDelete();">禁用</A>
+         -->
       </DIV>
     </DIV>
   
@@ -117,12 +148,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <td>{$T.id}</td>
                     <td>{$T.staff_login_profile}</td>
-                    <td>{$T.staff_status}</td>
+                    <td>{dVal("staff.status", "name_", {PK_ID:$T.staff_status})}</td>
                     <td>{$T.staff_name}</td>
-                    <td>{$T.staff_gender}</td>
-                    <td>{$T.staff_role_id}</td>
-                    <td>{$T.staff_last_login_time}</td>
-                    <td><a href="javascript:viewJs.foo({$T.id}, '{$T.staff_status}')">禁用</a></td>
+                    <td>{dVal("CM.gender", "name_", {PK_ID:$T.staff_gender})}</td>
+                    <td>{dVal("Role", "staff_role_name", {PK_ID:$T.staff_role_id})}</td>
+                    <td>{fmt.maxlen($T.staff_last_login_time, 100)}</td>
+                    <td>
+                      {#if $T.staff_status == 'I'}
+                      <a href="javascript:viewJs.updateStatus({$T.id}, 'A')">激活</a>
+                      {#else}
+                      <a href="javascript:viewJs.updateStatus({$T.id}, 'I')">禁用</a>
+                      {#/if}
+                    </td>
                   </tr>
               </textarea>
             </td>
@@ -167,7 +204,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th width="25%">密码：</th>
                 <td>
-                 <input type="text" name="staff.staff_login_pwd" id="staff.staff_login_pwd" maxlength="50"/>
+                 <input type="password" name="staff.staff_login_pwd" id="staff.staff_login_pwd" maxlength="50"/>
+                </td>
+              </tr>
+              <tr>
+                <th width="25%">密码确认：</th>
+                <td>
+                 <input type="password" id="staff.staff_login_pwd2" maxlength="50"/>
                 </td>
               </tr>
               <tr>
@@ -183,6 +226,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 </td>
               </tr>
               <tr>
+                <th width="25%">电话号码：</th>
+                <td>
+                 <input type="text" name="staff.phone_no" id="staff.phone_no" maxlength="50"/>
+                </td>
+              </tr>
+              <tr>
                 <th width="25%">用户角色：</th>
                 <td>
                   <select name="staff.staff_role_id" id="staff.staff_role_id"></select>
@@ -192,8 +241,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 </td>
               </tr>
               <tr>
+                <th width="25%">性别：</th>
+                <td>
+                  <select name="staff.staff_gender" id="staff.staff_gender"></select>
+                </td>
+              </tr>
+              <tr>
                 <th width="25%">状态：</th>
-                <td><input type="text" name="staff.staff_status" id="staff.staff_status" maxlength="50"/></td>
+                <td>
+                  <select name="staff.staff_status" id="staff.staff_status"></select>
+                </td>
               </tr>
             </table> 
           </td>

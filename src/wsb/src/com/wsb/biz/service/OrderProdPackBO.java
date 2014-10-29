@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackSO;
@@ -83,5 +84,7 @@ public class OrderProdPackBO extends BaseServiceImpl {
         
         return org;
     }
-    
+    public static OrderProdPackBO getOrderProdPackBO() {
+    	return (OrderProdPackBO)CodeHelper.getAppContext().getBean("orderProdPackBO");
+    }
 }

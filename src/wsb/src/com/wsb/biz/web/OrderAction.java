@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
-import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.Order;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.entity.Staff;
+import com.wsb.biz.entity.StaffSO;
 import com.wsb.biz.service.OrderBO;
 import com.wsb.biz.service.StaffBO;
 import com.opensymphony.xwork2.Preparable;
@@ -43,20 +44,31 @@ public class OrderAction extends BaseAction implements Preparable {
 	public String execute() throws Exception { 
         return this.list(); 
     }
+	
+	public String searchView() throws Exception {
+		return "jsp";
+	}
     
     public String openView() throws Exception {
 
+    	StaffSO so = new StaffSO();
+    	so.setStaff_status(Staff.STATUS_ACTIVE);
+    	
     	this.getRequest().setAttribute(
     			"staffsJson", 
-    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(null)));
+    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(so)));
     	
     	return "jsp";
     }
     
     public String followUpView() throws Exception {
+
+    	StaffSO so = new StaffSO();
+    	so.setStaff_status(Staff.STATUS_ACTIVE);
+    	
     	this.getRequest().setAttribute(
     			"staffsJson", 
-    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(null)));
+    			GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(so)));
     	
     	return "jsp";
     }
@@ -68,7 +80,7 @@ public class OrderAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String getOpenInfo() throws Exception {
 
-        Object newOrder = orderBO.getOpenInfo(customer_id) ;
+        Object newOrder = orderBO.getOpenInfo(order, customer_id) ;
 
         renderObject(newOrder, null) ;
         return null;  
@@ -130,9 +142,7 @@ public class OrderAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String list() throws Exception {  
 
-        ArrayPageList<Order> pageList = orderBO.query(orderSO) ;
-
-        renderList(pageList) ; 
+        renderList(orderBO.queryOrders(orderSO)) ; 
         
         return null ;  
         
@@ -185,6 +195,7 @@ public class OrderAction extends BaseAction implements Preparable {
         
     }
 
+    /*
     @Pid(value=Pid.DO_NOT_CHECK)
     public String addOrderProdPackEvent() throws Exception {
     	
@@ -193,7 +204,7 @@ public class OrderAction extends BaseAction implements Preparable {
         renderObject(order, ResponseMessage.KEY_UPDATE_OK) ;
         
         return null;    
-    }
+    }*/
 
 
     public void setOrderBO(OrderBO orderBO) {

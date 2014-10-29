@@ -19,6 +19,9 @@ import com.globalwave.base.BaseEntity;
 @Entity
 @Table(name = "staff_demo_rt")
 public class Staff extends BaseEntity {
+
+	public static String STATUS_ACTIVE = "A";
+	public static String STATUS_INVALUE = "I";
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

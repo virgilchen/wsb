@@ -733,6 +733,13 @@ var baseView_af24332idihy00p2jww = {
     get:function(id, prefun, postfun) {
     	if (id == -1) {
              viewJs.entity = this.eFormInitData;
+             if(viewJs.onGet != undefined && viewJs.onGet) {
+             	var getEvent = {isHandled:false};
+             	viewJs.onGet(this.eFormInitData, getEvent);
+             	if (getEvent.isHandled) {
+             		return ;
+             	}
+             }
     		 formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
     		 return ;
     	}
@@ -744,7 +751,13 @@ var baseView_af24332idihy00p2jww = {
             params,
             function(data, textStatus){
                 viewJs.entity = data;
-                if(viewJs.onGet != undefined && viewJs.onGet) viewJs.onGet(data);
+                if(viewJs.onGet != undefined && viewJs.onGet) {
+                	var getEvent = {isHandled:false};
+                	viewJs.onGet(data, getEvent);
+                	if (getEvent.isHandled) {
+                		return ;
+                	}
+                }
                 if(prefun != undefined && prefun) prefun(data);
                 formDeserialize("eForm", data, {}) ;
                 if(postfun != undefined && postfun) postfun(data);

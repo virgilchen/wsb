@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
-import com.globalwave.common.cache.CodeHelper;
-import com.globalwave.common.exception.BusinessException;
 import com.globalwave.system.entity.SessionUser;
 import com.globalwave.system.service.SequenceBO;
 import com.wsb.biz.entity.Order;
@@ -36,18 +34,35 @@ public class OrderBO extends BaseServiceImpl {
         return newItem;
     }
     
-    public Order getOpenInfo(Long customerId) {
+    /**
+     * 要看是否包含订单信息，当包含订单信息时，需要从数据中取出信息
+     * 
+     * @param order
+     * @param customerId
+     * @return
+     */
+    public Order getOpenInfo(Order order, Long customerId) {
     	
-    	Order result = new Order();
-    	result.setCustomer(getCustomerBO().get(customerId));
+    	Order result = (order == null?new Order():this.get(order.getId()));
     	
-    	String orderPrefix = U.yyyyMMdd(U.currentDate());
-    	result.setOrder_no(
-    			orderPrefix + 
-    			StringUtils.leftPad(String.valueOf(SequenceBO.getSequenceBO().nextValue("Ord$" + orderPrefix.substring(0,6))), 4, '0'));
+    	if (customerId == null) {
+    		customerId = result.getPsdo_cust_id();
+    	}
     	
-    	result.setOrder_init_time_stamp(U.currentTimestamp());
-    	result.setPsdo_cust_id(result.getCustomer().getId());
+    	result.setCustomer(CustomerBO.getCustomerBO().get(customerId));
+    	
+    	if (order == null) {
+	    	String orderPrefix = U.yyyyMMdd(U.currentDate());
+	    	result.setOrder_no(
+	    			orderPrefix + 
+	    			StringUtils.leftPad(String.valueOf(SequenceBO.getSequenceBO().nextValue("Ord$" + orderPrefix.substring(0,6))), 4, '0'));
+	    	
+	    	result.setOrder_init_time_stamp(U.currentTimestamp());
+	    	result.setPsdo_cust_id(result.getCustomer().getId());
+    	} else {
+    		result.setOrderProdPacks(OrderProdPackBO.getOrderProdPackBO().queryByOrderId(order.getId()));
+    		result.setOrderProdPackEvents(OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(order.getId())) ;
+    	}
     	
     	return result;
     }
@@ -55,11 +70,11 @@ public class OrderBO extends BaseServiceImpl {
     public Order save(Order order, List<OrderProdPack> orderProdPacks) {
 
     	Order result = null;
+    	order.setOrder_init_staff_id(SessionUser.get().getStaff().getId());
         
     	if (order.getId() == null) {
-    		if (order.getOrder_cur_status() == null) {
-    		    order.setOrder_cur_status(Order.STATUS_INIT);
-    		}
+    		order.setOrder_cur_status(Order.STATUS_INIT);
+
     		result = (Order) jdbcDao.insert(order) ;
     	} else {
     		jdbcDao.update(order) ;
@@ -70,7 +85,7 @@ public class OrderBO extends BaseServiceImpl {
     		jdbcDao.delete(OrderProdPack.class, orderProdPackSO);
     	}
 
-    	OrderProdPackEventBO eventBO = this.getOrderProdPackEventBO();
+    	OrderProdPackEventBO eventBO = OrderProdPackEventBO.getOrderProdPackEventBO();
     	
     	for (OrderProdPack opp : orderProdPacks) {
     		if (opp == null) {
@@ -80,7 +95,7 @@ public class OrderBO extends BaseServiceImpl {
     		opp.setOrder_id(order.getId());
     		jdbcDao.insert(opp);
 
-    		eventBO.saveOpenOrderEvents(order.getId(), opp);
+    		eventBO.saveOpenOrderEvents(order.getId(), opp, OrderProdPackEvent.STATUS_INIT);
     	}
     	
         return result;
@@ -95,11 +110,11 @@ public class OrderBO extends BaseServiceImpl {
     	
     	Set<Long> productPackageIds = new HashSet<Long>();
 
-    	OrderProdPackEventBO eventBO = this.getOrderProdPackEventBO();
+    	OrderProdPackEventBO eventBO = OrderProdPackEventBO.getOrderProdPackEventBO();
     	
     	for (OrderProdPack opp : orderProdPacks) {
     		productPackageIds.add(opp.getProd_pack_id());
-    		eventBO.saveOpenOrderEvents(order.getId(), opp);
+    		eventBO.saveOpenOrderEvents(order.getId(), opp, OrderProdPackEvent.STATUS_READY);
     	}
     	
     	//this.getOrderProdPackEventBO().saveOpenOrderEvents(productPackageIds, order.getId());
@@ -109,21 +124,21 @@ public class OrderBO extends BaseServiceImpl {
     public Order getOrderInfo(Long orderId) {
     	
     	Order result = this.get(orderId);
-    	result.setCustomer(getCustomerBO().get(result.getPsdo_cust_id()));
+    	result.setCustomer(CustomerBO.getCustomerBO().get(result.getPsdo_cust_id()));
     	
-    	OrderProdPackBO orderProdPackBO = getOrderProdPackBO();
+    	OrderProdPackBO orderProdPackBO = OrderProdPackBO.getOrderProdPackBO();
     	
     	result.setOrderProdPacks(orderProdPackBO.queryByOrderId(orderId));
     	result.setProducts(orderProdPackBO.queryOrderProdByOrderId(orderId));
     	
-    	result.setOrderProdPackEvents(getOrderProdPackEventBO().queryByOrderId(orderId));
+    	result.setOrderProdPackEvents(OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(orderId));
     	
     	
     	return result;
     }
 
     public OrderProdPackEvent followUp(OrderProdPackEvent event) {
-    	OrderProdPackEvent result = this.getOrderProdPackEventBO().followUp(event);
+    	OrderProdPackEvent result = OrderProdPackEventBO.getOrderProdPackEventBO().followUp(event);
     	
     	if (result == null) {
     		Long orderId = event.getOrder_id();
@@ -144,7 +159,7 @@ public class OrderBO extends BaseServiceImpl {
 
     public void pickUp(OrderProdPackEvent event) {
     	event.setEvent_staff_id(SessionUser.get().getStaff().getId());
-    	this.getOrderProdPackEventBO().pickUp(event);
+    	OrderProdPackEventBO.getOrderProdPackEventBO().pickUp(event);
     }
 
     
@@ -173,14 +188,14 @@ public class OrderBO extends BaseServiceImpl {
         jdbcDao.delete(Order.class, criterion) ;
         
     }
-    
+    /*
     
     public void addOrderProdPackEvent(OrderProdPackEvent orderProdPackEvent) {
     	
         
         
     }
-    
+
     public ArrayPageList<Order> query(OrderSO orderSO) {
 
         if (orderSO == null) {
@@ -189,6 +204,21 @@ public class OrderBO extends BaseServiceImpl {
         orderSO.addDesc("order_timestamp") ;
         
         return (ArrayPageList<Order>)jdbcDao.query(orderSO, Order.class);
+    }*/
+    
+    public ArrayPageList<HashMap> queryOrders(OrderSO orderSO) {
+
+        if (orderSO == null) {
+        	orderSO = new OrderSO() ;
+        }
+        
+        SessionUser sessionUser = SessionUser.get();
+        
+        if (!sessionUser.isManager()) {
+            orderSO.setOrder_init_staff_id(sessionUser.getStaff().getId());
+        }
+        
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrders", orderSO, HashMap.class);
     }
 
 
@@ -202,17 +232,6 @@ public class OrderBO extends BaseServiceImpl {
         return order;
     }
     
-    public CustomerBO getCustomerBO() {
-    	return (CustomerBO)CodeHelper.getAppContext().getBean("customerBO");
-    }
-    
-    public OrderProdPackEventBO getOrderProdPackEventBO() {
-    	return (OrderProdPackEventBO)CodeHelper.getAppContext().getBean("orderProdPackEventBO");
-    }
-    
-    public OrderProdPackBO getOrderProdPackBO() {
-    	return (OrderProdPackBO)CodeHelper.getAppContext().getBean("orderProdPackBO");
-    }
     
     
     

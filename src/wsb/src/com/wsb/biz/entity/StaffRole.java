@@ -24,8 +24,6 @@ public class StaffRole extends BaseEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="staff_role_id")
 	private Long id;
-	@Transient
-	private String staff_role_page_id;
 	private String staff_role_status;
 	private String staff_role_name;
 	private String staff_role_remark;
@@ -39,12 +37,6 @@ public class StaffRole extends BaseEntity {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getStaff_role_page_id() {
-		return staff_role_page_id;
-	}
-	public void setStaff_role_page_id(String staff_role_page_id) {
-		this.staff_role_page_id = staff_role_page_id;
 	}
 	public String getStaff_role_status() {
 		return staff_role_status;
