@@ -1,5 +1,6 @@
 package com.wsb.biz.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class Car extends BaseEntity {
     private String car_pai_liang;
     private String car_framework_no;
     private String car_engine_no;
-    private Timestamp car_init_register_date;
+    private Date car_init_register_date;
     private Double car_miles;
 	public Long getPsdo_cust_id() {
 		return psdo_cust_id;
@@ -86,12 +87,6 @@ public class Car extends BaseEntity {
 	public void setCar_engine_no(String car_engine_no) {
 		this.car_engine_no = car_engine_no;
 	}
-	public Timestamp getCar_init_register_date() {
-		return car_init_register_date;
-	}
-	public void setCar_init_register_date(Timestamp car_init_register_date) {
-		this.car_init_register_date = car_init_register_date;
-	}
 	public Double getCar_miles() {
 		return car_miles;
 	}
@@ -103,6 +98,12 @@ public class Car extends BaseEntity {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Date getCar_init_register_date() {
+		return car_init_register_date;
+	}
+	public void setCar_init_register_date(Date car_init_register_date) {
+		this.car_init_register_date = car_init_register_date;
 	}
     
 }

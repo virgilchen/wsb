@@ -49,7 +49,9 @@ private static final long serialVersionUID = 7244882365197775441L;
     }
 
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
-    public String get() throws Exception {  
+    public String get() throws Exception { 
+    	
+    	System.out.println("============"+this.id);
 
     	Customer customer = customerBO.get(this.id) ;
     	CarSO carso = new CarSO();
@@ -57,7 +59,6 @@ private static final long serialVersionUID = 7244882365197775441L;
     	ArrayPageList _cars = carBO.query(carso);
     	customer.setCars(_cars);
     	renderObject(customer, null) ; 
-//    	renderObject(car, null) ; 
         return null ;  
     }
 
@@ -99,6 +100,14 @@ private static final long serialVersionUID = 7244882365197775441L;
         
         return null;    
         
+    }
+    
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String view360() throws Exception {  
+    	ArrayPageList<Customer> pageList = customerBO.query(customerSO) ;
+
+        renderList(pageList) ; 
+        return "jsp" ;  
     }
 
 

@@ -31,6 +31,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
+        var _id= <%=request.getParameter("customer.id")%>;
+        viewJs.toEdit({value:_id});
         
     },
     add:function() {
@@ -187,15 +189,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
   </div>
     
   <div id="editDiv" style="display:none;" >
-    
-    <DIV class=main_title>
-      <B>客户资料录入</B> 
-      <DIV class="main_tt_right fr">
-        <A class=orange href="javascript:viewJs.save();">保存</A>
-        <A class=blue href="javascript:viewJs.toSearch();">取消</A>
-      </DIV>
-    </DIV>
-
+    <div class="main_title">
+		<b>360视图</b>
+		<div class="main_tt_right fr">
+		 	<a href="#" class="blue">导出客户信息</a>
+		 	<a href="javascript:viewJs.toOrderOpen();" class="orange">保存并发起业务</a>
+		 	<a href="viewJs.save()" class="orange">保存</a>
+		 	<A class=blue href="javascript:removeAll();openView(130001, '/biz/customer_view.action', '客户列表');">取消</A>
+		</div>
+	</div>
+	
+	
+	<div class="user_suggest">
+		<div class="content">
+		<p><b>跟据客户的信息和过往的业务记录。建议：</b></p>
+		<p>1、决策1</p><p>2、决策2</p><p>3、决策3</p><p>4、决策5</p>
+		</div>
+	</div>
 
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
       <input type="hidden" name="customer.id" id="customer.id"/>

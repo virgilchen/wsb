@@ -24,12 +24,13 @@ public class CustomerBO extends BaseServiceImpl {
     public Customer create(Customer customer, List<Car> cars) {  
 
     	Customer newItem = (Customer) jdbcDao.insert(customer) ;
-    	for(int i=0;i<cars.size();i++){
-    		if(cars.get(i).getCar_no() != null && !cars.get(i).getCar_no().equalsIgnoreCase("")){
+    	if(cars != null){
+    		for(int i=0;i<cars.size();i++){
     			cars.get(i).setPsdo_cust_id(newItem.getId());
     			jdbcDao.insert(cars.get(i));
-    		}
+        	}
     	}
+    	
         
         return newItem;
     }
@@ -38,10 +39,12 @@ public class CustomerBO extends BaseServiceImpl {
     	CarSO carSO = new CarSO();
     	carSO.setPsdo_cust_id(customer.getId());
     	jdbcDao.delete(Car.class, carSO);
-    	
-        jdbcDao.update(customer) ;
-        for(int i=0;i<cars.size();i++){
-    		jdbcDao.insert(cars.get(i));
+    	if(cars != null){
+	        jdbcDao.update(customer) ;
+	        for(int i=0;i<cars.size();i++){
+	        	cars.get(i).setPsdo_cust_id(customer.getId());
+	    		jdbcDao.insert(cars.get(i));
+	    	}
     	}
     }
     
