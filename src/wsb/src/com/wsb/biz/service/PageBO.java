@@ -59,9 +59,11 @@ public class PageBO extends BaseServiceImpl {
 
     public ArrayPageList<Page> queryByRole(Long roleId) {
 
+
     	PageSO pageSO = new PageSO() ;
+    	pageSO.setStaff_role_id(roleId);
         
-        return (ArrayPageList<Page>)jdbcDao.query(pageSO, Page.class);
+        return (ArrayPageList<Page>)jdbcDao.queryName("bizSQLs:queryPagesByRole", pageSO, Page.class);
     }
 
     public ArrayPageList<RolePage> queryAccessablePagesByRole(Long roleId) {

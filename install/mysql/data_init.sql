@@ -86,9 +86,6 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('13002', '13002', '�
 
 
 
-/*  Staff init  */
-INSERT INTO `staff_demo_rt` (`staff_id`, `staff_status`, `staff_login_profile`, `staff_login_pwd`, `staff_name`, `staff_gender`, `staff_id_card`) VALUES ('1', '有效', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '系统管理员', '男', '440181198001010001');
-
 delete from cfg_dict where id<>9898986565104;
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1, 0, 'Cache_Sql', 'Dict', 'subTable=domain_&isSCM=Y', 'select code_ as id, name_ , desc_ , domain_, ext_s1, ext_s2, ext_s3,ext_s4,ext_s5 from cfg_dict where domain_!=''Cache_Sql'' and status_ = ''A'' order by domain_,order_ ', null, 'A', 1, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-4, 0, 'Cache_Sql', 'Message', '', 'select code_ as id, value_ from cfg_message ', null, 'A', 4, null, null, null, null, null);
@@ -128,20 +125,40 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1303, 0, 'orderEvent.status', 'F', '失败', '', null, 'A', 4, null, null, null, null, null);
 
 
+delete from `staff_demo_rt` where `staff_id`<>0;
 
+/*  Staff init  */
+INSERT INTO `staff_demo_rt` (`staff_id`, `staff_status`, `staff_login_profile`, `staff_login_pwd`, `staff_name`, `staff_gender`, `staff_id_card`, staff_role_id) VALUES ('1', 'A', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '系统管理员', '男', '440181198001010001', 1);
+
+INSERT INTO `staff_role_demo_rt` (`staff_role_id`, `staff_role_status`, `staff_role_name`, `staff_role_remark`, `staff_role_org_id`) VALUES ('1', 'A', '系统管理员', '系统管理员', '1');
 
 
 delete from `page_id_dim` where `page_id` != '0';
 
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('100001', '业务单处理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('100004', '业务单流查看');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('110001', '客户列表');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120001', '业务管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120003', '基础商品管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120004', '商品包管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('140001', '决策信息管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190002', '组织结构管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190003', '角色配置');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190004', '员工管理');
-INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190001', '公告管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('10001', '业务单处理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('10004', '业务单流查看');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('11001', '客户列表');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('12001', '业务管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('12003', '基础商品管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('12004', '商品包管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('14001', '决策信息管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('19002', '组织结构管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('19003', '角色配置');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('19004', '员工管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('20001', '公告管理');
+
+delete from `role_page_rt` where `staff_role_id`<>0 and `page_id`<>0;
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '10001');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '10004');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '11001');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '12001');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '12003');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '12004');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '14001');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '19002');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '19003');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '19004');
+INSERT INTO `role_page_rt` (`staff_role_id`, `page_id`) VALUES ('1', '20001');
+
+
 

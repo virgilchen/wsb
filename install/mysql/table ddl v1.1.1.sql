@@ -336,7 +336,7 @@ CREATE TABLE `appl_form_dim` (
 -- drop table `page_id_dim`;
 -- `wsbd001`.`page_id_dim`
 CREATE TABLE `page_id_dim` (
-  `page_id` VARCHAR(100) NOT NULL,
+  `page_id` int(5) NOT NULL,
   `page_name` VARCHAR(100) NULL,
   PRIMARY KEY (`page_id`),
   INDEX `page_key` (`page_id` ASC))

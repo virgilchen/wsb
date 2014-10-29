@@ -47,7 +47,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     }, 
     
     checkEditForm:function() {
-    	if (V("staff.id") != "" && V("staff.staff_login_pwd") == "") {
+    	if (V("staff.id") == "" && V("staff.staff_login_pwd") == "") {
     		alert("请输入密码！") ;
             E("staff.staff_login_pwd").focus();
     		return false ;
