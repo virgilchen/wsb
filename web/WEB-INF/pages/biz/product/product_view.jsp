@@ -50,6 +50,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     toListProduct:function(business_id) {
+    	this.businessId = business_id;
+    	
     	$("#businessTB tr", viewJs.view).each(function (i, elem) {
     		if (elem.id != business_id) {
     			$(elem).removeClass("selected_row");
@@ -61,6 +63,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.eFormInitData["business_id"] = business_id;// 无需要带product.前辍
         
     	this.list();
+    },
+    
+    toAddBusiness:function () {
+    	if (typeof(this.businessId) == "undefined") {
+    		alert("请先选择业务分类！");
+    		return ;
+    	}
+    	this.toAdd();
     }
     
 }) ;
@@ -113,7 +123,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		    <DIV class=main_title>
 		      <B>基础商品列表</B> 
 		      <DIV class="main_tt_right fr">
-		        <A class=blue href="javascript:viewJs.toAdd();">添加</A>
+		        <A class=blue href="javascript:viewJs.toAddBusiness();">添加</A>
 		        <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
 		        <A class=orange href="javascript:viewJs.toDelete();">删除</A>
 		      </DIV>
