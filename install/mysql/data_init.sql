@@ -1,67 +1,69 @@
 /* system */
-insert into cfg_message(code_, value_) 
-values('1', '[{0}]输入不能为空！' );
+delete from cfg_message where id <> 0;
 
-insert into cfg_message(code_, value_) 
-values('95', '已经成功发送信息！' );
-insert into cfg_message(code_, value_) 
-values('96', '操作成功！' );
-insert into cfg_message(code_, value_) 
-values('97', '已经成功创建记录！' );
-insert into cfg_message(code_, value_) 
-values('98', '已经成功更新记录！' );
-insert into cfg_message(code_, value_) 
-values('99', '已经成功删除记录！' );
+insert into cfg_message(ID, code_, value_) 
+values('1', '1', '[{0}]输入不能为空！' );
+
+insert into cfg_message(ID, code_, value_) 
+values('95', '95', '已经成功发送信息！' );
+insert into cfg_message(ID, code_, value_) 
+values('96', '96', '操作成功！' );
+insert into cfg_message(ID, code_, value_) 
+values('97', '97', '已经成功创建记录！' );
+insert into cfg_message(ID, code_, value_) 
+values('98', '98', '已经成功更新记录！' );
+insert into cfg_message(ID, code_, value_) 
+values('99', '99', '已经成功删除记录！' );
 
 /* 100~120 for DB*/
-insert into cfg_message(code_, value_) 
-values('100', '数据库操作异常！' );
+insert into cfg_message(ID, code_, value_) 
+values('100', '100', '数据库操作异常！' );
 
-insert into cfg_message(code_, value_) 
-values('101', '需要操作的记录已经被其它程序更新，请重新查询数据后再做操作！[表名：{0}, {1}]' );
-
-
-insert into cfg_message(code_, value_) 
-values('102', '编码已经被使用，保存失败，请使用其它编码后再进行保存！' );
-
-insert into cfg_message(code_, value_) 
-values('103', '数据为系统保留数据，不能修改与删除！' );
-
-insert into cfg_message(code_, value_) 
-values('104', '数据为系统保留数据，不能删除！' );
+insert into cfg_message(ID, code_, value_) 
+values('101', '101', '需要操作的记录已经被其它程序更新，请重新查询数据后再做操作！[表名：{0}, {1}]' );
 
 
-insert into cfg_message(code_, value_) 
-values('1000', '未登陆或已经超时，请重新登陆！' );
+insert into cfg_message(ID, code_, value_) 
+values('102', '102', '编码已经被使用，保存失败，请使用其它编码后再进行保存！' );
 
-insert into cfg_message(code_, value_) 
-values('1001', '当前用户没有操作权限！' );
+insert into cfg_message(ID, code_, value_) 
+values('103', '103', '数据为系统保留数据，不能修改与删除！' );
+
+insert into cfg_message(ID, code_, value_) 
+values('104', '104', '数据为系统保留数据，不能删除！' );
+
+
+insert into cfg_message(ID, code_, value_) 
+values('1000', '1000', '未登陆或已经超时，请重新登陆！' );
+
+insert into cfg_message(ID, code_, value_) 
+values('1001', '1001', '当前用户没有操作权限！' );
 
 
 
-insert into cfg_message(code_, value_) 
-values('1106', '用户已经成功登录！' );
+insert into cfg_message(ID, code_, value_) 
+values('1106', '1106', '用户已经成功登录！' );
 
-insert into cfg_message(code_, value_) 
-values('1107', '用户已经成功更改密码！' );
+insert into cfg_message(ID, code_, value_) 
+values('1107', '1107', '用户已经成功更改密码！' );
 
-insert into cfg_message(code_, value_) 
-values('1108', '密码为空，更改密码失败！' );
+insert into cfg_message(ID, code_, value_) 
+values('1108', '1108', '密码为空，更改密码失败！' );
 
-insert into cfg_message(code_, value_) 
-values('1109', '原密码不正确，更改密码失败！' );
+insert into cfg_message(ID, code_, value_) 
+values('1109', '1109', '原密码不正确，更改密码失败！' );
 
-insert into cfg_message(code_, value_) 
-values('1110', '用户登录账号已经被使用，请使用其它登录账号！' );
+insert into cfg_message(ID, code_, value_) 
+values('1110', '1110', '用户登录账号已经被使用，请使用其它登录账号！' );
 
-insert into cfg_message(code_, value_) 
-values('1111', '用户被冻结，不能进行任何操作！' );
+insert into cfg_message(ID, code_, value_) 
+values('1111', '1111', '用户被冻结，不能进行任何操作！' );
 
-insert into cfg_message(code_, value_) 
-values('1112', '用户非激活状态，不能登录！' );
+insert into cfg_message(ID, code_, value_) 
+values('1112', '1112', '用户非激活状态，不能登录！' );
 
-insert into cfg_message(code_, value_) 
-values('1113', '用户已经成功登出！' );
+insert into cfg_message(ID, code_, value_) 
+values('1113', '1113', '用户已经成功登出！' );
 
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用户不存在！');
