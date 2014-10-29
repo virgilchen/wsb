@@ -56,23 +56,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
     </DIV>
   
     <DIV class="main_search">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
-        <input name="recmdtInventorySO.pageIndex" id="recmdtInventorySOSO.pageIndex" value="1" type="hidden" />
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
+        <input name="recmdtInventorySO.pageIndex" id="recmdtInventorySO.pageIndex" value="1" type="hidden" />
         <input name="recmdtInventorySO.pageSize" id="recmdtInventorySO.pageSize" value="10" type="hidden" />
         <table width="100%" >
           <tr>
-           <td style="width:60px;" >决策名称：</td>
+           <td style="width:80px;" >决策名称：</td>
            <td style="width:100px;">
              <input class=mg_r name="recmdtInventorySO。recmdt_name" value="" type="text" />
            </td>
-           <td style="width:60px;" >当前状态：</td>
+           <td style="width:80px;" >当前状态：</td>
            <td style="width:100px;">
              <select name="recmdtInventorySO.recmdt_status" id="recmdtStatusSelection"></select>
            </td>
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
            </td>
-           <td style="width:1000px;">
+           <td style="width:600px;">
            </td>
           </tr>
         </table>
