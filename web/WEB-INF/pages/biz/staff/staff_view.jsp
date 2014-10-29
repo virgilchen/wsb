@@ -64,6 +64,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     onGet:function(data, event) {
+    	V("staff.staff_login_pwd2", "");
     	if (typeof(data.id) == "undefined") {
     		E$("staff.staff_login_profile").removeAttr("readonly");
     	} else {
