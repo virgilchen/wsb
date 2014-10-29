@@ -59,7 +59,7 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_clientmanege.png" />客户管理</a></dt>
         <dd>
             <ul>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(130001, '/biz/customer_view.action', '客户列表');">客户列表</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(110001, '/biz/customer_view.action', '客户列表');">客户列表</a></li>
             </ul>
         </dd>
     </dl>
@@ -69,16 +69,16 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_business.png" />业务管理</a></dt>
         <dd>
             <ul>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(110001, '/biz/business_view.action', '业务管理');">业务管理</a></li>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(110003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(110004, '/biz/productPack_view.action', '商品包管理');">商品包管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120001, '/biz/business_view.action', '业务管理');">业务管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120004, '/biz/productPack_view.action', '商品包管理');">商品包管理</a></li>
             </ul>
         </dd>
     </dl>
     <div class="menu_line"></div>
     
     <dl>
-        <dt><a href="javascript:removeAll();openView(130001, '/biz/recmdtInventory_view.action', '决策信息管理');"><img src="images/menu_information.png" />决策信息管理</a></dt>
+        <dt><a href="javascript:removeAll();openView(140001, '/biz/recmdtInventory_view.action', '决策信息管理');"><img src="images/menu_information.png" />决策信息管理</a></dt>
     </dl>
     <div class="menu_line"></div>
     
@@ -86,13 +86,13 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_setup.png" />系统设置</a></dt>
         <dd>
             <ul>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120002, '/biz/companyOrg_view.action', '组织结构管理');">组织结构管理</a></li>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120003, '/biz/staffRole_view.action', '角色配置');">角色配置</a></li>
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120004, '/biz/staff_view.action', '员工管理');">员工管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(190002, '/biz/companyOrg_view.action', '组织结构管理');">组织结构管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(190003, '/biz/staffRole_view.action', '角色配置');">角色配置</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(190004, '/biz/staff_view.action', '员工管理');">员工管理</a></li>
                 <!-- 
                 <li><a href="#" target="mainFrame">客户资料字段配置</a></li>
                  -->
-                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(120001, '/biz/notice_view.action', '公告管理');">公告管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(190001, '/biz/notice_view.action', '公告管理');">公告管理</a></li>
             </ul>
         </dd>
     </dl>
