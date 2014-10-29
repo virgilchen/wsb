@@ -77,8 +77,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String update()  throws Exception {     
 
             	
-        customerBO.update(customer) ;
-        carBO.update(car) ;
+        customerBO.update(customer,cars) ;
 
         renderObject(customer, ResponseMessage.KEY_UPDATE_OK) ;
         

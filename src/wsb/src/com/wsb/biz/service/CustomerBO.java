@@ -34,9 +34,15 @@ public class CustomerBO extends BaseServiceImpl {
         return newItem;
     }
     
-    public void update(Customer customer) {
+    public void update(Customer customer, List<Car> cars) {
+    	CarSO carSO = new CarSO();
+    	carSO.setPsdo_cust_id(customer.getId());
+    	jdbcDao.delete(Car.class, carSO);
     	
         jdbcDao.update(customer) ;
+        for(int i=0;i<cars.size();i++){
+    		jdbcDao.insert(cars.get(i));
+    	}
     }
     
 
