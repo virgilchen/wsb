@@ -117,7 +117,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="viewJs.toFollowUpView({$T.id});">
+                  <tr id="{$T.id}" ondblclick="{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id}, {$T.event_id});{#/if}">
                     <td>{$T.order_no}</td>
                     <td>{fmt.maxlen($T.business_name, 100)}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>

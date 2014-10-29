@@ -116,7 +116,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="viewJs.toFollowUpView({$T.id});">
+                  <tr id="{$T.id}" {#if $T.event_staff_id != null}ondblclick="viewJs.toFollowUpView({$T.order_id}, {$T.event_id});"{#/if}>
                     <td>{$T.order_no}</td>
                     <td>{$T.business_name}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
@@ -131,8 +131,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       {#else} 
                       <a href="javascript:viewJs.toFollowUpView({$T.order_id}, {$T.event_id});">查看</a>
                       {#/if}
+                      <!-- 
 				      | 
 				      <a href="#">催单</a>
+                       -->
 				    </td>
                   </tr>
               </textarea>
