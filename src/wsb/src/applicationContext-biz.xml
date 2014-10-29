@@ -37,6 +37,7 @@ order by o.order_id
               <![CDATA[
 select
   o.*,
+  e.event_id,
   e.event_status,
   c.cust_name,
   c.cust_phone_no,

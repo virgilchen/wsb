@@ -66,15 +66,18 @@ public class OrderBO extends BaseServiceImpl {
     	
     	return result;
     }
-    
+
     public Order save(Order order, List<OrderProdPack> orderProdPacks) {
+    	order.setOrder_cur_status(Order.STATUS_INIT);
+    	return this.save(order, orderProdPacks, OrderProdPackEvent.STATUS_INIT);
+    }
+    
+    public Order save(Order order, List<OrderProdPack> orderProdPacks, String eventStaus) {
 
     	Order result = null;
     	order.setOrder_init_staff_id(SessionUser.get().getStaff().getId());
         
     	if (order.getId() == null) {
-    		order.setOrder_cur_status(Order.STATUS_INIT);
-
     		result = (Order) jdbcDao.insert(order) ;
     	} else {
     		jdbcDao.update(order) ;
@@ -95,14 +98,14 @@ public class OrderBO extends BaseServiceImpl {
     		opp.setOrder_id(order.getId());
     		jdbcDao.insert(opp);
 
-    		eventBO.saveOpenOrderEvents(order.getId(), opp, OrderProdPackEvent.STATUS_INIT);
+    		eventBO.saveOpenOrderEvents(order.getId(), opp, eventStaus);
     	}
     	
         return result;
     }
     
     public Order open(Order order, List<OrderProdPack> orderProdPacks) {
-    	
+    	/*
     	order.setOrder_cur_status(Order.STATUS_START);
     	order.setOrder_init_staff_id(SessionUser.get().getStaff().getId());
     	
@@ -119,6 +122,10 @@ public class OrderBO extends BaseServiceImpl {
     	
     	//this.getOrderProdPackEventBO().saveOpenOrderEvents(productPackageIds, order.getId());
     	return newItem;
+    	*/
+
+    	order.setOrder_cur_status(Order.STATUS_START);
+    	return this.save(order, orderProdPacks, OrderProdPackEvent.STATUS_READY);
     }
     
     public Order getOrderInfo(Long orderId) {
