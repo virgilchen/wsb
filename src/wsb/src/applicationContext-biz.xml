@@ -37,8 +37,9 @@ order by o.order_id
               <![CDATA[
 select
   o.*,
-  e.*,
-  c.*,
+  e.event_status,
+  c.cust_name,
+  c.cust_phone_no,
   b.business_name,
   p.procs_step_name,
   s.staff_name as order_init_staff_name,
