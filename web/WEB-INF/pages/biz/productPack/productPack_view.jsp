@@ -100,7 +100,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     </DIV>
   
     <DIV class="main_search">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="productPackSO.pageIndex" id="productPackSO.pageIndex" value="1" type="hidden" />
         <input name="productPackSO.pageSize" id="productPackSO.pageSize" value="10" type="hidden" />
         <table width="100%" >

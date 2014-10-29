@@ -25,6 +25,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"productSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("productTB", {height:"400px"}) ;
+        this.initDataGrid("businessTB");
         
         E$("product.product_timestamp").datetimepicker({
             timeFormat: "HH:mm:ss"
@@ -49,6 +50,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     toListProduct:function(business_id) {
+    	$("#businessTB tr", viewJs.view).each(function (i, elem) {
+    		if (elem.id != business_id) {
+    			$(elem).removeClass("selected_row");
+    		}
+    	});
+    	
         V("productSO.business_id", business_id);
         
         this.eFormInitData["business_id"] = business_id;// 无需要带product.前辍
@@ -73,7 +80,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <div class="main_bothside" style="width: 100%;height: 100%;">
             <div class="both_left fl" style="width: 100%;height: 100%;">
               <div class="title">业务分类</div>
-              <div class="content">
+              <div class="content main_list" style="padding: 0px;overflow: auto;">
 	              <TABLE border=0 width="100%" id="businessTB">
                 
 	                <tbody id="listBody" >
@@ -113,7 +120,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		    </DIV>
 		  
 		    <DIV class="main_search">
-		      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+		      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
 		        <input name="productSO.pageIndex" id="productSO.pageIndex" value="1" type="hidden" />
                 <input name="productSO.pageSize" id="productSO.pageSize" value="10" type="hidden" />
                 
