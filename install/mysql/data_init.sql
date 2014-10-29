@@ -126,3 +126,22 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1301, 0, 'orderEvent.status', 'B', '回退跟单', '', null, 'A', 2, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1302, 0, 'orderEvent.status', 'S', '成功', '', null, 'A', 3, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1303, 0, 'orderEvent.status', 'F', '失败', '', null, 'A', 4, null, null, null, null, null);
+
+
+
+
+
+delete from `page_id_dim` where `page_id` != '0';
+
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('100001', '业务单处理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('100004', '业务单流查看');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('110001', '客户列表');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120001', '业务管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120003', '基础商品管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('120004', '商品包管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('140001', '决策信息管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190002', '组织结构管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190003', '角色配置');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190004', '员工管理');
+INSERT INTO `page_id_dim` (`page_id`, `page_name`) VALUES ('190001', '公告管理');
+
