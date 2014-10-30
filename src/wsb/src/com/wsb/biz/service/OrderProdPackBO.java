@@ -62,7 +62,7 @@ public class OrderProdPackBO extends BaseServiceImpl {
 
     	OrderProdPackSO orderProdPackSO = new OrderProdPackSO() ;
     	orderProdPackSO.setOrder_id(order_id);
-        orderProdPackSO.addDesc("order_prod_pack_id") ;
+        orderProdPackSO.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
         
         return (ArrayPageList<OrderProdPack>)jdbcDao.queryName("bizSQLs:queryOrderProdPackByOrderId", orderProdPackSO, OrderProdPack.class);
     }

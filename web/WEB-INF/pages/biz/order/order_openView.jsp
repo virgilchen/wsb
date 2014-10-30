@@ -4,6 +4,7 @@
 String view_id=request.getParameter("view_id");
 String customer_id=request.getParameter("customer_id");
 String order_id=request.getParameter("order_id");
+String parent_view_id = request.getParameter("parent_view_id");
 %>
 
 <script>
@@ -138,6 +139,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
             function(data, textStatus){
                 if (data.code == "0") {
                     removeView(<%=view_id%>);
+                    <%if(parent_view_id != null && parent_view_id.length() == 0){%>
+                        g$v<%=parent_view_id%>.list();
+                    <%}%>
                 }
             }
         );

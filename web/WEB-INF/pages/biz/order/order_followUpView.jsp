@@ -14,7 +14,7 @@ if (sessionUser == null) {
 
 String order_id=request.getParameter("order.id");
 String event_id=request.getParameter("event_id");
-String myTask_view_id = request.getParameter("myTask_view_id");
+String parent_view_id = request.getParameter("parent_view_id");
 Long staffId=sessionUser.getStaff().getId();
 %>
 
@@ -77,8 +77,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var products = data.products;
                 var orderProdPackEvents = data.orderProdPackEvents;
                 
-                var titleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
-                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.last_event_id}, {$T.event_staff_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+                var titleTemplate = "<li onclick=\"viewJs.setSelectedEventEditForm({$T.prod_pack_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
+                var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.prod_pack_id}, {$T.last_event_id}, {$T.event_staff_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
                 var contentTemplate = "<div class=\"content\" id=\"con{$T._name_}_{$T._index_}\" ><ul id='businessTabs'></ul><div id='businessContents'></div></div>";
 
                 $("#productPackTitlesDiv").html("");
@@ -132,13 +132,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     
                     if (buinessLen > 0) {
                     	var selectIndex = businesses.selectedIndex;
+                    	if (typeof(selectIndex) == "undefined") {
+                    		selectIndex = 0;
+                    	}
                     	var business = businesses[selectIndex];
-                    	_this.setEventEditForm(business.last_event_id, business.event_staff_id);
+                    	_this.setEventEditForm(business.prod_pack_id, business.last_event_id, business.event_staff_id);
                         tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", selectIndex + 1, buinessLen);
                     }
                 }
 
                 if (prodLen > 0) {
+                	_this.setSelectedEventEditForm(orderProdPacks[orderProdPacks.selectedIndex].prod_pack_id);
                     tabShow('menuOrderProduct_', 'conOrderProduct_', orderProdPacks.selectedIndex + 1, prodLen);
                 }
             }
@@ -187,7 +191,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
         return ret ;
     },
     
-    setEventEditForm:function(lastEventId, eventStaffId) {
+    setEventEditForm:function(prodPackId, lastEventId, eventStaffId) {
+    	if (typeof(this.entity.selectedEventMap) == "undefined") {
+    		this.entity.selectedEventMap = {};
+    	}
+    	
+    	this.entity.selectedEventMap[prodPackId] = {lastEventId:lastEventId, eventStaffId:eventStaffId};
+    	
     	if (eventStaffId == this.staffId) {
     		E$("orderFollowUpContent").show();
     	} else {
@@ -195,6 +205,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	
         V("orderProdPackEvent.id", lastEventId);
+    },
+    
+    setSelectedEventEditForm:function(prodPackId) {
+    	var selected = this.entity.selectedEventMap[prodPackId] ;
+    	if (typeof(selected) == "undefined") {
+    	    return ;
+    	}
+    	this.setEventEditForm(prodPackId, selected.lastEventId, selected.eventStaffId);
     },
     
     onSaveOk:function(data) {
@@ -241,7 +259,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             function(data, textStatus){
                 if (data.code == "0") {
                 	removeView(<%=view_id%>);
-                	g$v<%=myTask_view_id%>.list();
+                	g$v<%=parent_view_id%>.list();
                 }
             }
         );

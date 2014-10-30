@@ -70,6 +70,9 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1007', '1007', '用户已有业务操作，不能被删除！');
 
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1401', '1401', '用户角色已有用户，不能被删除！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1402', '1402', '用户角色已经被流程环节使用，不能被删除！');
+
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11001', '11001', '本环节为业务最终环节，未能找到下一环节！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11002', '11002', '任务已被其它业务员领取！');

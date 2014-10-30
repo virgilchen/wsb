@@ -173,7 +173,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	if (newEventStaffId != null) {    	
     		Staff newStaff = StaffBO.getStaffBO().get(newEventStaffId);
     		Long roleId = newStaff.getStaff_role_id();
-    		if (process.getProcs_staff_role_id() != roleId) {
+    		if (!process.getProcs_staff_role_id().equals(roleId)) {
     			String roleName = StaffRoleBO.getStaffRoleBO().get(process.getProcs_staff_role_id()).getStaff_role_name();
     			throw new BusinessException(11004L, newStaff.getStaff_name(), roleName);//11004 业务员[{0}]没有业务环节所需要的角色权限[{1}]!
     		}
@@ -192,6 +192,20 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     }
 
     public void pickUp(OrderProdPackEvent event) {
+    	OrderProdPackEvent oldEvent = (OrderProdPackEvent)this.jdbcDao.get(event); 
+
+    	OrderProcess so = new OrderProcess() ;
+    	so.setBusiness_id(oldEvent.getBusiness_id());
+    	so.setProcs_step_no(oldEvent.getProcs_step_no());
+    	
+    	OrderProcess process = (OrderProcess)jdbcDao.find(so);
+    	
+    	Staff staff = SessionUser.get().getStaff();
+    	if (!process.getProcs_staff_role_id().equals(staff.getStaff_role_id())) {
+    		String roleName = CodeHelper.getString("Role", "staff_role_name", Integer.valueOf(process.getProcs_staff_role_id().intValue()));
+    		throw new BusinessException(11004L, staff.getStaff_name(), roleName);// '11004', '11004', '业务员[{0}]没有业务环节所需要的角色权限[{1}]！'
+    	}
+    	
         int count = jdbcDao.executeName("bizSQLs:pickUpTask", event) ;
         if (count == 0) {
         	throw new BusinessException(11002L);// 11002Ltask has been picked up by other people.

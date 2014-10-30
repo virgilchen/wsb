@@ -8,7 +8,9 @@ import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
+import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.RolePage;
+import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffRole;
 import com.wsb.biz.entity.StaffRoleSO;
 
@@ -50,11 +52,26 @@ public class StaffRoleBO extends BaseServiceImpl {
     
 
     public void delete(StaffRole role) {
+    	Long roleId = role.getId();
+    	
+    	Staff staff = new Staff() ;
+    	staff.setStaff_role_id(roleId);
+    	
+    	if (jdbcDao.find(staff) != null) {
+    		throw new BusinessException(1401L);//'1401', '用户角色已有用户，不能被删除！'
+    	}
+    	
+    	OrderProcess orderProcess = new OrderProcess() ;
+    	orderProcess.setProcs_staff_role_id(roleId);
+    	
+    	if (jdbcDao.find(orderProcess) != null) {
+    		throw new BusinessException(1402L);//'1402', '用户角色已经被流程环节使用，不能被删除！
+    	}
     	
         jdbcDao.delete(role) ;
         
 		RolePage rp = new RolePage();
-		rp.setStaff_role_id(role.getId());
+		rp.setStaff_role_id(roleId);
 		
 		jdbcDao.delete(RolePage.class, rp);
         

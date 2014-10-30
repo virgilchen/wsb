@@ -37,11 +37,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     toFollowUpView:function(order_id, event_id) {
-    	var url = '/biz/order_followUpView.action?order.id=' + order_id + '&event_id=' + event_id + '&myTask_view_id=' + <%=view_id%>;
+    	var url = '/biz/order_followUpView.action?order.id=' + order_id + '&event_id=' + event_id + '&parent_view_id=' + <%=view_id%>;
     	openView(100701, url, '业务单业务处理');
     },
     
-    pickUp:function(eventId) {
+    pickUp:function(orderId, eventId) {
     	var _this = this ;
         ajax(
             root + "/biz/order_pickUp.action", 
@@ -49,6 +49,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             function(data, textStatus){
                 if (data.code == "0") {
                     _this.list();
+                    _this.toFollowUpView(orderId, eventId);
                 }
             }
         );
@@ -127,7 +128,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td><span class="c_orange">{$T.procs_step_name}</span></td>
 				    <td>
 				      {#if $T.event_staff_id == null}
-                      <a href="javascript:viewJs.pickUp({$T.event_id});">领取</a> 
+                      <a href="javascript:viewJs.pickUp({$T.order_id}, {$T.event_id});">领取</a> 
                       {#else} 
                       <a href="javascript:viewJs.toFollowUpView({$T.order_id}, {$T.event_id});">查看</a>
                       {#/if}

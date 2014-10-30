@@ -20,6 +20,7 @@ import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackSO;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.entity.Staff;
 
 
 @Service("orderBO")
@@ -171,7 +172,11 @@ public class OrderBO extends BaseServiceImpl {
 
     
     public ArrayPageList<HashMap> getMyTasks() {
+    	Staff staff = SessionUser.get().getStaff();
+    	
     	OrderSO orderSO = new OrderSO() ;
+    	orderSO.setEvent_staff_id(staff.getId());
+    	orderSO.setProcs_staff_role_id(staff.getStaff_role_id());
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:myTasks", orderSO, HashMap.class);
     }

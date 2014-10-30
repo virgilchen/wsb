@@ -25,8 +25,7 @@ where o.order_id=e.order_id
   and o.order_cur_status='S'
   and e.event_status='R'
   and p.procs_step_no=e.procs_step_no
- {and e.event_staff_id=[event_staff_id]}
- {and p.procs_staff_role_id=[procs_staff_role_id]}
+  and (e.event_staff_id=[event_staff_id] or e.event_staff_id is null and p.procs_staff_role_id=[procs_staff_role_id])
 order by o.order_id
               ]]>
             </value>
@@ -37,6 +36,7 @@ order by o.order_id
               <![CDATA[
 select
   o.*,
+  e.event_staff_id,
   e.event_id,
   e.event_status,
   c.cust_name,
@@ -87,7 +87,7 @@ and procs_step_no=0
           <entry key="queryOrderProdPackByOrderId">
             <value>
               <![CDATA[
-select op.*, p.prod_pack_name from order_prod_pack_rt op left join product_pack_rt p on op.prod_pack_id=p.prod_pack_id where op.order_id=[order_id]
+select op.*, p.prod_pack_name from order_prod_pack_rt op left join product_pack_rt p on op.prod_pack_id=p.prod_pack_id where op.order_id=[order_id] order by order_prod_pack_id
               ]]>
             </value>
           </entry>
