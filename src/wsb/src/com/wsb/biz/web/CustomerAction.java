@@ -51,8 +51,6 @@ private static final long serialVersionUID = 7244882365197775441L;
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String get() throws Exception { 
     	
-    	System.out.println("============"+this.id);
-
     	Customer customer = customerBO.get(this.id) ;
     	CarSO carso = new CarSO();
     	carso.setPsdo_cust_id(customer.getId());

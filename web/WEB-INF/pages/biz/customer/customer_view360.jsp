@@ -194,7 +194,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		<div class="main_tt_right fr">
 		 	<a href="#" class="blue">导出客户信息</a>
 		 	<a href="javascript:viewJs.toOrderOpen();" class="orange">保存并发起业务</a>
-		 	<a href="viewJs.save()" class="orange">保存</a>
+		 	<A class=orange href="javascript:viewJs.save();">保存</A>
 		 	<A class=blue href="javascript:removeAll();openView(130001, '/biz/customer_view.action', '客户列表');">取消</A>
 		</div>
 	</div>
@@ -208,139 +208,140 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	</div>
 
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
-      <input type="hidden" name="customer.id" id="customer.id"/>
-	    <div class="info_entry" id="con1_1" style="display:block;">
-		<p><b>基本资料</b></p>
-		<table width="100%" border="0">
-			<tr>
-			<th>客户号：</th>
-			<td><input name="customer.cust_code" type="text" maxlength="50"/></td>
-			</tr>
-			<tr>
-			<th>姓名：</th>
-			<td><input name="customer.cust_name" type="text" maxlength="20" /><span class="c_red">*</span> 
-			 性别：
-			<select name="customer.cust_gender">
-			  <option selected="selected">男</option>
-			  <option>女</option>
-			</select></td>
-			</tr>
-			<tr>
-			<th>出生年月日：</th>
-			<td><input type="text" class="ipt_date" name="customer.cust_birthday" id="customer.cust_birthday" maxlength="10"/><span class="c_red"></span></td>
-			</tr>
-			<tr>
-			<th>电话号码：</th>
-			<td><input name="customer.cust_phone_no" type="text" maxlength="20" /><span class="c_red">*</span></td>
-			</tr>
-			<tr>
-			<th>其他联系方式：</th>
-			<td><input name="customer.other_contact_way" type="text" maxlength="100" class="long_ipt" /></td>
-			</tr>
-			<tr>
-			<th>家庭地址：</th>
-			<td><input name="customer.cust_home_address" type="text" maxlength="100" class="long_ipt" /></td>
-			</tr>
-		</table>
+      	<div class="user_detail_info" id="con1_1" style="display:block;">
+			<ul class="user_info">
+		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料</li>
+		        <li onclick="tabShow('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
+		        <li onclick="tabShow('menu2_','con2_',3,4);" id="menu2_3">客户资源</li>
+		        <li onclick="tabShow('menu2_','con2_',4,4);" id="menu2_4">车类资料<span class="c_red">[会员]</span></li>
+			</ul>
+		    <div id="con2_1" style="display:block;">
+				<table width="100%" border="0">
+					<tr>
+					<th>客户号：</th>
+					<td><input name="customer.cust_code" type="text" maxlength="50"/><input type="hidden" name="customer.id" id="customer.id"/></td>
+					</tr>
+					<tr>
+					<th>姓名：</th>
+					<td><input name="customer.cust_name" type="text" maxlength="20" /><span class="c_red">*</span> 
+					 性别：
+					<select name="customer.cust_gender">
+					  <option selected="selected">男</option>
+					  <option>女</option>
+					</select></td>
+					</tr>
+					<tr>
+					<th>出生年月日：</th>
+					<td><input type="text" class="ipt_date" name="customer.cust_birthday" id="customer.cust_birthday" maxlength="10"/><span class="c_red"></span></td>
+					</tr>
+					<tr>
+					<th>电话号码：</th>
+					<td><input name="customer.cust_phone_no" type="text" maxlength="20" /><span class="c_red">*</span></td>
+					</tr>
+					<tr>
+					<th>其他联系方式：</th>
+					<td><input name="customer.other_contact_way" type="text" maxlength="100" class="long_ipt" /></td>
+					</tr>
+					<tr>
+					<th>家庭地址：</th>
+					<td><input name="customer.cust_home_address" type="text" maxlength="100" class="long_ipt" /></td>
+					</tr>
+				</table>
+		    </div>
+		    <div id="con2_2" style="display:none;">
+				<table width="100%" border="0">
+					<tr>
+					<th>行业背景：</th>
+					<td><textarea name="customer.background" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+					</tr>
+					<tr>
+					<th>企业状况：</th>
+					<td><textarea name="customer.company_info" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+					</tr>
+					<tr>
+					<th>保险资源：</th>
+					<td><input type="text" name="customer.insurance_resource" maxlength="1000" /></td>
+					</tr>
+					<tr>
+					<th>联系人：</th>
+					<td><input name="customer.contact_person" type="text" maxlength="20"/></td>
+					</tr>
+				</table>
+		    </div>
+		    <div id="con2_3" style="display:none;">
+				<table width="100%" border="0">
+					<tr>
+					<th>客户来源：</th>
+					<td><select name="customer.cust_src">
+					  <option selected="selected">公司老客户</option>
+					  <option>外来</option><option>朋友</option>
+					</select></td>
+					</tr>
+					<tr>
+					<th>所属行业：</th>
+					<td><input name="customer.cust_industry_type" type="text" maxlength="20" /></td>
+					</tr>
+					<tr>
+					<th>职务：</th>
+					<td><input type="text" name="customer.cust_job_title" maxlength="20"/></td>
+					</tr>
+					<tr>
+					<th>公司名称：</th>
+					<td><input name="customer.company_name" type="text" maxlength="100" /></td>
+					</tr>
+					<tr>
+					<th>公司地址：</th>
+					<td><input name="customer.company_address" type="text" maxlength="100" class="long_ipt" /></td>
+					</tr>
+					<tr>
+					<th>关系网：</th>
+					<td><textarea name="customer.relationship_network" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
+					</tr>
+				</table>
+		    </div>
+		    <div id="con2_4" style="display:none;">
+				<table width="100%" border="0" id="carInfosTB">
+			      <tbody id="listBody">
+			      </tbody>
+			      
 		
-		<p><b>扩展资料</b></p>
-		<table width="100%" border="0">
-			<tr>
-			<th>行业背景：</th>
-			<td><textarea name="customer.background" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
-			</tr>
-			<tr>
-			<th>企业状况：</th>
-			<td><textarea name="customer.company_info" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
-			</tr>
-			<tr>
-			<th>保险资源：</th>
-			<td><input type="text" name="customer.insurance_resource" maxlength="1000" /></td>
-			</tr>
-			<tr>
-			<th>联系人：</th>
-			<td><input name="customer.contact_person" type="text" maxlength="20"/></td>
-			</tr>
-		</table>
-		
-		<p><b>客户资源</b></p>
-		<table width="100%" border="0">
-			<tr>
-			<th>客户来源：</th>
-			<td><select name="customer.cust_src">
-			  <option selected="selected">公司老客户</option>
-			  <option>外来</option><option>朋友</option>
-			</select></td>
-			</tr>
-			<tr>
-			<th>所属行业：</th>
-			<td><input name="customer.cust_industry_type" type="text" maxlength="20" /></td>
-			</tr>
-			<tr>
-			<th>职务：</th>
-			<td><input type="text" name="customer.cust_job_title" maxlength="20"/></td>
-			</tr>
-			<tr>
-			<th>公司名称：</th>
-			<td><input name="customer.company_name" type="text" maxlength="100" /></td>
-			</tr>
-			<tr>
-			<th>公司地址：</th>
-			<td><input name="customer.company_address" type="text" maxlength="100" class="long_ipt" /></td>
-			</tr>
-			<tr>
-			<th>关系网：</th>
-			<td><textarea name="customer.relationship_network" style="width: 100%;height: 80px;" maxlength="1000"></textarea></td>
-			</tr>
-		</table>
-		
-		<p><b>车类资料</b></p>
-		<table width="100%" border="0" id="carInfosTB">
-	      <tbody id="listBody">
-	      </tbody>
-	      
-
-	      <tbody style="display:none;visibility: false;" disabled="true">
-	      	<tr>
-	      		<td>
-	      			<textarea id="templateBody" jTemplate="yes">
-			      	
-					<tr>
-					<th>车牌号码：</th>
-					<td><input name="cars[{$T.index}].car_no" type="text" value="{$T.car_no}" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" type="text" value="{$T.car_district}"/></td>
-					</tr>
-					<tr>
-					<th>品牌：</th>
-					<td><input name="cars[{$T.index}].car_band" type="text" value="{$T.car_band}" /><span class="c_red"></span>车型：<input name="cars[{$T.index}].car_type" type="text" value="{$T.car_type}" /></td>
-					</tr>
-					<tr>
-					<th>颜色：</th>
-					<td><input name="cars[{$T.index}].car_color" type="text" value="{$T.car_color}"/><span class="c_red"></span>排量：<input name="cars[{$T.index}].car_pai_liang" type="text" value="{$T.car_pai_liang}" /></td>
-					</tr>
-					<tr>
-					<th>车架号码：</th>
-					<td><input name="cars[{$T.index}].car_framework_no" type="text" value="{$T.car_framework_no}" /><span class="c_red"></span>发动机号码：<input name="cars[{$T.index}].car_engine_no" type="text" value="{$T.car_engine_no}" /></td>
-					</tr>
-					<tr>
-					<th>初登日期：</th>
-					<td><input name="cars[{$T.index}].car_init_register_date" id="car_init_register_date{$T.index}" type="text" value="{fmt.maxlen($T.car_init_register_date,10)}"/><span class="c_red"></span>历程数：<input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" /></td>
-					</tr>
-					<tr style="border-top:1px #248cb8 solid;">
-						<td style="border-top:1px #248cb8 solid;" colspan="2"></td>
-					</tr>
-					</textarea>
-	      		</td>
-	      	</tr>
-          </tbody>
-        </table>
+			      <tbody style="display:none;visibility: false;" disabled="true">
+			      	<tr>
+			      		<td>
+			      			<textarea id="templateBody" jTemplate="yes">
+					      	
+							<tr>
+							<th>车牌号码：</th>
+							<td><input name="cars[{$T.index}].car_no" type="text" value="{$T.car_no}" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" type="text" value="{$T.car_district}"/></td>
+							</tr>
+							<tr>
+							<th>品牌：</th>
+							<td><input name="cars[{$T.index}].car_band" type="text" value="{$T.car_band}" /><span class="c_red"></span>车型：<input name="cars[{$T.index}].car_type" type="text" value="{$T.car_type}" /></td>
+							</tr>
+							<tr>
+							<th>颜色：</th>
+							<td><input name="cars[{$T.index}].car_color" type="text" value="{$T.car_color}"/><span class="c_red"></span>排量：<input name="cars[{$T.index}].car_pai_liang" type="text" value="{$T.car_pai_liang}" /></td>
+							</tr>
+							<tr>
+							<th>车架号码：</th>
+							<td><input name="cars[{$T.index}].car_framework_no" type="text" value="{$T.car_framework_no}" /><span class="c_red"></span>发动机号码：<input name="cars[{$T.index}].car_engine_no" type="text" value="{$T.car_engine_no}" /></td>
+							</tr>
+							<tr>
+							<th>初登日期：</th>
+							<td><input name="cars[{$T.index}].car_init_register_date" id="car_init_register_date{$T.index}" type="text" value="{fmt.maxlen($T.car_init_register_date,10)}"/><span class="c_red"></span>历程数：<input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" /></td>
+							</tr>
+							<tr style="border-top:1px #248cb8 solid;">
+								<td style="border-top:1px #248cb8 solid;" colspan="2"></td>
+							</tr>
+							</textarea>
+			      		</td>
+			      	</tr>
+		          </tbody>
+		        </table>
+		    <div class="add_car"><a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a></div>
+		  </div>
+		</div>
         
-        <table>
-          <tr>
-            <td>
-              <a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a>
-            </td>
-          </tr>
-        </table>
 		<br />
     </form>
      <!-- 
