@@ -1207,10 +1207,10 @@ function ajax(_url, _data, handleOnSuccess, isShowMessage, isShowProgress) {
         		if (typeof(data.message) != "undefined") {
                     alert(data.message) ;
                 	if (1000==data.code) {// 过期session
-                		if (relogin) {
+                		if (typeof(relogin) != "undefined") {
                 			relogin();
                 		}else{
-                    		window.location = root + "/logon.jsp";	
+                    		window.location = root + "/login.jsp";	
                 		}
                 	}
         	    }

@@ -4,7 +4,14 @@
 <%
 
 SessionUser sessionUser = (SessionUser)session.getAttribute(SessionUser.SESSION_PK) ;
+
 String view_id=request.getParameter("view_id");
+if (sessionUser == null) {
+	response.getWriter().write("<script>window.location = '" + request.getContextPath() + "/login.jsp';var g$v" + view_id + " = null;</script>");
+	response.getWriter().flush();
+	return ;
+}
+
 String order_id=request.getParameter("order.id");
 String event_id=request.getParameter("event_id");
 String myTask_view_id = request.getParameter("myTask_view_id");

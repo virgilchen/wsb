@@ -103,7 +103,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.size ++;
         this.refreshTableList();
         
-        E$("eForm").validator();
+        E$("eForm").validator({inputEvent:"change",errorInputEvent: "change"});
     },
     
     refreshTableList:function() {
@@ -146,7 +146,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     selectProdPack:function(id, name) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
-        E("eForm").resetForm();
+        //E("eForm").resetForm();
         
         var _this = this;
         

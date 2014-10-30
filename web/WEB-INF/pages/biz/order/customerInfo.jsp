@@ -2,7 +2,7 @@
 
 <div class="main_userinfo" id="customerInfoDetailDiv">
   <div class="title">
-    <a href="#" class="btn_blue">360视图</a>客户信息
+    <!-- <a href="#" class="btn_blue">360视图</a> -->客户信息
   </div>
   <table width="80%" border="0">
     <tr>
