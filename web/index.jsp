@@ -46,7 +46,7 @@
     </tr>
     <tr>
       <td width="180px" valign="top">
-        <div id="menuDiv" style="height: 100%; width: 197px; overflow: auto;">
+        <div id="menuDiv" style="height: 100%; width: 197px; overflow: auto; background-color:#55a9cd;">
         <%@include file="frameMenu.jsp" %>
         </div>
       </td>

@@ -1,4 +1,4 @@
-<%@page import="com.globalwave.system.entity.SessionUser"%>
+﻿<%@page import="com.globalwave.system.entity.SessionUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
@@ -37,7 +37,7 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
 
 <div class="FrameMenu">
     <dl>
-        <dt><a href="FrameMain.html" target="mainFrame"><img src="images/menu_home.png" />首页</a></dt>
+        <dt><a href="index.jsp"><img src="images/menu_home.png" />首页</a></dt>
     </dl>
     <div class="menu_line"></div>
     
