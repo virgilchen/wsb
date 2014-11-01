@@ -69,7 +69,7 @@ body.FrameMiddle .middel_bg{ position:absolute; top:0; left:0; width:6px; height
 
 
 .main_list table,.main_table table,.border_table{border: 1px #cedde7 solid;border-collapse: collapse;}
-.main_list th{ border-bottom:1px #cedde7 solid; font-size:14px; background:#f4f7f9;padding:5px; text-align:center; height:27px; }
+.main_list th{ border-bottom:1px #cedde7 solid; font-size:14px; background:#e0e8ed;padding:5px; text-align:center; height:27px; }
 .main_list td{border-bottom:1px #cedde7 solid; background:#fff;padding:5px;text-align:center;height:27px; color:#666666; }
 .main_list td a,.main_table td a,.border_table a{ color:#3298c3;}
 .main_list td a:hover,.main_table td a:hover,.border_table a:hover{ color:#3298c3; text-decoration:underline;}
@@ -259,6 +259,6 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 
 
 
-.main_list .even_row td {background:#f7f7f7;}
-.main_list .active_row td {background:#FFFFDD;}
-.main_list .selected_row td {background:#CCFF99;}
+.main_list .even_row td {background:#f4f7f9;}
+.main_list .active_row td {background:#eaf0f3;}
+.main_list .selected_row td {background:#FFFFDD;}
