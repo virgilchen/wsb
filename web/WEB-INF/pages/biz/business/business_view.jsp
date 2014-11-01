@@ -73,6 +73,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
         var _url = '/biz/orderProcess_view.action' ;
         var _title = '流程节点@' + business_name  ;
         openView(_id, _url, _title, {business_id:business_id, business_name:business_name}) ;
+    },
+    onSaveOk:function (data) {
+
+    	viewJs.toPage('s') ;
+        viewJs.list() ;
+        
+        if (V("business.id") == ""){
+            this.openOrderProcessView(data.id, data.business_name);
+        }
     }
 }) ;
 
