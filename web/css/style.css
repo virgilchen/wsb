@@ -259,6 +259,6 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 
 
 
-.main_list .even_row td {background:#FFFFDD;}
-.main_list .active_row td {background:#FFFFAA;}
+.main_list .even_row td {background:#f7f7f7;}
+.main_list .active_row td {background:#FFFFDD;}
 .main_list .selected_row td {background:#CCFF99;}
