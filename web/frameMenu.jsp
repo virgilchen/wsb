@@ -20,6 +20,10 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
       dlhead.eq(2).children("dd").hide();
       dlhead.eq(2).find(".close").hide();
       dlhead.eq(2).find(".open").show();
+	  
+      dlhead.eq(3).children("dd").hide();
+      dlhead.eq(3).find(".close").hide();
+      dlhead.eq(3).find(".open").show();
       dlhead.children("dt").click(function(){
           $(this).find(".close").toggle();
           $(this).find(".open").toggle(); 
