@@ -112,29 +112,20 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	var info_car_district = document.getElementById("car_district"+rowIndex);
     	carNo = info_car_no.value;
     	var district_value = '';
-    	alert('1111111111');
     	if(carNo.substring(0,2) == 'WJ'){
-    		alert('22222222');
-    		if(dVal("car_num_match_district", "name_", {code_:carNo.substring(0,5)}) != null){
-    			alert('3333333333'+dVal("car_num_match_district", "name_", {code_:carNo.substring(0,5)}));
-    			district_value = dVal("car_num_match_district", "name_", {code_:carNo.substring(0,5)});
-    		}else if(dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)+'****'+carNo.substring(carNo.length()-1)}) != null){
-    			alert('44444444444'+dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)+'****'+carNo.substring(carNo.length()-1)}));
-    			district_value = dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)+'****'+carNo.substring(carNo.length()-1)});
-    		}else if(dVal("car_num_match_district", "name_", {code_:carNo.substring(0,3)+'****'+carNo.substring(carNo.length()-1)}) != null){
-    			alert('555555555'+dVal("car_num_match_district", "name_", {code_:carNo.substring(0,3)+'****'+carNo.substring(carNo.length()-1)}));
-    			district_value = dVal("car_num_match_district", "name_", {code_:carNo.substring(0,3)+'****'+carNo.substring(carNo.length()-1)});
+    		if(dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,5)}) != ''){
+    			district_value = dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,5)});
+    		}else if(dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,2)+'****'+carNo.substring(carNo.length-1)}) != ''){
+    			district_value = dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,2)+'****'+carNo.substring(carNo.length-1)});
+    		}else if(dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,3)+'****'+carNo.substring(carNo.length-1)}) != ''){
+    			district_value = dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,3)+'****'+carNo.substring(carNo.length-1)});
     		}else{
-    			alert('66666666666');
     			district_value = '';
     		}
     	}else{
-    		alert('77777777777');
-    		if(dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)}) != null){
-    			alert('9999999'+dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)}));
-    			district_value = dVal("car_num_match_district", "name_", {code_:carNo.substring(0,2)});
+    		if(dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,2)}) != null){
+    			district_value = dVal("car_num_match_district", "name_", {PK_ID:carNo.substring(0,2)});
     		}else{
-    			alert('8888888888');
     			district_value = '';
     		}
     	}
