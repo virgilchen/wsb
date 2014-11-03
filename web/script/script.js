@@ -1,4 +1,4 @@
-// µ¯³öÒþ²Ø
+// å¼¹å‡ºéšè—
 function showCL(name) {
     document.getElementById(name).style.display = 'block';
 }
@@ -9,7 +9,7 @@ function closeCL(name) {
 
 //tab
 function tabShow(m, c, n, t) {
-    //mÎªµ¼º½Í³Ò»Ãû³Æ£¬cÎª¶ÔÓ¦ÄÚÈÝÍ³Ò»Ãû³Æ£¬nÎª¶ÔÓ¦ÐòºÅ,tÎªÊýÁ¿£¨±ÈÈçÕâ¸öÇÐ»»Ð§¹ûÓÐÈý¿éÄÚÈÝÔòÎª3£©
+	//mä¸ºå¯¼èˆªç»Ÿä¸€åç§°ï¼Œcä¸ºå¯¹åº”å†…å®¹ç»Ÿä¸€åç§°ï¼Œnä¸ºå¯¹åº”åºå·,tä¸ºæ•°é‡ï¼ˆæ¯”å¦‚è¿™ä¸ªåˆ‡æ¢æ•ˆæžœæœ‰ä¸‰å—å†…å®¹åˆ™ä¸º3ï¼‰
     for (i = 1; i <= t; i++) {
         document.getElementById(m + i).className = "";
         document.getElementById(c + i).style.display = "none";

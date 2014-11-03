@@ -74,6 +74,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
         );
     },
     
+    toView360:function (selectInput) {
+    	alert("2222222222");
+    	this.selected = null ;
+    	
+    	if (selectInput) {
+    		this.selected = selectInput ;
+    	} else {
+	    	var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
+	    	if (sels.length == 0) {
+	    		alert("请先选择要编辑的记录！") ;
+	    		return ;
+	    	}
+	    	this.selected = sels[0] ;
+    	}
+    	openView(11002, '/biz/customer_view360.action?customer.id='+this.selected.value, '360视图');
+    },
+    
     toOrderOpen:function () {
 
         var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
@@ -99,7 +116,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
       <B>客户列表</B> 
       <DIV class="main_tt_right fr">
         <A class=blue href="javascript:viewJs.toAdd();">添加</A>
-        <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
+        <A class=blue href="javascript:viewJs.toView360();">编辑</A>
         <A class=blue href="javascript:viewJs.toOrderOpen();">业务发起</A>
         <A class=blue href="javascript:viewJs.toEdit();">发展成会员</A>
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
@@ -161,7 +178,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="javascript:openView(130002, '/biz/customer_view360.action?customer.id={$T.id}', '360视图');">
+                  <tr id="{$T.id}" ondblclick="javascript:openView(11002, '/biz/customer_view360.action?customer.id={$T.id}', '360视图');">
                     <td>
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
