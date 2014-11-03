@@ -14,6 +14,7 @@ import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.system.entity.SessionUser;
 import com.wsb.biz.entity.OrderProcess;
+import com.wsb.biz.entity.OrderProcessSO;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackEventSO;
@@ -45,13 +46,22 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 		for (int i = 0 ; i < orderProdPack.getBusiness_ids().length ; i ++) {
 			OrderProdPackEvent event  = new OrderProdPackEvent() ;
 			
+			Long business_id = orderProdPack.getBusiness_ids()[i];
+			Long staff_id = orderProdPack.getEvent_staff_ids()[i];
+			
 			event.setOrder_id(orderId);
 			event.setProcs_step_no(0);
 			event.setProd_pack_id(orderProdPack.getProd_pack_id());
-			event.setBusiness_id(orderProdPack.getBusiness_ids()[i]);
-			event.setEvent_staff_id(orderProdPack.getEvent_staff_ids()[i]);
+			event.setBusiness_id(business_id);
+			event.setEvent_staff_id(staff_id);
 			event.setEvent_status(status);
 			
+			OrderProcess processSo  = new OrderProcess() ;
+			processSo.setBusiness_id(business_id);
+			processSo.setProcs_step_no(0);
+	    	OrderProcess process = (OrderProcess)jdbcDao.find(processSo);
+	    	checkProcessRole(process, staff_id);
+	    	
 			jdbcDao.insert(event);
 		}
 		
@@ -170,14 +180,10 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	Long newEventStaffId = event.getEvent_staff_id() ;
     	
-    	if (newEventStaffId != null) {    	
-    		Staff newStaff = StaffBO.getStaffBO().get(newEventStaffId);
-    		Long roleId = newStaff.getStaff_role_id();
-    		if (!process.getProcs_staff_role_id().equals(roleId)) {
-    			String roleName = StaffRoleBO.getStaffRoleBO().get(process.getProcs_staff_role_id()).getStaff_role_name();
-    			throw new BusinessException(11004L, newStaff.getStaff_name(), roleName);//11004 业务员[{0}]没有业务环节所需要的角色权限[{1}]!
-    		}
+    	if (!OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
+    	    checkProcessRole(process, newEventStaffId);
     	}
+    	
     	event.setProcs_step_no(process.getProcs_step_no());
     	
     	event.setId(null);
@@ -190,6 +196,17 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	return event;
     }
+
+	private void checkProcessRole(OrderProcess process, Long newEventStaffId) {
+		if (newEventStaffId != null) {    	
+    		Staff newStaff = StaffBO.getStaffBO().get(newEventStaffId);
+    		Long roleId = newStaff.getStaff_role_id();
+    		if (!process.getProcs_staff_role_id().equals(roleId)) {
+    			String roleName = StaffRoleBO.getStaffRoleBO().get(process.getProcs_staff_role_id()).getStaff_role_name();
+    			throw new BusinessException(11004L, newStaff.getStaff_name(), roleName);//11004 业务员[{0}]没有业务环节所需要的角色权限[{1}]!
+    		}
+    	}
+	}
 
     public void pickUp(OrderProdPackEvent event) {
     	OrderProdPackEvent oldEvent = (OrderProdPackEvent)this.jdbcDao.get(event); 

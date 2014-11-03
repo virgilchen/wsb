@@ -73,9 +73,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
             }
         );
     },
-    
+
     toView360:function (selectInput) {
-    	alert("2222222222");
+
     	this.selected = null ;
     	
     	if (selectInput) {
@@ -90,16 +90,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	openView(11002, '/biz/customer_view360.action?customer.id='+this.selected.value, '360视图');
     },
-    
-    toOrderOpen:function () {
 
-        var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
-        if (sels.length == 0) {
-            alert("请先选择要发起业务的客户！") ;
-            return ;
-        }
+    toOrderOpen:function (customerId) {
 
-    	openView(100003, '/biz/order_openView.action?customer_id=' + sels[0].value, '业务发起');
+    	if (typeof(customerId) == "undefined") {
+            var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
+            if (sels.length == 0) {
+                alert("请先选择要发起业务的客户！") ;
+                return ;
+            }
+            customerId = sels[0].value;
+    	}
+        
+    	openView(100003, '/biz/order_openView.action?customer_id=' + customerId, '业务发起');
     }
 }) ;
 
