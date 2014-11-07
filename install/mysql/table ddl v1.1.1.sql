@@ -306,6 +306,7 @@ CREATE TABLE `member_info_rt` (
   `member_internal_level` VARCHAR(5) NULL,
   `member_duration` SMALLINT NULL,
   `member_expectation` VARCHAR(1000) NULL,
+  `member_create_time` TIMESTAMP NULL,
   PRIMARY KEY (`member_id`),
   INDEX `member_key` (`member_id` ASC),
   INDEX `cust_key` (`psdo_cust_id` ASC))
