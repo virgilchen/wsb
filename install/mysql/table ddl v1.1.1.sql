@@ -225,7 +225,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `product_pack_rt` (
   `prod_pack_id` INT NOT NULL AUTO_INCREMENT,
   `prod_pack_name` VARCHAR(50) NULL,
-  `prod_pack_owner` VARCHAR(20) NULL,
+  `prod_pack_owner` INT NULL,
   `prod_pack_picture` VARCHAR(100) NULL,
   `prod_pack_orignal_price` DECIMAL(12,2) NULL,
   `prod_pack_selling_price` DECIMAL(12,2) NULL,
