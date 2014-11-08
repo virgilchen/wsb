@@ -14,7 +14,6 @@ import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.system.entity.SessionUser;
 import com.wsb.biz.entity.OrderProcess;
-import com.wsb.biz.entity.OrderProcessSO;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackEventSO;
@@ -175,7 +174,12 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     		if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
     			return null;// successfully exists
     		}
-    		throw new BusinessException(11001L);//11001 本环节为业务最终环节，未能找到下一环节
+    		
+    		if (OrderProdPackEvent.STATUS_BACK.equals(event_status)) {
+    			throw new BusinessException(11005L);//11001 本环节为业务首环节，未能可回退一环节
+    		} else {    			
+    			throw new BusinessException(11001L);//11001 本环节为业务最终环节，未能找到下一环节
+    		}
     	}
     	
     	Long newEventStaffId = event.getEvent_staff_id() ;
@@ -195,6 +199,45 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	jdbcDao.insert(event);
     	
     	return event;
+    }
+    
+    
+    
+
+    public OrderProcess getStaffRoleId4Event(OrderProdPackEvent event) {
+    	
+    	OrderProdPackEvent oldEvent = this.get(event.getId());
+    	
+    	String event_status = event.getEvent_status();
+    	
+    	
+    	OrderProcess so = new OrderProcess();
+    	so.setBusiness_id(event.getBusiness_id());
+    	
+    	if (OrderProdPackEvent.STATUS_CONTINUE.equals(event_status)) {
+    	    so.setProcs_step_no(oldEvent.getProcs_step_no());
+    	} else if (OrderProdPackEvent.STATUS_BACK.equals(event_status)) {
+    		so.setProcs_step_no(oldEvent.getProcs_step_no() - 1);
+    	} else if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
+    		so.setProcs_step_no(oldEvent.getProcs_step_no() + 1);
+    	} else {// if (OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
+    		so.setProcs_step_no(oldEvent.getProcs_step_no());
+    	}
+    	
+    	OrderProcess process = (OrderProcess)jdbcDao.find(so);
+    	if (process == null) {
+    		if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
+    			return null;// successfully exists
+    		}
+    		
+    		if (OrderProdPackEvent.STATUS_BACK.equals(event_status)) {
+    			throw new BusinessException(11005L);//11001 本环节为业务首环节，未能可回退一环节
+    		} else {    			
+    			throw new BusinessException(11001L);//11001 本环节为业务最终环节，未能找到下一环节
+    		}
+    	}
+    	
+    	return process;
     }
 
 	private void checkProcessRole(OrderProcess process, Long newEventStaffId) {

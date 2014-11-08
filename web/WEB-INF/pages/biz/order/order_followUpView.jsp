@@ -258,9 +258,51 @@ var g$v<%=view_id%> = $.extend(newView(), {
             E$("eForm").serialize(),
             function(data, textStatus){
                 if (data.code == "0") {
-                	removeView(<%=view_id%>);
-                	g$v<%=parent_view_id%>.list();
+                    removeView(<%=view_id%>);
+                    g$v<%=parent_view_id%>.list();
                 }
+            }
+        );
+    },
+    
+    onOrderProdPackEventChanged:function() {
+
+    	if (typeof(this.roleMap) == "undefined") {
+    		this.roleMap = {} ;
+    	} 
+    	
+    	var key = V("orderProdPackEvent.id") + "#" + V("event_status");
+    	if (typeof(this.roleMap[key]) != "undefined") {
+
+            E$("orderProdPackEvent.event_staff_id").combobox2({
+                id:"orderProdPackEvent.event_staff_id", 
+                data:filter(this.staffsJson, {staff_role_id:this.roleMap[key]}), 
+                firstLabel:"请选择...", 
+                valueProperty:"id", 
+                idProperty:"id", 
+                textProperty:["staff_name"], 
+                titleProperty:"staff_name"
+            });
+            return ;
+    	}
+    
+       var _this = this;
+       
+        ajax(
+        	root + "/biz/order_getStaffRoleId4Event.action", 
+            E$("eForm").serialize(),
+            function(data, textStatus){
+                	_this.roleMap[key] = data.procs_staff_role_id;
+                	
+                    E$("orderProdPackEvent.event_staff_id").combobox2({
+                        id:"orderProdPackEvent.event_staff_id", 
+                        data:filter(_this.staffsJson, {staff_role_id:_this.roleMap[key]}), 
+                        firstLabel:"请选择...", 
+                        valueProperty:"id", 
+                        idProperty:"id", 
+                        textProperty:["staff_name"], 
+                        titleProperty:"staff_name"
+                    });
             }
         );
     }
@@ -428,7 +470,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <tr>
                     <th>处理结果：</th>
                     <td>
-                      <select name="orderProdPackEvent.event_status" id="event_status">
+                      <select name="orderProdPackEvent.event_status" id="event_status" onchange="viewJs.onOrderProdPackEventChanged();">
                       </select>
                     </td>
                     <th> 业务处理人：</th>

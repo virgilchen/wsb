@@ -16,6 +16,7 @@ import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffSO;
 import com.wsb.biz.service.OrderBO;
+import com.wsb.biz.service.OrderProdPackEventBO;
 import com.wsb.biz.service.StaffBO;
 import com.opensymphony.xwork2.Preparable;
 
@@ -122,6 +123,16 @@ public class OrderAction extends BaseAction implements Preparable {
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  
     }
+
+
+    public String getStaffRoleId4Event() throws Exception {
+
+        renderObject(OrderProdPackEventBO.getOrderProdPackEventBO().getStaffRoleId4Event(orderProdPackEvent), null) ;
+        
+        return null;  
+    }
+    
+    
     
     public String pickUp() throws Exception {
 
