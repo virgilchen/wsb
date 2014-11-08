@@ -3,6 +3,24 @@
 
 
 <%SessionUser sessionUser = (SessionUser)session.getAttribute(SessionUser.SESSION_PK) ;%>
+
+<script>
+$(function() {
+	
+ajax(
+    root + "/biz/notice_getNoticesByDate.action", 
+    function(data){
+    	var notices = "";
+    	$(data.list).each(function(i, elem) {
+    		notices += elem.notice_subject;
+    	});
+    	
+    	$("#noticesDiv").html(notices);
+    }
+);
+});
+</script>
+
 <div class="frame_top">
     <ul>
         <li class="user">
@@ -15,5 +33,5 @@
         <li class="top_logout"><a href="javascript:logout();" title="退出登录">退出登录</a></li>
     </ul>
     
-    <div class="top_notice"><b>公告：</b><!-- <span><a href="公告.html" target="mainFrame">关于福利事业</a>[2014/08/26]</span> --></div>
+    <div class="top_notice"><b>公告：</b><marquee behavior="scroll " id="noticesDiv"></marquee></div>
 </div>
