@@ -1,8 +1,12 @@
 package com.wsb.biz.entity;
 
+
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 
 import com.globalwave.base.BaseSO;
+import com.globalwave.base.annotations.Comparison;
 
 
 public class NoticeSO extends BaseSO {
@@ -12,6 +16,11 @@ public class NoticeSO extends BaseSO {
  
     private String notice_subject  ;
     private String notice_content  ;
+    private Timestamp notice_timestamp;
+    
+    @Column(name="notice_timestamp")
+    @Comparison(operator=">")
+    private Timestamp notice_timestamp_start;
 
     
 	public Long[] getIds() {
@@ -30,6 +39,19 @@ public class NoticeSO extends BaseSO {
 		this.notice_subject = notice_subject;
 	}
 
+	public Timestamp getNotice_timestamp_start() {
+		return notice_timestamp_start;
+	}
+	public void setNotice_timestamp_start(Timestamp notice_timestamp_start) {
+		this.notice_timestamp_start = notice_timestamp_start;
+	}
+	public Timestamp getNotice_timestamp() {
+		return notice_timestamp;
+	}
+
+	public void setNotice_timestamp(Timestamp notice_timestamp) {
+		this.notice_timestamp = notice_timestamp;
+	}
 
 	public String getNotice_content() {
 		return notice_content;
