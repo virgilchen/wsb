@@ -380,7 +380,7 @@ function tabChange(m, c, n, t) {
 							</tr>
 							<tr>
 								<th>会员：</th>
-								<td><a href="javascript:viewJs.toBeMember('{$customer.id}','{$T.car_no}');">发展为会员</a></td>
+								<td><a href="javascript:viewJs.toBeMember('{$T.psdo_cust_id}','{$T.car_no}');">发展为会员</a></td>
 							</tr>
 							<tr>
 							<th>品牌：</th>
