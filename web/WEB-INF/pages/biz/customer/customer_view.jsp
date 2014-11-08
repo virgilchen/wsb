@@ -16,6 +16,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     delete_url:root + "/biz/customer_delete.action" ,
     entityName:"customer",
     size:0,
+    isOpenOrderAfterSave:false,
     
     init:function (){
 
@@ -105,10 +106,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
     	openView(100003, '/biz/order_openView.action?customer_id=' + sels[0].value, '业务发起');
     },
-    //onSaveOk:function(data) {
-    //	removeView(<%=view_id%>);
-    //	viewJs.list();
-    //},
+    
+    onSaveOk:function(data) {
+
+        viewJs.toPage('s') ;
+        viewJs.list() ;
+
+    	if (this.isOpenOrderAfterSave) {    		
+            openView(100003, '/biz/order_openView.action?parent_view_id=<%=view_id%>&customer_id=' + data.id, '业务发起');
+            this.isOpenOrderAfterSave = false ;
+    	}
+
+    },
+    
     getDistrict:function(rowIndex){
     	var info_car_no = document.getElementById("car_no"+rowIndex);
     	var info_car_district = document.getElementById("car_district"+rowIndex);
@@ -242,7 +252,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		<b>360视图</b>
 		<div class="main_tt_right fr">
 		 	<a href="#" class="blue">导出客户信息</a>
-		 	<a href="javascript:viewJs.toOrderOpen();" class="orange">保存并发起业务</a>
+		 	<a href="javascript:viewJs.isOpenOrderAfterSave=true;viewJs.save();" class="orange">保存并发起业务</a>
 		 	<A class=orange href="javascript:viewJs.save();">保存</A>
 		 	<A class=blue href="javascript:viewJs.toSearch();">取消</A>
 		</div>
