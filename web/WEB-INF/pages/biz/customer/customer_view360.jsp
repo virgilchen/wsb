@@ -130,8 +130,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	info_car_district.value = district_value;
     },
-    toBeMember:function(){
-    	
+    toBeMember:function(custId,carId){
+    	alert(custId+"====>"+carId);
+    	openView(11001, '/biz/customer_view.action', '客户列表');
     }
 }) ;
 
