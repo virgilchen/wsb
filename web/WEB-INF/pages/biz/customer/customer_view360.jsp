@@ -77,7 +77,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     toView360:function (selectInput) {
-    	alert("1111111111");
     	this.selected = null ;
     	
     	if (selectInput) {
@@ -130,6 +129,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		}
     	}
     	info_car_district.value = district_value;
+    },
+    toBeMember:function(){
+    	
     }
 }) ;
 
@@ -158,7 +160,6 @@ function tabChange(m, c, n, t) {
         <A class=blue href="javascript:viewJs.toAdd();">添加</A>
         <A class=blue href="javascript:viewJs.toView360();">编辑</A>
         <A class=blue href="javascript:viewJs.toOrderOpen();">业务发起</A>
-        <A class=blue href="javascript:viewJs.toEdit();">发展成会员</A>
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
       </DIV>
     </DIV>
@@ -375,6 +376,10 @@ function tabChange(m, c, n, t) {
 							<tr>
 							<th>车牌号码：</th>
 							<td><input name="cars[{$T.index}].car_no" id="car_no{$T.index}" type="text" value="{$T.car_no}" onblur="javascript:viewJs.getDistrict({$T.index});" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" id="car_district{$T.index}" type="text" value="{$T.car_district}"/></td>
+							</tr>
+							<tr>
+								<th>会员：</th>
+								<td><a href="javascript:viewJs.toBeMember('{$customer.id}','{$T.car_no}');">发展为会员</a></td>
 							</tr>
 							<tr>
 							<th>品牌：</th>
