@@ -133,20 +133,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
     }
 }) ;
 
+
 function tabChange(m, c, n, t) {
-	//m为导航统一名称，c为对应内容统一名称，n为对应序号,t为数量（比如这个切换效果有三块内容则为3）
+    //m为导航统一名称，c为对应内容统一名称，n为对应序号,t为数量（比如这个切换效果有三块内容则为3）
     for (i = 1; i <= t; i++) {
         document.getElementById(m + i).className = "";
         document.getElementById(c + i).style.display = "none";
-        alert(c+i+"====>"+document.getElementById(c + i).style.display);
     }
-    alert("111111");
         document.getElementById(m + n).className = "selected";
-        alert("222222");
         document.getElementById(c + n).style.display = "";
-        alert("333333");
-        alert(c+n+"====>"+document.getElementById(c + n).style.display);
-};
+}
 
 </script>
     
@@ -268,13 +264,13 @@ function tabChange(m, c, n, t) {
 	<div class="user_detail_title">
 	<b>客户详细</b>
 	 	<ul class="title_right">
-            <li class="selected" onclick="tabChange('menu1_','con1_',1,2);" id="menu1_1">客户信息</li>
-            <li onclick="tabChange('menu1_','con1_',2,2);" id="menu1_2">业务历史记录</li>
+            <li class="selected" onclick="tabChange('menu9_','con9_',1,2);" id="menu9_1">客户信息</li>
+            <li onclick="tabChange('menu9_','con9_',2,2);" id="menu9_2">业务历史记录</li>
 		</ul>
 	</div>
 
-    <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
-		<div class="user_detail_info" id="con1_1" style="display:block;">
+    <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
+		<div class="user_detail_info" id="con9_1" style="display:block;">
 			<ul class="user_info">
 		        <li class="selected" onclick="tabChange('menu2_','con2_',1,4);" id="menu2_1">基本资料</li>
 		        <li onclick="tabChange('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
@@ -407,7 +403,7 @@ function tabChange(m, c, n, t) {
 				<div class="add_car"><a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a></div>
 			</div>
 		</div>
-        <div class="user_detail_history" id="con1_2" style="display:none;">
+        <div class="user_detail_history" id="con9_2" style="display:none;">
 			<div class="main_order_detail">
 			<div class="title">业务单编号：000213｜业务提交时间：2013-12-01 13:22
 				<ul class="title_right">
