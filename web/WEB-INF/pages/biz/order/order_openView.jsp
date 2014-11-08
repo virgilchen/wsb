@@ -174,7 +174,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
             E$("event_staff_ids_" + elem.index + "_" + elem.id).combobox2({
                 id:"event_staff_ids_" + elem.index + "_" + elem.id, 
-                data:_this.staffsJson, 
+                data:filter(_this.staffsJson, {staff_role_id:elem.procs_staff_role_id}), 
                 firstLabel:"请选择...", 
                 valueProperty:"id", 
                 idProperty:"id", 

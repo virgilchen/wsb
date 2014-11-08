@@ -135,7 +135,10 @@ where d.prod_pack_id=[id]
           <entry key="queryBusinessesInProductPack">
             <value>
               <![CDATA[
-select b.business_id as id, b.*
+select 
+  b.business_id as id, 
+  b.*,
+  (select procs_staff_role_id from order_procs_rt op where op.business_id=b.business_id and procs_step_no=0) as procs_staff_role_id
   from product_rt p 
               inner join business_rt b on p.business_id=b.business_id
               inner join product_pack_detail_rt d on d.prod_id=p.prod_id
