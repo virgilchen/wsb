@@ -1,11 +1,14 @@
 package com.wsb.biz.web;
 
+
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.U;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Notice;
 import com.wsb.biz.entity.NoticeSO;
@@ -83,6 +86,15 @@ public class NoticeAction extends BaseAction implements Preparable {
         
         return null;    
         
+    }
+    
+    public ArrayPageList getNoticesByDate() throws Exception { 	
+    	noticeSO = new NoticeSO();
+    	noticeSO.setNotice_timestamp_start(U.currentTimestamp());
+    	
+    	ArrayPageList<Notice> noticeList = noticeBO.query(noticeSO) ;
+    	
+    	return noticeList;
     }
 
 
