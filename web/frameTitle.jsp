@@ -9,12 +9,13 @@ $(function() {
 	
 ajax(
     root + "/biz/notice_getNoticesByDate.action", 
+    {},
     function(data){
     	var notices = "";
     	$(data.list).each(function(i, elem) {
-    		notices += elem.notice_subject;
+    		notices += "<a>" + elem.notice_subject + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     	});
-    	
+
     	$("#noticesDiv").html(notices);
     }
 );
@@ -33,5 +34,10 @@ ajax(
         <li class="top_logout"><a href="javascript:logout();" title="退出登录">退出登录</a></li>
     </ul>
     
-    <div class="top_notice"><b>公告：</b><marquee behavior="scroll " id="noticesDiv"></marquee></div>
+    <div class="top_notice">
+      <span style="height: 20px;line-height: 20px;" ><b>公告：</b></span>
+      <span>
+        <marquee style="width: 400px;height: 20px;line-height: 20px;" direction="left" loop="-1" onmousemove="this.stop()" onmouseout="this.start()" id="noticesDiv"></marquee>
+      </span>
+    </div>
 </div>
