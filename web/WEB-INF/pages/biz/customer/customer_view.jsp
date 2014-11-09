@@ -269,7 +269,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<b>客户详细</b>
 	 	<ul class="title_right">
             <li class="selected" onclick="tabShow('menu1_','con1_',1,2);" id="menu1_1">客户信息</li>
-            <li onclick="tabShow('menu1_','con1_',2,2);" id="menu1_2">业务历史记录</li>
+            <li onclick="viewJs.getMyOrders();tabShow('menu1_','con1_',2,2);" id="menu1_2">业务历史记录</li>
 		</ul>
 	</div>
 
