@@ -273,8 +273,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		</ul>
 	</div>
 
-    <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
-		<div class="user_detail_info" id="con1_1" style="display:block;">
+	<div class="user_detail_info" id="con1_1" style="display:block;">
+      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
 			<ul class="user_info">
 		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料</li>
 		        <li onclick="tabShow('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
@@ -410,23 +410,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		        </table>
 				<div class="add_car"><a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a></div>
 			</div>
-		</div>
-        <div class="user_detail_history" id="con1_2" style="display:none;">
-          <%@include file="/WEB-INF/pages/biz/customer/orderHistoryView.jsp" %>
-			
-	    </div>
-		<br />
-    </form>
-    
-     <!-- 
-    <table cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-          <td colspan="2" align="center" class="tx_center">
-            <button onclick="viewJs.save()" tabindex="-1">保存(S)</button>
-          </td>
-        </tr>
-    </table>
-    -->
+      </form>
+	</div>
+	
+    <div class="user_detail_history" id="con1_2" style="display:none;">
+      <%@include file="/WEB-INF/pages/biz/customer/orderHistoryView.jsp" %>
+    </div>
     
     
   </div>
