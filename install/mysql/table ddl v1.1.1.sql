@@ -363,7 +363,7 @@ CREATE TABLE `member_need_rt` (
   `member_id` INT NULL,
   `member_need_name` VARCHAR(20) NULL,
   `member_need_desc` VARCHAR(1000) NULL,
-  `prodcut_picture` VARCHAR(100) NULL,
+  `product_picture` VARCHAR(100) NULL,
   PRIMARY KEY (`member_need_id`),
   INDEX `member_need_id_key` (`member_need_id` ASC),
   INDEX `member_id_key` (`member_id` ASC));
