@@ -214,6 +214,7 @@ CREATE TABLE `product_rt` (
   `no_of_product_effective_mth` SMALLINT NULL,
   `no_of_day_remind_advance` SMALLINT NULL,
   `no_of_mth_remind_advance` SMALLINT NULL,
+  `rec_update_time` int(14) unsigned NOT NULL DEFAULT '0',  -- products from xchdb_archive, it's derive from senddate
   PRIMARY KEY (`prod_id`),
   INDEX `business_id_key` (`business_id` ASC),
   INDEX `prod_id_key` (`prod_id` ASC))
@@ -229,6 +230,7 @@ CREATE TABLE `product_pack_rt` (
   `prod_pack_picture` VARCHAR(100) NULL,
   `prod_pack_orignal_price` DECIMAL(12,2) NULL,
   `prod_pack_selling_price` DECIMAL(12,2) NULL,
+  `rec_update_time` int(14) unsigned NOT NULL DEFAULT '0',  -- products from xchdb_archive, it's derive from senddate
   PRIMARY KEY (`prod_pack_id`)
 )
 ENGINE = InnoDB
@@ -366,7 +368,9 @@ CREATE TABLE `member_need_rt` (
   `product_picture` VARCHAR(100) NULL,
   PRIMARY KEY (`member_need_id`),
   INDEX `member_need_id_key` (`member_need_id` ASC),
-  INDEX `member_id_key` (`member_id` ASC));
+  INDEX `member_id_key` (`member_id` ASC))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
 
 
 
