@@ -315,6 +315,11 @@ CREATE TABLE `member_info_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- modified at 20141108
+ALTER TABLE `wsbd001`.`member_info_rt` 
+CHANGE COLUMN `member_id` `member_id` INT(11) NOT NULL AUTO_INCREMENT ;
+ADD COLUMN `car_id` INT(11) NULL DEFAULT NULL AFTER `member_create_time`;
+
 -- drop table `member_appl_form_rt`;
 CREATE TABLE `member_appl_form_rt` (
   `member_id` INT NOT NULL,

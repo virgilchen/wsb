@@ -64,6 +64,7 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
         <dd>
             <ul>
                 <li <%=showOrNot(sessionUser, new short[]{(short)11001}) %>><a href="javascript:removeAll();openView(11001, '/biz/customer_view.action', '客户列表');">客户列表</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)11005}) %>><a href="javascript:removeAll();openView(11005, '/biz/member_view.action', '会员列表');">会员列表</a></li>
             </ul>
         </dd>
     </dl>

@@ -4,13 +4,17 @@
 
     <!-- 数据源定义,使用Apache DBCP 连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <!-- 
-         -->
+        
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://192.168.0.160:3306/wsbd001?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull" />
         <property name="user" value="root" />
         <property name="password" value="root" />
-         
+        <!-- 
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.1.99:3306/wsbd001?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull" />
+        <property name="user" value="root" />
+        <property name="password" value="Wsb123456" />
+         --> 
         <!-- 
         <property name="properties" ref="dataSourceProperties"/>
          -->

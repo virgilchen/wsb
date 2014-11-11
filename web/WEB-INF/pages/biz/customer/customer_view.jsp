@@ -144,8 +144,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	info_car_district.value = district_value;
     },
     toBeMember:function(custId,carId){
-    	alert(custId+"====>"+carId);
-    	return;
+    	
+    	if(carId == '' || custId == ''){
+    		alert("请先完整填写资料！");
+    		return;
+    	}else{
+    		alert("可以发展成会员啦！！");
+    		var str = '/biz/member_toMember.action?carId='+carId+'&customerId='+custId;
+    		alert(str);
+    		openView(11005, str, '会员列表');
+    		return;
+    	}
+    	
     }
 }) ;
 
@@ -382,7 +392,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 							</tr>
 							<tr>
 								<th>会员：</th>
-								<td><a href="javascript:viewJs.toBeMember('{$T.psdo_cust_id}','{$T.car_no}');">发展为会员</a></td>
+								<td><a href="javascript:viewJs.toBeMember('{$T.psdo_cust_id}','{$T.id}');">发展为会员</a></td>
 							</tr>
 							<tr>
 							<th>品牌：</th>

@@ -107,8 +107,7 @@ private static final long serialVersionUID = 7244882365197775441L;
         renderList(pageList) ; 
         return "jsp" ;  
     }
-
-
+    
     public void setCustomerBO(CustomerBO customerBO) {
 		this.customerBO = customerBO;
 	}
