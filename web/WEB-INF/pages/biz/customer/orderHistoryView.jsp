@@ -2,12 +2,16 @@
 
 <script type="text/javascript">
 <!--
-g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
-
-	getMyOrders:function() {
+g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
+    view:document.getElementById("orderHistoryListDiv"), 
+    pageIndex : document.getElementById("orderSO.pageIndex") ,
+    
+    getMyOrders:function() {
+    	V("orderSO.csdo_cust_id", V("customer.id"));
+    	
         ajax(
             root + "/biz/customer_getMyOrders.action", 
-            {id:V("customer.id")},
+            E$("sOrderHistoryForm").serialize(),
             function(data, textStatus){
                 var $div = E$("orderHistoryListDiv");
                 $div.html("");
@@ -15,8 +19,13 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
                 var orderRowTemplate = V("orderRowTemplate");
                 
                 $(data.list).each(function(i, order) {
-                	$div.append(parse(orderRowTemplate, order));
+                    $div.append(parse(orderRowTemplate, order));
                 });
+                
+                var $pageSize = E$("orderSO.pageSize") ;
+                
+                viewJs.lastIndex = Math.ceil(data.total/parseInt($pageSize.val()));
+                viewJs.setPaginationInfo(data.total, data.pageIndex, viewJs.lastIndex, "orderHistoryView") ;
                 
                 
                 /*
@@ -36,23 +45,23 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
     },
     
     showOrderPackDetail:function(orderProdPackId, orderId, index, length) {
-    	var _this = this ;
-    	
-    	var contentId = 'conOrder' + orderId + '_';
-    	tabShow('menuOrder' + orderId + '_', contentId, index, length);
-    	
-    	var $content = E$(contentId + 1);
-    	
-    	if ($content.attr("isInited") == "N") {
-    		var buinessTitleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
-    		
+        var _this = this ;
+        
+        var contentId = 'conOrder' + orderId + '_';
+        tabShow('menuOrder' + orderId + '_', contentId, index, length);
+        
+        var $content = E$(contentId + 1);
+        
+        if ($content.attr("isInited") == "N") {
+            var buinessTitleTemplate = "<li onclick=\"tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
+            
             ajax(
                 root+"/biz/order_getOrderInfo.action", 
                 {"order.id":orderId},
                 function(data, textStatus){
-                	$content.attr("isInited", "Y");
-                	
-                	 var orderProdPacks = data.orderProdPacks;
+                    $content.attr("isInited", "Y");
+                    
+                     var orderProdPacks = data.orderProdPacks;
                      var products = data.products;
                      var orderProdPackEvents = data.orderProdPackEvents;
                      
@@ -108,7 +117,7 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
                      tabShow('menuOrder' + orderId + '_', contentId, index, length);
                 }
             );
-    	}
+        }
     },
     
     // same as order followUp
@@ -158,6 +167,12 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
 });
 //-->
 </script>
+<form method="post" id="sOrderHistoryForm" name="sOrderHistoryForm" onsubmit="return false;" style="margin: 0">
+<input name="orderSO.pageIndex" id="orderSO.pageIndex" value="1" type="hidden" />
+<input name="orderSO.pageSize" id="orderSO.pageSize" value="10" type="hidden" />
+<input name="orderSO.csdo_cust_id" id="orderSO.csdo_cust_id" value="" type="hidden" />
+
+
 <div id="orderHistoryListDiv">
     <%--
     <div class="main_order_detail">
@@ -234,7 +249,7 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
             <div class="title">业务单编号：{$T.order_no}｜业务提交时间：{$T.order_init_time_stamp}｜启动业务人员：{$T.order_init_staff_name}
                 <ul class="title_right">
                   {#foreach $T.orderProdPacks as pack}
-                    <li onclick="viewJs.showOrderPackDetail({$T.pack.id}, {$T.id}, {$T.pack$index + 1}, {$T.orderProdPacks.length});" id="menuOrder{$T.id}_{$T.pack$index + 1}">
+                    <li onclick="viewJs.orderHistoryView.showOrderPackDetail({$T.pack.id}, {$T.id}, {$T.pack$index + 1}, {$T.orderProdPacks.length});" id="menuOrder{$T.id}_{$T.pack$index + 1}">
                       {$T.pack.prod_pack_name}（{$T.pack.no_of_order_prod_pack}份）
                     </li>
                   {#/for}
@@ -361,21 +376,14 @@ g$v<%=view_id%> = $.extend(g$v<%=view_id%>, {
         
         
         
-        
-        <div class="page_wrap clearfix">
-            <div class="paginator">
-                <span class="page-start">＜上一页</span>
-                <span class="page-this">1</span>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#">7</a>
-                <a href="#">8</a>
-                <span>...</span>
-                <a href="#">20</a>
-                <a href="#" class="page-next">下一页＞</a>
-            </div>
-                    第1/3页，共30条记录
-        </div>
+
+	<div class="page_wrap clearfix" id='pagination.orderHistoryView'>
+	    <label id="paginationInfo">总记录数为0条，当前为第1页，共0页&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	    
+	    <div class=paginator>
+	      <a href="javascript:viewJs.orderHistoryView.preview();">&lt;上一页</a>
+	      <span id="paginationNumbers"></span>
+	      <a href="javascript:viewJs.orderHistoryView.next();">下一页&gt;</a>
+	    </div>
+	</div>
+</form>

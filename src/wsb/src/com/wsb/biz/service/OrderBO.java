@@ -1,9 +1,7 @@
 package com.wsb.biz.service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.entity.SessionUser;
 import com.globalwave.system.service.SequenceBO;
 import com.wsb.biz.entity.Order;
@@ -233,6 +232,17 @@ public class OrderBO extends BaseServiceImpl {
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrders", orderSO, HashMap.class);
     }
 
+    public ArrayPageList<Order> queryOrderHistories(OrderSO orderSO) {
+    	ArrayPageList<Order> result = (ArrayPageList<Order>)jdbcDao.queryName("bizSQLs:queryOrderHistories", orderSO, Order.class);
+    	
+    	OrderProdPackBO orderProdPackBO = OrderProdPackBO.getOrderProdPackBO();
+    	
+    	for (Order order : result) {
+    		order.setOrderProdPacks(orderProdPackBO.queryByOrderId(order.getId()));
+    	}
+    	
+        return result;
+    }
 
 
     public Order get(Long id) {  
@@ -244,7 +254,9 @@ public class OrderBO extends BaseServiceImpl {
         return order;
     }
     
-    
+    public static OrderBO getOrderBO() {
+    	return (OrderBO) CodeHelper.getAppContext().getBean("orderBO");
+    }
     
     
 }

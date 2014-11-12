@@ -129,6 +129,19 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-1303, 0, 'orderEvent.status', 'F', '失败', '', null, 'A', 4, null, null, null, null, null);
 
 
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000009, 0, 'SYS.ActionName', '/system/user_logout', '用户登出', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000008, 0, 'SYS.ActionName', '/system/user_login', '用户登录', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000007, 0, 'SYS.ActionName', 'add', '添加', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000006, 0, 'SYS.ActionName', 'get', '读取', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000005, 0, 'SYS.ActionName', 'query', '查询', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000004, 0, 'SYS.ActionName', 'list', '查询列表', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000003, 0, 'SYS.ActionName', 'delete', '删除', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000002, 0, 'SYS.ActionName', 'update', '更新', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3000001, 0, 'SYS.ActionName', 'create', '创建', '', null, 'A', 1, null, null, null, null, null);
+
+
+
 delete from `staff_demo_rt` where `staff_id`<>0;
 
 /*  Staff init  */

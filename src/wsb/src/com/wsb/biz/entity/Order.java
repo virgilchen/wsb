@@ -40,6 +40,10 @@ public class Order extends BaseEntity {
     private String order_cur_status  ;
     private String order_remark  ;
     
+    
+    @Transient
+    private String order_init_staff_name;
+    
     @Transient
     private Customer customer ;
     
@@ -118,6 +122,12 @@ public class Order extends BaseEntity {
 	}
 	public void setOrder_no(String order_no) {
 		this.order_no = order_no;
+	}
+	public String getOrder_init_staff_name() {
+		return order_init_staff_name;
+	}
+	public void setOrder_init_staff_name(String order_init_staff_name) {
+		this.order_init_staff_name = order_init_staff_name;
 	}
 
 }

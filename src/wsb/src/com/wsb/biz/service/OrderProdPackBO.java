@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.cache.CodeHelper;
-import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackSO;
 
@@ -74,7 +73,6 @@ public class OrderProdPackBO extends BaseServiceImpl {
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderProdByOrderId", orderProdPackSO, HashMap.class);
     }
 
-    
 
     public OrderProdPack get(Long id) {  
     	OrderProdPack org = new OrderProdPack() ;

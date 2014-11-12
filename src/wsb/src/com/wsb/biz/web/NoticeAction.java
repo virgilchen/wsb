@@ -2,6 +2,9 @@ package com.wsb.biz.web;
 
 
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -87,14 +90,19 @@ public class NoticeAction extends BaseAction implements Preparable {
         return null;    
         
     }
-    
-    public ArrayPageList getNoticesByDate() throws Exception { 	
+
+    @Pid(value=Pid.DO_NOT_CHECK)
+    public String getNoticesByDate() throws Exception { 	
     	noticeSO = new NoticeSO();
-    	noticeSO.setNotice_timestamp_start(U.currentTimestamp());
+    	
+    	Timestamp dateNow = new Timestamp(U.int2Date((U.date2int(U.currentDate())/1000000) * 1000000).getTime());
+
+    	noticeSO.setNotice_timestamp_start(dateNow);
     	
     	ArrayPageList<Notice> noticeList = noticeBO.query(noticeSO) ;
+        renderList(noticeList) ; 
     	
-    	return noticeList;
+    	return null;
     }
 
 

@@ -19,7 +19,7 @@ public class NoticeSO extends BaseSO {
     private Timestamp notice_timestamp;
     
     @Column(name="notice_timestamp")
-    @Comparison(operator=">")
+    @Comparison(operator=">=")
     private Timestamp notice_timestamp_start;
 
     

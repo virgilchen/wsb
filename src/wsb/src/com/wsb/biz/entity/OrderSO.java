@@ -17,6 +17,7 @@ public class OrderSO extends BaseSO {
     private Long order_init_staff_id;
     private String order_no;
     private String psdo_cust_name  ;
+    private Long psdo_cust_id  ;
     private String order_cur_status  ;
     
 	public Long[] getIds() {
@@ -82,7 +83,13 @@ public class OrderSO extends BaseSO {
 	public void setOrder_init_staff_id(Long order_init_staff_id) {
 		this.order_init_staff_id = order_init_staff_id;
 	}
-
+    public Long getPsdo_cust_id() {
+		return psdo_cust_id;
+	}
+    public void setPsdo_cust_id(Long psdo_cust_id) {
+		this.psdo_cust_id = psdo_cust_id;
+	}
+    
 	@Override
 	public Class<?> getTableClass() {
 		return Order.class;

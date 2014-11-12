@@ -58,7 +58,27 @@ where o.psdo_cust_id=c.psdo_cust_id
  {and o.order_no like [order_no]}
  {and o.order_init_staff_id=[order_init_staff_id]}
  {and o.order_cur_status=[order_cur_status]}
+ {and o.psdo_cust_id=[psdo_cust_id]}
 order by o.order_id
+              ]]>
+            </value>
+          </entry>
+
+          <entry key="queryOrderHistories">
+            <value>
+              <![CDATA[
+select
+  o.*,
+  s.staff_name as order_init_staff_name
+ from 
+   order_rt o 
+     left join staff_demo_rt s on s.staff_id=o.order_init_staff_id
+where 1=1
+ {and o.order_no like [order_no]}
+ {and o.order_init_staff_id=[order_init_staff_id]}
+ {and o.order_cur_status=[order_cur_status]}
+ {and o.psdo_cust_id=[psdo_cust_id]}
+order by o.order_id desc
               ]]>
             </value>
           </entry>

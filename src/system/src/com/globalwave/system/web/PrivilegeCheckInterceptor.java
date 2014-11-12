@@ -131,9 +131,16 @@ public class PrivilegeCheckInterceptor extends AbstractInterceptor {
 	    	eventLog.setExt_c2(action_url) ;
 	    	
 	    	eventLog.setEvent_type_code("ACTION") ;
-	    	eventLog.setUser_id(u.getId()) ;
-	    	eventLog.setUser_name(user == null?u.getLogin_id():u.getName_cn() + " " + (u.getName_en() == null?"":u.getName_en())) ;
-	    	eventLog.setCreated_by(u.getLogin_id()) ;
+	    	if (u==null) {
+	    		eventLog.setUser_id(user.getStaff().getId());
+	    		eventLog.setUser_name(user.getStaff().getStaff_name());
+	    		eventLog.setCreated_by(user.getStaff().getStaff_login_profile());
+	    	} else {
+		    	eventLog.setUser_id(u.getId()) ;
+		    	eventLog.setUser_name(user == null?u.getLogin_id():u.getName_cn() + " " + (u.getName_en() == null?"":u.getName_en())) ;
+		    	eventLog.setCreated_by(u.getLogin_id()) ;
+	    	}
+	    	
 	    	
 	    	HttpServletRequest request = ((HttpServletRequest) ((BaseAction)actionInvocation.getProxy().getAction()).getRequest()) ;
 	    	

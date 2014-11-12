@@ -9,13 +9,14 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
-import com.itextpdf.text.log.SysoLogger;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
+import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
+import com.wsb.biz.service.OrderBO;
 import com.opensymphony.xwork2.Preparable;
 
 @Service("biz_customerAction")
@@ -108,6 +109,18 @@ private static final long serialVersionUID = 7244882365197775441L;
         return "jsp" ;  
     }
     
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String getMyOrders() throws Exception {
+    	OrderSO so = new OrderSO();
+    	so.setPsdo_cust_id(id);
+    	
+        renderList(OrderBO.getOrderBO().queryOrderHistories(so)) ; 
+        
+        return null ;  
+    }
+
+
+
     public void setCustomerBO(CustomerBO customerBO) {
 		this.customerBO = customerBO;
 	}
