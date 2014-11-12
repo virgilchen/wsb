@@ -1,5 +1,5 @@
 .ui-combobox {
-    width:100%;
+   min-width:127px; 
     position: relative;
     display: inline-block;
     left: 0;
@@ -26,7 +26,7 @@
 .ui-combobox input {width: 98%;}
 /*.ui-combobox .ui-icon-triangle-1-s {width: 2px;}*/
 
-.ui-autocomplete { max-height: 250px; overflow-y: auto; overflow-x: hidden;}
+.ui-autocomplete { max-height: 160px; overflow-y: auto; overflow-x: hidden;}
 
 
 
