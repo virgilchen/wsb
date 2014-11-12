@@ -94,10 +94,14 @@ public class NoticeAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK)
     public String getNoticesByDate() throws Exception { 	
     	noticeSO = new NoticeSO();
+ 
+    	int day = 5;
     	
-    	Timestamp dateNow = new Timestamp(U.int2Date((U.date2int(U.currentDate())/1000000) * 1000000).getTime());
+    	Timestamp startDate = new Timestamp(U.int2Date((U.date2int(U.currentDate())/1000000) * 1000000).getTime() - day*24*60*60*1000);
 
-    	noticeSO.setNotice_timestamp_start(dateNow);
+    	
+    	
+    	noticeSO.setNotice_timestamp_start(startDate);
     	
     	ArrayPageList<Notice> noticeList = noticeBO.query(noticeSO) ;
         renderList(noticeList) ; 
