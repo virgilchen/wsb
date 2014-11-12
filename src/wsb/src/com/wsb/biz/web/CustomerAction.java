@@ -27,7 +27,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     
     private CustomerBO customerBO ;
     private Customer customer ;
-    private CustomerSO customerSO ; 
+    private CustomerSO customerSO ;
+    private OrderSO orderSO;
     private List<Car> cars ;
     private CarBO carBO ;
     private Car car ;
@@ -111,10 +112,9 @@ private static final long serialVersionUID = 7244882365197775441L;
     
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String getMyOrders() throws Exception {
-    	OrderSO so = new OrderSO();
-    	so.setPsdo_cust_id(id);
+    	orderSO.setPsdo_cust_id(id);
     	
-        renderList(OrderBO.getOrderBO().queryOrderHistories(so)) ; 
+        renderList(OrderBO.getOrderBO().queryOrderHistories(orderSO)) ; 
         
         return null ;  
     }
@@ -168,5 +168,11 @@ private static final long serialVersionUID = 7244882365197775441L;
 
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
+	}
+	public OrderSO getOrderSO() {
+		return orderSO;
+	}
+	public void setOrderSO(OrderSO orderSO) {
+		this.orderSO = orderSO;
 	}
 }

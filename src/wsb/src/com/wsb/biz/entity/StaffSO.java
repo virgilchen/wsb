@@ -8,7 +8,8 @@ import com.globalwave.base.annotations.Comparison;
 public class StaffSO extends BaseSO {
 	@Column(name="staff_id")
 	private Long[] ids ;
-	
+
+	@Comparison(operator=Comparison.EQ)
 	private String staff_status;
 
 	@Comparison(operator=Comparison.EQ)

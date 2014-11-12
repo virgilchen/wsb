@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
+import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.Order;
@@ -54,6 +55,7 @@ public class OrderAction extends BaseAction implements Preparable {
 
     	StaffSO so = new StaffSO();
     	so.setStaff_status(Staff.STATUS_ACTIVE);
+    	so.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
     	
     	this.getRequest().setAttribute(
     			"staffsJson", 
@@ -66,6 +68,7 @@ public class OrderAction extends BaseAction implements Preparable {
 
     	StaffSO so = new StaffSO();
     	so.setStaff_status(Staff.STATUS_ACTIVE);
+    	so.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
     	
     	this.getRequest().setAttribute(
     			"staffsJson", 

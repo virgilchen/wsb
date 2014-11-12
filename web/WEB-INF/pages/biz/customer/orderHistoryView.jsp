@@ -6,6 +6,10 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
     view:document.getElementById("orderHistoryListDiv"), 
     pageIndex : document.getElementById("orderSO.pageIndex") ,
     
+    list:function() {
+    	this.getMyOrders();
+    },
+    
     getMyOrders:function() {
     	V("orderSO.csdo_cust_id", V("customer.id"));
     	
@@ -169,7 +173,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
 </script>
 <form method="post" id="sOrderHistoryForm" name="sOrderHistoryForm" onsubmit="return false;" style="margin: 0">
 <input name="orderSO.pageIndex" id="orderSO.pageIndex" value="1" type="hidden" />
-<input name="orderSO.pageSize" id="orderSO.pageSize" value="10" type="hidden" />
+<input name="orderSO.pageSize" id="orderSO.pageSize" value="5" type="hidden" />
 <input name="orderSO.csdo_cust_id" id="orderSO.csdo_cust_id" value="" type="hidden" />
 
 
