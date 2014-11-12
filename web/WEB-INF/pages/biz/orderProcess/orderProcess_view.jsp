@@ -235,6 +235,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <td><!--<input type="text" name="orderProcess.procs_staff_role_id" id="orderProcess.procs_staff_role_id" maxlength="50"/>-->
                       <select name="orderProcesses[{$T.procs_step_no}].procs_staff_role_id">
+                        <option>请选择...</option>
                         <%List<HashMap<String, Object>> roles = ((List<HashMap<String, Object>>)CodeHelper.query("Role", HashMap.class)) ;%>
                         <%for (HashMap<String, Object> role : roles) {%>
                         <option value="<%=role.get("id") %>" {#if $T.procs_staff_role_id == <%=role.get("id") %>}selected="selected"{#/if}><%=role.get("staff_role_name") %></option>
