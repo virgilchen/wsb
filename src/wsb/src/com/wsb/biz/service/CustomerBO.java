@@ -48,6 +48,10 @@ public class CustomerBO extends BaseServiceImpl {
     	}
     }
     
+    public void update(Customer customer) {
+    	jdbcDao.update(customer) ;
+    }
+    
 
     public void delete(Customer customer) {
     	CarSO carSO = new CarSO();

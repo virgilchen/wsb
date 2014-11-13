@@ -143,14 +143,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	info_car_district.value = district_value;
     },
-    toBeMember:function(custId,carId){
-    	
-    	if(carId == '' || custId == ''){
-    		alert("请先完整填写资料！");
+    toMember:function(){
+    	var custId = document.getElementById("customer.id").value;
+    	if(custId == ''){
+    		alert("请先完整填写客户资料！");
     		return;
     	}else{
-    		alert("可以发展成会员啦！！");
-    		var str = '/biz/member_toMember.action?carId='+carId+'&customerId='+custId;
+    		var memberId = document.getElementById("customer.member_id").value;
+    		if(memberId == '' || memberId == '0'){
+    			alert("可以发展成会员啦！！");
+    		}
+    		
+    		var str = '/biz/member_view.action?customerId='+custId;
     		alert(str);
     		openView(11005, str, '会员列表');
     		return;
@@ -286,16 +290,22 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<div class="user_detail_info" id="con1_1" style="display:block;">
       <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
 			<ul class="user_info">
-		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料</li>
+		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料<span class="c_red">[会员]</span></li>
 		        <li onclick="tabShow('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
 		        <li onclick="tabShow('menu2_','con2_',3,4);" id="menu2_3">客户资源</li>
-		        <li onclick="tabShow('menu2_','con2_',4,4);" id="menu2_4">车类资料<span class="c_red">[会员]</span></li>
+		        <li onclick="tabShow('menu2_','con2_',4,4);" id="menu2_4">车类资料</li>
 			</ul>
 		    <div id="con2_1" style="display:block;">
 				<table width="100%" border="0">
 					<tr>
 					<th>客户号：</th>
-					<td><input name="customer.cust_code" type="text" maxlength="50"/><input type="hidden" name="customer.id" id="customer.id"/></td>
+					<td><input name="customer.cust_code" type="text" maxlength="50"/>
+						<input type="hidden" name="customer.id" id="customer.id"/>
+						<input type="hidden" name="customer.member_id" id="customer.member_id"/>
+						<input type="hidden" name="customer.member_idc" id="customer.member_idc"/>
+					</td>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:viewJs.toMember();">发展为会员</a>
 					</tr>
 					<tr>
 					<th>姓名：</th>
@@ -388,11 +398,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					      	
 							<tr>
 							<th>车牌号码：</th>
-							<td><input name="cars[{$T.index}].car_no" id="car_no{$T.index}" type="text" value="{$T.car_no}" onblur="javascript:viewJs.getDistrict({$T.index});" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" id="car_district{$T.index}" type="text" value="{$T.car_district}"/></td>
-							</tr>
-							<tr>
-								<th>会员：</th>
-								<td><a href="javascript:viewJs.toBeMember('{$T.psdo_cust_id}','{$T.id}');">发展为会员</a></td>
+							<td><input name="cars[{$T.index}].car_no" id="car_no{$T.index}" type="text" value="{$T.car_no}" onblur="javascript:viewJs.getDistrict({$T.index});" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" id="car_district{$T.index}" type="text" value="{$T.car_district}"/>
+							</td>
 							</tr>
 							<tr>
 							<th>品牌：</th>

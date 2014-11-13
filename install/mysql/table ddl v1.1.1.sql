@@ -41,7 +41,8 @@ CREATE TABLE `cust_demo_rt` (
   UNIQUE INDEX `cust_key` (`psdo_cust_id` ASC))
 ENGINE = InnoDB;
 
-
+ALTER TABLE `wsbd001`.`cust_demo_rt` 
+CHANGE COLUMN `member_idc` `member_idc` CHAR(1) NULL DEFAULT 0 ;
 
 -- SELECT * FROM wsbd001.cust_demo_rt LIMIT 0, 1000
 
@@ -319,6 +320,7 @@ DEFAULT CHARACTER SET = utf8;
 ALTER TABLE `wsbd001`.`member_info_rt` 
 CHANGE COLUMN `member_id` `member_id` INT(11) NOT NULL AUTO_INCREMENT ;
 ADD COLUMN `car_id` INT(11) NULL DEFAULT NULL AFTER `member_create_time`;
+CHANGE COLUMN `member_status` `member_status` VARCHAR(5) NULL DEFAULT 0 ;
 
 -- drop table `member_appl_form_rt`;
 CREATE TABLE `member_appl_form_rt` (

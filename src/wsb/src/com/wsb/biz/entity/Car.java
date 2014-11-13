@@ -1,7 +1,6 @@
 package com.wsb.biz.entity;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -33,6 +33,7 @@ public class Car extends BaseEntity {
     private String car_engine_no;
     private Date car_init_register_date;
     private Double car_miles;
+    
 	public Long getPsdo_cust_id() {
 		return psdo_cust_id;
 	}
