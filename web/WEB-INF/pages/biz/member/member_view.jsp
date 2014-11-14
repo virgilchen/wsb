@@ -39,6 +39,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	removeView(<%=view_id%>);
     	viewJs.list();
     },
+    toCust:function(data){
+    	removeView(<%=view_id%>);
+    	viewJs.list();
+    },
     getMember:function(customerId) {
 		ajax(
 				root + "/biz/member_toMember.action", 
@@ -49,6 +53,31 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     formDeserialize("eForm", data, {}) ;
                 }
             );
+    },
+    checkEditForm:function() {
+    	if (V("member_login_id") == "" && V("member_login_pwd") == "") {
+    		alert("请输入密码！") ;
+            E("member_login_pwd").focus();
+    		return false ;
+    	}
+    	if(V("member_login_pwd2") != V("member_login_pwd")) {
+    		alert("两次密码不一致，请重新输入！");
+            V("member_login_pwd2", "");
+            V("member_login_pwd", "");
+            E("member_login_pwd").focus();
+    		return false ;
+    	}
+    	
+    	return true ;
+    },
+    
+    onGet:function(data, event) {
+    	V("member_login_pwd2", "");
+    	if (typeof(data.id) == "undefined") {
+    		E$("member_login_id").removeAttr("readonly");
+    	} else {
+            E$("member_login_id").attr("readonly", "readonly") ;
+    	}
     }
 }) ;
 
@@ -144,14 +173,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
       <B>会员视图</B> 
       <DIV class="main_tt_right fr">
         <A class=orange href="javascript:viewJs.save();">保存</A>
-        <A class=blue href="javascript:viewJs.toSearch();">取消</A>
+        <A class=blue href="javascript:viewJs.toCust();">取消</A>
       </DIV>
     </DIV>
 
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
       <input type="hidden" name="member.id" id="member.id"/>
-      <input type="text" name="member.psdo_cust_id" id="member.psdo_cust_id"/>
-      <input type="text" name="member.car_id" id="member.car_id"/>
+      <input type="hidden" name="member.psdo_cust_id" id="member.psdo_cust_id"/>
+      <input type="hidden" name="member.car_id" id="member.car_id"/>
 	  <div class="main_infomation" id="carInfoDetailDiv">
 		<table width="100%" border="0">
 			<tr>
@@ -165,6 +194,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	  <div class="user_accout">
 		<p><label>会员号：</label><input type="text" name="member.member_login_id" id="member_login_id" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>登陆密码：</label><input type="password" name="member.member_login_pwd" id="member_login_pwd" maxlength="50"/><span class="c_red">*</span></p>
+		<p><label>确认密码：</label><input type="password" name="member.member_login_pwd" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>有效期限：</label><input type="text" name="member.member_expiry_date" id="member_expiry_date" maxlength="10"/><span class="c_red">*</span></p>
 	  </div>
       <div class="membership">

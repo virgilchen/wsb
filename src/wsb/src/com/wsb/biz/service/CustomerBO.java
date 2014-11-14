@@ -14,6 +14,8 @@ import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
+import com.wsb.biz.entity.MemberSO;
+import com.wsb.biz.entity.Member;
 
 
 @Service("customerBO")
@@ -22,7 +24,13 @@ import com.wsb.biz.entity.CustomerSO;
 public class CustomerBO extends BaseServiceImpl {
 
     public Customer create(Customer customer, List<Car> cars) {  
-
+    	
+    	Customer customerSO = new Customer();
+    	customerSO.setCust_code((customer.getCust_code()));
+		if (this.jdbcDao.find(customerSO) != null) {
+			throw new BusinessException(1110L);//1110', '会员登录账号已经被使用，请使用其它登录账号
+		}
+		
     	Customer newItem = (Customer) jdbcDao.insert(customer) ;
     	if(cars != null){
     		for(int i=0;i<cars.size();i++){
@@ -57,6 +65,11 @@ public class CustomerBO extends BaseServiceImpl {
     	CarSO carSO = new CarSO();
     	carSO.setPsdo_cust_id(customer.getId());
     	jdbcDao.delete(Car.class, carSO);
+    	
+    	MemberSO memberSO = new MemberSO();
+		memberSO.setPsdo_cust_id(customer.getId().toString());
+		jdbcDao.delete(Member.class, memberSO);
+    	
         jdbcDao.delete(customer) ;
         
     }
@@ -66,7 +79,12 @@ public class CustomerBO extends BaseServiceImpl {
     		CarSO carSO = new CarSO();
         	carSO.setPsdo_cust_id(customerIds[i]);
         	jdbcDao.delete(Car.class, carSO);
+        	
+        	MemberSO memberSO = new MemberSO();
+    		memberSO.setPsdo_cust_id(customerIds[i].toString());
+    		jdbcDao.delete(Member.class, memberSO);
     	}
+    	
     	
         CustomerSO customer = new CustomerSO() ;
         customer.setIds(customerIds) ;

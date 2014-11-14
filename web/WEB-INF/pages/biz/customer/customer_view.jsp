@@ -151,11 +151,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}else{
     		var memberId = document.getElementById("customer.member_id").value;
     		if(memberId == '' || memberId == '0'){
-    			alert("可以发展成会员啦！！");
+    			//alert("可以发展成会员啦！！");
     		}
     		
     		var str = '/biz/member_view.action?customerId='+custId;
-    		alert(str);
     		openView(11005, str, '会员列表');
     		return;
     	}

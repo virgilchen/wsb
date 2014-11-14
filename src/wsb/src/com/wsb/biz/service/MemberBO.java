@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.Util;
+import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.MemberSO;
 
@@ -17,7 +19,12 @@ import com.wsb.biz.entity.MemberSO;
 public class MemberBO extends BaseServiceImpl{
 	
 	public Member create(Member member) {  
-
+		Member memberSO = new Member();
+		memberSO.setMember_login_id(member.getMember_login_id());
+		if (this.jdbcDao.find(memberSO) != null) {
+			throw new BusinessException(1110L);//1110', '会员登录账号已经被使用，请使用其它登录账号
+		}
+//		member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()));
     	Member newItem = (Member) jdbcDao.insert(member) ;
         
         return newItem;
