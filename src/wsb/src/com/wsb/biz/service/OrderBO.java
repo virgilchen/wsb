@@ -131,6 +131,7 @@ public class OrderBO extends BaseServiceImpl {
     public Order getOrderInfo(Long orderId) {
     	
     	Order result = this.get(orderId);
+    	result.setOrder_init_staff_name(StaffBO.getStaffBO().get(result.getOrder_init_staff_id()).getStaff_name());
     	result.setCustomer(CustomerBO.getCustomerBO().get(result.getPsdo_cust_id()));
     	
     	OrderProdPackBO orderProdPackBO = OrderProdPackBO.getOrderProdPackBO();

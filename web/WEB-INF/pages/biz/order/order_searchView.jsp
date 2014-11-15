@@ -139,16 +139,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
 				    <td>{$T.order_init_time_stamp}</td>
 				    <td>{fmt.maxlen($T.event_staff_name)}</td>
-				    <td><span class="c_orange">{fmt.maxlen($T.procs_step_name, 100)}</span></td>
+				    <td><span class="c_orange">{fmt.maxlen($T.procs_step_name, 100)}{#if $T.order_cur_status == 'E'}完结{#/if}</span></td>
 				    <td>
 				      {#if $T.order_cur_status == 'I'}
                       <a href="javascript:viewJs.toEditView({$T.order_id});">查看</a> 
                       {#else} 
+                        {#if $T.order_cur_status == 'S'}
 	                      {#if $T.event_staff_id == null}
 	                      <a href="javascript:viewJs.pickUp({$T.order_id}, {$T.event_id});">领取</a> 
 	                      {#else} 
 	                      <a href="javascript:viewJs.toFollowUpView({$T.order_id}, {$T.event_id});">查看</a>
 	                      {#/if}
+	                    {/#if}
                       {#/if}
 				    </td>
                   </tr>

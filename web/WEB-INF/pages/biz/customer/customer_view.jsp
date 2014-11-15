@@ -27,7 +27,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         this.initDataGrid("customerTB") ;
         
-        E$("customer.cust_birthday").datepicker({});
+        E$("customer.cust_birthday").datepicker();
         
         E$("eForm").validator();
         E$("sForm").validator();

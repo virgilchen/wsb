@@ -1,3 +1,4 @@
+<%@page import="com.wsb.biz.entity.OrderProdPackEvent"%>
 <%@page import="com.globalwave.system.entity.SessionUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -52,7 +53,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             titleProperty:"staff_name"
         });
         
-        E$("eForm").validator();
+        E$("eForm").validator({inputEvent:"change",errorInputEvent: "change"});
         //E$("sForm").validator();
         E("eForm").setFirstFocus();
         this.size = 0;
@@ -71,6 +72,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 formDeserializeText("customerInfoDetailDiv", "label", data.customer, {}) ;
                 formDeserializeText("orderInfoDiv", "label", data, {}) ;
                 E$("order.order_no").html(data.order_no);
+                E$("order.order_init_staff_name").html(data.order_init_staff_name);
+                
                 //formDeserialize("eForm", data, {}) ;
                 
                 var orderProdPacks = data.orderProdPacks;
@@ -142,8 +145,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
 
                 if (prodLen > 0) {
-                	_this.setSelectedEventEditForm(orderProdPacks[orderProdPacks.selectedIndex].prod_pack_id);
-                    tabShow('menuOrderProduct_', 'conOrderProduct_', orderProdPacks.selectedIndex + 1, prodLen);
+                	if (typeof(orderProdPacks.selectedIndex) == "undefined") {// finish?
+                		tabShow('menuOrderProduct_', 'conOrderProduct_', 1, prodLen);
+                		E$("orderFollowUpContent").hide();
+                	} else {
+	                	_this.setSelectedEventEditForm(orderProdPacks[orderProdPacks.selectedIndex].prod_pack_id);
+	                    tabShow('menuOrderProduct_', 'conOrderProduct_', orderProdPacks.selectedIndex + 1, prodLen);
+                	}
                 }
             }
         );
@@ -271,12 +279,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		this.roleMap = {} ;
     	} 
     	
-    	var key = V("orderProdPackEvent.id") + "#" + V("event_status");
-    	if (typeof(this.roleMap[key]) != "undefined") {
+    	var event_status = V("event_status") ;
+    	
+    	var key = V("orderProdPackEvent.id") + "#" + event_status;
+    	var isFail = (event_status == "<%=OrderProdPackEvent.STATUS_FAIL%>");
+    	
+    	if (typeof(this.roleMap[key]) != "undefined" || isFail) {
 
             E$("orderProdPackEvent.event_staff_id").combobox2({
                 id:"orderProdPackEvent.event_staff_id", 
-                data:filter(this.staffsJson, {staff_role_id:this.roleMap[key]}), 
+                data:isFail || this.roleMap[key] == null?this.staffsJson:filter(this.staffsJson, {staff_role_id:this.roleMap[key]}), 
                 firstLabel:"请选择...", 
                 valueProperty:"id", 
                 idProperty:"id", 
@@ -292,18 +304,21 @@ var g$v<%=view_id%> = $.extend(newView(), {
         	root + "/biz/order_getStaffRoleId4Event.action", 
             E$("eForm").serialize(),
             function(data, textStatus){
-                	_this.roleMap[key] = data.procs_staff_role_id;
-                	
-                    E$("orderProdPackEvent.event_staff_id").combobox2({
-                        id:"orderProdPackEvent.event_staff_id", 
-                        data:filter(_this.staffsJson, {staff_role_id:_this.roleMap[key]}), 
-                        firstLabel:"请选择...", 
-                        valueProperty:"id", 
-                        idProperty:"id", 
-                        textProperty:["staff_name"], 
-                        titleProperty:"staff_name"
-                    });
-            }
+        	    //if (data == null) {// this is the last event
+        	    var roleId = (data == null? null:data.procs_staff_role_id);
+            	_this.roleMap[key] = roleId;
+            	
+                E$("orderProdPackEvent.event_staff_id").combobox2({
+                    id:"orderProdPackEvent.event_staff_id", 
+                    data:roleId == null?_this.staffsJson:filter(_this.staffsJson, {staff_role_id:roleId}), 
+                    firstLabel:"请选择...", 
+                    valueProperty:"id", 
+                    idProperty:"id", 
+                    textProperty:["staff_name"], 
+                    titleProperty:"staff_name"
+                });
+            },
+            false
         );
     }
     
@@ -330,7 +345,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		    <td width="10%" style="text-align: right;">业务单发起时间：</td>
             <td width="20%" style="text-align: left;"><label id="customer.order_init_time_stamp">2010-12-01 13:22</label></td>
             <td width="10%" style="text-align: right;">业务单发起人：</td>
-            <td width="30%" style="text-align: left;"><label id="customer.order_init_staff_id">启动业务人员</label></td>
+            <td width="30%" style="text-align: left;"><label id="order.order_init_staff_name">启动业务人员</label></td>
 	      </tr>
 	      <tr>
             <td width="10%" style="text-align: right;">业务单备注：</td>
@@ -470,12 +485,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <tr>
                     <th>处理结果：</th>
                     <td>
-                      <select name="orderProdPackEvent.event_status" id="event_status" onchange="viewJs.onOrderProdPackEventChanged();">
+                      <select name="orderProdPackEvent.event_status" id="event_status" onchange="viewJs.onOrderProdPackEventChanged();" required="required">
                       </select>
                     </td>
                     <th> 业务处理人：</th>
                     <td>
-                      <input name="orderProdPackEvent.event_staff_id" id="orderProdPackEvent.event_staff_id" type="text">
+                      <input name="orderProdPackEvent.event_staff_id" id="orderProdPackEvent.event_staff_id" type="text" >
                       <!-- 
                         <a href="#" class="link_blue">选择</a>
                        -->
@@ -484,7 +499,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   
                   <tr>
                     <th>备注：</th>
-                    <td colspan="5"><textarea name="orderProdPackEvent.event_remark" cols="46" rows="5"></textarea> <span class="c_red">*</span></td>
+                    <td colspan="5"><textarea name="orderProdPackEvent.event_remark" cols="46" rows="5" required="required"></textarea> <span class="c_red">*</span></td>
                   </tr>
                   
                   <tr>

@@ -104,3 +104,7 @@ background: #EAF4FB url(../../../../css/admin_bg.png) left bottom no-repeat;
 
 
 .ui-widget-header-v { border: 1px solid #4297d7; background: #5c9ccc url(images/title-bg.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+width: 40%;
+}
