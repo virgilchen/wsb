@@ -2,7 +2,6 @@ package com.wsb.biz.web;
 
 import java.util.List;
 
-import org.omg.CORBA.Request;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,6 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
-import com.sun.xml.internal.ws.client.RequestContext;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
