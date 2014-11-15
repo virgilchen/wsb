@@ -50,8 +50,10 @@ public class CustomerBO extends BaseServiceImpl {
     	if(cars != null){
 	        jdbcDao.update(customer) ;
 	        for(int i=0;i<cars.size();i++){
-	        	cars.get(i).setPsdo_cust_id(customer.getId());
-	    		jdbcDao.insert(cars.get(i));
+	        	if(cars.get(i) != null){
+	        		cars.get(i).setPsdo_cust_id(customer.getId());
+		    		jdbcDao.insert(cars.get(i));
+	        	}
 	    	}
     	}
     }

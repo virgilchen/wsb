@@ -3,7 +3,6 @@
 <%
 String view_id=request.getParameter("view_id");
 %>
-
 <script>
 
 var g$v<%=view_id%> = $.extend(newView(), {
@@ -34,7 +33,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E("sForm").setFirstFocus();
         //var _id= <%=request.getParameter("customer.id")%>;
         //viewJs.toEdit({value:_id});
-        
     },
     add:function() {
         this.addRows ("carInfosTB", [{index:this.size}], {forceClear:false});
@@ -75,7 +73,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     E$("car_init_register_date" + _this.size).datepicker();
             	});
                 this.size = _this.size++;
-
+				if(data.member_id == null || data.member_id == '' ){
+					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
+				}else{
+					$("#memberDisplay2").html("[会员]");
+					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>会员ID："+data.member_id+"</a>");
+				}
             }
         );
     },
@@ -289,7 +292,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<div class="user_detail_info" id="con1_1" style="display:block;">
       <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
 			<ul class="user_info">
-		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料<span class="c_red">[会员]</span></li>
+		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料<span class="c_red" id='memberDisplay2'></span></li>
 		        <li onclick="tabShow('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
 		        <li onclick="tabShow('menu2_','con2_',3,4);" id="menu2_3">客户资源</li>
 		        <li onclick="tabShow('menu2_','con2_',4,4);" id="menu2_4">车类资料</li>
@@ -302,9 +305,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 						<input type="hidden" name="customer.id" id="customer.id"/>
 						<input type="hidden" name="customer.member_id" id="customer.member_id"/>
 						<input type="hidden" name="customer.member_idc" id="customer.member_idc"/>
+						<span class="c_red" id="memberDisplay"></span>
 					</td>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="javascript:viewJs.toMember();">发展为会员</a>
 					</tr>
 					<tr>
 					<th>姓名：</th>
