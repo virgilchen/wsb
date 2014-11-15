@@ -65,6 +65,13 @@ values('1112', '1112', '用户非激活状态，不能登录！' );
 insert into cfg_message(ID, code_, value_) 
 values('1113', '1113', '用户已经成功登出！' );
 
+--20141115 zhanjm
+insert into cfg_message(ID, code_, value_) 
+values('1114', '1114', '客户号已经被使用，请使用其它客户号！' );
+
+insert into cfg_message(ID, code_, value_) 
+values('1115', '1115', '会员号已经被使用，请使用其它会员号！' );
+
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1005', '1005', '用户不存在！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('1006', '1006', '密码错误！');

@@ -28,7 +28,7 @@ public class CustomerBO extends BaseServiceImpl {
     	Customer customerSO = new Customer();
     	customerSO.setCust_code((customer.getCust_code()));
 		if (this.jdbcDao.find(customerSO) != null) {
-			throw new BusinessException(1110L);//1110', '会员登录账号已经被使用，请使用其它登录账号
+			throw new BusinessException(1114L);//1114', '客户号已经被使用，请使用其它客户号
 		}
 		
     	Customer newItem = (Customer) jdbcDao.insert(customer) ;

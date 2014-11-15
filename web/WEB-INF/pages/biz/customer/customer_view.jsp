@@ -152,10 +152,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		alert("请先完整填写客户资料！");
     		return;
     	}else{
-    		var memberId = document.getElementById("customer.member_id").value;
-    		if(memberId == '' || memberId == '0'){
-    			//alert("可以发展成会员啦！！");
-    		}
     		
     		var str = '/biz/member_view.action?customerId='+custId;
     		openView(11005, str, '会员列表');

@@ -22,7 +22,7 @@ public class MemberBO extends BaseServiceImpl{
 		Member memberSO = new Member();
 		memberSO.setMember_login_id(member.getMember_login_id());
 		if (this.jdbcDao.find(memberSO) != null) {
-			throw new BusinessException(1110L);//1110', '会员登录账号已经被使用，请使用其它登录账号
+			throw new BusinessException(1115L);//1115', '会员号已经被使用，请使用其它会员号
 		}
 //		member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()));
     	Member newItem = (Member) jdbcDao.insert(member) ;
