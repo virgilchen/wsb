@@ -48,8 +48,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
             {"orderProdPackEvent.id":eventId},
             function(data, textStatus){
                 if (data.code == "0") {
-                    _this.list();
-                    _this.toFollowUpView(orderId, eventId);
+                    _this.list(function() {
+                        _this.toFollowUpView(orderId, eventId);
+                    });
                 }
             }
         );

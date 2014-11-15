@@ -766,7 +766,7 @@ var baseView_af24332idihy00p2jww = {
         );
     },
     
-    list:function() {
+    list:function(listCallBack) {
     	if (E("selectMe") != null) {
     		E("selectMe").checked = false ;
     	}
@@ -784,6 +784,10 @@ var baseView_af24332idihy00p2jww = {
                 
                 if (viewJs.onList) {
                 	viewJs.onList(data) ;
+                }
+                
+                if (listCallBack) {
+                	listCallBack();
                 }
             }
         );
