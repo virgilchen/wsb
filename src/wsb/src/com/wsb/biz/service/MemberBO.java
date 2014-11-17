@@ -24,14 +24,21 @@ public class MemberBO extends BaseServiceImpl{
 		if (this.jdbcDao.find(memberSO) != null) {
 			throw new BusinessException(1115L);//1115', '会员号已经被使用，请使用其它会员号
 		}
-//		member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()));
+		member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()));
     	Member newItem = (Member) jdbcDao.insert(member) ;
         
         return newItem;
     }
     
     public void update(Member member) {
-    	
+    	Member memberSO = new Member();
+		memberSO.setMember_login_id(member.getMember_login_id());
+		Member membervo = (Member) jdbcDao.find(memberSO);
+		if(membervo.getMember_login_pwd().equals(member.getMember_login_pwd())){
+			member.addExclusions("member_login_pwd");
+		}else{
+			member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()));
+		}
         jdbcDao.update(member) ;
     }
     

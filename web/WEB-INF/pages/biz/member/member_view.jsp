@@ -56,17 +56,38 @@ var g$v<%=view_id%> = $.extend(newView(), {
             );
     },
     checkEditForm:function() {
-    	if (V("member_login_id") == "" && V("member_login_pwd") == "") {
-    		alert("请输入密码！") ;
-            E("member_login_pwd").focus();
-    		return false ;
-    	}
-    	if(V("member_login_pwd2") != V("member_login_pwd")) {
-    		alert("两次密码不一致，请重新输入！");
-            V("member_login_pwd2", "");
-            V("member_login_pwd", "");
-            E("member_login_pwd").focus();
-    		return false ;
+    	if(V("member_login_pwd") == ""){
+    		if(V("member_login_pwd1") == "" ){
+    			alert("请输入密码！") ;
+                E("member_login_pwd1").focus();
+        		return false ;
+    		}else if(V("member_login_pwd2") != V("member_login_pwd1")){
+    			alert("两次密码不一致，请重新输入！");
+                V("member_login_pwd2", "");
+                V("member_login_pwd1", "");
+                E("member_login_pwd1").focus();
+        		return false ;
+    		}
+    		
+    		if(V("member_login_pwd2") == V("member_login_pwd1")){
+    			var pwd_val = document.getElementById("member_login_pwd1").value;
+    			V("member_login_pwd", pwd_val);
+    			alert(V("member_login_pwd"));
+    		}
+    	}else{
+    		if(V("member_login_pwd1") != "" || V("member_login_pwd2") != ""){
+    			if(V("member_login_pwd2") == V("member_login_pwd1")) {
+    				var pwd_val = document.getElementById("member_login_pwd1").value;
+        			V("member_login_pwd", pwd_val);
+        			alert(V("member_login_pwd"));
+    	    	}else{
+    	    		alert("两次密码不一致，请重新输入！如不需要改密码，请留空！");
+    	            V("member_login_pwd2", "");
+    	            V("member_login_pwd1", "");
+    	            E("member_login_pwd1").focus();
+    	    		return false ;
+    	    	}
+    		}
     	}
     	
     	return true ;
@@ -194,9 +215,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		</table>
 	  </div>
 	  <div class="user_accout">
+<<<<<<< .mine
+		<p><label>会员号：</label><input type="text" name="member.member_login_id" id="member_login_id" maxlength="50"/><input type="hidden" name="member.member_login_pwd" id="member_login_pwd" maxlength="50"/><span class="c_red">*</span></p>
+		<p><label>登录密码：</label><input type="password" id="member_login_pwd1" maxlength="50"/><span class="c_red">*</span></p>
+		<p><label>确认密码：</label><input type="password" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
+=======
 		<p><label>会员号：</label><input type="text" name="member.member_login_id" id="member_login_id" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>登陆密码：</label><input type="password" name="member.member_login_pwd" id="member_login_pwd" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>确认密码：</label><input type="password" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
+>>>>>>> .r171
 		<p><label>有效期限：</label><input type="text" name="member.member_expiry_date" id="member_expiry_date" maxlength="10"/><span class="c_red">*</span></p>
 	  </div>
       <div class="membership">
