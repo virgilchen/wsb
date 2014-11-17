@@ -8,6 +8,7 @@ ul,li,p,dl,dt,dd{ list-style:none;margin:0; padding:0;}
 a,a:hover{ color:#1f1513; text-decoration:none;}
 img{ border:0;}
 input,textarea{ border:1px solid #d2d2d2;_vertical-align: middle; padding:0 3px;}
+select{padding:4px;_vertical-align: middle;}
 .mg_r{ margin-right:10px;}
 a.link_blue{ color:#3298c3;}
 .clearfix:after {content:".";display:block; height:0; clear:both; visibility:hidden;}
@@ -85,7 +86,23 @@ label{ vertical-align:top;}
 .main_search{ background:#f4f7f9; border:1px solid #cedde7; padding:10px; padding-bottom:0; border-top:0;}
 .main_search p{ line-height:26px; padding-bottom:10px; }
 .main_search p a{ color:#3298c3;}
-select{ background:url(../images/select_bg.png) no-repeat 95% 6px #fff;border:1px solid #d2d2d2; -webkit-appearance: none;padding:0 3px; padding-right:20px; height:26px;  _vertical-align: middle; }
+
+select{ 
+-webkit-appearance: none;
+-webkit-background:url(../images/select_bg.png) no-repeat 95% 6px #fff;
+-webkit-border:1px solid #d2d2d2;
+-webkit-padding:0 3px;
+-webkit-padding-right:20px;
+-webkit-height:26px;
+}
+select{ 
+-moz-background:url(../images/select_bg.png) no-repeat 95% 6px #fff;
+-moz-border:1px solid #d2d2d2;
+-moz-padding:0 3px;
+-moz-padding-right:20px;
+-moz-height:26px;
+}
+
 .main_search input{ height:24px; padding:0 3px; line-height:24px;}
 .main_search .ipt_btn{ background:#74acc4; border:1px solid #74acc4; color:#fff; cursor:pointer; padding:0 10px;height:26px; line-height:24px;}
 .ipt_date{ width:100px; background:url(../images/date_bg.png) no-repeat 95% center #fff; cursor:pointer;}
@@ -196,7 +213,7 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 .main_order_detail .content .order_result table{ border:0;}
 .main_order_detail .content .order_result td{ border:0; background:none; text-align:left;}
 .main_order_detail .content .order_result th{ border:0; background:none;text-align:right; padding:10px;}
-.main_order_detail .content .order_result select{ margin-right:20px;}
+.main_order_detail .content .order_result select{ -moz-margin-right:20px; -webkit-margin-right:20px; -o-margin-right:20px;}
 
 /*发展为会员*/
 .user_accout p label{ width:100px; text-align:right; display:block; float:left; line-height:26px;}
