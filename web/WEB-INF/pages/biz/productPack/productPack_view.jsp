@@ -55,8 +55,46 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	
     	if ($("#productsSelectedTB #" + product.id).length <= 0) {
+            var price = V("productPack.prod_pack_orignal_price");
+            if(price=="" || isNaN(price)) {
+                price = 0 ;
+            } else {
+                price = parseFloat(price);
+            }
+            V("productPack.prod_pack_orignal_price", price + product.product_original_price);
+
+            price = V("productPack.prod_pack_selling_price");
+            if(price=="" || isNaN(price)) {
+                price = 0 ;
+            } else {
+            	price = parseFloat(price);
+            }
+            V("productPack.prod_pack_selling_price", price + product.product_selling_price);
+            
             this.addRows ("productsSelectedTB", [product], {deep:1});
     	}
+    },
+    
+    removeProduct:function(id) {
+    	var $tr = E$("productTr_" + id);
+    	
+        var price = V("productPack.prod_pack_orignal_price");
+        if(isNaN(price)) {
+            price = 0 ;
+        } else {
+            price = parseFloat(price);
+        }
+        V("productPack.prod_pack_orignal_price", price - parseFloat($tr.attr("product_original_price")));
+
+        price = V("productPack.prod_pack_selling_price");
+        if(isNaN(price)) {
+            price = 0 ;
+        } else {
+            price = parseFloat(price);
+        }
+        V("productPack.prod_pack_selling_price", price - parseFloat($tr.attr("product_selling_price")));
+        
+        $tr.remove();
     },
     
     get:function(id, prefun, postfun) {
@@ -224,7 +262,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                           <tr>
                             <td>
                               <textarea id="templateBody" jTemplate="yes">
-                                  <tr id="{$T.id}">
+                                  <tr id="productTr_{$T.id}" product_original_price={$T.product_original_price} product_selling_price={$T.product_selling_price}>
                                     <td>{$T.prod_name}</td>
                                     <td>{$T.business_name}</td>
                                     <td>
@@ -233,7 +271,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                                     </td>
                                     <td>{$T.product_selling_price}</td>
                                     <td>
-                                      <a href="javascript:;" onclick="$(this).parent().parent().remove();">删除</a>
+                                      <a href="javascript:;" onclick="viewJs.removeProduct({$T.id});">删除</a>
                                     </td>
                                   </tr>
                               </textarea>
@@ -247,11 +285,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
               </tr>
               <tr>
                 <th>原始价格：</th>
-                <td><input type="text" name="productPack.prod_pack_orignal_price" required="required" maxlength="19"/></td>
+                <td><input type="text" name="productPack.prod_pack_orignal_price" id="productPack.prod_pack_orignal_price" required="required" maxlength="19"/></td>
               </tr>
               <tr>
                 <th> 销售价格：</th>
-                <td><input type="text" name="productPack.prod_pack_selling_price" required="required" maxlength="19"/></td>
+                <td><input type="text" name="productPack.prod_pack_selling_price" id="productPack.prod_pack_selling_price" required="required" maxlength="19"/></td>
               </tr>
             </table> 
           </td>

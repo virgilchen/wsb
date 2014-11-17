@@ -236,14 +236,46 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 </td>
               </tr>
               <tr>
-                <th>描述：</th>
+                <th>单位：</th>
                 <td>
                   <select name="product.prod_unit" id="product.prod_unit">
-			      </select>
+                  </select>
                 </td>
               </tr>
               
+              <tr>
+                <th>原始价格：</th>
+                <td>
+                  <input type="text" name="product.product_original_price" id="product.product_original_price"  required="required"/>
+                </td>
+              </tr>
               
+              <tr>
+                <th>销售价格：</th>
+                <td>
+                  <input type="text" name="product.product_selling_price" id="product.product_selling_price"  required="required"/>
+                </td>
+              </tr>
+              
+              <tr>
+                <th>到期提醒时间：</th>
+                <td>
+                  <input type="text" name="product.no_of_mth_remind_advance" id="product.no_of_mth_remind_advance" />
+                  <label>月</label>
+                  <input type="text" name="product.no_of_day_remind_advance" id="product.no_of_day_remind_advance" />
+                  <label>日</label>
+                </td>
+              </tr>
+              
+              <tr>
+                <th>商品有效时间：</th>
+                <td>
+                  <input type="text" name="product.no_of_product_effective_mth" id="product.no_of_product_effective_mth" />
+                  <label>月</label>
+                  <input type="text" name="product.no_of_product_effective_day" id="product.no_of_product_effective_day" />
+                  <label>日</label>
+                </td>
+              </tr>
               
               <!-- 
               <tr>

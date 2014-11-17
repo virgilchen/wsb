@@ -188,7 +188,7 @@ select
   e.* ,
   e.event_id as id,
   s.staff_name,
-  r.staff_role_name,
+  ifnull(r.staff_role_name, (select sr.staff_role_name from staff_role_demo_rt sr where sr.staff_role_id=p.procs_staff_role_id)) as staff_role_name,
   p.procs_step_name,
   b.business_name,
   timestampdiff(minute, event_time_stamp, event_duration) as minute_duration

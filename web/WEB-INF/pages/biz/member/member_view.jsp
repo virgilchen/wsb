@@ -51,6 +51,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     viewJs.entity = data;
                     formDeserializeText("carInfoDetailDiv", "label", data.car, {}) ;
                     formDeserialize("eForm", data, {}) ;
+                    viewJs.onGet(data);
                 }
             );
     },
@@ -69,11 +70,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	
     	return true ;
-    },
+    },	
     
-    onGet:function(data, event) {
-    	V("member_login_pwd2", "");
-    	if (typeof(data.id) == "undefined") {
+    onGet:function(data) {
+    	var psw = document.getElementById("member_login_pwd").value;
+    	V("member_login_pwd2", psw);
+    	if (data.id == null || data.id == '') {
     		E$("member_login_id").removeAttr("readonly");
     	} else {
             E$("member_login_id").attr("readonly", "readonly") ;
@@ -194,7 +196,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	  <div class="user_accout">
 		<p><label>会员号：</label><input type="text" name="member.member_login_id" id="member_login_id" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>登陆密码：</label><input type="password" name="member.member_login_pwd" id="member_login_pwd" maxlength="50"/><span class="c_red">*</span></p>
-		<p><label>确认密码：</label><input type="password" name="member.member_login_pwd" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
+		<p><label>确认密码：</label><input type="password" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>有效期限：</label><input type="text" name="member.member_expiry_date" id="member_expiry_date" maxlength="10"/><span class="c_red">*</span></p>
 	  </div>
       <div class="membership">

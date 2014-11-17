@@ -116,7 +116,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String getMyOrders() throws Exception {
-    	orderSO.setPsdo_cust_id(id);
+    	//orderSO.setPsdo_cust_id(id);
     	
         renderList(OrderBO.getOrderBO().queryOrderHistories(orderSO)) ; 
         

@@ -243,7 +243,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{$T.cust_gender}</td>
                     <td>{fmt.maxlen($T.cust_birthday,10)}</td>
                     <td>{$T.cust_phone_no}</td>
-                    <td>{$T.member_id}</td>
+                    <td>{fmt.maxlen($T.member_id, 100)}</td>
                   </tr>
               </textarea>
             </td>

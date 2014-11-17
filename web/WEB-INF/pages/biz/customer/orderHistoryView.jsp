@@ -11,7 +11,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
     },
     
     getMyOrders:function() {
-    	V("orderSO.csdo_cust_id", V("customer.id"));
+    	V("orderSO.psdo_cust_id", V("customer.id"));
     	
         ajax(
             root + "/biz/customer_getMyOrders.action", 
@@ -174,7 +174,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
 <form method="post" id="sOrderHistoryForm" name="sOrderHistoryForm" onsubmit="return false;" style="margin: 0">
 <input name="orderSO.pageIndex" id="orderSO.pageIndex" value="1" type="hidden" />
 <input name="orderSO.pageSize" id="orderSO.pageSize" value="5" type="hidden" />
-<input name="orderSO.csdo_cust_id" id="orderSO.csdo_cust_id" value="" type="hidden" />
+<input name="orderSO.psdo_cust_id" id="orderSO.psdo_cust_id" value="" type="hidden" />
 
 
 <div id="orderHistoryListDiv">
@@ -357,7 +357,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
                   {#foreach $T.businessEvents as record}
                   <tr>
                     <td>{$T.record$index + 1}</td>
-                    <td>{$T.record.staff_name}</td>
+                    <td>{fmt.maxlen($T.record.staff_name, 1000)}</td>
                     <td>{$T.record.staff_role_name}</td>
                     <td>{$T.record.procs_step_name}</td>
                     <td>{$T.record.event_time_stamp}</td>

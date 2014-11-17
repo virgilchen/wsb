@@ -32,7 +32,7 @@ public class Product extends BaseEntity {
 	private String prod_unit; 
 	private String prod_picture; 
 	private double product_original_price;
-	private double prodcut_selling_price; 
+	private double product_selling_price; 
     
 	private int no_of_product_effective_day; 
 	private int no_of_product_effective_mth;
@@ -87,11 +87,11 @@ public class Product extends BaseEntity {
 	public void setProduct_original_price(double product_original_price) {
 		this.product_original_price = product_original_price;
 	}
-	public double getProdcut_selling_price() {
-		return prodcut_selling_price;
+	public double getProduct_selling_price() {
+		return product_selling_price;
 	}
-	public void setProdcut_selling_price(double prodcut_selling_price) {
-		this.prodcut_selling_price = prodcut_selling_price;
+	public void setProduct_selling_price(double product_selling_price) {
+		this.product_selling_price = product_selling_price;
 	}
 	public int getNo_of_product_effective_day() {
 		return no_of_product_effective_day;
