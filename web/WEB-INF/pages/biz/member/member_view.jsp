@@ -72,14 +72,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		if(V("member_login_pwd2") == V("member_login_pwd1")){
     			var pwd_val = document.getElementById("member_login_pwd1").value;
     			V("member_login_pwd", pwd_val);
-    			alert(V("member_login_pwd"));
+    			//alert(V("member_login_pwd"));
     		}
     	}else{
     		if(V("member_login_pwd1") != "" || V("member_login_pwd2") != ""){
     			if(V("member_login_pwd2") == V("member_login_pwd1")) {
     				var pwd_val = document.getElementById("member_login_pwd1").value;
         			V("member_login_pwd", pwd_val);
-        			alert(V("member_login_pwd"));
+        			//alert(V("member_login_pwd"));
     	    	}else{
     	    		alert("两次密码不一致，请重新输入！如不需要改密码，请留空！");
     	            V("member_login_pwd2", "");
@@ -94,8 +94,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },	
     
     onGet:function(data) {
-    	var psw = document.getElementById("member_login_pwd").value;
-    	V("member_login_pwd2", psw);
     	if (data.id == null || data.id == '') {
     		E$("member_login_id").removeAttr("readonly");
     	} else {
