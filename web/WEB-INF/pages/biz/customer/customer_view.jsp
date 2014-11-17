@@ -26,7 +26,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         this.initDataGrid("customerTB") ;
         
-        E$("customer.cust_birthday").datepicker();
+        E$("customer.cust_birthday").datepicker({defaultDate:"-30y"});
         
         E$("eForm").validator();
         E$("sForm").validator();
@@ -168,7 +168,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <%--@include file="/WEB-INF/pages/frame/navigation.jsp" --%>
   
   <div id="listDiv">
-  
+    <div>
     <DIV class=main_title>
       <B>客户列表</B> 
       <DIV class="main_tt_right fr">
@@ -178,7 +178,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
       </DIV>
     </DIV>
-  
+    </div>
+    
     <DIV class="main_search">
       <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="customerSO.pageIndex" id="customerSO.pageIndex" value="1" type="hidden" />
