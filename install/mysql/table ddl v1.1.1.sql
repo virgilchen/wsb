@@ -391,4 +391,13 @@ CREATE TABLE `notice_rt`(
   INDEX `notice_key` (`notice_id` ASC));
   
   
-  
+  CREATE TABLE `wsbd001`.`recommendation_key_map_dim` (
+  `recmdt_key_in_inventory` VARCHAR(20) NOT NULL,
+  `recmdt_key_type` VARCHAR(20) NULL,
+  `recmdt_table_name` VARCHAR(100) NULL,
+  `recmdt_col_name` VARCHAR(45) NULL,
+  `recmdt_col_type` VARCHAR(20) NULL,
+  PRIMARY KEY (`recmdt_key_in_inventory`),
+  INDEX `idx_key_map` (`recmdt_key_in_inventory` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
