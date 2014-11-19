@@ -401,3 +401,12 @@ CREATE TABLE `notice_rt`(
   INDEX `idx_key_map` (`recmdt_key_in_inventory` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE `wsbd001`.`recommendation_opr_map_dim` (
+  `recommendation_opr_in_inventory` VARCHAR(20) NOT NULL,
+  `recommendation_opr_symbol` VARCHAR(10) NULL,
+  PRIMARY KEY (`recommendation_opr_in_inventory`),
+  INDEX `idx_opr_dim` (`recommendation_opr_in_inventory` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
