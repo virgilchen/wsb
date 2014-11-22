@@ -17,7 +17,7 @@ ajax(
     	
     	$(data.list).each(function(i, elem) {
     		noticeMap[elem.id] = elem ;
-    		notices += "<a href='javascript:showNoticeDetail(" + elem.id + ");'>" + elem.notice_subject + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    		notices += "<a href='javascript:showNoticeDetail(" + elem.id + ");'>" + fmt.maxlen(elem.notice_timestamp,10) + ":" + elem.notice_subject + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     	});
 
     	$("#noticesDiv").html(notices);
@@ -30,8 +30,9 @@ ajax(
 var noticeMaps = [];
 
 function showNoticeDetail(id) {
-    $("#subjectTd").html(noticeMap[id].notice_subject);
-    $("#contentTd").html(noticeMap[id].notice_content);
+	var elem = noticeMap[id];
+    $("#subjectTd").html(elem.notice_subject + '&nbsp;&nbsp;' + elem.notice_timestamp);
+    $("#contentTd").html(elem.notice_content);
     
     //alert(noticeMap[id].notice_subject);
 	$("#noticeDetailWindowDiv").dialog({
@@ -61,7 +62,7 @@ function showNoticeDetail(id) {
     <div class="top_notice">
       <span style="height: 20px;line-height: 20px;" ><b>公告：</b></span>
       <span>
-        <marquee style="width: 400px;height: 20px;line-height: 20px;" direction="left" loop="-1" onmousemove="this.stop()" onmouseout="this.start()" id="noticesDiv"></marquee>
+        <marquee scrolldelay="5" scrollamount="2" style="width: 400px;height: 20px;line-height: 20px;" direction="left" loop="-1" onmousemove="this.stop()" onmouseout="this.start()" id="noticesDiv"></marquee>
       </span>
     </div>
 </div>
