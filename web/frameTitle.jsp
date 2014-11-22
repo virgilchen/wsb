@@ -12,14 +12,38 @@ ajax(
     {},
     function(data){
     	var notices = "";
+    	
+    	noticeMap = data.list ;
+    	
     	$(data.list).each(function(i, elem) {
-    		notices += "<a>" + elem.notice_subject + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    		noticeMap[elem.id] = elem ;
+    		notices += "<a href='javascript:showNoticeDetail(" + elem.id + ");'>" + elem.notice_subject + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     	});
 
     	$("#noticesDiv").html(notices);
     }
 );
+
+
 });
+
+var noticeMaps = [];
+
+function showNoticeDetail(id) {
+    $("#subjectTd").html(noticeMap[id].notice_subject);
+    $("#contentTd").html(noticeMap[id].notice_content);
+    
+    //alert(noticeMap[id].notice_subject);
+	$("#noticeDetailWindowDiv").dialog({
+        height: 360,
+        width:500,
+        modal: true
+    });
+	
+	return true ;
+}
+
+
 </script>
 
 <div class="frame_top">
@@ -40,4 +64,13 @@ ajax(
         <marquee style="width: 400px;height: 20px;line-height: 20px;" direction="left" loop="-1" onmousemove="this.stop()" onmouseout="this.start()" id="noticesDiv"></marquee>
       </span>
     </div>
+</div>
+
+<div id="noticeDetailWindowDiv" style="display: none;" title="公告详细">
+  <div class="main_userinfo" >
+	  <div class="title" id="subjectTd">
+	  </div>
+	  <div id="contentTd" style="min-height: 200px;margin: 10px;">
+	  </div>
+  </div>
 </div>
