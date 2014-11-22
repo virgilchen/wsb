@@ -23,7 +23,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"notice.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"noticeSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
-        //this.initDataGrid("noticeTB", {height:"400px"}) ;
+        this.initDataGrid("noticeTB") ;
         
         E$("notice.notice_timestamp").datetimepicker({
             timeFormat: "HH:mm:ss"

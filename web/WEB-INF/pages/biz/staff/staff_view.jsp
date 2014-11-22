@@ -24,7 +24,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         fillOptions({id:"staff.staff_status", dictName:"staff.status", firstLabel:"请选择..."}) ;
         fillOptions({id:"staff.staff_gender", dictName:"CM.gender", firstLabel:"请选择..."}) ;
         
-        //this.initDataGrid("staffTB", {height:"400px"}) ;
+        this.initDataGrid("staffTB") ;
 
         E$("eForm").validator();
         E$("sForm").validator();

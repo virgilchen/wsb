@@ -41,6 +41,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     add:function() {
         this.addRows ("orderProcessTB", [{procs_step_no:this.size ++ }], {deep:1});
         this.refreshTableList();
+        
+        E$("eForm").validator();
     },
 
     moveUp:function(index) {
@@ -231,11 +233,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>
                       <input type="hidden" name="orderProcesses[{$T.procs_step_no}].procs_step_no" id="orderProcesses.procs_step_no" />
                       <input type="hidden" name="orderProcesses[{$T.procs_step_no}].business_id" value="<%=business_id %>" />
-                      <input type="text" name="orderProcesses[{$T.procs_step_no}].procs_step_name" value="{$T.procs_step_name}" maxlength="50"/>
+                      <input type="text" name="orderProcesses[{$T.procs_step_no}].procs_step_name" value="{$T.procs_step_name}" maxlength="50" required="required"/>
                     </td>
                     <td><!--<input type="text" name="orderProcess.procs_staff_role_id" id="orderProcess.procs_staff_role_id" maxlength="50"/>-->
-                      <select name="orderProcesses[{$T.procs_step_no}].procs_staff_role_id">
-                        <option>请选择...</option>
+                      <select name="orderProcesses[{$T.procs_step_no}].procs_staff_role_id" required="required">
+                        <option value="">请选择...</option>
                         <%List<HashMap<String, Object>> roles = ((List<HashMap<String, Object>>)CodeHelper.query("Role", HashMap.class)) ;%>
                         <%for (HashMap<String, Object> role : roles) {%>
                         <option value="<%=role.get("id") %>" {#if $T.procs_staff_role_id == <%=role.get("id") %>}selected="selected"{#/if}><%=role.get("staff_role_name") %></option>

@@ -23,7 +23,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"productPack.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"productPackSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
-        //this.initDataGrid("productPackTB", {height:"400px"}) ;
+        this.initDataGrid("productPackTB") ;
         
         var productsJson = <%=request.getAttribute("productsJson")%>;
         

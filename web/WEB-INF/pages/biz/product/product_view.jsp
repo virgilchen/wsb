@@ -25,6 +25,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"productSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("productTB", {height:"400px"}) ;
+        this.initDataGrid("productTB");
         this.initDataGrid("businessTB");
         
         E$("product.product_timestamp").datetimepicker({
