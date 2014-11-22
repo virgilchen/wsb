@@ -28,6 +28,10 @@ $(function() {
 
 	$("#viewContentDiv").scroll(function() {
 		reflowValidationForms();
+		
+		if (typeof(viewJs.toolbarRelocate) != "undefined") {
+			viewJs.toolbarRelocate($("#viewContentDiv").scrollTop());
+		}
     });
 	
     setFrameHeight();
@@ -145,6 +149,8 @@ function showView(id) {
     $("#sub_title_label").html("&gt;&nbsp;" + g$views[id].title) ;
     
     viewJs.onAfterShow() ;
+    
+    $("#viewContentDiv").scrollTop(0);
 }
 
 function removeView(id) {
@@ -334,3 +340,12 @@ function maximize() {
     }
     isMax = !isMax ;
 } ;
+
+
+
+
+
+
+baseView_af24332idihy00p2jww.toolbarRelocate=function(topOffset) {
+	E$("toolbarAutoScroll").css("top", topOffset);
+};

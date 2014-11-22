@@ -330,13 +330,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
 </script>
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
-	<div class="main_title">
-	  <b>业务单业务处理：<label id="order.order_no">xxxxxxxxxxxxxxxxxx</label></b>
-	  <DIV class="main_tt_right fr">
-        <A class=blue href="javascript:removeView(<%=view_id%>);">返回</A>
-      </DIV>
-	</div>
-	 
+    <div style="position: relative;z-index: 1000;margin-top: -10px;padding-top: 10px;background-color: white;" id="toolbarAutoScroll">
+		<div class="main_title">
+		  <b>业务单业务处理：<label id="order.order_no">xxxxxxxxxxxxxxxxxx</label></b>
+		  <DIV class="main_tt_right fr">
+	        <A class=blue href="javascript:removeView(<%=view_id%>);">返回</A>
+	      </DIV>
+		</div>
+    </div>
+    
 	<div class="main_infomation" id="orderInfoDiv">
 	    <table width="100%" border="0">
 	      <tr>

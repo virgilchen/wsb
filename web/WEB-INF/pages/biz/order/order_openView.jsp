@@ -216,6 +216,7 @@ width: 92%;
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
     <div id="customerInfoDiv" >
+      <div style="position: relative;z-index: 1000;margin-top: -10px;padding-top: 10px;background-color: white;" id="toolbarAutoScroll">
 		<div class="main_title">
 		    <b>发起“<label id="customer.cust_name">王小明</label>”的业务单</b>
 		    <div class="main_tt_right fr">
@@ -224,8 +225,9 @@ width: 92%;
 		        <a href="javascript:viewJs.closeView();" class="blue">返回</a>
 		    </div>
 		</div>
-
-		<%@include file="/WEB-INF/pages/biz/order/customerInfo.jsp" %>
+      </div>
+      
+	  <%@include file="/WEB-INF/pages/biz/order/customerInfo.jsp" %>
 		
 	</div>
 	 
