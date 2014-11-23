@@ -44,9 +44,11 @@ public class StaffRoleBO extends BaseServiceImpl {
 		
 		jdbcDao.delete(RolePage.class, rp);
 		
-		for (Long pageId: pageIds) {
-			rp.setPage_id(pageId);
-			jdbcDao.insert(rp) ;
+		if (pageIds != null) {
+			for (Long pageId: pageIds) {
+				rp.setPage_id(pageId);
+				jdbcDao.insert(rp) ;
+			}
 		}
     }
     

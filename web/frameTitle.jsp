@@ -31,7 +31,7 @@ var noticeMaps = [];
 
 function showNoticeDetail(id) {
 	var elem = noticeMap[id];
-    $("#subjectTd").html(elem.notice_subject + '&nbsp;&nbsp;' + elem.notice_timestamp);
+    $("#subjectTd").html(elem.notice_subject + '&nbsp;&nbsp;(发表时间：' + elem.notice_timestamp + ')');
     $("#contentTd").html(elem.notice_content);
     
     //alert(noticeMap[id].notice_subject);

@@ -24,12 +24,14 @@ public class OrderProcessBO extends BaseServiceImpl {
     	
     	jdbcDao.delete(OrderProcess.class, so) ;
     	
-    	for (OrderProcess op : orderProcesses) {
-    		if (op == null) {
-    			continue;
-    		}
-    		
-    	    jdbcDao.insert(op) ;
+    	if (orderProcesses != null) {
+	    	for (OrderProcess op : orderProcesses) {
+	    		if (op == null) {
+	    			continue;
+	    		}
+	    		
+	    	    jdbcDao.insert(op) ;
+	    	}
     	}
         
     }
