@@ -192,6 +192,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 <td><input type="text" name="staffRole.staff_role_name" maxlength="50"  required="required"/></td>
               </tr>
               <tr>
+                <th>角色权限：</th>
+                <td>
+                	<select name="staffRole.staff_role_authority" id="authoritySelection">
+                		<option value="H">高级</option>
+                		<option value="M">中级</option>
+                		<option value="L">低级</option>
+                	</select>
+                </td>
+              </tr>
+              <tr>
                 <th>备注：</th>
                 <td>
                   <textarea name="staffRole.staff_role_remark"  style="width: 100%;height: 80px;"></textarea>
