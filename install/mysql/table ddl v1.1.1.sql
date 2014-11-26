@@ -162,6 +162,7 @@ CREATE TABLE `staff_role_demo_rt` (
   --`staff_role_page_id` VARCHAR(100) NOT NULL,
   `staff_role_status` VARCHAR(5) NULL,
   `staff_role_name` VARCHAR(20) NULL,
+  `staff_role_authority` VARCHAR(5) NULL,
   `staff_role_remark` VARCHAR(500) NULL,
   `staff_role_org_id` INT NOT NULL,
   PRIMARY KEY (`staff_role_id`),
