@@ -20,6 +20,7 @@ import com.globalwave.common.ArrayPageList;
 @Table(name = "staff_role_demo_rt")
 public class StaffRole extends BaseEntity {
 	
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="staff_role_id")
@@ -28,6 +29,7 @@ public class StaffRole extends BaseEntity {
 	private String staff_role_name;
 	private String staff_role_remark;
 	private Long staff_role_org_id;
+	private String staff_role_authority;
 	
 	@Transient
 	private ArrayPageList<RolePage> rolePages ;
@@ -67,5 +69,12 @@ public class StaffRole extends BaseEntity {
 	}
 	public void setRolePages(ArrayPageList<RolePage> rolePages) {
 		this.rolePages = rolePages;
+	}
+	
+	public String getStaff_role_authority() {
+		return staff_role_authority;
+	}
+	public void setStaff_role_authority(String staff_role_authority) {
+		this.staff_role_authority = staff_role_authority;
 	}
 }
