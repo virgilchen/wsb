@@ -276,7 +276,7 @@ CREATE TABLE `recommendation_engine_dt` (
   `recmdt_engine_id` BIGINT NOT NULL,
   `recmdt_psdo_cust_id` INT NOT NULL,
   `recmdt_engine_priority` SMALLINT NOT NULL,
-  `recmdt_egnine_detail` VARCHAR(2000) NULL,
+  `recmdt_engine_detail` VARCHAR(2000) NULL,
   PRIMARY KEY (`recmdt_engine_id`, `recmdt_psdo_cust_id`, `recmdt_engine_priority`),
   INDEX `recmdt_engine_id_key` (`recmdt_engine_id` ASC),
   INDEX `recmdt_psdo_cust_id` (`recmdt_psdo_cust_id` ASC),
