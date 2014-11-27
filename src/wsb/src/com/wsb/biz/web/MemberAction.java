@@ -13,15 +13,20 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.U;
 import com.globalwave.system.web.annotations.Pid;
 import com.opensymphony.xwork2.Preparable;
+import com.wsb.biz.entity.Answer;
+import com.wsb.biz.entity.AnswerSO;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
-import com.wsb.biz.entity.CustomerSO;
 import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.MemberSO;
+import com.wsb.biz.entity.Question;
+import com.wsb.biz.entity.QuestionSO;
+import com.wsb.biz.service.AnswerBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
 import com.wsb.biz.service.MemberBO;
+import com.wsb.biz.service.QuestionBO;
 
 @Service("biz_memberAction")
 @Scope("prototype")
@@ -33,11 +38,9 @@ private static final long serialVersionUID = 7244882365197775441L;
     private Member member ;
     private MemberSO memberSO ; 
     private CustomerBO customerBO ;
-    private Customer customer ;
-    private CustomerSO customerSO ; 
     private CarBO carBO ;
-    private Car car ;
-    private CarSO carSO ;
+    private AnswerBO answerBO;
+    private QuestionBO questionBO;
     
     public String execute() throws Exception { 
         return this.list(); 
@@ -65,7 +68,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     }
 
     @Pid(value=Pid.DO_NOT_CHECK)
-    public String create()  throws Exception {        
+    public String create()  throws Exception {
     	
     	member.setMember_create_time(U.currentTimestamp());
     	member.setMember_status("1");//会员状态，默认0不是会员，1是会员，2会员过期
@@ -137,6 +140,22 @@ private static final long serialVersionUID = 7244882365197775441L;
         	}
     		member.setCar(car);
     	}
+    	QuestionSO questionso = new QuestionSO();
+    	questionso.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
+    	ArrayPageList _questionList = questionBO.query(questionso);
+    	ArrayPageList<Question> questionList = new ArrayPageList<Question>();
+    	if(_questionList.size()>0){
+    		for(int i=0; i<_questionList.size(); i++){
+    			Question e = (Question) _questionList.get(i);
+    			AnswerSO answerso = new AnswerSO();
+    			answerso.setAppl_form_question_id(e.getId());
+    			answerso.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
+    			ArrayPageList<Answer> answerList = answerBO.query(answerso);
+    			e.setAnswers(answerList);
+    			questionList.add(e);
+    		}
+    	}
+    	member.setQuestions(questionList);
     	renderObject(member, null) ; 
         return null ;  
     }
@@ -161,45 +180,21 @@ private static final long serialVersionUID = 7244882365197775441L;
         this.memberSO = memberSO;
     }
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public CustomerSO getCustomerSO() {
-		return customerSO;
-	}
-
-	public void setCustomerSO(CustomerSO customerSO) {
-		this.customerSO = customerSO;
-	}
-
-	public Car getCar() {
-		return car;
-	}
-
-	public void setCar(Car car) {
-		this.car = car;
-	}
-
-	public CarSO getCarSO() {
-		return carSO;
-	}
-
-
-	public void setCarSO(CarSO carSO) {
-		this.carSO = carSO;
-	}
-
 	public void setCustomerBO(CustomerBO customerBO) {
 		this.customerBO = customerBO;
 	}
 
 	public void setCarBO(CarBO carBO) {
 		this.carBO = carBO;
+	}
+
+
+	public void setAnswerBO(AnswerBO answerBO) {
+		this.answerBO = answerBO;
+	}
+
+	public void setQuestionBO(QuestionBO questionBO) {
+		this.questionBO = questionBO;
 	}
 
 }

@@ -1,7 +1,12 @@
 package com.wsb.biz.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 import com.globalwave.common.ArrayPageList;
@@ -12,43 +17,47 @@ import com.globalwave.common.ArrayPageList;
  *
  */
 @Entity
-@Table(name = "question_demo_rt")
+@Table(name = "appl_form_dim")
 public class Question extends BaseEntity {
 	
-	private Long question_id;
-    private String question_name;
-    private String form_type;
-    private String answer_type;
+	@Id
+    @Column(name="appl_form_question_id")
+	private Long id;
+    private String appl_form_type;
+    private String appl_form_question_name;
+    private String appl_form_answer_type;
+    
+    @Transient
     private ArrayPageList<Answer> answers;
-	public Long getQuestion_id() {
-		return question_id;
-	}
-	public void setQuestion_id(Long question_id) {
-		this.question_id = question_id;
-	}
-	public String getQuestion_name() {
-		return question_name;
-	}
-	public void setQuestion_name(String question_name) {
-		this.question_name = question_name;
-	}
-	public String getForm_type() {
-		return form_type;
-	}
-	public void setForm_type(String form_type) {
-		this.form_type = form_type;
-	}
-	public String getAnswer_type() {
-		return answer_type;
-	}
-	public void setAnswer_type(String answer_type) {
-		this.answer_type = answer_type;
-	}
 	public ArrayPageList<Answer> getAnswers() {
 		return answers;
 	}
 	public void setAnswers(ArrayPageList<Answer> answers) {
 		this.answers = answers;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getAppl_form_type() {
+		return appl_form_type;
+	}
+	public void setAppl_form_type(String appl_form_type) {
+		this.appl_form_type = appl_form_type;
+	}
+	public String getAppl_form_question_name() {
+		return appl_form_question_name;
+	}
+	public void setAppl_form_question_name(String appl_form_question_name) {
+		this.appl_form_question_name = appl_form_question_name;
+	}
+	public String getAppl_form_answer_type() {
+		return appl_form_answer_type;
+	}
+	public void setAppl_form_answer_type(String appl_form_answer_type) {
+		this.appl_form_answer_type = appl_form_answer_type;
 	}
 
 }

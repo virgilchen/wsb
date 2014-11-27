@@ -99,6 +99,39 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	} else {
             E$("member_login_id").attr("readonly", "readonly") ;
     	}
+    	$(data.questions).each(function (i, elem) {
+    		if(document.getElementById(elem.appl_form_type)==null ||document.getElementById(elem.appl_form_type)==undefined){
+    			$("#membership").append("<p><b>"+elem.appl_form_type+"</b></p>");
+    			$("#membership").append("<div id='"+elem.appl_form_type+"'>");
+    			$("#membership").append("</div>");
+    			
+    		}
+    		$("#"+elem.appl_form_type).append("<h3>"+elem.appl_form_question_name+"</h3>");
+    		$("#"+elem.appl_form_type).append("<table width='80%' border='0' id='"+elem.appl_form_question_name+"'>");
+    		var str='';
+    		var m=0;
+    		var l=elem.answers.length;
+    		$(elem.answers).each(function (j, answerElem) {
+    			if(m==0){
+    				str += "<tr>";
+    			}
+    			if(elem.appl_form_answer_type == '1'){
+    				str += "<td><input name='' type='radio' value='' /><label>"+answerElem.appl_form_answer_name+"</label></td>";
+    			}else{
+    				str += "<td><input name='' type='checkbox' value='' /><label>"+answerElem.appl_form_answer_name+"</label></td>";
+    			}
+    			
+    			m++;
+    			l--;
+    			if(l==0 || m==4){
+    				str += "</tr>";
+    				m=0;
+    			}
+        	});
+    		$("#"+elem.appl_form_question_name).append(str);
+    		$("#"+elem.appl_form_type).append("</table>");
+    	});
+    	$("#membership").append("<h3>敬请留下您对香车会的期望：</h3><table width='80%' border='0'><tr><td><textarea name='' cols='60' rows='7'></textarea></td></tr></table>");
     }
 }) ;
 
@@ -218,111 +251,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		<p><label>确认密码：</label><input type="password" id="member_login_pwd2" maxlength="50"/><span class="c_red">*</span></p>
 		<p><label>有效期限：</label><input type="text" name="member.member_expiry_date" id="member_expiry_date" maxlength="10"/><span class="c_red">*</span></p>
 	  </div>
-      <div class="membership">
+      <div class="membership" id="membership">
 		<h2>香车会入会表</h2>
-		<p><b>生活习惯</b></p>
-		<h3>1.您的个人兴趣及爱好？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>自驾游</label></td>
-			<td><input name="" type="checkbox" value="" /><label>酒会</label></td>
-			<td><input name="" type="checkbox" value="" /><label>美食</label></td>
-			<td><input name="" type="checkbox" value="" /><label>奢侈品</label></td>
-			</tr>
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>足球</label></td>
-			<td><input name="" type="checkbox" value="" /><label>赛车</label></td>
-			<td><input name="" type="checkbox" value="" /><label>高尔夫</label></td>
-			<td><input name="" type="checkbox" value="" /><label>投资移民</label></td>
-			</tr>
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>商业交流</label></td>
-			<td><input name="" type="checkbox" value="" /><label>旅游度假</label></td>
-			<td><input name="" type="checkbox" value="" /><label>金融理财</label></td>
-			<td><input name="" type="checkbox" value="" /><label>其它</label></td>
-			</tr>
-		</table>
-		<h3>2.您最喜欢的私人用车是什么品牌？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="radio" value="" /><label>奔驰</label></td>
-			<td><input name="" type="radio" value="" /><label>宝马</label></td>
-			<td><input name="" type="radio" value="" /><label>奥迪</label></td>
-			<td><input name="" type="radio" value="" /><label>路虎</label></td>
-			</tr>
-			<tr>
-			<td><input name="" type="radio" value="" /><label>保时捷</label></td>
-			<td><input name="" type="radio" value="" /><label>法拉利</label></td>
-			<td><input name="" type="radio" value="" /><label>宾利</label></td>
-			<td><input name="" type="radio" value="" /><label>其它</label></td>
-			</tr>
-		</table>
-		<h3>3.您每年是否有度假计划？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="radio" value="" /><label>是的，我有明确的度假计划</label></td>
-			<td><input name="" type="radio" value="" /><label>不一定，视具体情况而定</label></td>
-			<td><input name="" type="radio" value="" /><label>没有度假计划</label></td>
-			</tr>
-		</table>
-		<h3>4.您最喜欢的度假目的地是？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>海滨</label></td>
-			<td><input name="" type="checkbox" value="" /><label>酒会</label></td>
-			<td><input name="" type="checkbox" value="" /><label>美食</label></td>
-			<td><input name="" type="checkbox" value="" /><label>奢侈品</label></td>
-			</tr>
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>足球</label></td>
-			<td><input name="" type="checkbox" value="" /><label>赛车</label></td>
-			<td><input name="" type="checkbox" value="" /><label>高尔夫</label></td>
-			<td><input name="" type="checkbox" value="" /><label>投资移民</label></td>
-			</tr>
-		</table>
-		<h3>5.您是否为您或企业配备专业顾问？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>无</label></td>
-			<td><input name="" type="checkbox" value="" /><label>法律顾问</label></td>
-			<td><input name="" type="checkbox" value="" /><label>财税顾问</label></td>
-			<td><input name="" type="checkbox" value="" /><label>投资顾问</label></td>
-			</tr>
-		</table>
-		<p><b>香车会答疑</b></p>
-		<h3>1.您希望以何种方式获得香车会发布的信息？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>电话通知</label></td>
-			<td><input name="" type="checkbox" value="" /><label>手机短信</label></td>
-			<td><input name="" type="checkbox" value="" /><label>微信/QQ</label></td>
-			<td><input name="" type="checkbox" value="" /><label>其它</label></td>
-			</tr>
-		</table>
-		<h3>2.您认为香车会活动多久组织一次合适？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="radio" value="" /><label>一个季度</label></td>
-			<td><input name="" type="radio" value="" /><label>一个月</label></td>
-			<td><input name="" type="radio" value="" /><label>半个月</label></td>
-			<td><input name="" type="radio" value="" /><label>其它</label></td>
-			</tr>
-		</table>
-		<h3>3.您愿意参与香车会的哪些核心环节？</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><input name="" type="checkbox" value="" /><label>活动组织策划</label></td>
-			<td><input name="" type="checkbox" value="" /><label>活动的执行</label></td>
-			<td><input name="" type="checkbox" value="" /><label>活动参与</label></td>
-			<td><input name="" type="checkbox" value="" /><label>其它</label></td>
-			</tr>
-		</table>
-		<h3>敬请留下您对香车会的期望：</h3>
-		<table width="80%" border="0">
-			<tr>
-			<td><textarea name="" cols="60" rows="7"></textarea></td>
-			</tr>
-		</table>
 		
 	  </div>
     </form>

@@ -1,6 +1,10 @@
 package com.wsb.biz.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.globalwave.base.BaseEntity;
@@ -11,36 +15,32 @@ import com.globalwave.base.BaseEntity;
  *
  */
 @Entity
-@Table(name = "answer_demo_rt")
+@Table(name = "appl_form_answer_dim")
 public class Answer extends BaseEntity {
 	
-	private Long answer_id;
-	private String answer_name;
-    private String question_id;
-    private String is_checked;
-	public Long getAnswer_id() {
-		return answer_id;
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="appl_form_answer_id")
+	private Long id;
+	private String appl_form_question_id;
+    private String appl_form_answer_name;
+	public Long getId() {
+		return id;
 	}
-	public void setAnswer_id(Long answer_id) {
-		this.answer_id = answer_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getAnswer_name() {
-		return answer_name;
+	public String getAppl_form_question_id() {
+		return appl_form_question_id;
 	}
-	public void setAnswer_name(String answer_name) {
-		this.answer_name = answer_name;
+	public void setAppl_form_question_id(String appl_form_question_id) {
+		this.appl_form_question_id = appl_form_question_id;
 	}
-	public String getQuestion_id() {
-		return question_id;
+	public String getAppl_form_answer_name() {
+		return appl_form_answer_name;
 	}
-	public void setQuestion_id(String question_id) {
-		this.question_id = question_id;
-	}
-	public String getIs_checked() {
-		return is_checked;
-	}
-	public void setIs_checked(String is_checked) {
-		this.is_checked = is_checked;
+	public void setAppl_form_answer_name(String appl_form_answer_name) {
+		this.appl_form_answer_name = appl_form_answer_name;
 	}
 
 }

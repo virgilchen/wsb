@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
+import com.globalwave.common.ArrayPageList;
 
 @Entity
 @Table(name = "member_info_rt")
@@ -37,6 +38,9 @@ public class Member extends BaseEntity {
     
     @Transient
     private Car car;
+    
+    @Transient
+    private ArrayPageList<Question> questions;
 
 	public Long getId() {
 		return id;
@@ -140,6 +144,14 @@ public class Member extends BaseEntity {
 
 	public void setCar_id(Long car_id) {
 		this.car_id = car_id;
+	}
+
+	public ArrayPageList<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(ArrayPageList<Question> questions) {
+		this.questions = questions;
 	}
     
 }
