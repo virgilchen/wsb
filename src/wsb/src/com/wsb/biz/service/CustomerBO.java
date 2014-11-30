@@ -10,6 +10,8 @@ import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
+import com.globalwave.system.entity.SessionUser;
+import com.globalwave.util.DataFilterUtil;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
@@ -43,12 +45,15 @@ public class CustomerBO extends BaseServiceImpl {
         return newItem;
     }
     
+    /*
     public void update(Customer customer, List<Car> cars) {
     	CarSO carSO = new CarSO();
     	carSO.setPsdo_cust_id(customer.getId());
     	jdbcDao.delete(Car.class, carSO);
+    	
     	if(cars != null){
 	        jdbcDao.update(customer) ;
+    		
 	        for(int i=0;i<cars.size();i++){
 	        	if(cars.get(i) != null){
 	        		cars.get(i).setPsdo_cust_id(customer.getId());
@@ -57,8 +62,20 @@ public class CustomerBO extends BaseServiceImpl {
 	    	}
     	}
     }
+    */
+    
+    public void update(Customer customer, List<Car> cars) {
+
+		this.update(customer);
+		
+		CarBO.getCarBO().update(cars, customer.getId());
+    }
     
     public void update(Customer customer) {
+        Customer oldCustomer = (Customer)this.jdbcDao.get(customer);
+        
+        DataFilterUtil.updateFilter(customer, oldCustomer, this.getRestrictedProperties());
+        
     	jdbcDao.update(customer) ;
     }
     
@@ -102,9 +119,25 @@ public class CustomerBO extends BaseServiceImpl {
         }
         //customerSO.addDesc("customer_timestamp") ;
         
-        return (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
+        ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
+
+        DataFilterUtil.maskStar4List(result, getRestrictedProperties(), 0);
+        
+        return result;
     }
 
+    private String[] getRestrictedProperties() {
+    	SessionUser su = SessionUser.get();
+    	String authority = StaffRoleBO.getStaffRoleBO().get(su.getStaff().getStaff_role_id()).getStaff_role_authority();
+    	
+    	String pros = CodeHelper.getString("CUS.PROS.R", "desc_", authority);
+    	
+    	if (pros == null) {
+    		return new String[] {};
+    	} else {
+    		return pros.split(",");
+    	}
+    }
 
 
     public Customer get(Long id) {  
@@ -112,6 +145,8 @@ public class CustomerBO extends BaseServiceImpl {
     	customer.setId(id) ;
     	customer = (Customer) jdbcDao.get(customer) ;
         
+
+        DataFilterUtil.maskStar(customer, getRestrictedProperties(), 0);
         
         return customer;
     }

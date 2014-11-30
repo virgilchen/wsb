@@ -392,33 +392,67 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			      <tbody style="display:none;visibility: false;" disabled="true">
 			      	<tr>
 			      		<td>
-			      			<textarea id="templateBody" jTemplate="yes">
+			      	      <textarea id="templateBody" jTemplate="yes">
 					      	
 							<tr>
-							<th>车牌号码：</th>
-							<td><input name="cars[{$T.index}].car_no" id="car_no{$T.index}" type="text" value="{$T.car_no}" onblur="javascript:viewJs.getDistrict({$T.index});" /><span class="c_red"></span>车牌地区：<input name="cars[{$T.index}].car_district" id="car_district{$T.index}" type="text" value="{$T.car_district}"/>
-							</td>
+							  <th>车牌号码：</th>
+							  <td>
+                                <input name="cars[{$T.index}].car_no" id="car_no{$T.index}" type="text" value="{$T.car_no}" onblur="javascript:viewJs.getDistrict({$T.index});" />
+                                <input name="cars[{$T.index}].id" id="id{$T.index}" type="hidden" value="{$T.id}"/>
+							    <span class="c_red"></span>
+							  </td>
+							  <th>车牌地区：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_district" id="car_district{$T.index}" type="text" value="{$T.car_district}"/>
+							  </td>
 							</tr>
 							<tr>
-							<th>品牌：</th>
-							<td><input name="cars[{$T.index}].car_band" type="text" value="{$T.car_band}" /><span class="c_red"></span>车型：<input name="cars[{$T.index}].car_type" type="text" value="{$T.car_type}" /></td>
+							  <th>品牌：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_band" type="text" value="{$T.car_band}" />
+							    <span class="c_red"></span>
+                              </td>
+                              <th>车型：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_type" type="text" value="{$T.car_type}" />
+							  </td>
 							</tr>
 							<tr>
-							<th>颜色：</th>
-							<td><input name="cars[{$T.index}].car_color" type="text" value="{$T.car_color}"/><span class="c_red"></span>排量：<input name="cars[{$T.index}].car_pai_liang" type="text" value="{$T.car_pai_liang}" /></td>
+							  <th>颜色：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_color" type="text" value="{$T.car_color}"/>
+							    <span class="c_red"></span>
+                              </td>
+                              <th>排量：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_pai_liang" type="text" value="{$T.car_pai_liang}" />
+							  </td>
 							</tr>
 							<tr>
-							<th>车架号码：</th>
-							<td><input name="cars[{$T.index}].car_framework_no" type="text" value="{$T.car_framework_no}" /><span class="c_red"></span>发动机号码：<input name="cars[{$T.index}].car_engine_no" type="text" value="{$T.car_engine_no}" /></td>
+							  <th>车架号码：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_framework_no" type="text" value="{$T.car_framework_no}" /><span class="c_red"></span>
+                              </td>
+                              <th>发动机号码：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_engine_no" type="text" value="{$T.car_engine_no}" />
+                              </td>
 							</tr>
 							<tr>
-							<th>初登日期：</th>
-							<td><input name="cars[{$T.index}].car_init_register_date" id="car_init_register_date{$T.index}" type="text" value="{fmt.maxlen($T.car_init_register_date,10)}"/><span class="c_red"></span>历程数：<input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" /></td>
+							  <th>初登日期：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_init_register_date" id="car_init_register_date{$T.index}" type="text" value="{fmt.maxlen($T.car_init_register_date,10)}"/>
+							    <span class="c_red"></span>
+                              </td>
+                              <th>历程数：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" />
+							  </td>
 							</tr>
 							<tr style="border-top:1px #248cb8 solid;">
-								<td style="border-top:1px #248cb8 solid;" colspan="2"></td>
+								<td style="border-top:1px #248cb8 solid;" colspan="4"></td>
 							</tr>
-							</textarea>
+						  </textarea>
 			      		</td>
 			      	</tr>
 		          </tbody>

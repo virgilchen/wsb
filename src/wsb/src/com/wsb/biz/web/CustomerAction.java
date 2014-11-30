@@ -43,7 +43,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String list() throws Exception {  
 
         ArrayPageList<Customer> pageList = customerBO.query(customerSO) ;
-
+        
         renderList(pageList) ; 
         
         return null ;  

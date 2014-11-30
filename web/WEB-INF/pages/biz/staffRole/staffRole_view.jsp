@@ -21,7 +21,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         fillOptions({id:"staffRole.staff_role_status", dictName:"staffRole.status", firstLabel:"不限"}) ;// 改为字典取值
         fillOptions({id:"statusSelection", dictName:"staffRole.status", firstLabel:"请选择..."}) ;// 改为字典取值
-
+        fillOptions({id:"staffRole.staff_role_authority", dictName:"staffRole.Auth.Level", firstLabel:"请选择..."}) ;// 改为字典取值
+        
         this.initDataGrid("staffRoleTB") ;
         this.initDataGrid("pageTB") ;
 
@@ -194,10 +195,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th>角色权限：</th>
                 <td>
-                	<select name="staffRole.staff_role_authority" id="authoritySelection">
-                		<option value="H">高级</option>
-                		<option value="M">中级</option>
-                		<option value="L">低级</option>
+                	<select name="staffRole.staff_role_authority" id="staffRole.staff_role_authority">
                 	</select>
                 </td>
               </tr>

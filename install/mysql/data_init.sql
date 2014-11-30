@@ -149,6 +149,20 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 
 
 
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3002001, 0, 'staffRole.Auth.Level', 'H', '高级', '', null, 'A', 1, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3002002, 0, 'staffRole.Auth.Level', 'M', '中级', '', null, 'A', 2, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3002003, 0, 'staffRole.Auth.Level', 'L', '初级', '', null, 'A', 3, null, null, null, null, null);
+
+
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3007001, 0, 'CUS.PROS.R', 'L', '客户资料初级限制字段', 'cust_phone_no,other_contact_way,cust_home_address', null, 'A', 1, null, null, null, null, null);
+
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-3007101, 0, 'CUS.CAR.R', 'L', '车类资料初级限制字段', 'car_no,car_engine_no', null, 'A', 1, null, null, null, null, null);
+
+
+
+
 delete from `staff_demo_rt` where `staff_id`<>0;
 
 /*  Staff init  */
