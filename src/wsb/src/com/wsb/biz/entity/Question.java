@@ -29,11 +29,19 @@ public class Question extends BaseEntity {
     
     @Transient
     private ArrayPageList<Answer> answers;
+    @Transient
+    private Long[] ansIds;
 	public ArrayPageList<Answer> getAnswers() {
 		return answers;
 	}
 	public void setAnswers(ArrayPageList<Answer> answers) {
 		this.answers = answers;
+	}
+	public Long[] getAnsIds() {
+		return ansIds;
+	}
+	public void setAnsIds(Long[] ansIds) {
+		this.ansIds = ansIds;
 	}
 	public Long getId() {
 		return id;
@@ -59,5 +67,4 @@ public class Question extends BaseEntity {
 	public void setAppl_form_answer_type(String appl_form_answer_type) {
 		this.appl_form_answer_type = appl_form_answer_type;
 	}
-
 }

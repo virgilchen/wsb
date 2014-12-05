@@ -1,6 +1,8 @@
 package com.wsb.biz.web;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,12 +21,15 @@ import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.Member;
+import com.wsb.biz.entity.MemberAppl;
+import com.wsb.biz.entity.MemberApplSO;
 import com.wsb.biz.entity.MemberSO;
 import com.wsb.biz.entity.Question;
 import com.wsb.biz.entity.QuestionSO;
 import com.wsb.biz.service.AnswerBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
+import com.wsb.biz.service.MemberApplBO;
 import com.wsb.biz.service.MemberBO;
 import com.wsb.biz.service.QuestionBO;
 
@@ -41,6 +46,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     private CarBO carBO ;
     private AnswerBO answerBO;
     private QuestionBO questionBO;
+    private List<Question> questions ;
+    private MemberApplBO memberApplBO;
     
     public String execute() throws Exception { 
         return this.list(); 
@@ -72,7 +79,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     	
     	member.setMember_create_time(U.currentTimestamp());
     	member.setMember_status("1");//会员状态，默认0不是会员，1是会员，2会员过期
-        Object newMember = memberBO.create(member) ;
+        Object newMember = memberBO.create(member,questions) ;
         
         Customer customer = customerBO.get(member.getPsdo_cust_id()) ;
         customer.setMember_id(member.getId());
@@ -88,8 +95,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String update()  throws Exception {     
 
             	
-        memberBO.update(member) ;
-
+        memberBO.update(member,questions) ;
         renderObject(member, ResponseMessage.KEY_UPDATE_OK) ;
         
         return null;    
@@ -122,10 +128,23 @@ private static final long serialVersionUID = 7244882365197775441L;
     	ArrayPageList<Member> pageList = memberBO.query(memberSO) ;
     	Member member = null;
     	Car car = null;
+    	ArrayList<Long> ansIds = new ArrayList<Long>();
     	if(pageList.size()>0){
     		member = (Member) pageList.get(0);
     		car = carBO.get(member.getCar_id());
     		member.setCar(car);
+    		
+    		MemberApplSO memberApplSO = new MemberApplSO();
+            memberApplSO.setMember_id(member.getId());
+            ArrayPageList memberAppls = memberApplBO.query(memberApplSO);
+            if(memberAppls.size()>0){
+            	for(int i=0; i<memberAppls.size(); i++){
+            		MemberAppl memberAppl = (MemberAppl) memberAppls.get(i);
+            		Long ansId = memberAppl.getMember_appl_form_answer_id();
+            		ansIds.add(ansId);
+            	}
+            }
+            
     	} else {
     		member = new Member();
     		member.setPsdo_cust_id(Long.parseLong(customerId));
@@ -150,8 +169,25 @@ private static final long serialVersionUID = 7244882365197775441L;
     			AnswerSO answerso = new AnswerSO();
     			answerso.setAppl_form_question_id(e.getId());
     			answerso.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
-    			ArrayPageList<Answer> answerList = answerBO.query(answerso);
-    			e.setAnswers(answerList);
+    			ArrayPageList<Answer> _answerList = answerBO.query(answerso);
+    			ArrayPageList<Answer> answerList = new ArrayPageList<Answer>();
+    			if(ansIds != null){
+    				for(Answer answer : _answerList){
+        				for(int j=0; j<ansIds.size(); j++){
+        					Long ansId = ansIds.get(j);
+        					if(ansId.equals(answer.getId())){
+        						answer.setCheckType("checked");
+        						break;
+        					}
+        				}
+        				answerList.add(answer);
+        			}
+    				e.setAnswers(answerList);
+    			}else{
+    				e.setAnswers(_answerList);
+    			}
+    			
+    			
     			questionList.add(e);
     		}
     	}
@@ -188,7 +224,6 @@ private static final long serialVersionUID = 7244882365197775441L;
 		this.carBO = carBO;
 	}
 
-
 	public void setAnswerBO(AnswerBO answerBO) {
 		this.answerBO = answerBO;
 	}
@@ -197,4 +232,16 @@ private static final long serialVersionUID = 7244882365197775441L;
 		this.questionBO = questionBO;
 	}
 
+	public void setMemberApplBO(MemberApplBO memberApplBO) {
+		this.memberApplBO = memberApplBO;
+	}
+
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 }

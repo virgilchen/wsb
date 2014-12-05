@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -24,6 +25,8 @@ public class Answer extends BaseEntity {
 	private Long id;
 	private String appl_form_question_id;
     private String appl_form_answer_name;
+    @Transient
+    private String checkType;
 	public Long getId() {
 		return id;
 	}
@@ -41,6 +44,12 @@ public class Answer extends BaseEntity {
 	}
 	public void setAppl_form_answer_name(String appl_form_answer_name) {
 		this.appl_form_answer_name = appl_form_answer_name;
+	}
+	public String getCheckType() {
+		return checkType;
+	}
+	public void setCheckType(String checkType) {
+		this.checkType = checkType;
 	}
 
 }

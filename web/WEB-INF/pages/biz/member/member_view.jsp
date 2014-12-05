@@ -89,7 +89,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	    	}
     		}
     	}
-    	
     	return true ;
     },	
     
@@ -115,10 +114,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
     			if(m==0){
     				str += "<tr>";
     			}
+    			var checkStr = '';
+   				if(answerElem.checkType != null && answerElem.checkType != 'null'){
+   					
+   					checkStr = answerElem.checkType;
+   				}
     			if(elem.appl_form_answer_type == '1'){
-    				str += "<td><input name='' type='radio' value='' /><label>"+answerElem.appl_form_answer_name+"</label></td>";
+    				str += "<td><input name='questions["+i+"].ansIds' type='radio' value='"+answerElem.id+"' "+checkStr+" /><label>"+answerElem.appl_form_answer_name+"</label></td>";
     			}else{
-    				str += "<td><input name='' type='checkbox' value='' /><label>"+answerElem.appl_form_answer_name+"</label></td>";
+    				str += "<td><input name='questions["+i+"].ansIds' type='checkbox' value='"+answerElem.id+"' "+checkStr+" /><label>"+answerElem.appl_form_answer_name+"</label></td>";
     			}
     			
     			m++;
