@@ -32,21 +32,22 @@ public class MemberBO extends BaseServiceImpl{
 		}
 		member.setMember_login_pwd(Util.hash(member.getMember_login_pwd()).toLowerCase());
     	Member newItem = (Member) jdbcDao.insert(member) ;
-    	
-    	for(Question question : questions){
-        	if(question.getAnsIds() != null){
-        		for(int i=0; i<question.getAnsIds().length; i++){
-        			Long ansId = question.getAnsIds()[i];
-        			Answer ans = new Answer();
-        			ans = AnswerBO.getAnswerBO().get(ansId);
-        			MemberAppl memberAppl = new MemberAppl();
-        			memberAppl.setMember_id(newItem.getId());
-        			memberAppl.setMember_appl_form_question_id(Long.parseLong(ans.getAppl_form_question_id()));
-        			memberAppl.setMember_appl_form_answer_id(ans.getId());
-        			jdbcDao.insert(memberAppl);
-        		}
-        	}
-        }
+    	if(questions != null){
+    		for(Question question : questions){
+            	if(question.getAnsIds() != null){
+            		for(int i=0; i<question.getAnsIds().length; i++){
+            			Long ansId = question.getAnsIds()[i];
+            			Answer ans = new Answer();
+            			ans = AnswerBO.getAnswerBO().get(ansId);
+            			MemberAppl memberAppl = new MemberAppl();
+            			memberAppl.setMember_id(newItem.getId());
+            			memberAppl.setMember_appl_form_question_id(Long.parseLong(ans.getAppl_form_question_id()));
+            			memberAppl.setMember_appl_form_answer_id(ans.getId());
+            			jdbcDao.insert(memberAppl);
+            		}
+            	}
+            }
+    	}
         
         return newItem;
     }
@@ -65,20 +66,21 @@ public class MemberBO extends BaseServiceImpl{
         MemberApplSO memberApplSO = new MemberApplSO();
         memberApplSO.setMember_id(member.getId());
         jdbcDao.delete(MemberAppl.class, memberApplSO);
-        
-        for(Question question : questions){
-        	if(question.getAnsIds() != null){
-        		for(int i=0; i<question.getAnsIds().length; i++){
-        			Long ansId = question.getAnsIds()[i];
-        			Answer ans = new Answer();
-        			ans = AnswerBO.getAnswerBO().get(ansId);
-        			MemberAppl memberAppl = new MemberAppl();
-        			memberAppl.setMember_id(member.getId());
-        			memberAppl.setMember_appl_form_question_id(Long.parseLong(ans.getAppl_form_question_id()));
-        			memberAppl.setMember_appl_form_answer_id(ans.getId());
-        			jdbcDao.insert(memberAppl);
-        		}
-        	}
+        if(questions != null){
+        	for(Question question : questions){
+            	if(question.getAnsIds() != null){
+            		for(int i=0; i<question.getAnsIds().length; i++){
+            			Long ansId = question.getAnsIds()[i];
+            			Answer ans = new Answer();
+            			ans = AnswerBO.getAnswerBO().get(ansId);
+            			MemberAppl memberAppl = new MemberAppl();
+            			memberAppl.setMember_id(member.getId());
+            			memberAppl.setMember_appl_form_question_id(Long.parseLong(ans.getAppl_form_question_id()));
+            			memberAppl.setMember_appl_form_answer_id(ans.getId());
+            			jdbcDao.insert(memberAppl);
+            		}
+            	}
+            }
         }
     }
     

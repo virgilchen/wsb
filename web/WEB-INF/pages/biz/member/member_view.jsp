@@ -98,6 +98,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	} else {
             E$("member_login_id").attr("readonly", "readonly") ;
     	}
+    	var memberExpectation = data.member_expectation;
     	$(data.questions).each(function (i, elem) {
     		if(document.getElementById(elem.appl_form_type)==null ||document.getElementById(elem.appl_form_type)==undefined){
     			$("#membership").append("<p><b>"+elem.appl_form_type+"</b></p>");
@@ -135,7 +136,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		$("#"+elem.appl_form_question_name).append(str);
     		$("#"+elem.appl_form_type).append("</table>");
     	});
-    	$("#membership").append("<h3>敬请留下您对香车会的期望：</h3><table width='80%' border='0'><tr><td><textarea name='member.member_expectation' cols='60' rows='7'></textarea></td></tr></table>");
+    	$("#membership").append("<h3>敬请留下您对香车会的期望：</h3><table width='80%' border='0'><tr><td><textarea name='member.member_expectation' cols='60' rows='7'>"+memberExpectation+"</textarea></td></tr></table>");
     }
 }) ;
 
