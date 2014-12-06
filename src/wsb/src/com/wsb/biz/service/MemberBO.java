@@ -70,7 +70,6 @@ public class MemberBO extends BaseServiceImpl{
         	if(question.getAnsIds() != null){
         		for(int i=0; i<question.getAnsIds().length; i++){
         			Long ansId = question.getAnsIds()[i];
-        			System.out.println("==============="+ansId);
         			Answer ans = new Answer();
         			ans = AnswerBO.getAnswerBO().get(ansId);
         			MemberAppl memberAppl = new MemberAppl();
