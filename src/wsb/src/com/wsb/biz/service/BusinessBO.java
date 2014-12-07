@@ -9,6 +9,8 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Business;
 import com.wsb.biz.entity.BusinessSO;
+import com.wsb.biz.entity.OrderProcess;
+import com.wsb.biz.entity.OrderProcessSO;
 
 
 @Service("businessBO")
@@ -23,6 +25,8 @@ public class BusinessBO extends BaseServiceImpl {
     		throw new BusinessException(12001L) ;//12001', '父目录不存在，本操作无效！
     	}
 
+    	business.setDeep_level((short)(this.get(pid).getDeep_level() + 1));
+    	
     	Business newItem = (Business) jdbcDao.insert(business) ;
         
         return newItem;
@@ -44,12 +48,19 @@ public class BusinessBO extends BaseServiceImpl {
     		throw new BusinessException(12002L) ;// 12002', '子目录存在，本操作无效！
     	}
     	
+    	if (jdbcDao.queryName("bizSQLs:businessHasUsed", business, Business.class).size() > 0) {
+    		throw new BusinessException(12003L) ;// 12003', '业务已被使用，不能被删除！
+    	}
+    	
         jdbcDao.delete(business) ;
-        
+
+        OrderProcessSO criterion = new OrderProcessSO() ;
+        criterion.setBusiness_id(business.getId()) ;
+        jdbcDao.delete(OrderProcess.class, criterion) ;
     }
 
     public void deleteAll(Long[] businessIds) {
-    	
+    	/*
     	for (Long oId:businessIds) {
         	if (hasChildren(oId)) {
         		throw new BusinessException(12002L) ;// 12002', '子目录存在，本操作无效！
@@ -59,7 +70,13 @@ public class BusinessBO extends BaseServiceImpl {
         BusinessSO criterion = new BusinessSO() ;
         criterion.setIds(businessIds) ;
         jdbcDao.delete(Business.class, criterion) ;
-        
+		*/
+    	
+    	for (Long oId:businessIds) {
+    		Business b = new Business();
+    		b.setId(oId);
+    		delete(b);
+    	}
     }
     
     

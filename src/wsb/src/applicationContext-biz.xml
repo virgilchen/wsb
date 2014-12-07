@@ -223,6 +223,20 @@ select p.* from page_id_dim p, role_page_rt rp where p.page_id=rp.page_id and rp
             </value>
           </entry>
           
+         
+          <entry key="businessHasUsed">
+            <value>
+              <![CDATA[
+          
+select business_id from business_rt b 
+ where exists(select 1 from product_rt p where p.business_id=b.business_id)
+  and b.business_id=[id]
+              ]]>
+            </value>
+            
+            
+            
+          </entry>
         </map>
       </property>
     </bean>

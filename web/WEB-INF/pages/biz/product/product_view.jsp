@@ -46,6 +46,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             null,
             function(data, textStatus){
                 viewJs.addRows("businessTB", data.list, {pro_id_name:"business_id_upper"}) ;
+                g$U.buildTree("businessTB", {nodeColumn:0});
             }
         );
     },
@@ -91,7 +92,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <div class="main_bothside" style="width: 100%;height: 100%;">
             <div class="both_left fl" style="width: 100%;height: 100%;">
               <div class="title">业务分类</div>
-              <div class="content main_list" style="padding: 0px;overflow: auto;">
+              <div class="content main_list" style="padding: 0px;overflow: auto;" >
 	              <TABLE border=0 width="100%" id="businessTB">
                 
 	                <tbody id="listBody" >
@@ -102,8 +103,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	                  <tr>
 	                    <td>
 	                      <textarea id="templateBody" jTemplate="yes">
-			                  <tr id="{$T.id}" onclick="viewJs.toListProduct({$T.id});">
-			                    <td style="text-align: left;padding-left: {#if $T.business_id_upper == null}5{#else}25{#/if}px;">{$T.business_name}</td>
+			                  <tr id="{$T.id}" onclick="viewJs.toListProduct({$T.id});" proId="{$T.business_id_upper}" level="{$T.deep_level}">
+			                    <td style="text-align: left;padding-left: {$T.deep_level * 20}px;">{$T.business_name}</td>
 			                  </tr>
 	                      </textarea>
 	                    </td>

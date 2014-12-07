@@ -22,7 +22,6 @@ public class OrderProcess extends BaseEntity {
     private Integer procs_step_no;
     private String procs_step_name;
     private Long procs_staff_role_id;
-
 	
 	public Long getBusiness_id() {
 		return business_id;
@@ -48,7 +47,6 @@ public class OrderProcess extends BaseEntity {
 	public void setProcs_staff_role_id(Long procs_staff_role_id) {
 		this.procs_staff_role_id = procs_staff_role_id;
 	}
-	
 }
 
 

@@ -33,18 +33,22 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     get:function(id) {
-        
+
         var optionParams = {
             id:"business.business_id_upper", 
-            dictName:"BusinessUpper", 
-            firstLabel:"[顶级业务类型]", 
-            textProperty:"business_name", 
+            data:$.merge([{PK_ID:"", business_name:"[顶级业务类型]"}], g$dict.Business), 
+            //firstLabel:"[顶级业务类型]", 
+            valueProperty:"PK_ID", 
+            idProperty:"PK_ID", 
+            textProperty:["business_name"], 
             titleProperty:"business_name"} ;
         
         E("business.business_id_upper").isEdit = (id != -1);
         
         if (id == -1) {
-            fillOptions(optionParams) ;
+            //fillOptions(optionParams) ;
+            E$("business.business_id_upper").combobox2(optionParams);
+            
             formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
             return ;
         }
@@ -56,10 +60,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 if (data.business_id_upper != null && data.business_id_upper > 0) {
                     delete optionParams["firstLabel"] ;
                 }
-                var filterValues = {} ;
-                filterValues[data.business_id_upper] = true ;
-                optionParams["filter"] = filterValues ;
-                fillOptions(optionParams) ;
+                //var filterValues = {} ;
+                //filterValues[data.business_id_upper] = true ;
+                optionParams["data"] = filter(g$dict.Business, {PK_ID:data.business_id_upper});
+                //optionParams["filter"] = filterValues ;
+                //fillOptions(optionParams) ;
+                E$("business.business_id_upper").combobox2(optionParams);
                 
                 formDeserialize("eForm", data, {}) ;
             }
@@ -74,6 +80,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         var _title = '流程节点@' + business_name  ;
         openView(_id, _url, _title, {business_id:business_id, business_name:business_name}) ;
     },
+    
     onSaveOk:function (data) {
 
     	viewJs.toPage('s') ;
@@ -82,8 +89,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
         if (V("business.id") == ""){
             this.openOrderProcessView(data.id, data.business_name);
         }
+    },
+    
+    onList:function (data) {
+    	g$U.buildTree("businessTB", {});
     }
-}) ;
+}) ; 
 
 
 </script>
@@ -94,6 +105,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   
   <div id="listDiv">
   
+    <div style="position: relative;z-index: 1000;margin-top: -10px;padding-top: 10px;background-color: white;" id="toolbarAutoScroll">
     <DIV class=main_title>
       <B>业务列表</B> 
       <DIV class="main_tt_right fr">
@@ -102,11 +114,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
       </DIV>
     </DIV>
+    </div>
   
     <DIV class="main_search">
       <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="businessSO.pageIndex" id="businessSO.pageIndex" value="1" type="hidden" />
-        <input name="businessSO.pageSize" id="businessSO.pageSize" value="100" type="hidden" />
+        <input name="businessSO.pageSize" id="businessSO.pageSize" value="500" type="hidden" />
         <table width="100%" >
           <tr>
            <td style="width:100px;" >业务名称：</td>
@@ -130,7 +143,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <TR>
 			<TH width="20px"></TH>
 			<TH>业务名称</TH>
-			<TH>操作</TH>
+			<TH width="160px">操作</TH>
 		  <TR>
         </thead>
         
@@ -142,11 +155,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
+                  <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);" proId="{$T.business_id_upper}" level="{$T.deep_level}">
                     <td>
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
-                    <td style="text-align: left;padding-left: {#if $T.business_id_upper == null}5{#else}25{#/if}px;">{$T.business_name}</td>
+                    <td style="text-align: left;padding-left: {5 + 20*$T.deep_level}px;" >
+                      {$T.business_name}
+                    </td>
                     <td><a href="javascript:viewJs.openOrderProcessView({$T.id}, '{$T.business_name}')">流程配置</a></td>
                   </tr>
               </textarea>
@@ -187,8 +202,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th width="25%">上级业务：</th>
                 <td>
+                <!-- 
                  <select name="business.business_id_upper" id="business.business_id_upper" >
                  </select>
+                 -->
+                 <input name="business.business_id_upper" id="business.business_id_upper" />
                 </td>
               </tr>
               <tr>

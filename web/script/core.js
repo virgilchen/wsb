@@ -1772,6 +1772,128 @@ function setReadonly(_form, _ids, _ignorIds, isReadOnly, isDisable, className) {
 	}
 }
 
+
+
+g$U = {
+	buildTree:function(tableName, conf) {
+    	if (!conf) {
+    		conf = {} ;
+    	}
+    	
+    	var nodeColumn = 1;
+    	
+    	if (typeof(conf.nodeColumn) != "undefined") {
+    		nodeColumn = conf.nodeColumn;
+    	}
+                
+        $listBody = $("#" + tableName + " #listBody", viewJs.view) ;
+        
+    	$("tr", $listBody).each(function(i, trElem){
+        	var id = $(trElem).attr("id");
+        	var level = parseInt($(trElem).attr("level"));
+        	
+        	var $subTr = $("tr[proId=" + id + "]", $listBody);
+        	        	
+        	if ($subTr.length > 0) {
+        		$("td:eq(" + nodeColumn + ")", $(trElem)).prepend('<div class="ui-icon ui-icon-minus" style="display: inline-block;vertical-align: bottom;margin: 2px;" onclick="g$U.treeNodeClick(event, ' + (level + 1) + ', this)" ondblclick="g$U.cancelDblClick(event)">x</div>');
+        	} else {
+        		$("td:eq(" + nodeColumn + ")", $(trElem)).prepend('<div class="ui-icon ui-icon-bullet" style="display: inline-block;vertical-align: bottom;margin: 2px;" ondblclick="g$U.cancelDblClick(event)"></div>');
+        	}
+        });
+	},
+	
+	cancelDblClick:function(event) {
+        if (typeof(event) != "undefined") {
+            event.stopPropagation();
+        }
+	},
+
+    treeNodeClick:function(event, level_, elem) {
+
+    	var $elem = $(elem) ;
+    	var $tr = $elem.parents("tr:first") ;
+    	
+    	if (typeof(level_) == "undefined") {
+    		level_ = "1";
+    	} 
+
+    	if($elem.hasClass("ui-icon-plus")) {
+            $elem.removeClass("ui-icon-plus") ;
+            $elem.addClass("ui-icon-minus") ;
+    	} else {
+            $elem.removeClass("ui-icon-minus") ;
+            $elem.addClass("ui-icon-plus") ;
+    	}
+
+        if (typeof(event) != "undefined") {
+            event.stopPropagation();
+        }
+
+    	//if ($elem.attr("isLoaded")) {
+        if (true) {
+    		this.displayRow($tr, !$elem.hasClass("ui-icon-plus"));
+    		return ;
+    	}
+    	
+    	V("organizationSO.level_", level_);
+    	if($tr != null) {
+            V("organizationSO.pro_organization_id", $tr.attr("id"));
+    	}
+    	
+        if (E("selectMe") != null) {
+            E("selectMe").checked = false ;
+        }
+        
+        ajax(
+            this.list_url, 
+            E$("sForm").serialize(),
+            function(data, textStatus){
+            	viewJs.addRows(viewJs.entityName+"TB", data.list, {deep:level_}) ;
+            	$elem.attr("isLoaded", true);
+            }
+        );
+
+    },
+    
+    displayRow:function($tr, isShow) {
+
+    	var $next = $tr.next() ;
+    	var $last = null;
+    	while ($next != null && $next.is('tr')) {
+
+    		 if($next.attr("proId") == $tr.attr("proId")) {
+    			 break ;
+    		 }
+
+             if($next.attr("level") <= $tr.attr("level")) {
+                 break ;
+             }
+    		 
+    		 if (isShow) {
+    			 $next.show() ;
+    			 
+    			 if($next.attr("level") < $next.next().attr("level")) {//下一级
+    				 var isChildShow = $(".ui-icon-minus", $next).length > 0 ;
+    				 $next = this.displayRow($next, isChildShow);// 下级最后一个元素，下一循环继续本级下一元素
+    			 }
+    		 } else {
+    			 $next.hide() ;
+    		 }
+    		 
+    		 $last = $next ;
+             $next = $next.next() ;
+    	}
+    	
+    	return $last;//last element!
+    }
+} ;
+
+
+
+
+
+
+
 /**
  * 重新加载指定的Script元素
  * 
@@ -1792,12 +1914,7 @@ function reloadScript(id)
 }
 
 
-function isUndefined(elem) {
-	return (typeof(elem) == "undefined") ;
-}
-function isDefined(elem) {
-	return (typeof(elem) != "undefined") ;
-}
+
 
 /**
  * 

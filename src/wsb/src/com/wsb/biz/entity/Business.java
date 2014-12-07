@@ -26,6 +26,7 @@ public class Business extends BaseEntity {
     private String business_name  ;
     private String business_name_upper  ;
 	private Long business_id_upper;
+    private Short deep_level ;
     
 	public Long getId() {
 		return id;
@@ -50,6 +51,12 @@ public class Business extends BaseEntity {
 	}
 	public void setBusiness_id_upper(Long business_id_upper) {
 		this.business_id_upper = business_id_upper;
+	}
+	public Short getDeep_level() {
+		return deep_level;
+	}
+	public void setDeep_level(Short deep_level) {
+		this.deep_level = deep_level;
 	}
 	
 }

@@ -7,7 +7,7 @@ import com.globalwave.base.BaseSO;
 
 public class ProductSO extends BaseSO {
 
-    @Column(name="notice_id")
+    @Column(name="prod_id")
     private Long[] ids ;
  
     private String prod_name;

@@ -292,6 +292,7 @@ CREATE TABLE `order_procs_rt` (
   `procs_step_no` SMALLINT NOT NULL,
   `procs_step_name` VARCHAR(10) NULL,
   `procs_staff_role_id` INT NULL,
+  `deep_level` INT NULL,
   PRIMARY KEY (`business_id`, `procs_step_no`),
   INDEX `business_id_key` (`business_id` ASC),
   INDEX `procs_key` (`business_id` ASC, `procs_step_no` ASC))

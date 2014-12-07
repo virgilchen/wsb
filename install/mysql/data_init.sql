@@ -90,6 +90,7 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11005', '11005', '�
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12001', '12001', '父业务不存在，本操作无效！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12002', '12002', '子业务存在，本操作无效！');
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12003', '12003', '业务已被使用，不能被删除！');
 
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('13001', '13001', '父机构不存在，本操作无效！');
@@ -103,6 +104,7 @@ insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, stat
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-5, 0, 'Cache_Sql', 'BusinessUpper', 'isSCM=Y', 'select business_id as id, business_name, business_id_upper, business_name_upper from business_rt  where business_id_upper is null', null, 'A', 5, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-6, 0, 'Cache_Sql', 'Role', 'isSCM=Y', 'select staff_role_id as id, staff_role_name from staff_role_demo_rt', null, 'A', 6, null, null, null, null, null);
 insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-7, 0, 'Cache_Sql', 'Org', 'isSCM=Y', 'select org_id as id, o.* from company_org_rt o', null, 'A', 7, null, null, null, null, null);
+insert into cfg_dict (id, pro_dict_id, domain_, code_, name_, desc_, flag_, status_, order_, ext_s1, ext_s2, ext_s3, ext_s4, ext_s5) values (-8, 0, 'Cache_Sql', 'Business', 'isSCM=Y', 'select business_id as id, business_name, business_id_upper, business_name_upper from business_rt', null, 'A', 8, null, null, null, null, null);
 
 
 
