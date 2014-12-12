@@ -92,6 +92,9 @@ CREATE TABLE `order_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+ALTER TABLE `wsbd001`.`order_rt` ADD COLUMN `member_id` INT NULL DEFAULT NULL AFTER `order_init_staff_id`;
+ALTER TABLE `wsbd001`.`order_rt` CHANGE COLUMN `member_id` `member_login_id` INT NULL DEFAULT NULL;
+
 -- drop table `order_prod_pack_rt`;
 -- `wsbd001`.`order_prod_pack_rt`
 CREATE TABLE `order_prod_pack_rt` (
