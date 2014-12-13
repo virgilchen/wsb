@@ -73,12 +73,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     E$("car_init_register_date" + _this.size).datepicker();
             	});
                 this.size = _this.size++;
-				if(data.member_id == null || data.member_id == '' ){
-					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
-				}else{
-					$("#memberDisplay2").html("[会员]");
-					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>会员ID："+data.member_id+"</a>");
-				}
+                if(data.cars.length>0){
+                	if(data.member_id == null || data.member_id == '' ){
+    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
+    				}else{
+    					$("#memberDisplay2").html("[会员]");
+    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>会员ID："+data.member_id+"</a>");
+    				}
+                }
             }
         );
     },
