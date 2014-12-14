@@ -136,6 +136,9 @@ CREATE TABLE `order_prod_pack_event_rt` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+ALTER TABLE `wsbd001`.`order_prod_pack_event_rt` ADD COLUMN `order_prod_pack_id` BIGINT NULL DEFAULT NULL AFTER `order_id`;
+
+
 -- drop table `staff_demo_rt`;
 -- `wsbd001`.`staff_demo_rt`
 CREATE TABLE `staff_demo_rt` (
