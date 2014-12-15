@@ -25,7 +25,11 @@ public class BusinessBO extends BaseServiceImpl {
     		throw new BusinessException(12001L) ;//12001', '父目录不存在，本操作无效！
     	}
 
-    	business.setDeep_level((short)(this.get(pid).getDeep_level() + 1));
+    	if (pid == null) {
+        	business.setDeep_level((short)1);
+    	} else {
+        	business.setDeep_level((short)(this.get(pid).getDeep_level() + 1));
+    	}
     	
     	Business newItem = (Business) jdbcDao.insert(business) ;
         

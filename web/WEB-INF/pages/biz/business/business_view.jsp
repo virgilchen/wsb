@@ -192,7 +192,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
       <input type="hidden" name="business.id" id="business.id"/>
       <input type="hidden" name="business.version_id" id="business.version_id"/>
-  
+      <input type="hidden" name="business.deep_level" />
+      
       <table width="100%" border="0">
         <tr valign="top">
           <td valign="top" width="15%">

@@ -7,7 +7,7 @@
   <table width="80%" border="0">
     <tr>
       <td width="20%" style="text-align: right;">客户号：</td>
-      <td width="30%" style="text-align: left;"><label id="customer.id">xcyz_001</label></td>
+      <td width="30%" style="text-align: left;"><label id="customer.cust_code">xcyz_001</label></td>
       <td width="20%" style="text-align: right;">客户姓名：</td>
       <td width="30%" style="text-align: left;"><label id="customer.cust_name">王小明</label></td>
     </tr>
