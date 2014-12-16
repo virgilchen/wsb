@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.globalwave.base.BaseAction;
-import com.globalwave.common.Util;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.system.entity.SessionUser;
 import com.globalwave.system.web.annotations.Pid;

@@ -32,6 +32,8 @@ public class ProductPackAction extends BaseAction implements Preparable {
         return this.list(); 
     }
 
+
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String view() throws Exception { 
     	
     	this.getRequest().setAttribute(

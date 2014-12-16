@@ -56,6 +56,8 @@ public class BusinessAction extends BaseAction implements Preparable {
         Object newBusiness = businessBO.create(business) ;
 
         CodeHelper.reload("BusinessUpper");
+
+        CodeHelper.reload("Business");
         
         renderObject(newBusiness, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
@@ -69,6 +71,8 @@ public class BusinessAction extends BaseAction implements Preparable {
         businessBO.update(business) ;
         
         CodeHelper.reload("BusinessUpper");
+
+        CodeHelper.reload("Business");
 
         renderObject(business, ResponseMessage.KEY_UPDATE_OK) ;
         
@@ -86,6 +90,8 @@ public class BusinessAction extends BaseAction implements Preparable {
         }
         
         CodeHelper.reload("BusinessUpper");
+
+        CodeHelper.reload("Business");
         
         renderObject(business, ResponseMessage.KEY_DELETE_OK) ;
         

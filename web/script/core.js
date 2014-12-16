@@ -1804,7 +1804,11 @@ g$U = {
 	
 	cancelDblClick:function(event) {
         if (typeof(event) != "undefined") {
-            event.stopPropagation();
+        	if (typeof(event.stopPropagation) == "undefined") {
+        		event.cancelBubble = true ;
+        	} else {
+                event.stopPropagation();
+        	}
         }
 	},
 
@@ -1826,7 +1830,11 @@ g$U = {
     	}
 
         if (typeof(event) != "undefined") {
-            event.stopPropagation();
+        	if (typeof(event.stopPropagation) == "undefined") {
+        		event.cancelBubble = true ;
+        	} else {
+                event.stopPropagation();
+        	}
         }
 
     	//if ($elem.attr("isLoaded")) {
