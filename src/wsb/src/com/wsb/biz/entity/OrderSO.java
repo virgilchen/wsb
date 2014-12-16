@@ -19,6 +19,7 @@ public class OrderSO extends BaseSO {
     private String psdo_cust_name  ;
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
+    private String order_by ;
     
 	public Long[] getIds() {
 		return ids;
@@ -89,7 +90,16 @@ public class OrderSO extends BaseSO {
     public void setPsdo_cust_id(Long psdo_cust_id) {
 		this.psdo_cust_id = psdo_cust_id;
 	}
-    
+	public String getOrder_by() {
+		if (order_by == null) {
+			return " o.order_id " ;
+		}
+		return order_by;
+	}
+	public void setOrder_by(String order_by) {
+		this.order_by = order_by;
+	}
+
 	@Override
 	public Class<?> getTableClass() {
 		return Order.class;

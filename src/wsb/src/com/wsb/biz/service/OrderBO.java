@@ -228,6 +228,8 @@ public class OrderBO extends BaseServiceImpl {
         
         if (!sessionUser.isManager()) {
             orderSO.setOrder_init_staff_id(sessionUser.getStaff().getId());
+        } else {
+        	orderSO.setOrder_by(" o.order_id desc ");
         }
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrders", orderSO, HashMap.class);

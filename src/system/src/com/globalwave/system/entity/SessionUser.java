@@ -104,7 +104,8 @@ public class SessionUser {
     }
 
     public boolean isManager() {
-    	return false;
+    	Long roleId = staff.getStaff_role_id();
+    	return roleId == 1 || roleId == 10 || roleId == 11; //系统管理员/总经理/业务经理
     }
     
     public long[] getOrganization_ids() {

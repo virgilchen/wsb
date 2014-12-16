@@ -169,6 +169,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
         var $content = $("#business" + index + "TB #listBusinessBody", viewJs.view);
         $content.html("");
         $(datas).each(function (i, elem) {
+        	if (E$("event_staff_ids_" + index + "_" + elem.id).length > 0) {
+        		return ;
+        	}
             elem.index = index;
             $content.append(parse(V("businessTemplateBody"), elem));
 
