@@ -200,39 +200,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_phone_no" value="" type="text" />
            </td>
-           <td style="width:100px;">
-           </td>
-           <td style="width:100px;">
-           </td>
-          </tr>
-          <tr>
            <td style="width:100px;" >会员号：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="customerSO.member_id" value="" type="text" />
-           </td>
-           <td style="width:100px;" >业务类型：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="customerSO.cust_code" value="" type="text" />
-           </td>
-           <td style="width:80px;" >业务环节：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="customerSO.cust_phone_no" value="" type="text" />
-           </td>
-           <td style="width:100px;">
-           </td>
-           <td style="width:100px;">
-           </td>
-          </tr>
-          <tr>
-           <td style="width:80px;" >车架号：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="customerSO.cust_name" value="" type="text" />
-           </td>
-           <td style="width:100px;" >商品包：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="customerSO.member_id" value="" type="text" />
-           </td>
-           <td style="width:100px;" >到期时间：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.member_id" value="" type="text" />
            </td>
