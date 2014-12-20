@@ -73,3 +73,54 @@ create table sys_event_log  (
    constraint PK_SYS_EVENT_LOG primary key (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*==============================================================*/
+/* Table: biz_assets_holding ，客户资产持有表                                   */
+/*==============================================================*/
+create table biz_assets_holding  (
+   id                 bigint(12) not null AUTO_INCREMENT,
+   customer_id        bigint(12)  comment '客户ID',
+   assets_type        int(5) comment '资产类型，对应字典表Biz.Assets.Type，1:产品',
+   assets_id          bigint(12) comment '资产ID，当assets_type=1，本字段为产品ID',
+   assets_unit        int(5) comment '资产单位，对应字典表Biz.Assets.Unit，1：件',
+   order_id           bigint(12) comment '资产产生订单源ID',
+   
+   total_amount       decimal(12,2) default '0' NOT NULL comment '总量',
+   used_amount        decimal(12,2) default '0' NOT NULL comment '已使用',
+   pending_amount     decimal(12,2) default '0' NOT NULL comment '预扣',
+   remain_amount      decimal(12,2) default '0' NOT NULL comment '剩余',
+   
+   effect_date        datetime comment '资产生效时间',
+   expire_date        datetime comment '资产失效时间',
+   
+   version_id         bigint,
+   record_status      char(1),
+   created_by         varchar(50),
+   created_on         datetime,
+   update_by          varchar(50),
+   update_on          datetime,
+   
+   constraint PK_biz_assets_holding primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*==============================================================*/
+/* Table: biz_assets_transaction ，客户资产交易表                                         */
+/*==============================================================*/
+create table biz_assets_transaction (
+   id                 bigint(12) not null AUTO_INCREMENT,
+   biz_assets_holding_id bigint(12)  comment '资产持有记录ID',
+   transaction_type   int(5)  comment '交易类型，对应字典表Biz.Assets.TransactionType，1：订购，-1：使用',
+   amount             decimal(12,2)  comment '资产交易量',
+   
+   version_id         bigint,
+   record_status      char(1),
+   created_by         varchar(50),
+   created_on         datetime,
+   update_by          varchar(50),
+   update_on          datetime,
+   
+   constraint PK_biz_assets_transaction primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
