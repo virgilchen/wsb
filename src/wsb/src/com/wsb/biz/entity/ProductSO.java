@@ -14,6 +14,7 @@ public class ProductSO extends BaseSO {
     private String prod_desc;
 
 	private Long business_id;
+	private Long prod_pack_id;
 
     
 	public Long[] getIds() {
@@ -47,6 +48,14 @@ public class ProductSO extends BaseSO {
 
 	public void setBusiness_id(Long business_id) {
 		this.business_id = business_id;
+	}
+
+	public Long getProd_pack_id() {
+		return prod_pack_id;
+	}
+
+	public void setProd_pack_id(Long prod_pack_id) {
+		this.prod_pack_id = prod_pack_id;
 	}
 
 	@Override

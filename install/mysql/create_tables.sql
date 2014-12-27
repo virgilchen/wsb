@@ -98,8 +98,8 @@ create table biz_assets_holding  (
    record_status      char(1),
    created_by         varchar(50),
    created_on         datetime,
-   update_by          varchar(50),
-   update_on          datetime,
+   updated_by          varchar(50),
+   updated_on          datetime,
    
    constraint PK_biz_assets_holding primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -110,6 +110,7 @@ create table biz_assets_holding  (
 create table biz_assets_transaction (
    id                 bigint(12) not null AUTO_INCREMENT,
    biz_assets_holding_id bigint(12)  comment '资产持有记录ID',
+   order_id              bigint(12)  comment '订单记录ID',
    transaction_type   int(5)  comment '交易类型，对应字典表Biz.Assets.TransactionType，1：订购，-1：使用',
    amount             decimal(12,2)  comment '资产交易量',
    
@@ -117,8 +118,8 @@ create table biz_assets_transaction (
    record_status      char(1),
    created_by         varchar(50),
    created_on         datetime,
-   update_by          varchar(50),
-   update_on          datetime,
+   updated_by          varchar(50),
+   updated_on          datetime,
    
    constraint PK_biz_assets_transaction primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

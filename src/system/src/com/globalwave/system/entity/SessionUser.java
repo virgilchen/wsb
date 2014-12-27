@@ -153,7 +153,8 @@ public class SessionUser {
 	}
 	
 	public String getLogin_id() {
-   	    return getUser().getLogin_id() ;  
+   	    ///return getUser().getLogin_id() ;
+		return getStaff().getStaff_login_profile();
     }
    public void setStaff(Staff staff) {
 		this.staff = staff;

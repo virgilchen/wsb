@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Product;
 import com.wsb.biz.entity.ProductSO;
@@ -63,8 +64,16 @@ public class ProductBO extends BaseServiceImpl {
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryAllSelectableProducts", null, HashMap.class);
     }
+    
 
 
+    public ArrayPageList<Product> queryProdByProdPackId(Long productPackId) {
+
+    	ProductSO productSO = new ProductSO() ;
+    	productSO.setProd_pack_id(productPackId);
+        
+        return (ArrayPageList<Product>)jdbcDao.queryName("bizSQLs:queryProdByProdPackId", productSO, Product.class);
+    } 
 
     public Product get(Long id) {  
     	Product product = new Product() ;
@@ -75,4 +84,8 @@ public class ProductBO extends BaseServiceImpl {
         return product;
     }
     
+    
+    public static ProductBO getProductBO() {
+    	return (ProductBO)CodeHelper.getAppContext().getBean("productBO");
+    }
 }

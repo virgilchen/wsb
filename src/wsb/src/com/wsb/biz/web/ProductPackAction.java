@@ -67,7 +67,7 @@ public class ProductPackAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String queryBusinesses() throws Exception {  
 
-    	renderList(productPackBO.queryBusinesses(productPack), null) ; 
+    	renderList(productPackBO.queryBusinesses(productPackSO), null) ; 
     	
         return null ;  
     }

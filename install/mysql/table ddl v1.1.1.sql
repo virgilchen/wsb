@@ -82,6 +82,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE `order_rt` (
   `order_id` BIGINT NOT NULL AUTO_INCREMENT,
   `order_no` VARCHAR(80),
+  `order_type` VARCHAR(1),
   `order_init_time_stamp` TIMESTAMP NOT NULL,
   `order_init_staff_id` INT NULL,
   `psdo_cust_id` INT NULL,

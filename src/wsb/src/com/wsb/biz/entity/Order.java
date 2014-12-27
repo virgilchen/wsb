@@ -27,12 +27,18 @@ public class Order extends BaseEntity {
 	final public static String STATUS_START = "S";
 	final public static String STATUS_INIT = "I";
 	final public static String STATUS_END = "E";
+
+	final public static String ORDER_TYPE_PURCHASE = "P";
+	final public static String ORDER_TYPE_BUSINESS = "B";
+	
+	
 	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="order_id")
 	private Long id;
 
+    private String order_type  ;
     private Timestamp order_init_time_stamp  ;
     private Long order_init_staff_id  ;
     private String order_no;
@@ -128,6 +134,12 @@ public class Order extends BaseEntity {
 	}
 	public void setOrder_init_staff_name(String order_init_staff_name) {
 		this.order_init_staff_name = order_init_staff_name;
+	}
+	public String getOrder_type() {
+		return order_type;
+	}
+	public void setOrder_type(String order_type) {
+		this.order_type = order_type;
 	}
 
 }

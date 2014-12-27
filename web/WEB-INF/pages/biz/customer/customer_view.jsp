@@ -109,7 +109,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
             return ;
         }
 
-    	openView(100003, '/biz/order_openView.action?customer_id=' + sels[0].value, '业务发起');
+        openView(100003, '/biz/order_openView.action?customer_id=' + sels[0].value, '业务发起');
+    },
+    
+    toPurchaseView:function () {
+
+        var sels = $("#"+this.entityName+"TB input:checked", this.view) ;
+        if (sels.length == 0) {
+            alert("请先选择要发起业务的客户！") ;
+            return ;
+        }
+
+        openView(100006, '/biz/order_purchaseView.action?customer_id=' + sels[0].value, '订购产品');
     },
     
     onSaveOk:function(data) {
@@ -177,6 +188,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <A class=blue href="javascript:viewJs.toAdd();">添加</A>
         <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
         <A class=blue href="javascript:viewJs.toOrderOpen();">业务发起</A>
+        <A class=blue href="javascript:viewJs.toPurchaseView();">订购产品</A>
         <A class=orange href="javascript:viewJs.toDelete();">删除</A>
       </DIV>
     </DIV>

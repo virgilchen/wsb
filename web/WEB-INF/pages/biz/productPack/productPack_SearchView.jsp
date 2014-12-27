@@ -67,7 +67,7 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
 		          <tr>
 		            <td>
 		              <textarea id="templateBody" jTemplate="yes">
-		                  <tr id="{$T.id}" ondblclick="viewJs.toEdit($('#ids', this)[0]);">
+		                  <tr id="{$T.id}" ondblclick="viewJs.selectProdPack({$T.id}, '{$T.prod_pack_name}');closeCL('productPack_searchViewDiv');">
 		                    <td><input type="hidden" name="ids" id="ids" value="{$T.id}" />{$T.prod_pack_name}</td>
 		                    <td>{$T.prod_pack_name}</td>
 		                    <td>{$T.prod_pack_owner}</td>

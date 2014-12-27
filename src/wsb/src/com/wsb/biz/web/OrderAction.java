@@ -64,6 +64,21 @@ public class OrderAction extends BaseAction implements Preparable {
     	return "jsp";
     }
     
+    
+    
+    public String purchaseView() throws Exception {
+
+    	StaffSO so = new StaffSO();
+    	so.setStaff_status(Staff.STATUS_ACTIVE);
+    	so.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
+    	
+    	this.getRequest().setAttribute(
+    			"staffsJson", "[]");
+    			//GsonUtil.getGson().toJson(StaffBO.getStaffBO().query(so)));
+    	
+    	return "jsp";
+    }
+    
     public String followUpView() throws Exception {
 
     	StaffSO so = new StaffSO();
@@ -92,7 +107,16 @@ public class OrderAction extends BaseAction implements Preparable {
     
     public String save() throws Exception {
 
+    	order.setOrder_type(Order.ORDER_TYPE_BUSINESS);
+        Object newOrder = orderBO.save(order, orderProdPacks) ;
 
+        renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
+        return null;  
+    }
+    
+    public String purchase() throws Exception {
+
+    	order.setOrder_type(Order.ORDER_TYPE_PURCHASE);
         Object newOrder = orderBO.save(order, orderProdPacks) ;
 
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;

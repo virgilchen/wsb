@@ -150,8 +150,8 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 .login_box div input.ipt_check{vertical-align: middle;margin-right:5px; }
 
 /*弹出窗*/
-.pop_bg_500{position:fixed; left:0; top:0; width:100%; height:100%;background:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
-.pop_box{ font-size:12px; position:fixed; z-index:500; top:20%; left:50%; width:600px; margin-left:-300px; background:#fff;border:1px #cedde7 solid;}
+.pop_bg_500{position:fixed; left:0; top:0; width:100%; height:100%;background:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;z-index: 20;}
+.pop_box{ font-size:12px; position:fixed; z-index:1001; top:20%; left:50%; width:600px; margin-left:-300px; background:#fff;border:1px #cedde7 solid;}
 .pop_box .pop_title{ font-size:14px; font-weight:bold;}
 .pop_box .pop_title a{ cursor:pointer; font-weight:normal;}
 .pop_box .pop_content{ padding:20px;}

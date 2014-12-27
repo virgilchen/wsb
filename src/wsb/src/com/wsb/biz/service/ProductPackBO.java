@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
-import com.globalwave.common.exception.BusinessException;
-import com.wsb.biz.entity.Business;
 import com.wsb.biz.entity.ProductPack;
 import com.wsb.biz.entity.ProductPackDetail;
 import com.wsb.biz.entity.ProductPackSO;
@@ -92,8 +90,9 @@ public class ProductPackBO extends BaseServiceImpl {
     }
     
     
-    public ArrayPageList<HashMap> queryBusinesses(ProductPack productPack) {
-        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryBusinessesInProductPack", productPack, HashMap.class);
+    public ArrayPageList<HashMap> queryBusinesses(ProductPackSO productPackSO) {
+    	productPackSO.setPageSize(ArrayPageList.PAGEINDEX_NO_PAGE);
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryBusinessesInProductPack", productPackSO, HashMap.class);
     }
 
 

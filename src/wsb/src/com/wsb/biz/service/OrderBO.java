@@ -88,17 +88,35 @@ public class OrderBO extends BaseServiceImpl {
     		jdbcDao.delete(OrderProdPack.class, orderProdPackSO);
     	}
 
-    	OrderProdPackEventBO eventBO = OrderProdPackEventBO.getOrderProdPackEventBO();
-    	
-    	for (OrderProdPack opp : orderProdPacks) {
-    		if (opp == null) {
-    			continue;
-    		}
-    		opp.setId(null);
-    		opp.setOrder_id(order.getId());
-    		jdbcDao.insert(opp);
 
-    		eventBO.saveOpenOrderEvents(order.getId(), opp, eventStaus);
+    	if (Order.ORDER_TYPE_BUSINESS.equals(order.getOrder_type())) {
+	    	OrderProdPackEventBO eventBO = OrderProdPackEventBO.getOrderProdPackEventBO();
+	    	
+	    	for (OrderProdPack opp : orderProdPacks) {
+	    		if (opp == null) {
+	    			continue;
+	    		}
+	    		opp.setId(null);
+	    		opp.setOrder_id(order.getId());
+	    		jdbcDao.insert(opp);
+	
+	    		eventBO.saveOpenOrderEvents(order.getId(), opp, eventStaus);
+	    	}
+    	} else if (Order.ORDER_TYPE_PURCHASE.equals(order.getOrder_type())) {
+
+    		AssetsHoldingBO assetsHoldingBO = AssetsHoldingBO.getAssetsHoldingBO(); 
+        	for (OrderProdPack opp : orderProdPacks) {
+        		if (opp == null) {
+        			continue;
+        		}
+        		opp.setId(null);
+        		opp.setOrder_id(order.getId());
+        		jdbcDao.insert(opp);
+        		
+        		assetsHoldingBO.add(order, opp);
+        	}
+        	
+    		
     	}
     	
         return result;

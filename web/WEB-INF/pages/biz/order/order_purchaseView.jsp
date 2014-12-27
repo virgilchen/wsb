@@ -13,8 +13,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     view:document.getElementById("view_<%=view_id%>"), 
     id:<%=view_id%>,
     list_url:root+"/biz/order_list.action" ,
-    create_url:root + "/biz/order_save.action" ,
-    update_url:root + "/biz/order_save.action" ,
+    create_url:root + "/biz/order_purchase.action" ,
+    update_url:root + "/biz/order_purchase.action" ,
     get_url:root + "/biz/order_get.action" ,
     delete_url:root + "/biz/order_delete.action" ,
     entityName:"order",
@@ -82,7 +82,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     onSaveOk:function(data) {
     	//alert(data.id);
-    	V("order.id", data.id);
+    	//V("order.id", data.id);
+        if (data.code == "0") {
+            removeView(<%=view_id%>);
+            <%if(parent_view_id != null && parent_view_id.length() == 0){%>
+                g$v<%=parent_view_id%>.list();
+            <%}%>
+        }
     },
     
     add:function(data) {
@@ -98,7 +104,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	
         this.addRows ("orderProdPacksTB", datas, {forceClear:false});
 
-        E$("purchase_date" + this.size).datepicker();
+        E$("expire_date" + this.size).datepicker();
         E$("effect_date" + this.size).datepicker();
         
         this.size ++;
@@ -156,7 +162,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         ajax(
             root + "/biz/productPack_queryBusinesses.action", 
-            {"productPackSO.id":id, "productPackSO.customer_id":<%=customer_id%>},
+            {"productPack.id":id},
             function(data, textStatus){
                 //viewJs.addRows("businessTB", data.list) ;
                 _this.addBusinesses(data.list, _this.selectedIndex);
@@ -219,11 +225,13 @@ width: 92%;
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
     <div id="customerInfoDiv" >
-      <div style="position: relative;z-index: 1000;margin-top: -10px;padding-top: 10px;background-color: white;" id="toolbarAutoScroll">
+      <div style="position: relative;z-index: 10;margin-top: -10px;padding-top: 10px;background-color: white;" id="toolbarAutoScroll">
 		<div class="main_title">
 		    <b>发起“<label id="customer.cust_name">王小明</label>”的业务单</b>
 		    <div class="main_tt_right fr">
+		        <!-- 
 		        <a href="javascript:viewJs.open();" class="orange">保存并发起业务</a>
+		         -->
 		        <a href="javascript:viewJs.save();" class="orange">保存</a>
 		        <a href="javascript:viewJs.closeView();" class="blue">返回</a>
 		    </div>
@@ -241,8 +249,7 @@ width: 92%;
         <input type="hidden" name="order.psdo_cust_id" id="order.psdo_cust_id"/>
         <input type="hidden" name="order.order_cur_status" id="order.order_cur_status"/>
         <input type="hidden" name="order.order_type" id="order.order_type"/>
-
-
+        
 	    <table width="100%" border="0">
 	      <tr>
             <th>业务单单号：</th>
@@ -292,6 +299,7 @@ width: 92%;
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
+			              <%--
 			              <tr>
 			                <th>业务类型：</th>
 			                <td colspan="4" class="main_order_detail" style="border: 0;margin: 0;">
@@ -301,10 +309,8 @@ width: 92%;
 				                <table width="60%" border="0" id="business{$T.index}TB">
 				                  <thead>
 					                  <tr>
-					                    <th style="text-align: center;">基础商品</th>
 					                    <th style="text-align: center;">业务类型</th>
-                                        <th style="text-align: center;">业务处理人</th>
-                                        <th style="text-align: center;">使用</th>
+					                    <th style="text-align: center;">业务处理人</th>
 					                  </tr>
 				                  </thead>
         
@@ -313,15 +319,16 @@ width: 92%;
 				                </table>
 			                </td>
 			              </tr>
+			               --%>
 			              <tr>
-			                <th>购买日期：</th>
-			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
-			                </td>
 			                <th>起效日期：</th>
 			                <td>
 			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_effect_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
+                            <th>失效日期：</th>
+                            <td>
+                              <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_expire_date" id="expire_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_expire_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
+                            </td>
                             <td></td>
 			              </tr>
 			              <tr height="70px">
@@ -366,8 +373,6 @@ width: 92%;
             <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].event_staff_ids" id="event_staff_ids_{$T.index}_{$T.id}"  />
           </td>
-          <td style="text-align: left;">&nbsp;{$T.prod_name}</td>
-          <td style="text-align: left;">&nbsp;{$T.available_amount}</td>
         </tr>
     </textarea>
 </div>

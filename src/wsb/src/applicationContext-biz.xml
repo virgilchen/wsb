@@ -125,6 +125,18 @@ where opp.prod_pack_id=ppd.prod_pack_id
               ]]>
             </value>
           </entry>
+
+
+          <entry key="queryProdByProdPackId">
+            <value>
+              <![CDATA[
+select p.*
+ from product_pack_detail_rt ppd, product_rt p
+where ppd.prod_id=p.prod_id
+  and ppd.prod_pack_id=[prod_pack_id]
+              ]]>
+            </value>
+          </entry>
           
 
 
@@ -156,13 +168,16 @@ where d.prod_pack_id=[id]
             <value>
               <![CDATA[
 select 
+  p.*,
   b.business_id as id, 
   b.*,
-  (select procs_staff_role_id from order_procs_rt op where op.business_id=b.business_id and procs_step_no=0) as procs_staff_role_id
+  (select procs_staff_role_id from order_procs_rt op where op.business_id=b.business_id and procs_step_no=0) as procs_staff_role_id,
+  (select ifnull(sum(remain_amount),0) from biz_assets_holding ah where ah.customer_id=[customer_id] and ah.assets_type=1 and ah.assets_id=p.prod_id) as available_amount
   from product_rt p 
               inner join business_rt b on p.business_id=b.business_id
               inner join product_pack_detail_rt d on d.prod_id=p.prod_id
 where d.prod_pack_id=[id]
+order by b.business_id 
               ]]>
             </value>
           </entry>
