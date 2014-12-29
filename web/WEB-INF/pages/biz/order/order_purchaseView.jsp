@@ -81,14 +81,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     onSaveOk:function(data) {
-    	//alert(data.id);
+    	//alert(data.code);
     	//V("order.id", data.id);
-        if (data.code == "0") {
-            removeView(<%=view_id%>);
-            <%if(parent_view_id != null && parent_view_id.length() == 0){%>
-                g$v<%=parent_view_id%>.list();
-            <%}%>
-        }
+        removeView(<%=view_id%>);
+        <%if(parent_view_id != null && parent_view_id.length() == 0){%>
+            g$v<%=parent_view_id%>.list();
+        <%}%>
     },
     
     add:function(data) {
@@ -162,7 +160,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         ajax(
             root + "/biz/productPack_queryBusinesses.action", 
-            {"productPack.id":id},
+            {"productPackSO.id":id, "productPackSO.customer_id":<%=customer_id%>},
             function(data, textStatus){
                 //viewJs.addRows("businessTB", data.list) ;
                 _this.addBusinesses(data.list, _this.selectedIndex);
@@ -203,7 +201,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     closeView:function() {
-    	if (confirm("你是否需要离开业务发起？")) {
+    	if (confirm("你是否需要离开订购产品？")) {
             removeView(<%=view_id%>);
     	}
     }

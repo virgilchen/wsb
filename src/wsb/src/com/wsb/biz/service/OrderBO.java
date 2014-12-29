@@ -61,7 +61,9 @@ public class OrderBO extends BaseServiceImpl {
 	    	result.setPsdo_cust_id(result.getCustomer().getId());
     	} else {
     		result.setOrderProdPacks(OrderProdPackBO.getOrderProdPackBO().queryByOrderId(order.getId()));
-    		result.setOrderProdPackEvents(OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(order.getId())) ;
+    		
+    		result.setOrderProdPackEvents(
+    				OrderProdPackEventBO.getOrderProdPackEventBO().queryWithProductByOrderId(order.getId(), customerId)) ;
     	}
     	
     	return result;
@@ -91,6 +93,7 @@ public class OrderBO extends BaseServiceImpl {
 
     	if (Order.ORDER_TYPE_BUSINESS.equals(order.getOrder_type())) {
 	    	OrderProdPackEventBO eventBO = OrderProdPackEventBO.getOrderProdPackEventBO();
+	    	AssetsHoldingBO assetsHoldingBO = AssetsHoldingBO.getAssetsHoldingBO();
 	    	
 	    	for (OrderProdPack opp : orderProdPacks) {
 	    		if (opp == null) {
@@ -101,6 +104,7 @@ public class OrderBO extends BaseServiceImpl {
 	    		jdbcDao.insert(opp);
 	
 	    		eventBO.saveOpenOrderEvents(order.getId(), opp, eventStaus);
+	    		assetsHoldingBO.pendingProductAmount(order.getId(), order.getPsdo_cust_id(), opp);
 	    	}
     	} else if (Order.ORDER_TYPE_PURCHASE.equals(order.getOrder_type())) {
 
@@ -177,6 +181,8 @@ public class OrderBO extends BaseServiceImpl {
         	    order.addInclusions("order_cur_status");
         	    
         	    jdbcDao.update(order);
+        	    
+        	    AssetsHoldingBO.getAssetsHoldingBO().confirmProductAmount(orderId);
     	    }
     	}
     	

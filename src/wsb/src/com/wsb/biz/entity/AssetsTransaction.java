@@ -15,13 +15,14 @@ import com.globalwave.base.annotations.Versionable;
 public class AssetsTransaction extends BaseEntity {
 
 	public static Short TRANSACTION_TYPE_ADD = (short) 1;
-	public static Short TRANSACTION_TYPE_M = (short) 11;
+	public static Short TRANSACTION_TYPE_PENDING = (short) -1;
+	public static Short TRANSACTION_TYPE_CONFIRM = (short) 0;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
-	private Long biz_assets_holding_id;
+	private Long assets_holding_id;
 	private Long order_id;
     private Short transaction_type;
     private Double amount;
@@ -34,11 +35,11 @@ public class AssetsTransaction extends BaseEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getBiz_assets_holding_id() {
-		return biz_assets_holding_id;
+	public Long getAssets_holding_id() {
+		return assets_holding_id;
 	}
-	public void setBiz_assets_holding_id(Long biz_assets_holding_id) {
-		this.biz_assets_holding_id = biz_assets_holding_id;
+	public void setAssets_holding_id(Long assets_holding_id) {
+		this.assets_holding_id = assets_holding_id;
 	}
 	public Long getOrder_id() {
 		return order_id;

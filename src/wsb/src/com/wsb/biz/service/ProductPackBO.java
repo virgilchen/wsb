@@ -91,8 +91,32 @@ public class ProductPackBO extends BaseServiceImpl {
     
     
     public ArrayPageList<HashMap> queryBusinesses(ProductPackSO productPackSO) {
-    	productPackSO.setPageSize(ArrayPageList.PAGEINDEX_NO_PAGE);
-        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryBusinessesInProductPack", productPackSO, HashMap.class);
+    	productPackSO.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
+    	ArrayPageList<HashMap> result = 
+    			(ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryBusinessesInProductPack", productPackSO, HashMap.class);
+    	
+    	HashMap preElem = null ;
+    	int rowSpan = 1 ;
+    	for (HashMap elem : result) {
+    		if (preElem == null) {
+    			elem.put("rowSpan", rowSpan);
+    			preElem = elem ;
+    			continue ;
+    		}
+    		
+    		if (preElem.get("id").equals(elem.get("id"))) {
+    			rowSpan ++ ;
+    			preElem.put("rowSpan", rowSpan);
+    			elem.remove("id");
+    			continue ;
+    		}
+    		
+    		rowSpan = 1 ;
+			elem.put("rowSpan", rowSpan);
+			preElem = elem ;
+    	}
+    	
+    	return result ;
     }
 
 

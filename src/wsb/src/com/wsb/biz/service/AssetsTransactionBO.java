@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
+import com.globalwave.common.cache.CodeHelper;
 import com.wsb.biz.entity.AssetsTransaction;
 import com.wsb.biz.entity.AssetsTransactionSO;
 
@@ -62,6 +63,10 @@ public class AssetsTransactionBO extends BaseServiceImpl {
         
         
         return org;
+    }
+    
+    public static AssetsTransactionBO getAssetsTransactionBO() {
+    	return (AssetsTransactionBO) CodeHelper.getAppContext().getBean("assetsTransactionBO");
     }
     
 }

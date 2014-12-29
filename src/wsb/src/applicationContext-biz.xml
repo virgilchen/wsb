@@ -172,12 +172,20 @@ select
   b.business_id as id, 
   b.*,
   (select procs_staff_role_id from order_procs_rt op where op.business_id=b.business_id and procs_step_no=0) as procs_staff_role_id,
-  (select ifnull(sum(remain_amount),0) from biz_assets_holding ah where ah.customer_id=[customer_id] and ah.assets_type=1 and ah.assets_id=p.prod_id) as available_amount
+
+  (select ifnull(sum(remain_amount),0) 
+     from biz_assets_holding ah 
+    where (ah.expire_date is null or ah.expire_date>=sysdate()) 
+      and (ah.effect_date is null or ah.effect_date<=sysdate())
+      and ah.remain_amount>0
+      and ah.customer_id=[customer_id] 
+      and ah.assets_type=1 
+      and ah.assets_id=p.prod_id ) as available_amount
   from product_rt p 
               inner join business_rt b on p.business_id=b.business_id
               inner join product_pack_detail_rt d on d.prod_id=p.prod_id
 where d.prod_pack_id=[id]
-order by b.business_id 
+order by b.business_name, p.prod_name
               ]]>
             </value>
           </entry>
@@ -196,6 +204,44 @@ update order_prod_pack_event_rt
           </entry>
           
 
+          <entry key="queryOrderEventsWithProduct">
+            <value>
+              <![CDATA[
+select
+  e.* ,
+  e.event_id as id,
+  s.staff_name,
+  ifnull(r.staff_role_name, (select sr.staff_role_name from staff_role_demo_rt sr where sr.staff_role_id=p.procs_staff_role_id)) as staff_role_name,
+  p.procs_step_name,
+  b.business_name,
+  timestampdiff(minute, event_time_stamp, event_duration) as minute_duration,
+
+  prod.*,
+
+  (select ifnull(sum(remain_amount),0) 
+     from biz_assets_holding ah 
+    where (ah.expire_date is null or ah.expire_date>=sysdate()) 
+      and (ah.effect_date is null or ah.effect_date<=sysdate())
+      and ah.remain_amount>0
+      and ah.customer_id=[customer_id] 
+      and ah.assets_type=1 
+      and ah.assets_id=prod.prod_id ) as available_amount
+  from order_prod_pack_event_rt e 
+           inner join product_pack_detail_rt pd on e.prod_pack_id=pd.prod_pack_id
+           inner join product_rt prod on pd.prod_id=prod.prod_id
+           left join staff_demo_rt s on e.event_staff_id=s.staff_id
+           left join business_rt b on e.business_id=b.business_id
+           left join staff_role_demo_rt r on s.staff_role_id=r.staff_role_id,
+       order_procs_rt p
+where e.business_id=p.business_id 
+  and e.procs_step_no=p.procs_step_no  
+  and e.order_id=[order_id]
+order by b.business_name, prod.prod_name
+              ]]>
+            </value>
+          </entry>
+
+          
           <entry key="queryOrderEvents">
             <value>
               <![CDATA[
@@ -248,7 +294,68 @@ select business_id from business_rt b
   and b.business_id=[id]
               ]]>
             </value>
-            
+          </entry>
+
+          <entry key="queryAvailableAssetsHolding">
+            <value>
+              <![CDATA[
+select *, ifnull(expire_date, '2999-01-01') order_by_date 
+  from biz_assets_holding 
+ where (expire_date is null or expire_date>=sysdate()) 
+   and (effect_date is null or effect_date<=sysdate())
+   and remain_amount>0
+   and assets_type=[assets_type]
+   and assets_id=[assets_id]
+   and customer_id=[customer_id]
+order by order_by_date
+              ]]>
+            </value>
+          </entry>
+
+          <entry key="assetsHoldingConfirm">
+            <value>
+              <![CDATA[
+            update biz_assets_holding h 
+            inner join (select assets_holding_id, sum(amount) confirm_amount from biz_assets_transaction t where t.transaction_type=-1 and t.order_id=[order_id] group by assets_holding_id) t
+                  on h.id=t.assets_holding_id
+  set h.used_amount = h.used_amount + t.confirm_amount,
+      h.pending_amount = h.pending_amount - t.confirm_amount,
+      h.updated_by = [updated_by],
+      h.updated_on = sysdate() 
+              ]]>
+            </value>
+          </entry>
+         
+          <entry key="assetsTransactionConfirm">
+            <value>
+              <![CDATA[
+insert into `biz_assets_transaction`(
+    `assets_holding_id`,
+    `order_id`,
+    `transaction_type`,
+    `amount`,
+    `version_id`,
+    `record_status`,
+    `created_by`,
+    `created_on`,
+    `updated_by`,
+    `updated_on`
+)
+SELECT 
+    `assets_holding_id`,
+    `order_id`,
+    0 as `transaction_type`,
+    `amount`,
+    `version_id`,
+    'A' as `record_status`,
+    [created_by] as `created_by`,
+    sysdate() `created_on`,
+    [updated_by] as `updated_by`,
+    sysdate() `updated_on`
+ FROM `biz_assets_transaction`
+where transaction_type=-1 and order_id=[order_id]
+              ]]>
+            </value>
             
             
           </entry>

@@ -67,11 +67,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 		}
                 		
                 		var event = {
-                                id:oEvent.business_id,
+                                id:typeof(oEvent.id) == "undefined"?null:oEvent.id,
                                 business_name:oEvent.business_name,
                                 index:elem.index,
-                                event_staff_id:oEvent.event_staff_id
+                                event_staff_id:oEvent.event_staff_id,
+                                prod_id:oEvent.prod_id,
+                                prod_name:oEvent.prod_name,
+                                available_amount:oEvent.available_amount,
+                                rowSpan:oEvent.rowSpan
                 		};
+
                 		events[events.length] = event ;
                 	}
                 	_this.addBusinesses(events, _this.size - 1);
@@ -169,12 +174,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
         var $content = $("#business" + index + "TB #listBusinessBody", viewJs.view);
         $content.html("");
         $(datas).each(function (i, elem) {
+        	/*重复流程，后台处理
         	if (E$("event_staff_ids_" + index + "_" + elem.id).length > 0) {
         		return ;
-        	}
+        	}*/
             elem.index = index;
             $content.append(parse(V("businessTemplateBody"), elem));
 
+            if (elem.id == null) {
+            	return ;
+            }
+            
             E$("event_staff_ids_" + elem.index + "_" + elem.id).combobox2({
                 id:"event_staff_ids_" + elem.index + "_" + elem.id, 
                 data:filter(_this.staffsJson, {staff_role_id:elem.procs_staff_role_id}), 
@@ -200,6 +210,38 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	if (confirm("你是否需要离开业务发起？")) {
             removeView(<%=view_id%>);
     	}
+    },
+    
+    checkProductAmount:function(index, id) {
+    	var $available_amount = $("#available_amount_" + index + "_" + id) ;
+    	var $amount = $("#amounts_" + index + "_" + id);
+    	
+        var available_amount = parseFloat($available_amount.val());
+        var amount = parseFloat($amount.val());
+        
+        if (amount < 0) {
+            alert("使用数量不能小于0！");
+            $amount.focus();
+            return ;
+        }
+        
+        if (available_amount < amount) {
+        	alert("使用数量不能大于可用数量！");
+        	$amount.focus();
+        	return ;
+        }
+        
+        if (amount > parseFloat($("#no_of_order_prod_pack_" + index).val())) {
+        	alert("使用数量不能大于商品包订购数量！");
+            $amount.focus();
+        	return ;
+        }
+    },
+    
+    checkProductPacks:function() {
+    	$("#orderProdPacksTB #listBody tr").each(function(i, elem) {
+    		
+    	});
     }
     
 }) ;
@@ -288,7 +330,7 @@ width: 92%;
 			                </td>
 			                <th width="10%">数量：</th>
 			                <td width="20%">
-			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
+			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" name="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
@@ -301,9 +343,10 @@ width: 92%;
 				                <table width="60%" border="0" id="business{$T.index}TB">
 				                  <thead>
 					                  <tr>
-					                    <th style="text-align: center;">基础商品</th>
 					                    <th style="text-align: center;">业务类型</th>
                                         <th style="text-align: center;">业务处理人</th>
+					                    <th style="text-align: center;">基础商品</th>
+                                        <th style="text-align: center;">可用</th>
                                         <th style="text-align: center;">使用</th>
 					                  </tr>
 				                  </thead>
@@ -360,14 +403,25 @@ width: 92%;
 	 
 
     <textarea id="businessTemplateBody" jTemplate="yes" style="display: none;">
-        <tr>
-          <td style="text-align: left;">&nbsp;{$T.business_name}</td>
-          <td style="padding-right: 5px;">
+        <tr index="{$T.index}" id="{$T.id}">
+          {#if $T.id != null}
+          <td style="text-align: left;" rowspan="{$T.rowSpan}">&nbsp;{$T.business_name}</td>
+          <td style="padding-right: 5px;" rowspan="{$T.rowSpan}">
             <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].event_staff_ids" id="event_staff_ids_{$T.index}_{$T.id}"  />
           </td>
+          {#/if}
           <td style="text-align: left;">&nbsp;{$T.prod_name}</td>
-          <td style="text-align: left;">&nbsp;{$T.available_amount}</td>
+          <td style="text-align: left;">
+            <%--
+            <input type="hidden" name="orderProdPacks[{$T.index}].available_amount" id="available_amount_{$T.index}_{$T.id}" value="{$T.available_amount}"/>
+             --%>
+            &nbsp;{$T.available_amount}
+          </td>
+          <td style="text-align: left;">
+            <input type="hidden" name="orderProdPacks[{$T.index}].product_ids" value="{$T.prod_id}"/>
+            <input type="text" name="orderProdPacks[{$T.index}].amounts" id="amounts_{$T.index}_{$T.id}" onkeyup="viewJs.checkProductAmount({$T.index},{$T.id});" value="0" style="width: 80px;"/>
+          </td>
         </tr>
     </textarea>
 </div>

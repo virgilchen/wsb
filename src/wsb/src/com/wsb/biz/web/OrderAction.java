@@ -126,6 +126,7 @@ public class OrderAction extends BaseAction implements Preparable {
     public String open() throws Exception {
 
 
+    	order.setOrder_type(Order.ORDER_TYPE_BUSINESS);
         Object newOrder = orderBO.open(order, orderProdPacks) ;
 
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;

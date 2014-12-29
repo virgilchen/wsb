@@ -103,7 +103,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
         
         return (ArrayPageList<OrderProdPackEvent>)jdbcDao.query(orderProdPackEventSO, OrderProdPackEvent.class);
     }
-    
+
     
     public ArrayPageList<HashMap> queryByOrderId(Long order_id) {
 
@@ -114,8 +114,44 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderEvents", orderProdPackEventSO, HashMap.class);
     }
+    
+    public ArrayPageList<HashMap> queryWithProductByOrderId(Long order_id, Long customer_id) {
 
+    	OrderProdPackEventSO orderProdPackEventSO = new OrderProdPackEventSO() ;
 
+        orderProdPackEventSO.setOrder_id(order_id);
+        orderProdPackEventSO.setCustomer_id(customer_id);
+        orderProdPackEventSO.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
+        
+        ArrayPageList<HashMap> result = 
+        		(ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:queryOrderEventsWithProduct", orderProdPackEventSO, HashMap.class);
+        
+
+    	HashMap preElem = null ;
+    	int rowSpan = 1 ;
+    	for (HashMap elem : result) {
+    		if (preElem == null) {
+    			elem.put("rowSpan", rowSpan);
+    			preElem = elem ;
+    			continue ;
+    		}
+    		
+    		if (preElem.get("id").equals(elem.get("id"))) {
+    			rowSpan ++ ;
+    			preElem.put("rowSpan", rowSpan);
+    			elem.remove("id");
+    			continue ;
+    		}
+    		
+    		rowSpan = 1 ;
+			elem.put("rowSpan", rowSpan);
+			preElem = elem ;
+    	}
+    	
+    	return result;
+    }
+
+    
 
     public OrderProdPackEvent get(Long id) {  
     	OrderProdPackEvent org = new OrderProdPackEvent() ;

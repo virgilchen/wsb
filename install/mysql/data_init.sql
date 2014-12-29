@@ -86,6 +86,9 @@ INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11002', '11002', '�
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11003', '11003', '当前环节由其业务员处理！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11004', '11004', '业务员[{0}]没有业务环节所需要的角色权限[{1}]！');
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11005', '11005', '本环节为业务第一环节，未能找到可回退环节');
+
+
+INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('11201', '11201', '帐户上没有足够的已购买的产品！');
  
 
 INSERT INTO `cfg_message` (`ID`, `CODE_`, `VALUE_`) VALUES ('12001', '12001', '父业务不存在，本操作无效！');
