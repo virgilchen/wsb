@@ -340,7 +340,7 @@ width: 92%;
 			                    <!-- 
 			                    <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_idxx" disabled="disabled" value="车险,意外险" />
 			                     -->
-				                <table width="60%" border="0" id="business{$T.index}TB">
+				                <table width="90%" border="0" id="business{$T.index}TB">
 				                  <thead>
 					                  <tr>
 					                    <th style="text-align: center;">业务类型</th>
@@ -412,13 +412,13 @@ width: 92%;
           </td>
           {#/if}
           <td style="text-align: left;">&nbsp;{$T.prod_name}</td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             <%--
             <input type="hidden" name="orderProdPacks[{$T.index}].available_amount" id="available_amount_{$T.index}_{$T.id}" value="{$T.available_amount}"/>
              --%>
             &nbsp;{$T.available_amount}
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: center;">
             <input type="hidden" name="orderProdPacks[{$T.index}].product_ids" value="{$T.prod_id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].amounts" id="amounts_{$T.index}_{$T.id}" onkeyup="viewJs.checkProductAmount({$T.index},{$T.id});" value="0" style="width: 80px;"/>
           </td>
