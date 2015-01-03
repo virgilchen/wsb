@@ -281,7 +281,7 @@ width: 92%;
 			            
 			            <table width="100%" border="0" >
 			              <tr>
-			                <td rowspan="4" width="10%" id="packageIndexName" class="title">商品包1</td>
+			                <td rowspan="3" width="10%" id="packageIndexName" class="title" style="line-height: 18px;">商品包1</td>
 			                
 			                <th width="15%">商品包名称：</th>
 			                <td width="30%">
