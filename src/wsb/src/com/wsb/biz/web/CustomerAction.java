@@ -1,5 +1,6 @@
 package com.wsb.biz.web;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -9,11 +10,14 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
+import com.wsb.biz.entity.AssetsHolding;
+import com.wsb.biz.entity.AssetsHoldingSO;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.service.AssetsHoldingBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
 import com.wsb.biz.service.OrderBO;
@@ -33,6 +37,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     private CarBO carBO ;
     private Car car ;
     private CarSO carSO ; 
+    private AssetsHoldingBO assetsHoldingBO;
+    private AssetsHoldingSO assetsHoldingSO;
     
     public String execute() throws Exception { 
         return this.list(); 
@@ -73,7 +79,6 @@ private static final long serialVersionUID = 7244882365197775441L;
 
         renderObject(newCustomer, ResponseMessage.KEY_CREATE_OK) ;
         
-        
         return null;    
         
     }
@@ -81,7 +86,6 @@ private static final long serialVersionUID = 7244882365197775441L;
     @Pid(value=Pid.DO_NOT_CHECK)
     public String update()  throws Exception {     
 
-            	
         customerBO.update(customer,cars) ;
 
         renderObject(customer, ResponseMessage.KEY_UPDATE_OK) ;
@@ -120,6 +124,13 @@ private static final long serialVersionUID = 7244882365197775441L;
     	
         renderList(OrderBO.getOrderBO().queryOrderHistories(orderSO)) ; 
         
+        return null ;  
+    }
+    
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String getAssetsHolding() throws Exception {
+    	
+        renderList(assetsHoldingBO.getAssetsHoldingBO().queryAssetsHolding(assetsHoldingSO)) ; 
         return null ;  
     }
 
@@ -165,7 +176,6 @@ private static final long serialVersionUID = 7244882365197775441L;
 		this.carBO = carBO;
 	}
 
-
 	public List<Car> getCars() {
 		return cars;
 	}
@@ -179,4 +189,18 @@ private static final long serialVersionUID = 7244882365197775441L;
 	public void setOrderSO(OrderSO orderSO) {
 		this.orderSO = orderSO;
 	}
+
+
+	public AssetsHoldingSO getAssetsHoldingSO() {
+		return assetsHoldingSO;
+	}
+
+	public void setAssetsHoldingSO(AssetsHoldingSO assetsHoldingSO) {
+		this.assetsHoldingSO = assetsHoldingSO;
+	}
+
+	public void setAssetsHoldingBO(AssetsHoldingBO assetsHoldingBO) {
+		this.assetsHoldingBO = assetsHoldingBO;
+	}
+	
 }

@@ -13,6 +13,13 @@ public class CustomerSO extends BaseSO {
     private String cust_code;
     private String cust_phone_no;
     private String member_id;
+    
+    private String car_framework_no;
+    private String procs_step_name;//业务环节
+    private String business_name;//业务类型
+    private String prod_pack_name;//商品包名
+    private String order_prod_pack_expire_date;//到期时间
+    
 
 	public Long[] getIds() {
 		return ids;

@@ -359,6 +359,21 @@ where transaction_type=-1 and order_id=[order_id]
             
             
           </entry>
+          <entry key="queryAssetsHolding">
+            <value>
+              <![CDATA[
+select
+     b.business_name,
+     p.prod_name,
+     h.*
+   from biz_assets_holding h 
+			 left join product_rt p on h.assets_id=p.prod_id
+             left join business_rt b on p.business_id=b.business_id
+  where h.assets_type=1 
+    and customer_id=[customer_id] 
+              ]]>
+            </value>
+          </entry>
         </map>
       </property>
     </bean>

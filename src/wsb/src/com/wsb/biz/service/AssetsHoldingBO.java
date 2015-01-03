@@ -1,6 +1,8 @@
 package com.wsb.biz.service;
 
 
+import java.util.HashMap;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -186,6 +188,10 @@ public class AssetsHoldingBO extends BaseServiceImpl {
         this.jdbcDao.executeName("bizSQLs:assetsTransactionConfirm", tran);
     }
     
+    public ArrayPageList<HashMap<String, Object>> queryAssetsHolding(AssetsHoldingSO assetsHoldingSO) {
+    	ArrayPageList<HashMap<String, Object>> result = (ArrayPageList<HashMap<String, Object>>)jdbcDao.queryName("bizSQLs:queryAssetsHolding", assetsHoldingSO, HashMap.class);
+        return result;
+    }
     
     
     public static AssetsHoldingBO getAssetsHoldingBO() {

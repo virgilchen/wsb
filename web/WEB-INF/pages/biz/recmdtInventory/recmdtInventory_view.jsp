@@ -39,13 +39,24 @@ var g$v<%=view_id%> = $.extend(newView(), {
     }
 }) ;
 
-function tabStep(stepNo) {
-	//m为导航统一名称，c为对应内容统一名称，n为对应序号,t为数量（比如这个切换效果有三块内容则为3）
+function tabSteps(stepNo) {
+	//校验必填字段
+	var recmdt_name = document.getElementById("recmdt_name");
+	var recmdt_code = document.getElementById("recmdt_code");
+	if(recmdt_code.value == null || recmdt_code.value == ''){
+		recmdt_code.focus();
+		return;
+	}
+	if(recmdt_name.value == null || recmdt_name.value == ''){
+		recmdt_name.focus();
+		return;
+	}
+	
 	var t = 2;
-    for (i = 1; i <= t; i++) {
-        document.getElementById(step + i).style.display = "none";
+    for (var i = 1; i <= t; i++) {
+        document.getElementById("step" + i + "Show").style.display = "none";
     }
-        document.getElementById(stepNo).style.display = "";
+    document.getElementById(stepNo).style.display = "block";
 }
 
 </script>
@@ -145,7 +156,7 @@ function tabStep(stepNo) {
     
     <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" class="main_form">
     	
-    	<div id="step1">
+    	<div id="step1Show">
 		    <div class="step_01">
 				<span>第1步</span><span>第2步</span>
 		    </div>
@@ -161,11 +172,11 @@ function tabStep(stepNo) {
 			      <table width="100%" border="0">
 			        <tr>
 			          <th>决策编码：</th>
-			          <td><input type="text" name="recmdtInventory.recmdt_code" maxlength="50"  required="required"/></td>
+			          <td><input type="text" name="recmdtInventory.recmdt_code" id="recmdt_code" maxlength="50"  required="required"/></td>
 			        </tr>
 			        <tr>
 			          <th>决策名称：</th>
-			          <td><input type="text" name="recmdtInventory.recmdt_name" maxlength="50"  required="required"/></td>
+			          <td><input type="text" name="recmdtInventory.recmdt_name" id="recmdt_name" maxlength="50"  required="required"/></td>
 			        </tr>
 			        <tr>
 			          <th>决策备注：</th>
@@ -187,9 +198,9 @@ function tabStep(stepNo) {
 			  </tr>
 			  <tr height="20"><td colspan="2"></td></tr>
 			</table>
-			<a href="#" class="btn_blue" onclick="tabStep('step2');">下一步</a>
+			<a href="#" class="btn_blue" onclick="tabSteps('step2Show');">下一步</a>
 		</div>
-		<div id="step2" style="display:none;">
+		<div id="step2Show" style="display:none;">
 			<div class="step_02">
 				<span>第1步</span><span>第2步</span>
 			</div>
@@ -252,7 +263,7 @@ function tabStep(stepNo) {
 					</td>
 				  </tr>
 				</table>
-				<a href="#" class="btn_blue" onclick="tabStep('step1');">上一步</a><a href="#" class="btn_orange">完成</a>
+				<a href="#" class="btn_blue" onclick="tabSteps('step1Show');">上一步</a><a href="#" class="btn_orange">完成</a>
 			</div>
 		</div>
     </form>

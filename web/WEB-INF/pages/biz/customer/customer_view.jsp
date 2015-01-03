@@ -171,6 +171,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		return;
     	}
     	
+    },
+    toAssetsHolding:function(){
+    	var custId = document.getElementById("customer.id").value;
+    	if(custId == ''){
+    		alert("请先完整填写客户资料！");
+    		return;
+    	}else{
+    		
+    		var str = '/biz/member_view.action?customerId='+custId;
+    		openView(11005, str, '会员列表');
+    		return;
+    	}
     }
 }) ;
 
@@ -295,8 +307,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<div class="user_detail_title" id="user_detail_title">
 	<b>客户详细</b>
 	 	<ul class="title_right">
-            <li class="selected" onclick="tabShow('menu1_','con1_',1,2);" id="menu1_1">客户信息</li>
-            <li onclick="viewJs.orderHistoryView.getMyOrders();tabShow('menu1_','con1_',2,2);" id="menu1_2">业务历史记录</li>
+            <li class="selected" onclick="tabShow('menu1_','con1_',1,3);" id="menu1_1">客户信息</li>
+            <li onclick="viewJs.assetsHoldingView.getAssetsHolding();tabShow('menu1_','con1_',2,3);" id="menu1_2">客户拥有商品包</li>
+            <li onclick="viewJs.orderHistoryView.getMyOrders();tabShow('menu1_','con1_',3,3);" id="menu1_3">业务历史记录</li>
+            
 		</ul>
 	</div>
 
@@ -476,10 +490,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
       </form>
 	</div>
 	
-    <div class="user_detail_history" id="con1_2" style="display:none;">
-      <%@include file="/WEB-INF/pages/biz/customer/orderHistoryView.jsp" %>
+	<div class="user_detail_history" id="con1_2" style="display:none;">
+    	<%@include file="/WEB-INF/pages/biz/customer/assetsHoldingView.jsp" %>
     </div>
     
+	<div class="user_detail_history" id="con1_3" style="display:none;">
+      <%@include file="/WEB-INF/pages/biz/customer/orderHistoryView.jsp" %>
+    </div>
     
   </div>
 </div>
