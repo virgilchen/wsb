@@ -24,6 +24,7 @@ public class AssetsHolding extends BaseEntity {
 	
 	private Long customer_id;
     private Short assets_type;
+    private Long pro_assets_id;
 	private Long assets_id;
 	private Short assets_unit;
 	private Long order_id;
@@ -117,6 +118,12 @@ public class AssetsHolding extends BaseEntity {
 	}
 	public void setRecord_status(String record_status) {
 		this.record_status = record_status;
+	}
+	public Long getPro_assets_id() {
+		return pro_assets_id;
+	}
+	public void setPro_assets_id(Long pro_assets_id) {
+		this.pro_assets_id = pro_assets_id;
 	}
     
     

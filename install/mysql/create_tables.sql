@@ -82,6 +82,7 @@ create table biz_assets_holding  (
    id                 bigint(12) not null AUTO_INCREMENT,
    customer_id        bigint(12)  comment '客户ID',
    assets_type        int(5) comment '资产类型，对应字典表Biz.Assets.Type，1:产品',
+   pro_assets_id      bigint(12) comment '资产ID，当assets_type=1，本字段为商品ID',
    assets_id          bigint(12) comment '资产ID，当assets_type=1，本字段为产品ID',
    assets_unit        int(5) comment '资产单位，对应字典表Biz.Assets.Unit，1：件',
    order_id           bigint(12) comment '资产产生订单源ID',
@@ -124,4 +125,27 @@ create table biz_assets_transaction (
    constraint PK_biz_assets_transaction primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+create table biz_document
+(
+   id                   bigint not null auto_increment comment '标识',
+   order_id             bigint comment '订单ID',
+   company_id             bigint comment '公司ID',
+   folder_name          varchar(6) comment 'yyyymm作为文档的文件夹，不可改',
+   file_uuid            varchar(36) comment '文件的uuid，作为系统文件名称，不可改',
+   document_name        varchar(150) comment '文档名称',
+   document_type        varchar(1) comment '文档类型',
+   desc_                varchar(500) comment '文档描述',
+   record_status        char(1) comment '记录状态，用于逻辑删除
+            A-Active
+            C-Cancel',
+   order_               int comment '记录顺序',
+   version_id           bigint comment '版本号，保留，数据更新时，用于“乐观锁”，放置时间的long(java)形式',
+   created_by           varchar(50) comment '创建的操作员Login_ID',
+   created_on           datetime comment '创建的时间',
+   updated_by           varchar(50) comment '更新的操作员Login_ID',
+   updated_on           datetime comment '更新的时间，同时用作version_id',
+   primary key (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

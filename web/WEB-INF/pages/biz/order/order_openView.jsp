@@ -391,6 +391,11 @@ width: 92%;
         </table>
 	    
 	  </form>
+	  
+	  <%--
+	  <button onclick="documentUploader.doUpload()" >上传文件</button>
+	  <%@include file="/WEB-INF/pages/biz/order/document_uploader.jsp" %>
+	   --%>
 	</div>
 	
 	<!-- 

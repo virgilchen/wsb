@@ -75,6 +75,7 @@ public class AssetsHoldingBO extends BaseServiceImpl {
 	    	holding.setAssets_type(AssetsHolding.ASSETS_TYPE_PRODUCT);
 	    	holding.setCustomer_id(order.getPsdo_cust_id());
 	    	holding.setAssets_id(product.getId());
+	    	holding.setPro_assets_id(orderProdPack.getProd_pack_id());
 	    	holding.setAssets_unit(null);
 	    	holding.setOrder_id(order.getId());
 	    	
