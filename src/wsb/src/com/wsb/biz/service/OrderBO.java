@@ -1,5 +1,6 @@
 package com.wsb.biz.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackSO;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.entity.ProductPackSO;
+import com.wsb.biz.entity.ProductSO;
 import com.wsb.biz.entity.Staff;
 
 
@@ -101,10 +104,16 @@ public class OrderBO extends BaseServiceImpl {
 	    		}
 	    		opp.setId(null);
 	    		opp.setOrder_id(order.getId());
+	    		
+	    		setPackProductNames(opp);
+	    		
 	    		jdbcDao.insert(opp);
 	
 	    		eventBO.saveOpenOrderEvents(order.getId(), opp, eventStaus);
-	    		assetsHoldingBO.pendingProductAmount(order.getId(), order.getPsdo_cust_id(), opp);
+	    		
+	    		if (OrderProdPackEvent.STATUS_READY.equals(eventStaus)) {
+	    		    assetsHoldingBO.pendingProductAmount(order.getId(), order.getPsdo_cust_id(), opp);
+	    		}
 	    	}
     	} else if (Order.ORDER_TYPE_PURCHASE.equals(order.getOrder_type())) {
 
@@ -124,6 +133,32 @@ public class OrderBO extends BaseServiceImpl {
     	}
     	
         return result;
+    }
+    
+    private void setPackProductNames(OrderProdPack opp) {
+    	if (opp.getProduct_ids() == null) {
+    		return ;
+    	}
+    	
+    	List<Long> ids = new ArrayList<Long>();
+    	for (int i = 0 ; i < opp.getProduct_ids().length ; i ++) {
+    		Double amount = opp.getAmounts()[i];
+    		
+    		if (amount != null && amount != 0D) {
+    			ids.add(opp.getProduct_ids()[i]) ;
+    		}
+    	}
+    	
+    	ProductSO so = new ProductSO() ;
+    	so.setProd_pack_id(opp.getProd_pack_id());
+    	so.setProd_ids(ids.toArray(new Long[]{}));
+    	
+    	ArrayPageList<OrderProdPack> names = 
+    			(ArrayPageList<OrderProdPack>)this.jdbcDao.queryName("bizSQLs:queryPackProductNames", so, OrderProdPack.class);
+    	
+    	if (names.size() > 0) {
+    		opp.setProd_names(names.get(0).getProd_names());
+    	}
     }
     
     public Order open(Order order, List<OrderProdPack> orderProdPacks) {
@@ -195,10 +230,9 @@ public class OrderBO extends BaseServiceImpl {
     }
 
     
-    public ArrayPageList<HashMap> getMyTasks() {
+    public ArrayPageList<HashMap> getMyTasks(OrderSO orderSO) {
     	Staff staff = SessionUser.get().getStaff();
     	
-    	OrderSO orderSO = new OrderSO() ;
     	orderSO.setEvent_staff_id(staff.getId());
     	orderSO.setProcs_staff_role_id(staff.getStaff_role_id());
         

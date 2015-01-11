@@ -106,9 +106,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     for (var j = 0 ; j < buinessLen ; j ++) {
                     	var business = businesses[j];
                     	var businessEvents = _this.getBusinessEvents(orderProdPackEvents, orderProdPack.prod_pack_id, business.business_id);
+                    	
                         var $businessTabs = $("#businessTabs", $productPackContents);
                         var $businessContents = $("#businessContents", $productPackContents);
-                    	var lastEvent = businessEvents[businessEvents.length - 1];
+                    	var lastEvent = businessEvents.length == 0
+                    	                        ?{id:-1,event_staff_id:-1}
+                    	                        :businessEvents[businessEvents.length - 1];
                     	
                         business.order_id = orderProdPack.order_id;
                     	business._name_ = "OrderBusiness" + i;
@@ -116,10 +119,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     	business._length_ = buinessLen;
                         business.last_event_id = lastEvent.id;
                         business.event_staff_id = lastEvent.event_staff_id;
-
-                        $businessTabs.append(parse(buinessTitleTemplate, business));
                         
-                        orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
+                        var $buinessTitle = $(parse(buinessTitleTemplate, business));
+                        if (lastEvent.id == -1) {
+                        	$buinessTitle.hide();
+                        }
+
+                        $businessTabs.append($buinessTitle);
+                        
+                        if (orderProdPack.prod_names != null && orderProdPack.prod_names != "") {
+                            orderProdPack.product_names = orderProdPack.prod_names;
+                        } else {
+                        	orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
+                        }
                         orderProdPack.businessEvents = businessEvents ;
                         orderProdPack._name_ = business._name_ ;
                         orderProdPack._index_ = business._index_ ;
@@ -206,7 +218,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	
     	this.entity.selectedEventMap[prodPackId] = {lastEventId:lastEventId, eventStaffId:eventStaffId};
     	
-    	if (eventStaffId == this.staffId) {
+    	if (this.entity.order_cur_status !='E' && eventStaffId == this.staffId) {
     		E$("orderFollowUpContent").show();
     	} else {
     		E$("orderFollowUpContent").hide();
@@ -451,7 +463,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   {#foreach $T.businessEvents as record}
                   <tr>
                     <td>{$T.record$index + 1}</td>
-                    <td>{$T.record.staff_name}</td>
+                    <td>{fmt.maxlen($T.record.staff_name,100)}</td>
                     <td>{$T.record.staff_role_name}</td>
                     <td>{$T.record.procs_step_name}</td>
                     <td>{$T.record.event_time_stamp}</td>

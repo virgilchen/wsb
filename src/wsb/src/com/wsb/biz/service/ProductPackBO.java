@@ -77,7 +77,7 @@ public class ProductPackBO extends BaseServiceImpl {
     		this.delete(productPack);
     	}
     }
-    
+
     
     public ArrayPageList<ProductPack> query(ProductPackSO productPackSO) {
 
@@ -87,6 +87,16 @@ public class ProductPackBO extends BaseServiceImpl {
         productPackSO.addAsc("prod_pack_name") ;
         
         return (ArrayPageList<ProductPack>)jdbcDao.query(productPackSO, ProductPack.class);
+    }
+    
+    public ArrayPageList<ProductPack> query4Selection(ProductPackSO productPackSO) {
+
+        if (productPackSO == null) {
+        	productPackSO = new ProductPackSO() ;
+        }
+        productPackSO.addAsc("prod_pack_name") ;
+        
+        return (ArrayPageList<ProductPack>)jdbcDao.queryName("bizSQLs:queryProductPack4Selection", productPackSO, ProductPack.class);
     }
     
     

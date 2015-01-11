@@ -54,6 +54,18 @@ public class ProductPackAction extends BaseAction implements Preparable {
         return null ;  
         
     }
+    
+
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String query4Selection() throws Exception {  
+
+        ArrayPageList<ProductPack> pageList = productPackBO.query4Selection(productPackSO) ;
+
+        renderList(pageList) ; 
+        
+        return null ;  
+        
+    }
 
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String get() throws Exception {  

@@ -107,6 +107,8 @@ CREATE TABLE `order_prod_pack_rt` (
   `order_prod_pack_effect_date` DATE NULL,
   `order_prod_pack_expire_date` DATE NULL,
   `order_prod_pack_remark` VARCHAR(1000) NULL,
+  `prod_names` VARCHAR(1000) NULL,
+  
   PRIMARY KEY (`order_prod_pack_id`)
 )
 ENGINE = InnoDB

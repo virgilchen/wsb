@@ -173,7 +173,7 @@ public class OrderAction extends BaseAction implements Preparable {
 
     public String getMyTasks() throws Exception {
 
-        renderList(orderBO.getMyTasks()) ;
+        renderList(orderBO.getMyTasks(this.orderSO)) ;
         
         return null;  
     }

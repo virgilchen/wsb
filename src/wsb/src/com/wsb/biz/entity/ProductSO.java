@@ -15,6 +15,9 @@ public class ProductSO extends BaseSO {
 
 	private Long business_id;
 	private Long prod_pack_id;
+	
+    @Column(name="prod_id")
+	private Long[] prod_ids;
 
     
 	public Long[] getIds() {
@@ -56,6 +59,15 @@ public class ProductSO extends BaseSO {
 
 	public void setProd_pack_id(Long prod_pack_id) {
 		this.prod_pack_id = prod_pack_id;
+	}
+
+
+	public Long[] getProd_ids() {
+		return prod_ids;
+	}
+
+	public void setProd_ids(Long[] prod_ids) {
+		this.prod_ids = prod_ids;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     entityName:"order",
     size:0,
     staffsJson:<%=request.getAttribute("staffsJson")%>,
+    customer_id:<%=customer_id%>,
     
     init:function (){
         //this.initSelect() ;
@@ -53,6 +54,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             function(data, textStatus){
                 viewJs.entity = data;
                 formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
+                _this.customer_id = data.customer.id;
                 formDeserialize("eForm", data, {}) ;
 
                 $(data.orderProdPacks).each(function (i, elem) {
@@ -155,13 +157,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     selectProdPack:function(id, name) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
-        //E("eForm").resetForm();
         
         var _this = this;
         
         ajax(
             root + "/biz/productPack_queryBusinesses.action", 
-            {"productPackSO.id":id, "productPackSO.customer_id":<%=customer_id%>},
+            {"productPackSO.id":id, "productPackSO.customer_id":this.customer_id},
             function(data, textStatus){
                 //viewJs.addRows("businessTB", data.list) ;
                 _this.addBusinesses(data.list, _this.selectedIndex);
@@ -170,6 +171,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     addBusinesses:function (datas, index) {
+
+        var isCustomerHolding = ($("#sProductPackForm input[name='productPackSO.customer_id']:checked").val() != "");
+        
+        var $theadTh = $("#business" + index + "TB thead th", viewJs.view);
+        if (isCustomerHolding) {
+            $($theadTh[3]).show();
+            $($theadTh[4]).show();
+        } else {
+            $($theadTh[3]).hide();
+            $($theadTh[4]).hide();
+        }
+        
         var _this = this;
         var $content = $("#business" + index + "TB #listBusinessBody", viewJs.view);
         $content.html("");
@@ -179,6 +192,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         		return ;
         	}*/
             elem.index = index;
+        	elem.isCustomerHolding = isCustomerHolding ;
             $content.append(parse(V("businessTemplateBody"), elem));
 
             if (elem.id == null) {
@@ -236,12 +250,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
             $amount.focus();
         	return ;
         }
-    },
-    
-    checkProductPacks:function() {
-    	$("#orderProdPacksTB #listBody tr").each(function(i, elem) {
-    		
-    	});
     }
     
 }) ;
@@ -417,6 +425,7 @@ width: 92%;
           </td>
           {#/if}
           <td style="text-align: left;">&nbsp;{$T.prod_name}</td>
+          {#if $T.isCustomerHolding}
           <td style="text-align: center;">
             <%--
             <input type="hidden" name="orderProdPacks[{$T.index}].available_amount" id="available_amount_{$T.index}_{$T.id}" value="{$T.available_amount}"/>
@@ -427,6 +436,7 @@ width: 92%;
             <input type="hidden" name="orderProdPacks[{$T.index}].product_ids" value="{$T.prod_id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].amounts" id="amounts_{$T.index}_{$T.id}" onkeyup="viewJs.checkProductAmount({$T.index},{$T.id});" value="0" style="width: 80px;"/>
           </td>
+          {#/if}
         </tr>
     </textarea>
 </div>

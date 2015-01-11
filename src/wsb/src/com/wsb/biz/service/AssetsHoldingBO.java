@@ -112,7 +112,10 @@ public class AssetsHoldingBO extends BaseServiceImpl {
         return holding;
     }
 
-    public void pendingProductAmount(Long orderId, Long customer_id, OrderProdPack orderProdPack) {  
+    public void pendingProductAmount(Long orderId, Long customer_id, OrderProdPack orderProdPack) {
+    	if (orderProdPack.getProduct_ids() == null) {
+    		return ;
+    	}
     	AssetsTransactionBO tranBO = AssetsTransactionBO.getAssetsTransactionBO();
     	
 		for (int i = 0 ; i < orderProdPack.getProduct_ids().length ; i ++) {

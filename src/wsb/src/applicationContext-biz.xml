@@ -225,7 +225,8 @@ select
       and ah.remain_amount>0
       and ah.customer_id=[customer_id] 
       and ah.assets_type=1 
-      and ah.assets_id=prod.prod_id ) as available_amount
+      and ah.assets_id=prod.prod_id 
+      and ah.pro_assets_id=pd.prod_pack_id ) as available_amount
   from order_prod_pack_event_rt e 
            inner join product_pack_detail_rt pd on e.prod_pack_id=pd.prod_pack_id
            inner join product_rt prod on pd.prod_id=prod.prod_id
@@ -315,7 +316,7 @@ order by order_by_date
           <entry key="assetsHoldingConfirm">
             <value>
               <![CDATA[
-            update biz_assets_holding h 
+update biz_assets_holding h 
             inner join (select assets_holding_id, sum(amount) confirm_amount from biz_assets_transaction t where t.transaction_type=-1 and t.order_id=[order_id] group by assets_holding_id) t
                   on h.id=t.assets_holding_id
   set h.used_amount = h.used_amount + t.confirm_amount,
@@ -356,9 +357,9 @@ SELECT
 where transaction_type=-1 and order_id=[order_id]
               ]]>
             </value>
-            
-            
           </entry>
+          
+          
           <entry key="queryAssetsHolding">
             <value>
               <![CDATA[
@@ -367,13 +368,48 @@ select
      p.prod_name,
      h.*
    from biz_assets_holding h 
-			 left join product_rt p on h.assets_id=p.prod_id
+             left join product_rt p on h.assets_id=p.prod_id
              left join business_rt b on p.business_id=b.business_id
   where h.assets_type=1 
     and customer_id=[customer_id] 
               ]]>
             </value>
           </entry>
+          
+          
+          <entry key="queryProductPack4Selection">
+            <value>
+              <![CDATA[
+select * 
+  from product_pack_rt pp
+ where 1=1
+  {and pp.prod_pack_name like [prod_pack_name]}
+  {and exists(select 1 from biz_assets_holding ah 
+                      where (ah.expire_date is null or ah.expire_date>=sysdate()) 
+                        and (ah.effect_date is null or ah.effect_date<=sysdate())
+                        and ah.remain_amount>0
+                        and ah.customer_id=[customer_id] 
+                        and ah.assets_type=1 
+                        and ah.pro_assets_id=pp.prod_pack_id)}
+              ]]>
+            </value>
+          </entry>
+          
+          
+          
+          <entry key="queryPackProductNames">
+            <value>
+              <![CDATA[
+select d.prod_pack_id, group_concat(prod_name) as prod_names 
+  from product_pack_detail_rt d join product_rt p on d.prod_id=p.prod_id 
+ where d.prod_pack_id=[prod_pack_id]
+   and d.prod_id in ([prod_ids])
+ group by prod_pack_id
+              ]]>
+            </value>
+          </entry>
+          
+          
         </map>
       </property>
     </bean>

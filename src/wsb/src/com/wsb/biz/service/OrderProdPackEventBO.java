@@ -1,6 +1,8 @@
 package com.wsb.biz.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
@@ -17,6 +19,8 @@ import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.OrderProdPack;
 import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderProdPackEventSO;
+import com.wsb.biz.entity.Product;
+import com.wsb.biz.entity.ProductSO;
 import com.wsb.biz.entity.Staff;
 
 
@@ -41,13 +45,60 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 		so.setProd_pack_id(orderProdPack.getProd_pack_id());
 		
 		jdbcDao.delete(OrderProdPackEvent.class, so);
+
+		Long[] business_ids = orderProdPack.getBusiness_ids();
+		Long[] event_staff_ids = orderProdPack.getEvent_staff_ids();
+		
+		Long[] product_ids = orderProdPack.getProduct_ids();
+		if (product_ids != null) {
+			Double[] amounts = orderProdPack.getAmounts();
+			
+			List<Long> productIds = new ArrayList<Long>();
+			
+			for (int i = 0 ; i < amounts.length ; i ++) {
+				Double amount = amounts[i] ;
+				if (amount == null || amount == 0D) {
+					continue ;
+				}
+				
+				productIds.add(product_ids[i]);
+			}
+			
+			if (productIds.size() <= 0) {
+				throw new BusinessException(11006L);// '11006', '请选择业务所需要的基础产品！'
+			}
+
+
+			ProductSO productSO = new ProductSO() ;
+			productSO.setProd_ids(productIds.toArray(new Long[]{}));
+			boolean hasBusiness = false ;
+			
+			for (int i = 0 ; i < business_ids.length ; i ++) {
+				productSO.setBusiness_id(business_ids[i]);
+				if (jdbcDao.query(productSO, Product.class).size() <= 0) {
+					business_ids[i] = null;
+				} else {
+					hasBusiness = true ;
+				}
+			}
+			
+			if (!hasBusiness) {
+				throw new BusinessException(11006L);// '11006', '请选择业务所需要的基础产品！'
+			}
+		}
 		
 		for (int i = 0 ; i < orderProdPack.getBusiness_ids().length ; i ++) {
 			OrderProdPackEvent event  = new OrderProdPackEvent() ;
 			
-			Long business_id = orderProdPack.getBusiness_ids()[i];
-			Long staff_id = orderProdPack.getEvent_staff_ids()[i];
+			Long business_id = business_ids[i];
 			
+			if (business_id == null) {
+				continue ;
+			}
+			
+			Long staff_id = event_staff_ids[i];
+			
+			event.setEvent_time_stamp(U.currentTimestamp());
 			event.setOrder_id(orderId);
 			event.setProcs_step_no(0);
 			event.setProd_pack_id(orderProdPack.getProd_pack_id());

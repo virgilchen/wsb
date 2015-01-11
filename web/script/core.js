@@ -1184,6 +1184,10 @@ var baseView_af24332idihy00p2jww = {
     },
     
     destroy:function () {
+    	if (typeof(this.onDestroy) != "undefined") {
+    		this.onDestroy();
+    	}
+
     	this.resetEditForm() ;
     	this.resetSearchForm() ;
     }

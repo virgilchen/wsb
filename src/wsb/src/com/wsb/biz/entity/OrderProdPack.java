@@ -34,6 +34,8 @@ public class OrderProdPack extends BaseEntity {
 	private Date order_prod_pack_effect_date;	
 	private Date order_prod_pack_expire_date;
 	private String order_prod_pack_remark;
+	
+	private String prod_names;
 
 	@Transient
 	private String prod_pack_name;
@@ -129,6 +131,12 @@ public class OrderProdPack extends BaseEntity {
 	}
 	public void setAmounts(Double[] amounts) {
 		this.amounts = amounts;
+	}
+	public String getProd_names() {
+		return prod_names;
+	}
+	public void setProd_names(String prod_names) {
+		this.prod_names = prod_names;
 	}
     
 	

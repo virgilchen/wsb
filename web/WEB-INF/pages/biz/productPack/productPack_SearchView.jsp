@@ -9,7 +9,7 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
     
     list:function() {
 	    ajax(
-	        root + "/biz/productPack_list.action", 
+	        root + "/biz/productPack_query4Selection.action", 
 	        E$("sProductPackForm").serialize(),
 	        function(data, textStatus){
 	            viewJs.addRows("productPackTB", data.list) ;
@@ -23,6 +23,7 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
     
     open:function() {
     	showCL('productPack_searchViewDiv');
+    	V("productPackSO.customer_id_1", g$v<%=view_id%>.customer_id);
     }
 });
 </script>
@@ -44,6 +45,11 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
                   <option>商品包编号</option><option>销售价格</option><option>所属业务</option>
                 </select>
                  -->
+                <input type="radio" name="productPackSO.customer_id" id="productPackSO.customer_id_1" checked="checked" value="<%=customer_id%>" style="height: 10px" onchange="javascript:viewJs.productSearchView.list();"/>
+                <label for="productPackSO.customer_id_1" style="line-height: 28px">用户已有</label>
+                <input type="radio" name="productPackSO.customer_id" id="productPackSO.customer_id_2" value="" style="height: 10px" onchange="javascript:viewJs.productSearchView.list();"/>
+                <label for="productPackSO.customer_id_2" style="line-height: 28px">销售</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <lable>商品包名称</lable>
                 <input type="text" name="productPackSO.prod_pack_name"/>
                 <a href="javascript:viewJs.productSearchView.list();" class="btn_blue">搜索</a>
@@ -87,4 +93,4 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
       </div>
       <div class="pop_bg_500"></div>
 </form>
- </div>
+</div>
