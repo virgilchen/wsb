@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-
+<%
+Object has_customer_id = request.getAttribute("has_customer_id");
+%>
 <div id="productPack_searchViewDiv" style="display:none;">
 <script>
 g$v<%=view_id%>.productSearchView = $.extend(newView(), {
@@ -45,11 +47,13 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
                   <option>商品包编号</option><option>销售价格</option><option>所属业务</option>
                 </select>
                  -->
+                <%if (has_customer_id != null) { %>
                 <input type="radio" name="productPackSO.customer_id" id="productPackSO.customer_id_1" checked="checked" value="<%=customer_id%>" style="height: 10px" onchange="javascript:viewJs.productSearchView.list();"/>
                 <label for="productPackSO.customer_id_1" style="line-height: 28px">用户已有</label>
                 <input type="radio" name="productPackSO.customer_id" id="productPackSO.customer_id_2" value="" style="height: 10px" onchange="javascript:viewJs.productSearchView.list();"/>
                 <label for="productPackSO.customer_id_2" style="line-height: 28px">销售</label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%} %>
                 <lable>商品包名称</lable>
                 <input type="text" name="productPackSO.prod_pack_name"/>
                 <a href="javascript:viewJs.productSearchView.list();" class="btn_blue">搜索</a>

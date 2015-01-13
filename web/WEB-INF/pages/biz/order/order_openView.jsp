@@ -184,6 +184,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
         }
         
         var _this = this;
+        
+        if (isCustomerHolding) {
+            $("#amountTh" + index, viewJs.view).hide();
+            $("#amountTd" + index, viewJs.view).hide();
+            $("#amountTd" + index + " input", viewJs.view).val("0");
+        } else {
+            $("#amountTh" + index, viewJs.view).show();
+            $("#amountTd" + index, viewJs.view).show();
+        }
+        
         var $content = $("#business" + index + "TB #listBusinessBody", viewJs.view);
         $content.html("");
         $(datas).each(function (i, elem) {
@@ -336,8 +346,8 @@ width: 92%;
 			                  <a href="javascript:viewJs.openProductSearchView({$T.index});" class="link_blue">选择</a>
 			                  <span class="c_red"></span>
 			                </td>
-			                <th width="10%">数量：</th>
-			                <td width="20%">
+			                <th width="10%" id="amountTh{$T.index}">数量：</th>
+			                <td width="20%" id="amountTd{$T.index}">
 			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" name="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
@@ -409,7 +419,7 @@ width: 92%;
 	<!-- 
 	<a href="#" class="btn_orange mg_r">保存并发起业务</a><a href="#" class="btn_orange">保存</a><a href="#" class="btn_blue">返回</a>
 	 -->
-	 
+	<%request.setAttribute("has_customer_id", true); %>
     <%@include file="/WEB-INF/pages/biz/productPack/productPack_SearchView.jsp" %>
 	 
 	 
