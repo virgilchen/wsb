@@ -68,7 +68,9 @@ public class CustomerBO extends BaseServiceImpl {
 
 		this.update(customer);
 		
-		CarBO.getCarBO().update(cars, customer.getId());
+		if(cars != null){
+			CarBO.getCarBO().update(cars, customer.getId());
+		}
     }
     
     public void update(Customer customer) {
