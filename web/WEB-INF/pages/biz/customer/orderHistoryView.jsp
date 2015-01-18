@@ -91,7 +91,9 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
                              var businessEvents = _this.getBusinessEvents(orderProdPackEvents, orderProdPack.prod_pack_id, business.business_id);
                              var $businessTabs = $("#businessTabs", $productPackContents);
                              var $businessContents = $("#businessContents", $productPackContents);
-                             var lastEvent = businessEvents[businessEvents.length - 1];
+                             var lastEvent = businessEvents.length == 0
+						                             ?{id:-1,event_staff_id:-1}
+						                             :businessEvents[businessEvents.length - 1];
                              
                              business.order_id = orderProdPack.order_id;
                              business._name_ = "OrderBusiness" + orderProdPack.id + "_" + business.id;
@@ -99,8 +101,13 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
                              business._length_ = buinessLen;
                              business.last_event_id = lastEvent.id;
                              business.event_staff_id = lastEvent.event_staff_id;
+                             
+                             var $buinessTitle = $(parse(buinessTitleTemplate, business));
+                             if (lastEvent.id == -1) {
+                                 $buinessTitle.hide();
+                             }
 
-                             $businessTabs.append(parse(buinessTitleTemplate, business));
+                             $businessTabs.append($buinessTitle);
                              
                              orderProdPack.product_names = _this.getProductNames (products, orderProdPack.prod_pack_id, business.business_id);
                              orderProdPack.businessEvents = businessEvents ;
@@ -110,6 +117,10 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
                              
                              $businessContents.append(parse(V("orderBusinessTemplate"), orderProdPack));
 
+                             if (typeof(data.order_type) != "undefined" && data.order_type == "P") {
+                            	 $businessContents.hide();
+                             }
+                             
                              if (j == buinessLen - 1) {
                                  tabShow('menu' + business._name_ + "_", 'con' + business._name_ + "_", 1, buinessLen);
                              }
@@ -250,7 +261,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
 
     <textarea id="orderRowTemplate" jTemplate="yes" style="display: none;">
         <div class="main_order_detail">
-            <div class="title">业务单编号：{$T.order_no}｜业务提交时间：{$T.order_init_time_stamp}｜启动业务人员：{$T.order_init_staff_name}
+            <div class="title">{#if $T.order_type == 'P'}订购{#else}流程{#/if}业务单编号：{$T.order_no}｜业务提交时间：{$T.order_init_time_stamp}｜启动业务人员：{$T.order_init_staff_name}
                 <ul class="title_right">
                   {#foreach $T.orderProdPacks as pack}
                     <li onclick="viewJs.orderHistoryView.showOrderPackDetail({$T.pack.id}, {$T.id}, {$T.pack$index + 1}, {$T.orderProdPacks.length});" id="menuOrder{$T.id}_{$T.pack$index + 1}">
