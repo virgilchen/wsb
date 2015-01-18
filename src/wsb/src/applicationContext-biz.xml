@@ -391,12 +391,15 @@ where transaction_type=-1 and order_id=[order_id]
 select
      b.business_name,
      p.prod_name,
+     pp.prod_pack_name,
      h.*
    from biz_assets_holding h 
              left join product_rt p on h.assets_id=p.prod_id
              left join business_rt b on p.business_id=b.business_id
+             left join product_pack_rt pp on h.pro_assets_id=pp.prod_pack_id
   where h.assets_type=1 
     and customer_id=[customer_id] 
+   {and pro_assets_id=[pro_assets_id]}
               ]]>
             </value>
           </entry>

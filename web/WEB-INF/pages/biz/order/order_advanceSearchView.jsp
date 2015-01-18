@@ -130,7 +130,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr>
             <td>
               <textarea id="templateBody" jTemplate="yes">
-                  <tr id="{$T.id}" ondblclick="viewJs.toEditView({$T.order_id});">
+                  <tr id="{$T.id}" ondblclick="{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id});{#/if}">
                     <td>{$T.order_no}</td>
                     <td>{fmt.maxlen($T.business_name, 100)}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
@@ -139,7 +139,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td>{$T.order_init_time_stamp}</td>
 				    <td><span class="c_orange">{#if $T.order_cur_status == 'E'}完结{#else}{fmt.maxlen($T.procs_step_name, 100)}{#/if}</span></td>
 				    <td>
-                      <a href="javascript:viewJs.toEditView({$T.order_id});">查看</a> 
+                      <a href="javascript:{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id});{#/if}">查看</a> 
 				    </td>
                   </tr>
               </textarea>

@@ -1,6 +1,5 @@
 package com.wsb.biz.web;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -10,7 +9,6 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
-import com.wsb.biz.entity.AssetsHolding;
 import com.wsb.biz.entity.AssetsHoldingSO;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
@@ -131,6 +129,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String getAssetsHolding() throws Exception {
     	
         renderList(assetsHoldingBO.getAssetsHoldingBO().queryAssetsHolding(assetsHoldingSO)) ; 
+        
         return null ;  
     }
 

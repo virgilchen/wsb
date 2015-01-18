@@ -14,6 +14,7 @@ public class AssetsHoldingSO extends BaseSO {
 	
 	private Long customer_id;
     private Short assets_type;
+	private Long pro_assets_id;
 	private Long assets_id;
 	private Short assets_unit;
 	private Long order_id;
@@ -99,6 +100,13 @@ public class AssetsHoldingSO extends BaseSO {
 	public void setIds(Long[] ids) {
 		this.ids = ids;
 	}
+	public Long getPro_assets_id() {
+		return pro_assets_id;
+	}
+	public void setPro_assets_id(Long pro_assets_id) {
+		this.pro_assets_id = pro_assets_id;
+	}
+	
 	@Override
 	public Class<?> getTableClass() {
 		return AssetsHolding.class;
