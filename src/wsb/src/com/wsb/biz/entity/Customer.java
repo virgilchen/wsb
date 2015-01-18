@@ -1,7 +1,6 @@
 package com.wsb.biz.entity;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,6 +49,10 @@ public class Customer extends BaseEntity {
     
     @Transient
     private ArrayPageList<Car> cars;
+    
+    @Transient
+    private ArrayPageList<Document> documents;
+    
 
 	public Long getId() {
 		return id;
@@ -183,7 +186,12 @@ public class Customer extends BaseEntity {
 	public void setCars(ArrayPageList<Car> cars) {
 		this.cars = cars;
 	}
-	
+	public ArrayPageList<Document> getDocuments() {
+		return documents;
+	}
+	public void setDocuments(ArrayPageList<Document> documents) {
+		this.documents = documents;
+	}
 }
 
 

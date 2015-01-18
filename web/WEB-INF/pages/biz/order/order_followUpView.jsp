@@ -173,6 +173,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	                    tabShow('menuOrderProduct_', 'conOrderProduct_', orderProdPacks.selectedIndex + 1, prodLen);
                 	}
                 }
+                
+                documentUploader.doShow(data.documents);
             }
         );
     },
@@ -362,7 +364,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<div class="main_infomation" id="orderInfoDiv">
 	    <table width="100%" border="0">
 	      <tr>
-		    <td width="10%" style="text-align: right;">业务单单号：</td>
+		    <td width="10%" style="text-align: right;">业务单单号：<input type="hidden" name="order.id" id="order.id" value="<%=order_id%>"/></td>
 		    <td width="20%" style="text-align: left;"><label id="order.order_no">xxxxxxxxxxxxxxxxxxx</label></td>
 		    <td width="10%" style="text-align: right;">业务单发起时间：</td>
             <td width="20%" style="text-align: left;"><label id="customer.order_init_time_stamp">2010-12-01 13:22</label></td>
@@ -534,4 +536,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
         </div>
 	</div>
 
+    <div class="main_order_detail">
+	  <div class="title">
+	    <b>订单附件</b>
+	    <button onclick="documentUploader.doUpload();" style="line-height: 22px;" >上传文件</button>
+      </div>
+	  <div class="content" >
+        <%@include file="/WEB-INF/pages/biz/order/document_uploader.jsp" %>
+	  </div>
+	</div>
+	    
 </div>

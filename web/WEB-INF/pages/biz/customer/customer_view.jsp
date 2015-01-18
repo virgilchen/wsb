@@ -81,6 +81,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
     					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>会员ID："+data.member_id+"</a>");
     				}
                 }
+                
+                customerDocumentUploader.doShow(data.documents);
             }
         );
     },
@@ -317,10 +319,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	<div class="user_detail_info" id="con1_1" style="display:block;">
       <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0;padding:0;" class="main_form">
 			<ul class="user_info">
-		        <li class="selected" onclick="tabShow('menu2_','con2_',1,4);" id="menu2_1">基本资料<span class="c_red" id='memberDisplay2'></span></li>
-		        <li onclick="tabShow('menu2_','con2_',2,4);" id="menu2_2">扩展资料</li>
-		        <li onclick="tabShow('menu2_','con2_',3,4);" id="menu2_3">客户资源</li>
-		        <li onclick="tabShow('menu2_','con2_',4,4);" id="menu2_4">车类资料</li>
+		        <li class="selected" onclick="tabShow('menu2_','con2_',1,5);" id="menu2_1">基本资料<span class="c_red" id='memberDisplay2'></span></li>
+		        <li onclick="tabShow('menu2_','con2_',2,5);" id="menu2_2">扩展资料</li>
+		        <li onclick="tabShow('menu2_','con2_',3,5);" id="menu2_3">客户资源</li>
+                <li onclick="tabShow('menu2_','con2_',4,5);" id="menu2_4">车类资料</li>
+                <li onclick="tabShow('menu2_','con2_',5,5);" id="menu2_5">附件</li>
 			</ul>
 		    <div id="con2_1" style="display:block;">
 				<table width="100%" border="0">
@@ -487,6 +490,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		        </table>
 				<div class="add_car"><a href="javascript:viewJs.add();" class="link_blue">+新增车类信息</a></div>
 			</div>
+            <div id="con2_5" style="display:none;">
+		      <div  style="border: 0px;" class="main_order_detail">
+		        <button onclick="customerDocumentUploader.doUpload();" style="line-height: 22px;" >上传文件</button>
+
+		        <%@include file="/WEB-INF/pages/biz/customer/document_uploader.jsp" %>
+		      </div>
+            </div>
       </form>
 	</div>
 	

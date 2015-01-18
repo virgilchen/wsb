@@ -3,6 +3,7 @@ package com.wsb.biz.entity;
 import javax.persistence.Column;
 
 import com.globalwave.base.BaseSO;
+import com.globalwave.base.annotations.Comparison;
 
 
 public class DocumentSO extends BaseSO {
@@ -12,6 +13,7 @@ public class DocumentSO extends BaseSO {
 
     private String document_name        ;
 
+    @Comparison(operator=Comparison.EQ)
     private String document_type        ;
 
 	private Long order_id;

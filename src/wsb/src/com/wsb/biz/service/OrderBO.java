@@ -197,7 +197,7 @@ public class OrderBO extends BaseServiceImpl {
     	result.setProducts(orderProdPackBO.queryOrderProdByOrderId(orderId));
     	
     	result.setOrderProdPackEvents(OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(orderId));
-    	
+    	result.setDocuments(DocumentBO.getDocumentBO().query(orderId, "O"));
     	
     	return result;
     }

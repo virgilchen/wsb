@@ -61,6 +61,9 @@ public class Order extends BaseEntity {
 
     @Transient
     private ArrayPageList<HashMap> products ;
+
+    @Transient
+    private ArrayPageList<Document> documents;
     
 	public Long getId() {
 		return id;
@@ -140,6 +143,12 @@ public class Order extends BaseEntity {
 	}
 	public void setOrder_type(String order_type) {
 		this.order_type = order_type;
+	}
+	public ArrayPageList<Document> getDocuments() {
+		return documents;
+	}
+	public void setDocuments(ArrayPageList<Document> documents) {
+		this.documents = documents;
 	}
 
 }

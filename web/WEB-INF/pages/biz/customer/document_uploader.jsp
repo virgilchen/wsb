@@ -2,10 +2,14 @@
 
 <script type="text/javascript">
 <!--
-var documentUploader = {
-    documentType:'O',
+var customerDocumentUploader = {
+    documentType:'C',
     
     doUpload:function(){
+    	if (V('customer.id') == "") {
+    		alert("请先保存客户资料，再上传文件！");
+    		return ;
+    	}
     	var _this = this ;
         load("uploadFormWinDiv", root + "/biz/document/document_uploadForm.action", null, function(responseText, textStatus, XMLHttpRequest) {
             uploader.url = "/biz/document" ;
@@ -13,7 +17,7 @@ var documentUploader = {
                 return parse(E$("templateListDocumentDisplay").val(), data);
             };
             
-            uploader.show(V('order.id'), _this.documentType, 'listDocumentDisplay', true, true); 
+            uploader.show(V('customer.id'), _this.documentType, 'listDocumentDisplay', true, true); 
         });
     },
 
@@ -88,7 +92,7 @@ var documentUploader = {
                --%>
               <a href="<%=request.getContextPath() %>/biz/document_download.action?id={$T.id}" target="_blank" style="cursor:pointer;">下载</a>
               &nbsp;
-              <a onclick="documentUploader.doDelete({$T.id}, $(this).parent());" style="cursor:pointer;">删除</a>
+              <a onclick="customerDocumentUploader.doDelete({$T.id}, $(this).parent());" style="cursor:pointer;">删除</a>
             </td>
           </tr>                              
         </textarea>

@@ -114,10 +114,10 @@ var uploader_parent = {
 	          <td><input type="text" name="document.biz_id" id="document.biz_id"/></td>
 	        </tr>
 	        <tr>
-	          <td class="item_label" style="width: 80px;">浏览：<button id="changeChannelBtn" class="ui-icon ui-icon-transferthick-e-w"  style="display: none;margin: 2px;" onclick="uploader.changeChannel(this)" title="切换至单文件模式">+</button></td>
+	          <td class="item_label" style="width: 80px;padding: 5px;" align="right">浏览：<%--<button id="changeChannelBtn" class="ui-icon ui-icon-transferthick-e-w"  style="display: none;margin: 2px;" onclick="uploader.changeChannel(this)" title="切换至单文件模式">+</button> --%></td>
 	          <td class="item_input">
 	            <div style="display:none;" id="sFileDiv1">
-	              <input type="file" name="document.document_file" id="document.document_file" onchange="uploader.setDocumentName(this)"  />
+	              <input type="file" name="document.document_file" id="document.document_file" onchange="uploader.setDocumentName(this)" style="height: 22px;width: 90%;" />
                 </div>
                 
                 <div style="display: inline;" id="mFileDiv1">
@@ -130,10 +130,10 @@ var uploader_parent = {
 	          </td>
 	        </tr>
 	        <tr>
-	          <td class="item_label" style="padding: 5px">文件名：</td>
+	          <td class="item_label" style="padding: 5px" align="right">文件名：</td>
 	          <td class="item_input">
                 <div style="display:none;" id="sFileDiv2">
-	              <input type="text" name="document.document_name" id="document.document_name"  required="required" />
+	              <input type="text" name="document.document_name" id="document.document_name"  required="required"  style="height: 22px;width: 90%;"/>
                 </div>
 	          
                 <div id="mFileDiv2">
@@ -154,8 +154,8 @@ var uploader_parent = {
 	          <td><input type="text" name="document.company_id" id="document.company_id" /></td>
 	        </tr>
 	        <tr id="remarkTD">
-	          <td class="item_label" style="padding: 5px">备注：</td>
-	          <td class="item_input"><input type="text" name="document.desc_"/></td>
+	          <td class="item_label" style="padding: 5px" align="right">备注：</td>
+	          <td class="item_input"><input type="text" name="document.desc_" style="height: 22px;width: 90%;"/></td>
 	        </tr>
 	        <tr style="display:none;">
 	          <td>Order:</td>

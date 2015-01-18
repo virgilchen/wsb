@@ -121,6 +121,21 @@ public class DocumentBO extends BaseServiceImpl {
         return (ArrayPageList<Document>)jdbcDao.query(documentSO, Document.class);
     }
 
+    
+    public ArrayPageList<Document> query(Long order_id, String document_type) {
+
+        DocumentSO documentSO = new DocumentSO() ;
+        documentSO.setDocument_type(document_type);
+        documentSO.setOrder_id(order_id);
+        
+        documentSO.addAsc("order_") ;
+        documentSO.addAsc("company_id") ;
+        documentSO.addAsc("document_type") ;
+        documentSO.addAsc("document_name") ;
+        
+        return (ArrayPageList<Document>)jdbcDao.query(documentSO, Document.class);
+    }
+
     public Document get(Long id) {  
     	Document org = new Document() ;
     	org.setId(id) ;
@@ -130,5 +145,8 @@ public class DocumentBO extends BaseServiceImpl {
         return org;
     }
     
+    public static DocumentBO getDocumentBO() {
+    	return (DocumentBO)CodeHelper.getAppContext().getBean("documentBO");
+    }
     
 }

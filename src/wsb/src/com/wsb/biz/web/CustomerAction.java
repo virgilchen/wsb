@@ -18,6 +18,7 @@ import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.AssetsHoldingBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
+import com.wsb.biz.service.DocumentBO;
 import com.wsb.biz.service.OrderBO;
 import com.opensymphony.xwork2.Preparable;
 
@@ -60,8 +61,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     	Customer customer = customerBO.get(this.id) ;
     	CarSO carso = new CarSO();
     	carso.setPsdo_cust_id(customer.getId());
-    	ArrayPageList _cars = carBO.query(carso);
-    	customer.setCars(_cars);
+    	customer.setCars(carBO.query(carso));
+    	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
     	renderObject(customer, null) ; 
     	
     	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){

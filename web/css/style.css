@@ -254,7 +254,7 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 .user_detail_info{ padding:20px; border:1px #cedde7 solid; border-top:0;}
 .user_detail_history{ padding:10px 20px; border:1px #cedde7 solid; border-top:0;}
 .user_info{ height:32px; margin-bottom:10px;}
-.user_info li{ float:left; width:25%; height:32px; cursor:pointer; line-height:32px; text-align:center; border-bottom:1px #cedde7 solid;}
+.user_info li{ float:left; width:20%; height:32px; cursor:pointer; line-height:32px; text-align:center; border-bottom:1px #cedde7 solid;}
 .user_info li.selected{ background:#cedde7;}
 .user_detail_info table th{text-align:right; font-weight:normal; color:#666; width:100px; }
 .user_detail_info input{ height:25px; line-height:25px; width:200px;}
