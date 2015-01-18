@@ -5,6 +5,7 @@ String view_id=request.getParameter("view_id");
 String customer_id=request.getParameter("customer_id");
 String order_id=request.getParameter("order_id");
 String parent_view_id = request.getParameter("parent_view_id");
+String readonly = request.getParameter("readonly");
 %>
 
 <script>
@@ -283,8 +284,10 @@ width: 92%;
 		<div class="main_title">
 		    <b>发起“<label id="customer.cust_name">王小明</label>”的业务单</b>
 		    <div class="main_tt_right fr">
+		        <%if (readonly == null) { %>
 		        <a href="javascript:viewJs.open();" class="orange">保存并发起业务</a>
 		        <a href="javascript:viewJs.save();" class="orange">保存</a>
+		        <%} %>
 		        <a href="javascript:viewJs.closeView();" class="blue">返回</a>
 		    </div>
 		</div>
@@ -342,8 +345,10 @@ width: 92%;
 			                <td width="30%">
                               <input type="hidden" name="orderProdPacks[{$T.index}].id" value="{$T.index}" /> 
                               <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_id" id="prod_pack_id{$T.index}" value="{$T.prod_pack_id}" /> 
-                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="{$T.prod_pack_name}" readonly="readonly" required="required" onclick="viewJs.openProductSearchView({$T.index});"/> 
+                              <input type="text" name="orderProdPacks[{$T.index}].prod_pack_name" id="prod_pack_name{$T.index}" value="{$T.prod_pack_name}" readonly="readonly" required="required" <%if (readonly == null) { %>onclick="viewJs.openProductSearchView({$T.index});"<%} %>/>
+                              <%if (readonly == null) { %> 
 			                  <a href="javascript:viewJs.openProductSearchView({$T.index});" class="link_blue">选择</a>
+			                  <%} %>
 			                  <span class="c_red"></span>
 			                </td>
 			                <th width="10%" id="amountTh{$T.index}">数量：</th>
@@ -403,7 +408,9 @@ width: 92%;
         <table>
           <tr>
             <td>
+              <%if (readonly == null) { %>
               <a href="javascript:viewJs.add();" class="link_blue">+新增商品包</a>
+              <%} %>
             </td>
           </tr>
         </table>

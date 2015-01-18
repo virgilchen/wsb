@@ -64,6 +64,31 @@ order by <<order_by>>
             </value>
           </entry>
 
+          <entry key="advanceSearchOrders">
+            <value>
+              <![CDATA[
+select
+  o.*,
+  c.cust_name,
+  c.cust_phone_no,
+  s.staff_name as order_init_staff_name,
+  (select group_concat(b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id and e.event_status='R') procs_step_name
+ from 
+   order_rt o 
+     left join staff_demo_rt s on s.staff_id=o.order_init_staff_id,
+   cust_demo_rt c
+where o.psdo_cust_id=c.psdo_cust_id
+ {and s.staff_name like [order_init_staff_name]}
+ {and c.cust_name like [psdo_cust_name]}
+ {and o.order_no like [order_no]}
+ {and o.order_init_staff_id=[order_init_staff_id]}
+ {and o.order_cur_status=[order_cur_status]}
+ {and o.psdo_cust_id=[psdo_cust_id]}
+order by <<order_by>>
+              ]]>
+            </value>
+          </entry>
+
           <entry key="queryOrderHistories">
             <value>
               <![CDATA[

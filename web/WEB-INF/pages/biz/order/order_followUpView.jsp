@@ -146,9 +146,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     }
                     
                     if (buinessLen > 0) {
+                    	//debugger;
                     	var selectIndex = businesses.selectedIndex;
                     	if (typeof(selectIndex) == "undefined") {
                     		selectIndex = 0;
+                    		var $li = $("li", $businessTabs);
+                    		for (var liIndex = 0 ;liIndex < $li.length ; liIndex ++) {
+                    			if (!$($li[liIndex]).is(":hidden")) {
+                    				selectIndex = liIndex ;
+                    				break ;
+                    			}
+                    		}
                     	}
                     	var business = businesses[selectIndex];
                     	_this.setEventEditForm(business.prod_pack_id, business.last_event_id, business.event_staff_id);
@@ -466,7 +474,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{fmt.maxlen($T.record.staff_name,100)}</td>
                     <td>{$T.record.staff_role_name}</td>
                     <td>{$T.record.procs_step_name}</td>
-                    <td>{$T.record.event_time_stamp}</td>
+                    <td>{#if $T.record.event_duration != null}{$T.record.event_duration}{#else}{$T.record.event_time_stamp}{#/if}</td>
                     <td>
                       {#if $T.record.event_status == 'R'}
                         <span>正在处理</span>
