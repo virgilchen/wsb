@@ -46,6 +46,7 @@ public class Customer extends BaseEntity {
     private String cust_age;
     private String member_idc;
     private Long member_id;
+    private String cust_id;
     
     @Transient
     private ArrayPageList<Car> cars;
@@ -192,6 +193,13 @@ public class Customer extends BaseEntity {
 	public void setDocuments(ArrayPageList<Document> documents) {
 		this.documents = documents;
 	}
+	public String getCust_id() {
+		return cust_id;
+	}
+	public void setCust_id(String cust_id) {
+		this.cust_id = cust_id;
+	}
+	
 }
 
 

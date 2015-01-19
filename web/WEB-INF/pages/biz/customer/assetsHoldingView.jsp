@@ -50,7 +50,7 @@ g$v<%=view_id%>.assetsHoldingView = $.extend(newView(), {
 </script>
 <form method="post" id="sAssetsHoldingForm" name="sAssetsHoldingForm" onsubmit="return false;" style="margin: 0">
 	<input name="assetsHoldingSO.pageIndex" id="assetsHoldingSO.pageIndex" value="1" type="hidden" />
-    <input name="assetsHoldingSO.pageSize" id="assetsHoldingSO.pageSize" value="10" type="hidden" />
+    <input name="assetsHoldingSO.pageSize" id="assetsHoldingSO.pageSize" value="100" type="hidden" />
 	<input name="assetsHoldingSO.customer_id" id="assetsHoldingSO.customer_id" value="" type="hidden" />
 
 	<DIV class="main_order_detail" style="border: 0px;">

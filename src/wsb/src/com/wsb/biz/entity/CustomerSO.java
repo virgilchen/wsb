@@ -19,6 +19,7 @@ public class CustomerSO extends BaseSO {
     private String business_name;//业务类型
     private String prod_pack_name;//商品包名
     private String order_prod_pack_expire_date;//到期时间
+    private String cust_id;//身份证号
     
 
 	public Long[] getIds() {
@@ -50,6 +51,12 @@ public class CustomerSO extends BaseSO {
 	}
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
+	}
+	public String getCust_id() {
+		return cust_id;
+	}
+	public void setCust_id(String cust_id) {
+		this.cust_id = cust_id;
 	}
 	@Override
 	public Class<?> getTableClass() {

@@ -350,6 +350,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					<td><input type="text" class="ipt_date" name="customer.cust_birthday" id="customer.cust_birthday" maxlength="10"/><span class="c_red"></span></td>
 					</tr>
 					<tr>
+					<th>身份证号：</th>
+					<td><input name="customer.cust_id" type="text" maxlength="20" /></td>
+					</tr>
+					<tr>
 					<th>电话号码：</th>
 					<td><input name="customer.cust_phone_no" type="text" maxlength="20" /><span class="c_red">*</span></td>
 					</tr>
