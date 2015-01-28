@@ -299,7 +299,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	
     	OrderProcess so = new OrderProcess();
-    	so.setBusiness_id(event.getBusiness_id());
+    	so.setBusiness_id(oldEvent.getBusiness_id());
     	
     	if (OrderProdPackEvent.STATUS_CONTINUE.equals(event_status)) {
     	    so.setProcs_step_no(oldEvent.getProcs_step_no());

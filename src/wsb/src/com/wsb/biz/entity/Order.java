@@ -45,6 +45,7 @@ public class Order extends BaseEntity {
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
     private String order_remark  ;
+    private Double selling_price;
     
     
     @Transient
@@ -149,6 +150,12 @@ public class Order extends BaseEntity {
 	}
 	public void setDocuments(ArrayPageList<Document> documents) {
 		this.documents = documents;
+	}
+	public Double getSelling_price() {
+		return selling_price;
+	}
+	public void setSelling_price(Double selling_price) {
+		this.selling_price = selling_price;
 	}
 
 }

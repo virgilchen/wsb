@@ -88,6 +88,7 @@ CREATE TABLE `order_rt` (
   `psdo_cust_id` INT NULL,
   `order_cur_status` VARCHAR(10) NULL COMMENT 'C:Cancel/S:Started/I:Init',
   `order_remark` VARCHAR(1000) NULL,
+  `selling_price` DECIMAL(12,2) NULL,
   PRIMARY KEY (`order_id`),
   INDEX `order_key` (`order_id` ASC))
 ENGINE = InnoDB

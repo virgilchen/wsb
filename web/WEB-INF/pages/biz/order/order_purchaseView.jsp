@@ -151,9 +151,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
         );
     },
     
-    selectProdPack:function(id, name) {
+    selectProdPack:function(id, name, prod_pack_selling_price) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
+        E$("prod_pack_selling_price_" + this.selectedIndex).val(prod_pack_selling_price);
         //E("eForm").resetForm();
         
         var _this = this;
@@ -204,6 +205,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	if (confirm("你是否需要离开订购产品？")) {
             removeView(<%=view_id%>);
     	}
+    },
+    
+    sumSellingPrice:function() {
+        var total = 0 ;
+        
+        $("#orderProdPacksTB #listBody", this.view).children().each(function(i, tr) {
+            var index = $(tr).attr("index");
+            var noOfPack = V("no_of_order_prod_pack_" + index);
+            if (noOfPack == "") {
+                noOfPack = 0 ;
+            } else {
+                noOfPack = parseFloat(noOfPack);
+            }
+            total += parseFloat(V("prod_pack_selling_price_" + index)) * noOfPack;
+        });
+        
+        V("order.selling_price", total);
     }
     
 }) ;
@@ -254,8 +272,8 @@ width: 92%;
             <td><input type="text"  name="order.order_no" readonly="readonly"/><span class="c_red">*</span></td>
             <th>业务单发起时间：</th>
             <td><input type="text"  name="order.order_init_time_stamp" readonly="readonly" /><span class="c_red">*</span></td>
-            <td></td>
-            <td></td>
+            <td>售价：</td>
+            <td><input type="text"  name="order.selling_price" id='order.selling_price' /></td>
             <!-- 
             <th>业务处理人：</th>
             <td><input type="text"  name="order.order_init_staff_id" id="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
@@ -276,7 +294,7 @@ width: 92%;
 	          <tr>
 	            <td>
 	              <textarea id="templateBody" jTemplate="yes">
-                    <tr><td>
+                    <tr index="{$T.index}"><td>
 			        <div class="goods_bag clearfix">
 			            
 			            <table width="100%" border="0" >
@@ -293,7 +311,8 @@ width: 92%;
 			                </td>
 			                <th width="10%">数量：</th>
 			                <td width="20%">
-			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
+                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_selling_price" id="prod_pack_selling_price_{$T.index}" style=" width:50px;" required="required" value=""/>
+			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" id="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}" onchange="viewJs.sumSellingPrice();"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>

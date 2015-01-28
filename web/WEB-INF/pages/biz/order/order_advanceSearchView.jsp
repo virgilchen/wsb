@@ -20,8 +20,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.initSelect() ;
         this.pageIndex = E("orderSO.pageIndex") ;
         
-        //fillOptions({id:"order.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
-        //fillOptions({id:"orderSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
+        fillOptions({id:"orderSO.order_type", dictName:"Order.type", firstLabel:"全部"}) ;// 改为字典取值
+        fillOptions({id:"orderSO.order_cur_status", dictName:"Order.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
         
@@ -87,18 +87,39 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="orderSO.order_no" value="" type="text" />
            </td>
-           <td style="width:100px;" >客户姓名：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="orderSO.psdo_cust_name" value="" type="text" />
-           </td>
            <td style="width:80px;" >发起人：</td>
            <td style="width:100px;">
              <input class=mg_r name="orderSO.order_init_staff_name" value="" type="text" />
            </td>
+           <td style="width:100px;" >业务类型：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="orderSO.business_name" value="" type="text" />
+           </td>
+           <td style="width:100px;" >当前处理人：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="orderSO.event_staff_name" value="" type="text" />
+           </td>
+           <td></td>
+          </tr>
+          <tr>
+           <td style="width:100px;" >客户名称：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="orderSO.psdo_cust_name" value="" type="text" />
+           </td>
+           <td style="width:100px;" >客户电话：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="orderSO.cust_phone_no" value="" type="text" />
+           </td>
+           <td style="width:80px;" >订单类型：</td>
+           <td style="width:100px;">
+             <select name="orderSO.order_type" id="orderSO.order_type"></select>
+           </td>
+           <td style="width:80px;" >订单状态：</td>
+           <td style="width:100px;">
+             <select name="orderSO.order_cur_status" id="orderSO.order_cur_status"></select>
+           </td>
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();">
-           </td>
-           <td style="width:400px;">
            </td>
           </tr>
         </table>
@@ -112,12 +133,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <thead>
           <TR>
 		    <th>业务单号</th>
-		    <th>业务类型</th>
 		    <th>姓名</th>
 		    <th>联系电话</th>
 		    <th>业务发起人 </th>
 		    <th>发起时间</th>
-		    <th>处理状态</th>
+            <th>处理状态</th>
 		    <th>操作</th>
 		  <TR>
         </thead>
@@ -132,7 +152,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <textarea id="templateBody" jTemplate="yes">
                   <tr id="{$T.id}" ondblclick="{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id});{#/if}">
                     <td>{$T.order_no}</td>
-                    <td>{fmt.maxlen($T.business_name, 100)}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>

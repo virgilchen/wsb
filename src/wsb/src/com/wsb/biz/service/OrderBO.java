@@ -284,7 +284,9 @@ public class OrderBO extends BaseServiceImpl {
         
         SessionUser sessionUser = SessionUser.get();
         
-        if (!sessionUser.isManager()) {
+        //if (!sessionUser.isManager()) {
+        Long roleId = sessionUser.getStaff().getStaff_role_id();
+        if (CodeHelper.getString("Order.Permission.H", "name_", String.valueOf(roleId)) == null){
             orderSO.setOrder_init_staff_id(sessionUser.getStaff().getId());
         } else {
         	orderSO.setOrder_by(" o.order_id desc ");
@@ -301,7 +303,9 @@ public class OrderBO extends BaseServiceImpl {
         
         SessionUser sessionUser = SessionUser.get();
         
-        if (!sessionUser.isManager()) {
+        //if (!sessionUser.isManager()) {
+        Long roleId = sessionUser.getStaff().getStaff_role_id();
+        if (CodeHelper.getString("Order.Permission.H", "desc_", String.valueOf(roleId)) != null){
             orderSO.setOrder_init_staff_id(sessionUser.getStaff().getId());
         } else {
         	orderSO.setOrder_by(" o.order_id desc ");

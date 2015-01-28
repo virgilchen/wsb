@@ -77,12 +77,12 @@ g$v<%=view_id%>.productSearchView = $.extend(newView(), {
 		          <tr>
 		            <td>
 		              <textarea id="templateBody" jTemplate="yes">
-		                  <tr id="{$T.id}" ondblclick="viewJs.selectProdPack({$T.id}, '{$T.prod_pack_name}');closeCL('productPack_searchViewDiv');">
+		                  <tr id="{$T.id}" ondblclick="viewJs.selectProdPack({$T.id}, '{$T.prod_pack_name}', {$T.prod_pack_selling_price});closeCL('productPack_searchViewDiv');">
 		                    <td><input type="hidden" name="ids" id="ids" value="{$T.id}" />{$T.prod_pack_name}</td>
 		                    <td>{$T.prod_pack_name}</td>
 		                    <td>{$T.prod_pack_owner}</td>
 		                    <td>{$T.prod_pack_selling_price}</td>
-		                    <td><a href="javascript:viewJs.selectProdPack({$T.id}, '{$T.prod_pack_name}');closeCL('productPack_searchViewDiv');">选择</a></td>
+		                    <td><a href="javascript:viewJs.selectProdPack({$T.id}, '{$T.prod_pack_name}', {$T.prod_pack_selling_price});closeCL('productPack_searchViewDiv');">选择</a></td>
 		                  </tr>
 		              </textarea>
 		            </td>

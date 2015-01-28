@@ -59,6 +59,8 @@ where o.psdo_cust_id=c.psdo_cust_id
  {and o.order_init_staff_id=[order_init_staff_id]}
  {and o.order_cur_status=[order_cur_status]}
  {and o.psdo_cust_id=[psdo_cust_id]}
+ {and o.order_type=[order_type]}
+ {and o.order_cur_status=[order_cur_status]}
 order by <<order_by>>
               ]]>
             </value>
@@ -80,10 +82,17 @@ select
 where o.psdo_cust_id=c.psdo_cust_id
  {and s.staff_name like [order_init_staff_name]}
  {and c.cust_name like [psdo_cust_name]}
+ {and c.cust_phone_no like [cust_phone_no]}
  {and o.order_no like [order_no]}
  {and o.order_init_staff_id=[order_init_staff_id]}
- {and o.order_cur_status=[order_cur_status]}
  {and o.psdo_cust_id=[psdo_cust_id]}
+ 
+ {and o.order_type=[order_type]}
+ {and o.order_cur_status=[order_cur_status]}
+ 
+ {and exists (select 1 from order_prod_pack_event_rt ppe join staff_demo_rt st on ppe.event_staff_id=st.staff_id where ppe.order_id=o.order_id and st.staff_name like [event_staff_name])}
+ {and exists (select 1 from order_prod_pack_event_rt ppe join business_rt biz on ppe.business_id=biz.business_id where ppe.order_id=o.order_id and biz.business_name like [business_name])}
+  
 order by <<order_by>>
               ]]>
             </value>

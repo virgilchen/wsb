@@ -55,6 +55,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	
     	if ($("#productsSelectedTB #" + product.id).length <= 0) {
+    		/*
             var price = V("productPack.prod_pack_orignal_price");
             if(price=="" || isNaN(price)) {
                 price = 0 ;
@@ -70,13 +71,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
             	price = parseFloat(price);
             }
             V("productPack.prod_pack_selling_price", price + product.product_selling_price);
-            
+            */
             this.addRows ("productsSelectedTB", [product], {deep:1});
+            this.recaculatePrice();
     	}
     },
     
     removeProduct:function(id) {
     	var $tr = E$("productTr_" + id);
+    	/*
     	
         var price = V("productPack.prod_pack_orignal_price");
         if(isNaN(price)) {
@@ -93,8 +96,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
             price = parseFloat(price);
         }
         V("productPack.prod_pack_selling_price", price - parseFloat($tr.attr("product_selling_price")));
-        
+        */
         $tr.remove();
+        this.recaculatePrice();
     },
     
     get:function(id, prefun, postfun) {
@@ -118,6 +122,22 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 _this.addRows ("productsSelectedTB", data.productPackDetails);
             }
         );
+    },
+    
+    recaculatePrice:function() {
+        var originalPrice = 0 ;
+        var sellingPrice = 0 ;
+        
+    	$("#productsSelectedTB #listBody tr").each(function(i, tr) {
+    		var $tr = $(tr);
+
+    		var quantity = parseFloat($("input[name='product_quantitys']", $tr).val());
+            originalPrice += quantity * parseFloat($tr.attr("product_original_price"));
+            sellingPrice += quantity * parseFloat($tr.attr("product_selling_price"));
+    	});
+    	
+        V("productPack.prod_pack_orignal_price", originalPrice);
+        V("productPack.prod_pack_selling_price", sellingPrice);
     }
 }) ;
 
@@ -267,7 +287,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                                     <td>{$T.business_name}</td>
                                     <td>
                                       <input type="hidden" name="product_ids" value="{$T.id}"/>
-                                      <input type="text" name="product_quantitys" value="{$T.quantity}" maxlength="5" style="width: 100px;"/>
+                                      <input type="text" name="product_quantitys" value="{$T.quantity}" maxlength="5" style="width: 100px;" onchange="viewJs.recaculatePrice();"/>
                                     </td>
                                     <td>{$T.product_selling_price}</td>
                                     <td>

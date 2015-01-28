@@ -155,9 +155,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
         );
     },
     
-    selectProdPack:function(id, name) {
+    selectProdPack:function(id, name, prod_pack_selling_price) {
         E$("prod_pack_id" + this.selectedIndex).val(id);
         E$("prod_pack_name" + this.selectedIndex).val(name);
+        E$("prod_pack_selling_price_" + this.selectedIndex).val(prod_pack_selling_price);
         
         var _this = this;
         
@@ -169,6 +170,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 _this.addBusinesses(data.list, _this.selectedIndex);
             }
         );
+        
+        this.sumSellingPrice();
     },
     
     addBusinesses:function (datas, index) {
@@ -255,12 +258,29 @@ var g$v<%=view_id%> = $.extend(newView(), {
         	$amount.focus();
         	return ;
         }
-        
+        /*
         if (amount > parseFloat($("#no_of_order_prod_pack_" + index).val())) {
         	alert("使用数量不能大于商品包订购数量！");
             $amount.focus();
         	return ;
-        }
+        }*/
+    },
+    
+    sumSellingPrice:function() {
+    	var total = 0 ;
+    	
+    	$("#orderProdPacksTB #listBody", this.view).children().each(function(i, tr) {
+    		var index = $(tr).attr("index");
+    		var noOfPack = V("no_of_order_prod_pack_" + index);
+    		if (noOfPack == "") {
+    			noOfPack = 0 ;
+    		} else {
+    			noOfPack = parseFloat(noOfPack);
+    		}
+    		total += parseFloat(V("prod_pack_selling_price_" + index)) * noOfPack;
+    	});
+    	
+    	V("order.selling_price", total);
     }
     
 }) ;
@@ -312,8 +332,8 @@ width: 92%;
             <td><input type="text"  name="order.order_no" readonly="readonly"/><span class="c_red">*</span></td>
             <th>业务单发起时间：</th>
             <td><input type="text"  name="order.order_init_time_stamp" readonly="readonly" /><span class="c_red">*</span></td>
-            <td></td>
-            <td></td>
+            <td>售价：</td>
+            <td><input type="text"  name="order.selling_price" id='order.selling_price' /></td>
             <!-- 
             <th>业务处理人：</th>
             <td><input type="text"  name="order.order_init_staff_id" id="order.order_init_staff_id"/> <a href="" class="link_blue">选择</a></td>
@@ -334,7 +354,8 @@ width: 92%;
 	          <tr>
 	            <td>
 	              <textarea id="templateBody" jTemplate="yes">
-                    <tr><td>
+                    <tr index="{$T.index}">
+                    <td>
 			        <div class="goods_bag clearfix">
 			            
 			            <table width="100%" border="0" >
@@ -353,7 +374,8 @@ width: 92%;
 			                </td>
 			                <th width="10%" id="amountTh{$T.index}">数量：</th>
 			                <td width="20%" id="amountTd{$T.index}">
-			                  <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" name="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}"/> 份<span class="c_red">*</span>
+                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_selling_price" id="prod_pack_selling_price_{$T.index}" style=" width:50px;" required="required" value=""/>
+                              <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" id="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}" onchange="viewJs.sumSellingPrice();"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
 			              </tr>
@@ -398,7 +420,8 @@ width: 92%;
 			          
 			            </table>
 			        </div>
-			        </td></tr>
+			        </td>
+			        </tr>
 	              </textarea>
 	            </td>
 	          </tr>

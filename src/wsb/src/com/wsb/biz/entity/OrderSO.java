@@ -17,8 +17,12 @@ public class OrderSO extends BaseSO {
     private Long order_init_staff_id;
     private String order_no;
     private String psdo_cust_name  ;
+    private String cust_phone_no ;
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
+    private String event_staff_name ;
+    private String business_name ;
+    private String order_type  ;
     private String order_by ;
     
 	public Long[] getIds() {
@@ -70,6 +74,7 @@ public class OrderSO extends BaseSO {
 	}
 
 	public String getOrder_cur_status() {
+		if ("".equals(this.order_cur_status)) return null;
 		return order_cur_status;
 	}
 
@@ -98,6 +103,39 @@ public class OrderSO extends BaseSO {
 	}
 	public void setOrder_by(String order_by) {
 		this.order_by = order_by;
+	}
+
+	public String getOrder_type() {
+		if ("".equals(this.order_type)) return null;
+		return order_type;
+	}
+
+	public void setOrder_type(String order_type) {
+		this.order_type = order_type;
+	}
+
+	public String getEvent_staff_name() {
+		return event_staff_name;
+	}
+
+	public void setEvent_staff_name(String event_staff_name) {
+		this.event_staff_name = event_staff_name;
+	}
+
+	public String getBusiness_name() {
+		return business_name;
+	}
+
+	public void setBusiness_name(String business_name) {
+		this.business_name = business_name;
+	}
+
+	public String getCust_phone_no() {
+		return cust_phone_no;
+	}
+
+	public void setCust_phone_no(String cust_phone_no) {
+		this.cust_phone_no = cust_phone_no;
 	}
 
 	@Override

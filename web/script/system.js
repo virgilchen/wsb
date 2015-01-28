@@ -47,6 +47,9 @@ function setFrameHeight() {
 
 function reflowValidationForms() {
 
+	if (typeof(viewJs.validationForms) == "undefined") {
+		return ;
+	}
 	for (var index in viewJs.validationForms) {
 		viewJs.validationForms[index].reflow();
 	}

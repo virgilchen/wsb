@@ -372,8 +372,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <td width="30%" style="text-align: left;"><label id="order.order_init_staff_name">启动业务人员</label></td>
 	      </tr>
 	      <tr>
-            <td width="10%" style="text-align: right;">业务单备注：</td>
-            <td width="20%" style="text-align: left;" colspan="5"><label id="order.order_remark">备注备注备注备注备注</label></td>
+            <td style="text-align: right;">售价：</td>
+            <td style="text-align: left;"><label id="order.selling_price">1992.3</label></td>
+            <td style="text-align: right;">业务单备注：</td>
+            <td style="text-align: left;" colspan="3"><label id="order.order_remark">备注备注备注备注备注</label></td>
 	      </tr>
 	    </table>
 	</div>
