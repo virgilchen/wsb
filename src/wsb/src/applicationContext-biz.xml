@@ -437,6 +437,33 @@ select d.prod_pack_id, group_concat(prod_name) as prod_names
             </value>
           </entry>
           
+          <entry key="queryCustomerHighClass">
+            <value>
+              <![CDATA[
+select cu.* 
+  from cust_demo_rt cu where 1=1 
+  	{and cu.cust_name like [cust_name] } 
+    {and cu.cust_code like [cust_code] } 
+    {and cu.cust_phone_no like [cust_phone_no] } 
+    {and cu.member_id like [member_id] } 
+    {and cu.cust_id=[cust_id] } 
+  	{and exists ( select 1 from car_info_rt c 
+  		where cu.psdo_cust_id=c.psdo_cust_id 
+  		and cu.psdo_cust_id=c.psdo_cust_id 
+  		and c.car_framework_no like [car_framework_no] ) }
+  	{and exists ( select 1 from car_info_rt c 
+  		where cu.psdo_cust_id=c.psdo_cust_id 
+  		and cu.psdo_cust_id=c.psdo_cust_id 
+  		and c.car_engine_no like [car_engine_no] ) }
+  	{and exists ( select 1 from biz_assets_holding bah, product_pack_rt p 
+		where cu.psdo_cust_id=bah.customer_id 
+		and bah.pro_assets_id=p.prod_pack_id 
+		and assets_type=1 
+		and p.prod_pack_name like [prod_pack_name] ) }
+    order by cu.psdo_cust_id desc
+              ]]>
+            </value>
+          </entry>
           
         </map>
       </property>

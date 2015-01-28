@@ -14,12 +14,14 @@ public class CustomerSO extends BaseSO {
     private String cust_phone_no;
     private String member_id;
     
-    private String car_framework_no;
+    private String car_framework_no;//车架号
     private String procs_step_name;//业务环节
     private String business_name;//业务类型
     private String prod_pack_name;//商品包名
     private String order_prod_pack_expire_date;//到期时间
     private String cust_id;//身份证号
+    private String car_engine_no;//发动机号
+    
     
 
 	public Long[] getIds() {
@@ -57,6 +59,30 @@ public class CustomerSO extends BaseSO {
 	}
 	public void setCust_id(String cust_id) {
 		this.cust_id = cust_id;
+	}
+	public String getCar_framework_no() {
+		return car_framework_no;
+	}
+	public void setCar_framework_no(String car_framework_no) {
+		this.car_framework_no = car_framework_no;
+	}
+	public String getBusiness_name() {
+		return business_name;
+	}
+	public void setBusiness_name(String business_name) {
+		this.business_name = business_name;
+	}
+	public String getProd_pack_name() {
+		return prod_pack_name;
+	}
+	public void setProd_pack_name(String prod_pack_name) {
+		this.prod_pack_name = prod_pack_name;
+	}
+	public String getCar_engine_no() {
+		return car_engine_no;
+	}
+	public void setCar_engine_no(String car_engine_no) {
+		this.car_engine_no = car_engine_no;
 	}
 	@Override
 	public Class<?> getTableClass() {

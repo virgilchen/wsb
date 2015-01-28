@@ -214,7 +214,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <input name="customerSO.pageSize" id="customerSO.pageSize" value="10" type="hidden" />
         <table width="100%" >
           <tr>
-           <td style="width:80px;" >姓名：</td>
+           <td style="width:100px;" >姓名：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_name" value="" type="text" />
            </td>
@@ -222,13 +222,45 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_code" value="" type="text" />
            </td>
-           <td style="width:80px;" >电话：</td>
+           <td style="width:100px;" >电话：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.cust_phone_no" value="" type="text" />
            </td>
+           <td style="width:100px;">
+           </td>
+           <td style="width:100px;">
+           </td>
+          </tr>
+          <tr>
            <td style="width:100px;" >会员号：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.member_id" value="" type="text" />
+           </td>
+           <td style="width:100px;">身份证： </td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.cust_id" value="" type="text" />
+           </td>
+           <td style="width:100px;" >业务类型：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.business_name" value="" type="text" />
+           </td>
+           <td style="width:100px;">
+           </td>
+           <td style="width:100px;">
+           </td>
+          </tr>
+          <tr>
+           <td style="width:100px;" >车架号：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.car_framework_no" value="" type="text" />
+           </td>
+           <td style="width:100px;" >发动机号：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.car_engine_no" value="" type="text" />
+           </td>
+           <td style="width:100px;" >商品包：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.prod_pack_name" value="" type="text" />
            </td>
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">

@@ -119,9 +119,27 @@ public class CustomerBO extends BaseServiceImpl {
         if (customerSO == null) {
         	customerSO = new CustomerSO() ;
         }
+        
+        if("".equalsIgnoreCase(customerSO.getBusiness_name())){
+        	customerSO.setBusiness_name(null);
+        }
+        if("".equalsIgnoreCase(customerSO.getCar_engine_no())){
+        	customerSO.setCar_engine_no(null);
+        }
+        if("".equalsIgnoreCase(customerSO.getCar_framework_no())){
+        	customerSO.setCar_framework_no(null);
+        }
+        if("".equalsIgnoreCase(customerSO.getCust_id())){
+        	customerSO.setCust_id(null);
+        }
+        if("".equalsIgnoreCase(customerSO.getProd_pack_name())){
+        	customerSO.setProd_pack_name(null);
+        }
         //customerSO.addDesc("customer_timestamp") ;
         
-        ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
+        //ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
+        
+        ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.queryName("bizSQLs:queryCustomerHighClass", customerSO, Customer.class);
 
         DataFilterUtil.maskStar4List(result, getRestrictedProperties(), 0);
         
