@@ -235,6 +235,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     closeView:function() {
+    	if (<%=String.valueOf(readonly != null) %>) {
+    		removeView(<%=view_id%>);
+    		return ;
+    	}
     	if (confirm("你是否需要离开业务发起？")) {
             removeView(<%=view_id%>);
     	}
