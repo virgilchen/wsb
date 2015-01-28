@@ -84,41 +84,39 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <table width="100%" >
           <tr>
            <td style="width:100px;" >业务单号：</td>
-           <td style="width:100px;">
+           <td style="width:90px;">
              <input class=mg_r name="orderSO.order_no" value="" type="text" />
            </td>
-           <td style="width:80px;" >发起人：</td>
-           <td style="width:100px;">
+           <td style="width:100px;" >发起人：</td>
+           <td style="width:90px;">
              <input class=mg_r name="orderSO.order_init_staff_name" value="" type="text" />
            </td>
            <td style="width:100px;" >业务类型：</td>
-           <td style="width:100px;">
+           <td style="width:90px;">
              <input class=mg_r name="orderSO.business_name" value="" type="text" />
            </td>
            <td style="width:100px;" >当前处理人：</td>
-           <td style="width:100px;">
+           <td style="width:90px;">
              <input class=mg_r name="orderSO.event_staff_name" value="" type="text" />
            </td>
-           <td></td>
           </tr>
           <tr>
-           <td style="width:100px;" >客户名称：</td>
-           <td style="width:100px;">
+           <td>客户名称：</td>
+           <td>
              <input class=mg_r name="orderSO.psdo_cust_name" value="" type="text" />
            </td>
-           <td style="width:100px;" >客户电话：</td>
-           <td style="width:100px;">
+           <td>客户电话：</td>
+           <td>
              <input class=mg_r name="orderSO.cust_phone_no" value="" type="text" />
            </td>
-           <td style="width:80px;" >订单类型：</td>
-           <td style="width:100px;">
+           <td>订单类型：</td>
+           <td>
              <select name="orderSO.order_type" id="orderSO.order_type"></select>
            </td>
-           <td style="width:80px;" >订单状态：</td>
-           <td style="width:100px;">
+           <td>订单状态：</td>
+           <td>
              <select name="orderSO.order_cur_status" id="orderSO.order_cur_status"></select>
-           </td>
-           <td style="width:100px;">
+             &nbsp;
              <INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();">
            </td>
           </tr>
