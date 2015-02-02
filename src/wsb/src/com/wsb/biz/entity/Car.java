@@ -33,6 +33,12 @@ public class Car extends BaseEntity {
     private String car_engine_no;
     private Date car_init_register_date;
     private Double car_miles;
+    private Double car_price;
+    private String car_used_city;
+    private String car_service_city;
+    private String car_sales;
+    private String insurance_assistant;
+    
     
 	public Long getPsdo_cust_id() {
 		return psdo_cust_id;
@@ -105,6 +111,36 @@ public class Car extends BaseEntity {
 	}
 	public void setCar_init_register_date(Date car_init_register_date) {
 		this.car_init_register_date = car_init_register_date;
+	}
+	public Double getCar_price() {
+		return car_price;
+	}
+	public void setCar_price(Double car_price) {
+		this.car_price = car_price;
+	}
+	public String getCar_used_city() {
+		return car_used_city;
+	}
+	public void setCar_used_city(String car_used_city) {
+		this.car_used_city = car_used_city;
+	}
+	public String getCar_service_city() {
+		return car_service_city;
+	}
+	public void setCar_service_city(String car_service_city) {
+		this.car_service_city = car_service_city;
+	}
+	public String getCar_sales() {
+		return car_sales;
+	}
+	public void setCar_sales(String car_sales) {
+		this.car_sales = car_sales;
+	}
+	public String getInsurance_assistant() {
+		return insurance_assistant;
+	}
+	public void setInsurance_assistant(String insurance_assistant) {
+		this.insurance_assistant = insurance_assistant;
 	}
     
 }

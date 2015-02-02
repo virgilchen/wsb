@@ -23,6 +23,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         //fillOptions({id:"customer.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"customerSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
+        fillOptions({id:"customer.cust_gender", dictName:"CM.gender", firstLabel:"请选择..."}) ;
         
         this.initDataGrid("customerTB") ;
         
@@ -301,7 +302,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     </td>
                     <td>{$T.cust_code}</td>
                     <td>{$T.cust_name}</td>
-                    <td>{$T.cust_gender}</td>
+                    <td>{dVal("CM.gender", "name_", {PK_ID:$T.cust_gender})}</td>
                     <td>{fmt.maxlen($T.cust_birthday,10)}</td>
                     <td>{$T.cust_phone_no}</td>
                     <td>{fmt.maxlen($T.member_id, 100)}</td>
@@ -372,9 +373,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					<th>姓名：</th>
 					<td><input name="customer.cust_name" type="text" maxlength="20" /><span class="c_red">*</span> 
 					 性别：
-					<select name="customer.cust_gender">
-					  <option selected="selected">男</option>
-					  <option>女</option>
+					<select name="customer.cust_gender"  id="customer.cust_gender">
 					</select></td>
 					</tr>
 					<tr>
@@ -390,12 +389,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					<td><input name="customer.cust_phone_no" type="text" maxlength="20" /><span class="c_red">*</span></td>
 					</tr>
 					<tr>
-					<th>其他联系方式：</th>
-					<td><input name="customer.other_contact_way" type="text" maxlength="100" class="long_ipt" /></td>
-					</tr>
-					<tr>
 					<th>家庭地址：</th>
 					<td><input name="customer.cust_home_address" type="text" maxlength="100" class="long_ipt" /></td>
+					</tr>
+					<tr>
+					<th>其他联系方式：</th>
+					<td><textarea name="customer.other_contact_way" style="width: 100%;height: 80px;" maxlength="100"></textarea></td>
 					</tr>
 				</table>
 		    </div>
@@ -514,6 +513,38 @@ var g$v<%=view_id%> = $.extend(newView(), {
                               <th>历程数：</th>
                               <td>
                                 <input name="cars[{$T.index}].car_miles" type="text" value="{$T.car_miles}" />
+							  </td>
+							</tr>
+							<tr>
+							  <th>车辆价格：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_price" type="text" value="{$T.car_price}"/>
+							    <span class="c_red"></span>
+                              </td>
+                              <th>车使用城市：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_used_city" type="text" value="{$T.car_used_city}" />
+							  </td>
+							</tr>
+							<tr>
+							  <th>车辆销售：</th>
+							  <td>
+							    <input name="cars[{$T.index}].car_sales" type="text" value="{$T.car_sales}"/>
+							    <span class="c_red"></span>
+                              </td>
+                              <th>车服务城市：</th>
+                              <td>
+                                <input name="cars[{$T.index}].car_service_city" type="text" value="{$T.car_service_city}" />
+							  </td>
+							</tr>
+							<tr>
+							  <th>保险助理：</th>
+							  <td>
+							    <input name="cars[{$T.index}].insurance_assistant" type="text" value="{$T.insurance_assistant}"/>
+							    <span class="c_red"></span>
+                              </td>
+                              <th></th>
+                              <td>
 							  </td>
 							</tr>
 							<tr style="border-top:1px #248cb8 solid;">

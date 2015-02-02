@@ -474,6 +474,32 @@ select cu.*
             </value>
           </entry>
           
+          <entry key="queryRecommendationKeyType">
+            <value>
+              <![CDATA[
+select distinct p.recmdt_key_type, p.* from recommendation_key_map_dim p 
+              ]]>
+            </value>
+          </entry>
+          
+          <entry key="queryRecommendationByKey">
+            <value>
+              <![CDATA[
+select p.* from recommendation_key_map_dim p 
+	where 1=1 
+	{and p.recmdt_key_type=[recmdt_key_type]}
+              ]]>
+            </value>
+          </entry>
+          
+          <entry key="queryRecommendationOprMapDim">
+            <value>
+              <![CDATA[
+select p.* from recommendation_opr_map_dim p 
+              ]]>
+            </value>
+          </entry>
+          
         </map>
       </property>
     </bean>
