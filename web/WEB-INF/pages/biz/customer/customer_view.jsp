@@ -518,29 +518,29 @@ var g$v<%=view_id%> = $.extend(newView(), {
 							<tr>
 							  <th>车辆价格：</th>
 							  <td>
-							    <input name="cars[{$T.index}].car_price" type="text" value="{$T.car_price}"/>
+							    <input name="cars[{$T.index}].car_price" type="text" value="{fmt.maxlen($T.car_price, 100)}"/>
 							    <span class="c_red"></span>
                               </td>
                               <th>车使用城市：</th>
                               <td>
-                                <input name="cars[{$T.index}].car_used_city" type="text" value="{$T.car_used_city}" />
+                                <input name="cars[{$T.index}].car_used_city" type="text" value="{fmt.maxlen($T.car_used_city, 100)}" />
 							  </td>
 							</tr>
 							<tr>
 							  <th>车辆销售：</th>
 							  <td>
-							    <input name="cars[{$T.index}].car_sales" type="text" value="{$T.car_sales}"/>
+							    <input name="cars[{$T.index}].car_sales" type="text" value="{fmt.maxlen($T.car_sales, 100)}"/>
 							    <span class="c_red"></span>
                               </td>
                               <th>车服务城市：</th>
                               <td>
-                                <input name="cars[{$T.index}].car_service_city" type="text" value="{$T.car_service_city}" />
+                                <input name="cars[{$T.index}].car_service_city" type="text" value="{fmt.maxlen($T.car_service_city, 100)}" />
 							  </td>
 							</tr>
 							<tr>
 							  <th>保险助理：</th>
 							  <td>
-							    <input name="cars[{$T.index}].insurance_assistant" type="text" value="{$T.insurance_assistant}"/>
+							    <input name="cars[{$T.index}].insurance_assistant" type="text" value="{fmt.maxlen($T.insurance_assistant, 100)}"/>
 							    <span class="c_red"></span>
                               </td>
                               <th></th>

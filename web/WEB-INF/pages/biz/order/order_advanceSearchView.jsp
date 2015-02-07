@@ -83,20 +83,20 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
         <table width="100%" >
           <tr>
-           <td style="width:100px;" >业务单号：</td>
-           <td style="width:90px;">
+           <td style="width:80px;" >业务单号：</td>
+           <td>
              <input class=mg_r name="orderSO.order_no" value="" type="text" />
            </td>
-           <td style="width:100px;" >发起人：</td>
-           <td style="width:90px;">
+           <td style="width:80px;" >发起人：</td>
+           <td>
              <input class=mg_r name="orderSO.order_init_staff_name" value="" type="text" />
            </td>
-           <td style="width:100px;" >业务类型：</td>
-           <td style="width:90px;">
+           <td style="width:80px;" >业务类型：</td>
+           <td>
              <input class=mg_r name="orderSO.business_name" value="" type="text" />
            </td>
-           <td style="width:100px;" >当前处理人：</td>
-           <td style="width:90px;">
+           <td style="width:80px;" >当前处理人：</td>
+           <td>
              <input class=mg_r name="orderSO.event_staff_name" value="" type="text" />
            </td>
           </tr>
