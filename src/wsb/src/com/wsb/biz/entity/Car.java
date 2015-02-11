@@ -38,6 +38,7 @@ public class Car extends BaseEntity {
     private String car_service_city;
     private String car_sales;
     private String insurance_assistant;
+    private String insurance_status;
     
     
 	public Long getPsdo_cust_id() {
@@ -141,6 +142,12 @@ public class Car extends BaseEntity {
 	}
 	public void setInsurance_assistant(String insurance_assistant) {
 		this.insurance_assistant = insurance_assistant;
+	}
+	public String getInsurance_status() {
+		return insurance_status;
+	}
+	public void setInsurance_status(String insurance_status) {
+		this.insurance_status = insurance_status;
 	}
     
 }

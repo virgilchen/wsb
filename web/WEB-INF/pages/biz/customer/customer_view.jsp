@@ -24,6 +24,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"customer.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         //fillOptions({id:"customerSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
         fillOptions({id:"customer.cust_gender", dictName:"CM.gender", firstLabel:"请选择..."}) ;
+        fillOptions({id:"customer.cust_src", dictName:"CM.SRC", firstLabel:"请选择..."}) ;
+        
         
         this.initDataGrid("customerTB") ;
         
@@ -39,6 +41,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.addRows ("carInfosTB", [{index:this.size}], {forceClear:false});
 
         E$("car_init_register_date" + this.size).datepicker();
+        fillOptions({id:"insurance_status" + this.size, dictName:"car.status", firstLabel:"请选择..."}) ;
         
         this.size ++;
         this.refreshTableList();
@@ -72,6 +75,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             		_this.size = i;
                     _this.addRows ("carInfosTB", elem, {forceClear:i==0?true:false});
                     E$("car_init_register_date" + _this.size).datepicker();
+                    fillOptions({id:"insurance_status" + _this.size, dictName:"car.status", firstLabel:"请选择..."}) ;
             	});
                 this.size = _this.size++;
                 if(data.cars.length>0){
@@ -422,9 +426,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				<table width="100%" border="0">
 					<tr>
 					<th>客户来源：</th>
-					<td><select name="customer.cust_src">
-					  <option selected="selected">公司老客户</option>
-					  <option>外来</option><option>朋友</option>
+					<td><select name="customer.cust_src" id="customer.cust_src">
 					</select></td>
 					</tr>
 					<tr>
@@ -543,9 +545,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 							    <input name="cars[{$T.index}].insurance_assistant" type="text" value="{fmt.maxlen($T.insurance_assistant, 100)}"/>
 							    <span class="c_red"></span>
                               </td>
-                              <th></th>
-                              <td>
-							  </td>
+                              <th>保险状态：</th>
+							  <td><select name="cars[{$T.index}].insurance_status" id="insurance_status{$T.index}" value="{$T.insurance_status}">
+							  </select></td>
 							</tr>
 							<tr style="border-top:1px #248cb8 solid;">
 								<td style="border-top:1px #248cb8 solid;" colspan="4"></td>
