@@ -422,3 +422,15 @@ CREATE TABLE `wsbd001`.`recommendation_opr_map_dim` (
   INDEX `idx_opr_dim` (`recommendation_opr_in_inventory` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+-- modified at 20141108
+-- drop table `recommendation_dt` ;
+CREATE TABLE `wsbd001`.`recommendation_dt` (
+  `recmdt_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `recmdt_name` VARCHAR(30) NULL,
+  `recmdt_status` VARCHAR(10) NULL,
+  `recmdt_remark` VARCHAR(1000) NULL,
+  `recmdt_detail` VARCHAR(2000) NULL,
+  `recmdt_condition_operator` VARCHAR(5) NULL,
+  PRIMARY KEY (`recmdt_id`));
