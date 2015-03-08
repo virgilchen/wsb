@@ -347,6 +347,11 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	OrderProcess process = (OrderProcess)jdbcDao.find(so);
     	
+    	if (process == null) {
+    		//未能找到业务流程节点配置[ID:{0}, step:{1}]!
+    		throw new BusinessException(11007L, oldEvent.getBusiness_id(), oldEvent.getProcs_step_no()) ;
+    	}
+    	
     	Staff staff = SessionUser.get().getStaff();
     	if (!process.getProcs_staff_role_id().equals(staff.getStaff_role_id())) {
     		String roleName = CodeHelper.getString("Role", "staff_role_name", Integer.valueOf(process.getProcs_staff_role_id().intValue()));

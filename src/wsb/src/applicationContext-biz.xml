@@ -209,8 +209,8 @@ select
 
   (select ifnull(sum(remain_amount),0) 
      from biz_assets_holding ah 
-    where (ah.expire_date is null or ah.expire_date>=sysdate()) 
-      and (ah.effect_date is null or ah.effect_date<=sysdate())
+    where (ah.expire_date is null or ah.expire_date>=curdate()) 
+      and (ah.effect_date is null or ah.effect_date<=curdate())
       and ah.remain_amount>0
       and ah.customer_id=[customer_id] 
       and ah.assets_type=1 
@@ -254,8 +254,8 @@ select
 
   (select ifnull(sum(remain_amount),0) 
      from biz_assets_holding ah 
-    where (ah.expire_date is null or ah.expire_date>=sysdate()) 
-      and (ah.effect_date is null or ah.effect_date<=sysdate())
+    where (ah.expire_date is null or ah.expire_date>=curdate()) 
+      and (ah.effect_date is null or ah.effect_date<=curdate())
       and ah.remain_amount>0
       and ah.customer_id=[customer_id] 
       and ah.assets_type=1 
@@ -336,8 +336,8 @@ select business_id from business_rt b
               <![CDATA[
 select *, ifnull(expire_date, '2999-01-01') order_by_date 
   from biz_assets_holding 
- where (expire_date is null or expire_date>=sysdate()) 
-   and (effect_date is null or effect_date<=sysdate())
+ where (expire_date is null or expire_date>=curdate()) 
+   and (effect_date is null or effect_date<=curdate())
    and remain_amount>0
    and assets_type=[assets_type]
    and assets_id=[assets_id]
@@ -422,8 +422,8 @@ select *
  where 1=1
   {and pp.prod_pack_name like [prod_pack_name]}
   {and exists(select 1 from biz_assets_holding ah 
-                      where (ah.expire_date is null or ah.expire_date>=sysdate()) 
-                        and (ah.effect_date is null or ah.effect_date<=sysdate())
+                      where (ah.expire_date is null or ah.expire_date>=curdate()) 
+                        and (ah.effect_date is null or ah.effect_date<=curdate())
                         and ah.remain_amount>0
                         and ah.customer_id=[customer_id] 
                         and ah.assets_type=1 

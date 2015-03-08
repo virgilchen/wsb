@@ -31,9 +31,34 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
       });
   
       openView(100001, '/biz/order_myTasksView.action', '业务单处理');
+      
+      
   });
 
+  
+function findMyTaskCount() {
+   ajax(
+        root + "/biz/order_getMyTasks.action", 
+        {"orderSO.pageSize":0},
+        function(data, textStatus){
+        	if (data.total > 0) {
+                $("#myOrderCount").show();
+                $("span", $("#myOrderCount")).html(data.total);
+        	} else {
+                $("#myOrderCount").hide();
+        	}
+            setTimeout(findMyTaskCount, 60 * 1000);//D:正确 
+        },
+        false,
+        false
+    );
+ 
+}
+
+findMyTaskCount();
+
 </script>
+
 <!--[if IE 6]><script src="images/iepng.js" type="text/javascript"></script> <script type="text/javascript">
         DD_belatedPNG.fix('div, ul, img, li, input , a,span');
     </script><![endif]-->
@@ -49,7 +74,7 @@ public String showOrNot(SessionUser sessionUser, short[] pids) {
         <dt><a href="#"><span class="open">展开</span><span class="close">收缩</span><img src="images/menu_ordermanege.png" />业务单管理</a></dt>
         <dd>
             <ul>
-                <li <%=showOrNot(sessionUser, new short[]{(short)10001}) %>><a href="javascript:removeAll();openView(10001, '/biz/order_myTasksView.action', '业务单处理');">业务单处理<!-- <b><span>32</span></b> --></a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)10001}) %>><a href="javascript:removeAll();openView(10001, '/biz/order_myTasksView.action', '业务单处理');">业务单处理 <b id="myOrderCount" style="display: none;"><span>10</span></b></a></li>
                 <!-- 
                 <li <%=showOrNot(sessionUser, new short[]{(short)1}) %>><a href="javascript:removeAll();openView(100003, '/biz/order_openView.action', '业务发起');">业务发起</a></li>
                  -->

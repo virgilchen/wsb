@@ -144,10 +144,10 @@ public class PrivilegeCheckInterceptor extends AbstractInterceptor {
 	    	
 	    	HttpServletRequest request = ((HttpServletRequest) ((BaseAction)actionInvocation.getProxy().getAction()).getRequest()) ;
 	    	
-	    	Map<String, String> paramMap = new HashMap<String, String>() ;
+	    	Map<String, String[]> paramMap = new HashMap<String, String[]>() ;
 	    	paramMap.putAll(request.getParameterMap()) ;
 	    	if (paramMap.get("user.password_") != null) {
-	    	    paramMap.put("user.password_", "******") ;
+	    	    paramMap.put("user.password_", new String[]{"******"}) ;
 	    	}
 	    	String biz_data = 
 	    			GsonUtil.getGson().toJson(paramMap) ;

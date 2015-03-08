@@ -69,6 +69,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             params,
             function(data, textStatus){
                 viewJs.entity = data;
+                data.customer.cust_gender = dVal("CM.gender", "name_", {PK_ID:data.customer.cust_gender});
                 formDeserializeText("customerInfoDetailDiv", "label", data.customer, {}) ;
                 formDeserializeText("orderInfoDiv", "label", data, {}) ;
                 E$("order.order_no").html(data.order_no);
@@ -457,7 +458,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <div id="con{$T._name_}_{$T._index_}" style="display:block;" >
                 <p>基础商品：{$T.product_names}</p>
                 <p>购买日期：{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}</p>
-                <p>起效日期：{fmt.maxlen($T.order_prod_pack_effect_date, 10)}</p>
+                <p>有效日期：{fmt.maxlen($T.order_prod_pack_effect_date, 10)}~{fmt.maxlen($T.order_prod_pack_expire_date, 10)}</p>
                 <p>备注：{$T.order_prod_pack_remark}</p>
                 <p></p>
                 <b>流程处理记录：</b>

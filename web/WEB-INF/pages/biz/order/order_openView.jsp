@@ -54,6 +54,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             params,
             function(data, textStatus){
                 viewJs.entity = data;
+                data.customer.cust_gender = dVal("CM.gender", "name_", {PK_ID:data.customer.cust_gender});
                 formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
                 _this.customer_id = data.customer.id;
                 formDeserialize("eForm", data, {}) ;
@@ -106,7 +107,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	
         this.addRows ("orderProdPacksTB", datas, {forceClear:false});
 
-        E$("purchase_date" + this.size).datepicker();
+        E$("expire_date" + this.size).datepicker();
         E$("effect_date" + this.size).datepicker();
         
         this.size ++;
@@ -406,13 +407,13 @@ width: 92%;
 			                </td>
 			              </tr>
 			              <tr>
-			                <th>购买日期：</th>
-			                <td>
-			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_purchase_date" id="purchase_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
-			                </td>
 			                <th>起效日期：</th>
 			                <td>
 			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_effect_date" id="effect_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_effect_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
+			                </td>
+			                <th>失效日期：</th>
+			                <td>
+			                  <input type="text" name="orderProdPacks[{$T.index}].order_prod_pack_expire_date" id="expire_date{$T.index}" value="{fmt.maxlen($T.order_prod_pack_expire_date, 10)}" class="ipt_date" required="required" /><span class="c_red">*</span>
 			                </td>
                             <td></td>
 			              </tr>

@@ -1,5 +1,6 @@
 package com.wsb.biz.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,6 +104,9 @@ public class OrderBO extends BaseServiceImpl {
 	    		}
 	    		opp.setId(null);
 	    		opp.setOrder_id(order.getId());
+        		if (opp.getOrder_prod_pack_purchase_date() == null) {
+        			opp.setOrder_prod_pack_purchase_date(new Date(U.currentDate().getTime()));
+        		}
 	    		
 	    		setPackProductNames(opp);
 	    		
@@ -123,6 +127,9 @@ public class OrderBO extends BaseServiceImpl {
         		}
         		opp.setId(null);
         		opp.setOrder_id(order.getId());
+        		if (opp.getOrder_prod_pack_purchase_date() == null) {
+        			opp.setOrder_prod_pack_purchase_date(new Date(U.currentDate().getTime()));
+        		}
         		jdbcDao.insert(opp);
         		
         		assetsHoldingBO.add(order, opp);

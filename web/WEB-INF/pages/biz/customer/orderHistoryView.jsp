@@ -350,7 +350,7 @@ g$v<%=view_id%>.orderHistoryView = $.extend(newView(), {
             <div id="con{$T._name_}_{$T._index_}" style="display:block;" >
                 <p>基础商品：{$T.product_names}</p>
                 <p>购买日期：{fmt.maxlen($T.order_prod_pack_purchase_date, 10)}</p>
-                <p>起效日期：{fmt.maxlen($T.order_prod_pack_effect_date, 10)}</p>
+                <p>有效日期：{fmt.maxlen($T.order_prod_pack_effect_date, 10)}~{fmt.maxlen($T.order_prod_pack_expire_date, 10)}</p>
                 <p>备注：{$T.order_prod_pack_remark}</p>
                 <p></p>
                 <b>流程处理记录：</b>

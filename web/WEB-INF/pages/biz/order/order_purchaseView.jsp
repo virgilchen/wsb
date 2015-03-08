@@ -52,6 +52,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             params,
             function(data, textStatus){
                 viewJs.entity = data;
+                data.customer.cust_gender = dVal("CM.gender", "name_", {PK_ID:data.customer.cust_gender});
                 formDeserializeText("customerInfoDiv", "label", data.customer, {}) ;
                 formDeserialize("eForm", data, {}) ;
 
