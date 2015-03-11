@@ -21,6 +21,7 @@ public class CustomerSO extends BaseSO {
     private String order_prod_pack_expire_date;//到期时间
     private String cust_id;//身份证号
     private String car_engine_no;//发动机号
+    private String car_no;//车牌号
     
     
 
@@ -83,6 +84,12 @@ public class CustomerSO extends BaseSO {
 	}
 	public void setCar_engine_no(String car_engine_no) {
 		this.car_engine_no = car_engine_no;
+	}
+	public String getCar_no() {
+		return car_no;
+	}
+	public void setCar_no(String car_no) {
+		this.car_no = car_no;
 	}
 	@Override
 	public Class<?> getTableClass() {

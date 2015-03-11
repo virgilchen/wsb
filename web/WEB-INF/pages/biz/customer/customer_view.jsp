@@ -190,6 +190,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		openView(11005, str, '会员列表');
     		return;
     	}
+    },
+    displayConditions:function(total){
+    	var condType = "";
+    	if(document.getElementById('condtype1').style.display != "none"){
+    		condType = "none";
+    	}
+    	for ( var i = 1; i <= total; i++) {
+            document.getElementById('condtype' + i).style.display = condType;
+        }
     }
 }) ;
 
@@ -232,11 +241,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
              <input class=mg_r name="customerSO.cust_phone_no" value="" type="text" />
            </td>
            <td style="width:100px;">
+           	 <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
            </td>
            <td style="width:100px;">
+           	 <INPUT class="ipt_btn mg_r" value=高级 type=button name=""  onclick="javascript:viewJs.displayConditions(3);">
            </td>
           </tr>
-          <tr>
+          <tr id="condtype1" style="display:none;">
            <td style="width:100px;" >会员号：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.member_id" value="" type="text" />
@@ -254,7 +265,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
            </td>
           </tr>
-          <tr>
+          <tr id="condtype2" style="display:none;">
            <td style="width:100px;" >车架号：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.car_framework_no" value="" type="text" />
@@ -263,12 +274,29 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="customerSO.car_engine_no" value="" type="text" />
            </td>
+           <td style="width:100px;" >车牌号：</td>
+           <td style="width:100px;">
+             <input class=mg_r name="customerSO.car_no" value="" type="text" />
+           </td>
+           <td style="width:100px;">
+           </td>
+           <td style="width:100px;">
+           </td>
+          </tr>
+          <tr id="condtype3" style="display:none;">
            <td style="width:100px;" >商品包：</td>
            <td style="width:100px;">
              <input class=mg_r name="customerSO.prod_pack_name" value="" type="text" />
            </td>
+           <td style="width:100px;" >
+		   </td>
            <td style="width:100px;">
-             <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
+           </td>
+           <td style="width:100px;" >
+           </td>
+           <td style="width:100px;">
+           </td>
+           <td style="width:100px;">
            </td>
            <td style="width:100px;">
            </td>
