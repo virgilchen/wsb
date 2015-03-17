@@ -14,11 +14,13 @@ import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
+import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.service.AssetsHoldingBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
 import com.wsb.biz.service.DocumentBO;
+import com.wsb.biz.service.MemberBO;
 import com.wsb.biz.service.OrderBO;
 import com.opensymphony.xwork2.Preparable;
 
@@ -38,6 +40,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     private CarSO carSO ; 
     private AssetsHoldingBO assetsHoldingBO;
     private AssetsHoldingSO assetsHoldingSO;
+    private MemberBO memberBO;
     
     public String execute() throws Exception { 
         return this.list(); 
@@ -63,11 +66,16 @@ private static final long serialVersionUID = 7244882365197775441L;
     	carso.setPsdo_cust_id(customer.getId());
     	customer.setCars(carBO.query(carso));
     	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
-    	renderObject(customer, null) ; 
     	
+    	//如果是会员，查出会员信息
     	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
     		getRequest().setAttribute("mbid", customer.getMember_id());
+    		Member member = new Member();
+    		member = memberBO.get(customer.getMember_id());
+    		customer.setMember(member);
     	}
+    	renderObject(customer, null) ; 
+    	
         return null ;  
     }
 
@@ -201,6 +209,10 @@ private static final long serialVersionUID = 7244882365197775441L;
 
 	public void setAssetsHoldingBO(AssetsHoldingBO assetsHoldingBO) {
 		this.assetsHoldingBO = assetsHoldingBO;
+	}
+
+	public void setMemberBO(MemberBO memberBO) {
+		this.memberBO = memberBO;
 	}
 	
 }

@@ -54,6 +54,9 @@ public class Customer extends BaseEntity {
     @Transient
     private ArrayPageList<Document> documents;
     
+    @Transient
+    private Member member;
+    
 
 	public Long getId() {
 		return id;
@@ -198,6 +201,12 @@ public class Customer extends BaseEntity {
 	}
 	public void setCust_id(String cust_id) {
 		this.cust_id = cust_id;
+	}
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
 	}
 	
 }

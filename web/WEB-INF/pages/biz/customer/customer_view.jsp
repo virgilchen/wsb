@@ -75,7 +75,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             		_this.size = i;
                     _this.addRows ("carInfosTB", elem, {forceClear:i==0?true:false});
                     E$("car_init_register_date" + _this.size).datepicker();
-                    fillOptions({id:"insurance_status" + _this.size, dictName:"car.status", firstLabel:"请选择..."}) ;
+                    fillOptions({id:"insurance_status" + _this.size, dictName:"car.status", firstLabel:"请选择...", value:elem.insurance_status}) ;
             	});
                 this.size = _this.size++;
                 if(data.cars.length>0){
@@ -83,7 +83,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
     				}else{
     					$("#memberDisplay2").html("[会员]");
-    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>会员ID："+data.member_id+"</a>");
+    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>登录ID："+data.member.member_login_id+"</a>");
     				}
                 }
                 

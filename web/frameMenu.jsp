@@ -108,7 +108,7 @@ findMyTaskCount();
     <div class="menu_line"></div>
     
     <dl <%=showOrNot(sessionUser, new short[]{(short)14001}) %>>
-        <dt><a href="javascript:removeAll();openView(14001, '/biz/recmdtInventory_view.action', '决策信息管理');"><img src="images/menu_information.png" />决策信息管理</a></dt>
+        <dt><a href="javascript:removeAll();openView(14001, '/biz/recmdt_view.action', '决策信息管理');"><img src="images/menu_information.png" />决策信息管理</a></dt>
     </dl>
     <div <%=showOrNot(sessionUser, new short[]{(short)14001}) %> class="menu_line"></div>
     
