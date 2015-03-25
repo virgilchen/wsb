@@ -9,11 +9,13 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.exception.BusinessException;
 import com.globalwave.util.DataFilterUtil;
 import com.wsb.biz.entity.Recmdt;
+import com.wsb.biz.entity.RecmdtInventory;
 import com.wsb.biz.entity.RecmdtSO;
 import com.wsb.biz.entity.RecommendationKeyMapDim;
 import com.wsb.biz.entity.RecommendationKeyMapDimSO;
 import com.wsb.biz.entity.RecommendationOprMapDim;
 import com.wsb.biz.entity.RecommendationOprMapDimSO;
+import java.util.List;
 
 
 
@@ -22,9 +24,22 @@ import com.wsb.biz.entity.RecommendationOprMapDimSO;
 @Transactional
 public class RecmdtBO extends BaseServiceImpl {
 	
-	public Recmdt create(Recmdt recmdt) {  
+	public Recmdt create(Recmdt recmdt, List<RecmdtInventory> recmdtInventorys) {  
 
 		Recmdt newItem = (Recmdt) jdbcDao.insert(recmdt) ;
+		
+		if(recmdtInventorys != null){
+    		for(int i=0;i<recmdtInventorys.size();i++){
+    			recmdtInventorys.get(i).setRecmdt_code(newItem.getId());
+    			recmdtInventorys.get(i).setRecmdt_name(newItem.getRecmdt_name());
+    			recmdtInventorys.get(i).setRecmdt_status(newItem.getRecmdt_status());
+    			recmdtInventorys.get(i).setRecmdt_remark(newItem.getRecmdt_remark());
+    			recmdtInventorys.get(i).setRecmdt_detail(newItem.getRecmdt_detail());
+    			recmdtInventorys.get(i).setRecmdt_condition_operator(newItem.getRecmdt_condition_operator());
+    			recmdtInventorys.get(i).setRecmdt_condition_no(new Long(i));
+    			jdbcDao.insert(recmdtInventorys.get(i));
+        	}
+    	}
         
         return newItem;
     }

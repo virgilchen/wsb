@@ -53,7 +53,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
 			$("#user_suggest").hide();
 			$("#user_detail_title").hide();
 			formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
-			
 			return ;
     	}
 
@@ -83,7 +82,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
     				}else{
     					$("#memberDisplay2").html("[会员]");
-    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>登录ID："+data.member.member_login_id+"</a>");
+    					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>登录 ID："+data.member.member_login_id+"</a>");
     				}
                 }
                 

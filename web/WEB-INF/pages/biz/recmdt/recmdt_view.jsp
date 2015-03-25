@@ -30,24 +30,28 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //E$("notice.notice_timestamp").datetimepicker({
           //  timeFormat: "HH:mm:ss"
         //});
-
+        for(var i=0; i<5; i++){
+        	fillOptions({id:"recmdt_operator"+i, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol"}) ;// 改为字典取值
+            fillOptions({id:"recmdt_type"+i, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type"}) ;// 改为字典取值
+        };
+		
         
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
         
         this.first();
-    },
-    addInfos:function() {
+    }
+    /* addInfos:function() {
         this.addRows ("recmdtInfosTB", [{index:this.size}], {forceClear:false});
 
-        fillOptions({id:"recmdt.recmdt_operator"+ this.size, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol"}) ;// 改为字典取值
-        fillOptions({id:"recmdt.recmdt_type"+ this.size, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type"}) ;// 改为字典取值
+        fillOptions({id:"recmdt_operator"+ this.size, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol"}) ;// 改为字典取值
+        fillOptions({id:"recmdt_type"+ this.size, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type"}) ;// 改为字典取值
         
         this.size ++;
         this.refreshTableList();
         
-    }
+    } */
 }) ;
 
 function tabSteps(stepNo) {
@@ -65,14 +69,18 @@ function tabSteps(stepNo) {
     document.getElementById(stepNo).style.display = "block";
 }
 
-function changeKeyVal(obj){
-	//alert(obj.value);
-	if(obj.value != undefined && obj.value != ''){
-		fillOptions({id:"recmdt.recmdt_key", dictName:obj.value, firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
-	}else{
-		obj.html('');
-	}
-}
+var changeKeyVal = function(obj){
+	var recmdt_type_id=$(obj).attr('id');
+	var recmdt_type_val=$(obj).val();
+	fillOptions({id:recmdt_type_id+"_key", dictName:recmdt_type_val, firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
+};
+
+var cleanRecmdt = function(val){
+	fillOptions({id:"recmdt_operator"+val, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol"}) ;// 改为字典取值
+    fillOptions({id:"recmdt_type"+val, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type"}) ;// 改为字典取值
+    fillOptions({id:"recmdt_type"+val+"_key", dictName:'', firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
+    document.getElementById("recmdt_value"+val).value = "";
+};
 function selKey(obj){
 	//alert(obj.value);
 }
@@ -234,37 +242,112 @@ function selKey(obj){
 								  <option>任意</option>
 								</select>
 								以下条件：
+								<!-- <a class="de_add" href="javascript:viewJs.addInfos();">添加条件</a> -->
 							</span>
+							
 							<div class="fr">
 								<a href="javascript:showCL('test_condition')" class="btn_blue">测试以下条件</a>
 							</div>
 						</div>
 						
-						<table width="100%" border="0" id="recmdtInfosTB">
+						<!-- <table width="100%" border="0" id="recmdtInfosTB">
 						<tbody id="listBody">
 			      		</tbody>
 			      		
 			      		<tbody style="display:none;visibility: false;" disabled="true">
+			      			<tr><td>
 			      			<textarea id="templateBody" jTemplate="yes">
 			      				<ul id="{$T.index}">
 									<li>
 										<div>
 										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_type" id="recmdt_type{$T.index}" value="{$T.recmdt_type}" onchange="changeKeyVal(this)">
 										</select>
-										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_key" id="recmdt_key{$T.index}" value="{$T.recmdt_key}" onchange="selKey(this)">
+										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_key" id="recmdt_key_recmdt_type{$T.index}" value="{$T.recmdt_key}" onchange="selKey(this)">
 										</select>
 										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_operator" id="recmdt_operator{$T.index}" value="{$T.recmdt_operator}">
 										</select>
 										<input class="long_ipt" name="recmdtInventorys[{$T.index}].recmdt_value" type="text" value="{$T.recmdt_value}">
 										</div>
-										<a class="de_add" href="javascript:viewJs.addInfos();">+</a><a class="de_del" href="#">×</a>
+										<a class="de_del" href="#">×</a>
 									</li>
 								</ul>
 			      			</textarea>
+			      			</td></tr>
 			      		</tbody>
 			      		
 						
-						</table>
+						</table> -->
+						
+						<ul>
+							<li>
+								<div>
+								<select class="mg_r" name="recmdtInventorys[0].recmdt_type" id="recmdt_type0" onchange="changeKeyVal(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[0].recmdt_key" id="recmdt_type0_key" onchange="selKey(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[0].recmdt_operator" id="recmdt_operator0" >
+								</select>
+								<input class="long_ipt" name="recmdtInventorys[0].recmdt_value" id="recmdt_value0" type="text" >
+								</div>
+								<a class="de_del" href="#" onclick="cleanRecmdt('0')">×</a>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<div>
+								<select class="mg_r" name="recmdtInventorys[1].recmdt_type" id="recmdt_type1" onchange="changeKeyVal(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[1].recmdt_key" id="recmdt_type1_key" onchange="selKey(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[1].recmdt_operator" id="recmdt_operator1" >
+								</select>
+								<input class="long_ipt" name="recmdtInventorys[1].recmdt_value" id="recmdt_value1" type="text" >
+								</div>
+								<a class="de_del" href="#" onclick="cleanRecmdt('1')">×</a>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<div>
+								<select class="mg_r" name="recmdtInventorys[2].recmdt_type" id="recmdt_type2" onchange="changeKeyVal(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[2].recmdt_key" id="recmdt_type2_key" onchange="selKey(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[2].recmdt_operator" id="recmdt_operator2" >
+								</select>
+								<input class="long_ipt" name="recmdtInventorys[2].recmdt_value" id="recmdt_value2" type="text" >
+								</div>
+								<a class="de_del" href="#" onclick="cleanRecmdt('2')">×</a>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<div>
+								<select class="mg_r" name="recmdtInventorys[3].recmdt_type" id="recmdt_type3" onchange="changeKeyVal(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[3].recmdt_key" id="recmdt_type3_key" onchange="selKey(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[3].recmdt_operator" id="recmdt_operator3" >
+								</select>
+								<input class="long_ipt" name="recmdtInventorys[3].recmdt_value" id="recmdt_value3" type="text" >
+								</div>
+								<a class="de_del" href="#" onclick="cleanRecmdt('3')">×</a>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<div>
+								<select class="mg_r" name="recmdtInventorys[4].recmdt_type" id="recmdt_type4" onchange="changeKeyVal(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[4].recmdt_key" id="recmdt_type4_key" onchange="selKey(this)">
+								</select>
+								<select class="mg_r" name="recmdtInventorys[4].recmdt_operator" id="recmdt_operator4" >
+								</select>
+								<input class="long_ipt" name="recmdtInventorys[4].recmdt_value" id="recmdt_value4" type="text" >
+								</div>
+								<a class="de_del" href="#" onclick="cleanRecmdt('4')">×</a>
+							</li>
+						</ul>
 						<div>
 						决策建议：
 						</div>

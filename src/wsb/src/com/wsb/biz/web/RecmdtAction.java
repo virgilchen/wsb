@@ -1,6 +1,7 @@
 package com.wsb.biz.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.Recmdt;
+import com.wsb.biz.entity.RecmdtInventory;
 import com.wsb.biz.entity.RecmdtSO;
 import com.wsb.biz.entity.RecommendationKeyMapDimSO;
 import com.wsb.biz.entity.RecommendationOprMapDimSO;
@@ -27,6 +29,7 @@ public class RecmdtAction extends BaseAction implements Preparable {
 	private Recmdt recmdt;
 	private RecmdtSO recmdtSO;
 	private RecmdtBO recmdtBO;
+	private List<RecmdtInventory> recmdtInventorys;
 	
 	
 	public String execute() throws Exception { 
@@ -74,7 +77,7 @@ public class RecmdtAction extends BaseAction implements Preparable {
     @Pid(value=Pid.DO_NOT_CHECK)
     public String create()  throws Exception {        
 
-        Object newRecmdt = recmdtBO.create(recmdt) ;
+        Object newRecmdt = recmdtBO.create(recmdt,recmdtInventorys) ;
 
         renderObject(newRecmdt, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
@@ -139,6 +142,16 @@ public class RecmdtAction extends BaseAction implements Preparable {
 
 	public void setRecmdtBO(RecmdtBO recmdtBO) {
 		this.recmdtBO = recmdtBO;
+	}
+
+
+	public List<RecmdtInventory> getRecmdtInventorys() {
+		return recmdtInventorys;
+	}
+
+
+	public void setRecmdtInventorys(List<RecmdtInventory> recmdtInventorys) {
+		this.recmdtInventorys = recmdtInventorys;
 	}
     
     

@@ -25,7 +25,7 @@ public class RecmdtInventory extends BaseEntity {
     @Column(name="recmdt_id")
 	private Long id;
 	
-	private String recmdt_code;
+	private Long recmdt_code;
 	private String recmdt_name;
 	private String recmdt_status;
 	private String recmdt_remark;
@@ -113,12 +113,6 @@ public class RecmdtInventory extends BaseEntity {
 	public void setRecmdt_value(String recmdt_value) {
 		this.recmdt_value = recmdt_value;
 	}
-	public String getRecmdt_code() {
-		return recmdt_code;
-	}
-	public void setRecmdt_code(String recmdt_code) {
-		this.recmdt_code = recmdt_code;
-	}
 	public ArrayPageList<RecommendationOprMapDim> getOprInfos() {
 		return oprInfos;
 	}
@@ -136,6 +130,12 @@ public class RecmdtInventory extends BaseEntity {
 	}
 	public void setKeyInfos(ArrayPageList<RecommendationKeyMapDim> keyInfos) {
 		this.keyInfos = keyInfos;
+	}
+	public Long getRecmdt_code() {
+		return recmdt_code;
+	}
+	public void setRecmdt_code(Long recmdt_code) {
+		this.recmdt_code = recmdt_code;
 	}
 	
 	
