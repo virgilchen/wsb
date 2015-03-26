@@ -55,7 +55,7 @@ function showNoticeDetail(id) {
         <!-- 
         <li class="top_news"><a href="#" title="消息">消息</a><span>4</span></li>
          -->
-        <li class="top_key"><a href="javascript:openView(9120002, '/biz/staff_changePasswordView.action', '修改密码');" target="mainFrame" title="修改密码">修改密码</a></li>
+        <li class="top_key"><a href="javascript:openView(9120002, '/biz/staff_changePasswordView.action', '修改密码');" title="修改密码">修改密码</a></li>
         <li class="top_logout"><a href="javascript:logout();" title="退出登录">退出登录</a></li>
     </ul>
     

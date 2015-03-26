@@ -228,6 +228,11 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     		throw new BusinessException(11003L);//11003 当前环节由其业务员处理
     	}
     	
+    	if (!OrderProdPackEvent.STATUS_READY.equals(oldEvent.getEvent_status())) {
+    		throw new BusinessException(11008L);//11008', '任务已经处理，不能重复处理！
+    	}
+    	
+    	
     	event.setOrder_id(oldEvent.getOrder_id());
     	
     	String event_status = event.getEvent_status();
