@@ -133,12 +133,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
 
         viewJs.toPage('s') ;
         viewJs.list() ;
+        this.customer = data ;
 
-    	if (this.isOpenOrderAfterSave) {    		
-            openView(100003, '/biz/order_openView.action?parent_view_id=<%=view_id%>&customer_id=' + data.id, '业务发起');
+    },
+    
+    onList:function(data) {
+        if (this.isOpenOrderAfterSave) {          
+            openView(100003, '/biz/order_openView.action?parent_view_id=<%=view_id%>&customer_id=' + this.customer.id, '业务发起');
             this.isOpenOrderAfterSave = false ;
-    	}
-
+        }
     },
     
     getDistrict:function(rowIndex){
