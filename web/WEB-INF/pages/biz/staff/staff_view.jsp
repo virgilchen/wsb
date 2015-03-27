@@ -21,6 +21,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.pageIndex = E("staffSO.pageIndex") ;
         
         fillOptions({id:"staff.staff_role_id", dictName:"Role", firstLabel:"请选择...", textProperty:"staff_role_name",titleProperty:"staff_role_name"}) ;// 改为字典取值
+        fillOptions({id:"staffSO.staff_role_id", dictName:"Role", firstLabel:"请选择...", textProperty:"staff_role_name",titleProperty:"staff_role_name"}) ;// 改为字典取值
         fillOptions({id:"staff.staff_status", dictName:"staff.status", firstLabel:"请选择..."}) ;
         fillOptions({id:"staff.staff_gender", dictName:"CM.gender", firstLabel:"请选择..."}) ;
         
@@ -103,6 +104,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;" >登录账号：</td>
            <td style="width:100px;">
              <input class=mg_r name="staffSO.staff_login_profile" value="" type="text" />
+           </td>
+           <td style="width:100px;" >角色：</td>
+           <td style="width:100px;">
+             <select class=mg_r name="staffSO.staff_role_id" id="staffSO.staff_role_id"></select>
+             <!-- <input class=mg_r name="staffSO.staff_role_id" value="" type="text" /> -->
            </td>
            <td style="width:100px;" >姓名：</td>
            <td style="width:100px;">
