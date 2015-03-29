@@ -305,7 +305,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	var event_status = V("event_status") ;
     	
     	var key = V("orderProdPackEvent.id") + "#" + event_status;
-    	var isFail = (event_status == "<%=OrderProdPackEvent.STATUS_FAIL%>");
+    	var isFail = (event_status == "<%=OrderProdPackEvent.STATUS_FAIL_AND_HELP%>");
     	
     	if (typeof(this.roleMap[key]) != "undefined" || isFail) {
 

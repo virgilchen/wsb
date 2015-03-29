@@ -261,6 +261,10 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     		so.setProcs_step_no(oldEvent.getProcs_step_no());
     	}
     	
+    	if (OrderProdPackEvent.STATUS_TERMINAL.equals(event_status)) {
+    		return null;
+    	}
+    	
     	OrderProcess process = (OrderProcess)jdbcDao.find(so);
     	if (process == null) {
     		if (OrderProdPackEvent.STATUS_SUCCESSFULLY.equals(event_status)) {
@@ -276,7 +280,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     	
     	Long newEventStaffId = event.getEvent_staff_id() ;
     	
-    	if (!OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
+    	if (!OrderProdPackEvent.STATUS_FAIL_AND_HELP.equals(event_status)){
     	    checkProcessRole(process, newEventStaffId);
     	}
     	
@@ -314,6 +318,10 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
     		so.setProcs_step_no(oldEvent.getProcs_step_no() + 1);
     	} else {// if (OrderProdPackEvent.STATUS_FAIL.equals(event_status)){
     		so.setProcs_step_no(oldEvent.getProcs_step_no());
+    	}
+    	
+    	if (OrderProdPackEvent.STATUS_TERMINAL.equals(event_status)) {
+    		return null;
     	}
     	
     	OrderProcess process = (OrderProcess)jdbcDao.find(so);
