@@ -41,7 +41,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E("sForm").setFirstFocus();
         
         this.first();
-    }
+    },
     /* addInfos:function() {
         this.addRows ("recmdtInfosTB", [{index:this.size}], {forceClear:false});
 
@@ -52,6 +52,28 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.refreshTableList();
         
     } */
+    get:function(id) {
+
+    	var idProperty = (this.idName==null?"id":this.idName) ;
+    	var params = {} ;
+    	params[idProperty] = id ;
+        ajax(
+            this.get_url, 
+            params,
+            function(data, textStatus){
+                viewJs.entity = data;
+                formDeserialize("eForm", data, {}) ;
+        
+                $(data.recmdtInventorys).each(function (i, elem) {
+                    fillOptions({id:"recmdt_operator"+i, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol", value:elem.recmdt_operator}) ;// 改为字典取值
+                    fillOptions({id:"recmdt_type"+i, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type", value:elem.recmdt_type}) ;// 改为字典取值
+                    fillOptions({id:"recmdt_type"+i+"_key", dictName:elem.recmdt_type, firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory", value:elem.recmdt_key}) ;// 改为字典取值
+                    document.getElementById("recmdt_value"+i).value = elem.recmdt_value;
+            	});
+                
+            }
+        );
+    }
 }) ;
 
 function tabSteps(stepNo) {
@@ -59,6 +81,7 @@ function tabSteps(stepNo) {
 	var recmdt_name = document.getElementById("recmdt_name");
 	if(recmdt_name.value == null || recmdt_name.value == ''){
 		recmdt_name.focus();
+		//alert("请输入决策名称");
 		return;
 	}
 	

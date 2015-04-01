@@ -369,7 +369,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	
 	<div class="user_suggest" id="user_suggest">
 		<div class="content">
-		<p><b>跟据客户的信息和过往的业务记录。建议：</b></p>
+		<p><b>根据客户的信息和过往的业务记录。建议：</b></p>
 		<p>1、决策1</p><p>2、决策2</p><p>3、决策3</p><p>4、决策5</p>
 		</div>
 	</div>

@@ -10,6 +10,7 @@ import com.globalwave.common.exception.BusinessException;
 import com.globalwave.util.DataFilterUtil;
 import com.wsb.biz.entity.Recmdt;
 import com.wsb.biz.entity.RecmdtInventory;
+import com.wsb.biz.entity.RecmdtInventorySO;
 import com.wsb.biz.entity.RecmdtSO;
 import com.wsb.biz.entity.RecommendationKeyMapDim;
 import com.wsb.biz.entity.RecommendationKeyMapDimSO;
@@ -44,9 +45,26 @@ public class RecmdtBO extends BaseServiceImpl {
         return newItem;
     }
 	
-    public void update(Recmdt recmdt) {
+    public void update(Recmdt recmdt, List<RecmdtInventory> recmdtInventorys) {
     	
         jdbcDao.update(recmdt) ;
+        
+        if(recmdtInventorys != null){
+        	RecmdtInventorySO recmdtInventorySO = new RecmdtInventorySO();
+        	recmdtInventorySO.setRecmdt_code(recmdt.getId());
+        	jdbcDao.delete(RecmdtInventory.class, recmdtInventorySO);
+        	
+    		for(int i=0;i<recmdtInventorys.size();i++){
+    			recmdtInventorys.get(i).setRecmdt_code(recmdt.getId());
+    			recmdtInventorys.get(i).setRecmdt_name(recmdt.getRecmdt_name());
+    			recmdtInventorys.get(i).setRecmdt_status(recmdt.getRecmdt_status());
+    			recmdtInventorys.get(i).setRecmdt_remark(recmdt.getRecmdt_remark());
+    			recmdtInventorys.get(i).setRecmdt_detail(recmdt.getRecmdt_detail());
+    			recmdtInventorys.get(i).setRecmdt_condition_operator(recmdt.getRecmdt_condition_operator());
+    			recmdtInventorys.get(i).setRecmdt_condition_no(new Long(i));
+    			jdbcDao.insert(recmdtInventorys.get(i));
+        	}
+    	}
     }
 	
     public void delete(Recmdt recmdt) {

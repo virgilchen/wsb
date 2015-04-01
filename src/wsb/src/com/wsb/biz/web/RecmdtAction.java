@@ -10,12 +10,14 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
+import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Recmdt;
 import com.wsb.biz.entity.RecmdtInventory;
+import com.wsb.biz.entity.RecmdtInventorySO;
 import com.wsb.biz.entity.RecmdtSO;
-import com.wsb.biz.entity.RecommendationKeyMapDimSO;
 import com.wsb.biz.entity.RecommendationOprMapDimSO;
 import com.wsb.biz.service.RecmdtBO;
+import com.wsb.biz.service.RecmdtInventoryBO;
 import com.opensymphony.xwork2.Preparable;
 
 
@@ -30,6 +32,7 @@ public class RecmdtAction extends BaseAction implements Preparable {
 	private RecmdtSO recmdtSO;
 	private RecmdtBO recmdtBO;
 	private List<RecmdtInventory> recmdtInventorys;
+	private RecmdtInventoryBO recmdtInventoryBO;
 	
 	
 	public String execute() throws Exception { 
@@ -53,10 +56,10 @@ public class RecmdtAction extends BaseAction implements Preparable {
     public String get() throws Exception {  
 
     	Recmdt recmdt = recmdtBO.get(this.id) ;
-    	
-    	ArrayList optList = new ArrayList();
-    	
-    	RecommendationKeyMapDimSO recommendationKeyMapDimSO = new RecommendationKeyMapDimSO();
+    	RecmdtInventorySO recmdtInventorySO = new RecmdtInventorySO();
+    	recmdtInventorySO.setRecmdt_code(recmdt.getId());
+    	ArrayPageList<RecmdtInventory> recmdtInventoryList = recmdtInventoryBO.query(recmdtInventorySO);
+    	recmdt.setRecmdtInventorys(recmdtInventoryList);
     	
     	//资料类型下拉菜单
     	getRequest().setAttribute("keyTypeList", recmdtBO.queryRecommendationKeyType());
@@ -89,7 +92,7 @@ public class RecmdtAction extends BaseAction implements Preparable {
     public String update()  throws Exception {     
 
             	
-    	recmdtBO.update(recmdt) ;
+    	recmdtBO.update(recmdt,recmdtInventorys) ;
 
         renderObject(recmdt, ResponseMessage.KEY_UPDATE_OK) ;
         
@@ -152,6 +155,16 @@ public class RecmdtAction extends BaseAction implements Preparable {
 
 	public void setRecmdtInventorys(List<RecmdtInventory> recmdtInventorys) {
 		this.recmdtInventorys = recmdtInventorys;
+	}
+
+
+	public void setRecmdtInventoryBO(RecmdtInventoryBO recmdtInventoryBO) {
+		this.recmdtInventoryBO = recmdtInventoryBO;
+	}
+
+
+	public RecmdtInventoryBO getRecmdtInventoryBO() {
+		return recmdtInventoryBO;
 	}
     
     
