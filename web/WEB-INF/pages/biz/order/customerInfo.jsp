@@ -20,8 +20,8 @@
     <tr>
       <td style="text-align: right;">电话号码：</td>
       <td style="text-align: left;"><label id="customer.cust_phone_no">186888888</label></td>
-      <td></td>
-      <td></td>
+      <td style="text-align: right;">其他联系方式：</td>
+      <td style="text-align: left;"><label id="customer.other_contact_way">186888888</label></td>
     </tr>
   </table>
 </div>
