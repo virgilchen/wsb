@@ -313,12 +313,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <thead>
           <TR>
 			<TH width="20px"></TH>
-			<TH width="80px">客户号</TH>
+			<TH width="50px">客户号</TH>
+			<TH width="50px">会员号</TH>
 			<TH width="80px">姓名</TH>
 			<TH width="40px">性别</TH>
-			<TH width="80px">生日</TH>
-			<TH width="100px">电话号码</TH>
-			<TH width="100px">会员号</TH>
+			<TH width="100px">车牌</TH>
+			<TH width="120px">电话号码</TH>
+			<TH width="120px">其他联系方式</TH>
 		  <TR>
         </thead>
         
@@ -335,11 +336,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <input type="checkbox" name="ids" id="ids" value="{$T.id}" />
                     </td>
                     <td>{$T.cust_code}</td>
+                    <td>{$T.member_login_id}</td>
                     <td>{$T.cust_name}</td>
                     <td>{dVal("CM.gender", "name_", {PK_ID:$T.cust_gender})}</td>
-                    <td>{fmt.maxlen($T.cust_birthday,10)}</td>
+                    <td>{$T.car_no}</td>
                     <td>{$T.cust_phone_no}</td>
-                    <td>{fmt.maxlen($T.member_id, 100)}</td>
+                    <td>{$T.other_contact_way}</td>
                   </tr>
               </textarea>
             </td>

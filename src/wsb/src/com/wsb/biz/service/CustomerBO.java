@@ -140,6 +140,23 @@ public class CustomerBO extends BaseServiceImpl {
         //ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);
         
         ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.queryName("bizSQLs:queryCustomerHighClass", customerSO, Customer.class);
+//        ArrayPageList<Customer> newResult = new ArrayPageList<Customer>();
+//        for(Customer customer : result){
+//        	String car_no = "";
+//        	car_no = CarBO.getCarBO().getCar_no(customer.getId());
+//        	customer.setCar_no(car_no);
+//        	
+//        	if(customer.getMember_id() != null){
+//        		String member_login_id = "";
+//        		Member member = new Member();
+//        		member = MemberBO.getMemberBO().get(customer.getMember_id());
+//        		if(member != null){
+//        			member_login_id = member.getMember_login_id();
+//        		}
+//        		customer.setMember_login_id(member_login_id);
+//        	}
+//        	newResult.add(customer);
+//        }
 
         DataFilterUtil.maskStar4List(result, getRestrictedProperties(), 0);
         

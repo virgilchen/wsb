@@ -57,6 +57,12 @@ public class Customer extends BaseEntity {
     @Transient
     private Member member;
     
+    //查询结果展示用的属性
+    @Transient
+    private String member_login_id;
+    @Transient
+    private String car_no;
+    
 
 	public Long getId() {
 		return id;
@@ -207,6 +213,18 @@ public class Customer extends BaseEntity {
 	}
 	public void setMember(Member member) {
 		this.member = member;
+	}
+	public String getMember_login_id() {
+		return member_login_id;
+	}
+	public void setMember_login_id(String member_login_id) {
+		this.member_login_id = member_login_id;
+	}
+	public String getCar_no() {
+		return car_no;
+	}
+	public void setCar_no(String car_no) {
+		this.car_no = car_no;
 	}
 	
 }

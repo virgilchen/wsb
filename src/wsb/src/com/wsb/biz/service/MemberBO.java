@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.common.Util;
+import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Answer;
 import com.wsb.biz.entity.Member;
@@ -119,6 +120,10 @@ public class MemberBO extends BaseServiceImpl{
         
         
         return member;
+    }
+    
+    public static MemberBO getMemberBO() {
+    	return (MemberBO)CodeHelper.getAppContext().getBean("memberBO");
     }
 
 }

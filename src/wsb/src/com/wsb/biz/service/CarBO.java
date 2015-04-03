@@ -62,6 +62,26 @@ public class CarBO extends BaseServiceImpl {
     	}
     }
     
+    public String getCar_no(Long customerId) {
+    	String car_no = "";
+    	CarSO carSO = new CarSO();
+    	carSO.setPsdo_cust_id(customerId);
+
+    	ArrayPageList<Car> result = (ArrayPageList<Car>)this.jdbcDao.query(carSO, Car.class);
+        
+    	if(result != null && result.size() > 0){
+    		for(Car carVo : result){
+    			if(carVo.getCar_no() != null){
+    				car_no += carVo.getCar_no() + ", ";
+    			}
+    		}
+    	}
+    	if(car_no.indexOf(",")>0){
+    		car_no = car_no.substring(0, car_no.lastIndexOf(","));
+    	}
+    	return car_no;
+    }
+    
 
     public void delete(Car car) {
     	
