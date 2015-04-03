@@ -12,7 +12,7 @@ public class CustomerSO extends BaseSO {
     private String cust_name;
     private String cust_code;
     private String cust_phone_no;
-    private String member_id;
+    private String member_login_id;
     
     private String car_framework_no;//车架号
     private String procs_step_name;//业务环节
@@ -49,12 +49,6 @@ public class CustomerSO extends BaseSO {
 	public void setCust_phone_no(String cust_phone_no) {
 		this.cust_phone_no = cust_phone_no;
 	}
-	public String getMember_id() {
-		return member_id;
-	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
 	public String getCust_id() {
 		return cust_id;
 	}
@@ -90,6 +84,12 @@ public class CustomerSO extends BaseSO {
 	}
 	public void setCar_no(String car_no) {
 		this.car_no = car_no;
+	}
+	public String getMember_login_id() {
+		return member_login_id;
+	}
+	public void setMember_login_id(String member_login_id) {
+		this.member_login_id = member_login_id;
 	}
 	@Override
 	public Class<?> getTableClass() {

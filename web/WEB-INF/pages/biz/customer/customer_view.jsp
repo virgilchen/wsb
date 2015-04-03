@@ -252,7 +252,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
           <tr id="condtype1" style="display:none;">
            <td style="width:100px;" >会员号：</td>
            <td style="width:100px;">
-             <input class=mg_r name="customerSO.member_id" value="" type="text" />
+             <input class=mg_r name="customerSO.member_login_id" value="" type="text" />
            </td>
            <td style="width:100px;">身份证： </td>
            <td style="width:100px;">

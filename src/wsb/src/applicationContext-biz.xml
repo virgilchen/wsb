@@ -454,19 +454,18 @@ select cu.*
   	{and cu.cust_name like [cust_name] } 
     {and cu.cust_code like [cust_code] } 
     {and cu.cust_phone_no like [cust_phone_no] } 
-    {and cu.member_id like [member_id] } 
     {and cu.cust_id=[cust_id] } 
+    {and exists ( select 1 from member_info_rt m 
+  		where cu.psdo_cust_id=m.psdo_cust_id 
+  		and m.member_login_id like [member_login_id] ) }
   	{and exists ( select 1 from car_info_rt c 
   		where cu.psdo_cust_id=c.psdo_cust_id 
-  		and cu.psdo_cust_id=c.psdo_cust_id 
   		and c.car_framework_no like [car_framework_no] ) }
   	{and exists ( select 1 from car_info_rt c 
   		where cu.psdo_cust_id=c.psdo_cust_id 
-  		and cu.psdo_cust_id=c.psdo_cust_id 
   		and c.car_engine_no like [car_engine_no] ) }
   	{and exists ( select 1 from car_info_rt c 
   		where cu.psdo_cust_id=c.psdo_cust_id 
-  		and cu.psdo_cust_id=c.psdo_cust_id 
   		and c.car_no like [car_no] ) }
   	{and exists ( select 1 from biz_assets_holding bah, product_pack_rt p 
 		where cu.psdo_cust_id=bah.customer_id 
