@@ -48,11 +48,12 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 
 		Long[] business_ids = orderProdPack.getBusiness_ids();
 		Long[] event_staff_ids = orderProdPack.getEvent_staff_ids();
-		
 		Long[] product_ids = orderProdPack.getProduct_ids();
+		String[] event_prod_types = orderProdPack.getEvent_prod_types();
+		
 		if (product_ids != null) {
-			Double[] amounts = orderProdPack.getAmounts();
 			
+			Double[] amounts = orderProdPack.getAmounts();
 			List<Long> productIds = new ArrayList<Long>();
 			
 			for (int i = 0 ; i < amounts.length ; i ++) {
@@ -76,7 +77,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 			for (int i = 0 ; i < business_ids.length ; i ++) {
 				productSO.setBusiness_id(business_ids[i]);
 				if (jdbcDao.query(productSO, Product.class).size() <= 0) {
-					business_ids[i] = null;
+					business_ids[i] = null;// 没有选择的产品，不生成event（后继）
 				} else {
 					hasBusiness = true ;
 				}
@@ -102,6 +103,7 @@ public class OrderProdPackEventBO extends BaseServiceImpl {
 			event.setOrder_id(orderId);
 			event.setProcs_step_no(0);
 			event.setProd_pack_id(orderProdPack.getProd_pack_id());
+			event.setEvent_prod_type(event_prod_types[i]);
 			event.setBusiness_id(business_id);
 			event.setEvent_staff_id(staff_id);
 			event.setEvent_status(status);

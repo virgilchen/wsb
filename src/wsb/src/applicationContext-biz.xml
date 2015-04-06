@@ -61,6 +61,7 @@ where o.psdo_cust_id=c.psdo_cust_id
  {and o.psdo_cust_id=[psdo_cust_id]}
  {and o.order_type=[order_type]}
  {and o.order_cur_status=[order_cur_status]}
+ {and o.order_cur_status not in([order_cur_status_nq])}
 order by <<order_by>>
               ]]>
             </value>
@@ -141,7 +142,7 @@ and procs_step_no=0
           <entry key="queryOrderProdPackByOrderId">
             <value>
               <![CDATA[
-select op.*, p.prod_pack_name from order_prod_pack_rt op left join product_pack_rt p on op.prod_pack_id=p.prod_pack_id where op.order_id=[order_id] order by order_prod_pack_id
+select op.*, p.prod_pack_name, p.prod_pack_selling_price from order_prod_pack_rt op left join product_pack_rt p on op.prod_pack_id=p.prod_pack_id where op.order_id=[order_id] order by order_prod_pack_id
               ]]>
             </value>
           </entry>

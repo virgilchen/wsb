@@ -38,10 +38,15 @@ public class OrderProdPack extends BaseEntity {
 	private String prod_names;
 
 	@Transient
+	private Double prod_pack_selling_price;
+	@Transient
 	private String prod_pack_name;
 
 	@Transient
     private Long[] product_ids;
+
+	@Transient
+    private String[] event_prod_types;
 
 	@Transient
     private Long[] business_ids;
@@ -138,8 +143,18 @@ public class OrderProdPack extends BaseEntity {
 	public void setProd_names(String prod_names) {
 		this.prod_names = prod_names;
 	}
-    
-	
+    public String[] getEvent_prod_types() {
+		return event_prod_types;
+	}
+    public void setEvent_prod_types(String[] event_prod_types) {
+		this.event_prod_types = event_prod_types;
+	}
+	public Double getProd_pack_selling_price() {
+		return prod_pack_selling_price;
+	}
+	public void setProd_pack_selling_price(Double prod_pack_selling_price) {
+		this.prod_pack_selling_price = prod_pack_selling_price;
+	}
 }
 
 

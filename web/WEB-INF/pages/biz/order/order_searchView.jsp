@@ -95,6 +95,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="orderSO.order_init_staff_name" value="" type="text" />
            </td>
+           <td style="width:30px;">
+             <input class=mg_r name="orderSO.order_cur_status_nq" id="orderSO.order_cur_status_nq" value="E" type="checkbox" checked="checked" />
+           </td>
+           <td style="width:180px;">
+             <label for="orderSO.order_cur_status_nq">不含完成订单</label>             
+           </td>
            <td style="width:100px;">
              <INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();">
            </td>

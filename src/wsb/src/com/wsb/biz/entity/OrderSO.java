@@ -20,6 +20,7 @@ public class OrderSO extends BaseSO {
     private String cust_phone_no ;
     private Long psdo_cust_id  ;
     private String order_cur_status  ;
+    private String[] order_cur_status_nq  ;
     private String event_staff_name ;
     private String business_name ;
     private String order_type  ;
@@ -136,6 +137,13 @@ public class OrderSO extends BaseSO {
 
 	public void setCust_phone_no(String cust_phone_no) {
 		this.cust_phone_no = cust_phone_no;
+	}
+	public String[] getOrder_cur_status_nq() {
+		return order_cur_status_nq;
+	}
+	
+	public void setOrder_cur_status_nq(String[] order_cur_status_nq) {
+		this.order_cur_status_nq = order_cur_status_nq;
 	}
 
 	@Override

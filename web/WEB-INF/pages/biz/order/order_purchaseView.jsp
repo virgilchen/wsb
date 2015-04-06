@@ -70,6 +70,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 		var event = {
                                 id:oEvent.business_id,
                                 business_name:oEvent.business_name,
+                                business_id:business_id,
                                 index:elem.index,
                                 event_staff_id:oEvent.event_staff_id
                 		};

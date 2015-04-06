@@ -28,6 +28,10 @@ public class OrderProdPackEvent extends BaseEntity {
 	final public static String STATUS_INIT = "I";
 	final public static String STATUS_READY = "R";
 	
+
+	final public static String EVENT_PROD_TYPE_ASSET = "A";
+	final public static String EVENT_PROD_TYPE_PURCHASE = "P";
+	
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="event_id")
@@ -38,6 +42,7 @@ public class OrderProdPackEvent extends BaseEntity {
 	private Long order_id;
 	private Long prod_pack_id;
 	private Long prod_id;
+	private String event_prod_type ;
 	
 	private Long business_id;
 	private Integer procs_step_no;
@@ -47,6 +52,7 @@ public class OrderProdPackEvent extends BaseEntity {
     private Timestamp event_duration  ;
     private String event_status  ;
     private String event_remark  ;
+    
     
 	public Long getId() {
 		return id;
@@ -121,6 +127,13 @@ public class OrderProdPackEvent extends BaseEntity {
 		this.event_remark = event_remark;
 	}
 
+	public String getEvent_prod_type() {
+		return event_prod_type;
+	}
+	
+	public void setEvent_prod_type(String event_prod_type) {
+		this.event_prod_type = event_prod_type;
+	}
     
 }
 

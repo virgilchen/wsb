@@ -60,12 +60,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 formDeserialize("eForm", data, {}) ;
 
                 $(data.orderProdPacks).each(function (i, elem) {
+
                 	_this.add(elem);
                 	
                 	var events = [] ;
                 	for (var j = 0 ; j < data.orderProdPackEvents.length ; j ++) {
                         var oEvent = data.orderProdPackEvents[j];
-                        
+
                 		if (oEvent.prod_pack_id != elem.prod_pack_id) {
                 			continue;
                 		}
@@ -73,17 +74,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 		var event = {
                                 id:typeof(oEvent.id) == "undefined"?null:oEvent.id,
                                 business_name:oEvent.business_name,
+                                business_id:oEvent.business_id,
                                 index:elem.index,
                                 event_staff_id:oEvent.event_staff_id,
                                 prod_id:oEvent.prod_id,
                                 prod_name:oEvent.prod_name,
                                 available_amount:oEvent.available_amount,
+                                event_prod_type:oEvent.event_prod_type,
                                 rowSpan:oEvent.rowSpan
                 		};
 
                 		events[events.length] = event ;
                 	}
-                	_this.addBusinesses(events, _this.size - 1);
+                	_this.addBusinesses(events, _this.size - 1, (events.length > 0?(events[0].event_prod_type == 'A'):false));
                 });
             }
         );
@@ -172,12 +175,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
             }
         );
         
-        this.sumSellingPrice();
     },
     
-    addBusinesses:function (datas, index) {
-
-        var isCustomerHolding = ($("#sProductPackForm input[name='productPackSO.customer_id']:checked").val() != "");
+    addBusinesses:function (datas, index, isCustomerHolding) {
+    	if (typeof(isCustomerHolding) == "undefined") {
+            isCustomerHolding = ($("#sProductPackForm input[name='productPackSO.customer_id']:checked").val() != "");
+    	}
         
         var $theadTh = $("#business" + index + "TB thead th", viewJs.view);
         if (isCustomerHolding) {
@@ -228,6 +231,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 setInputValue(E("event_staff_ids_" + elem.index + "_" + elem.id), elem.event_staff_id) ;
             }
         });
+        
+
+        this.sumSellingPrice();
     },
     
     openProductSearchView:function(index) {
@@ -379,7 +385,7 @@ width: 92%;
 			                </td>
 			                <th width="10%" id="amountTh{$T.index}">数量：</th>
 			                <td width="20%" id="amountTd{$T.index}">
-                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_selling_price" id="prod_pack_selling_price_{$T.index}" style=" width:50px;" required="required" value=""/>
+                              <input type="hidden" name="orderProdPacks[{$T.index}].prod_pack_selling_price" id="prod_pack_selling_price_{$T.index}" style=" width:50px;" value="{$T.prod_pack_selling_price}"/>
                               <input type="text" name="orderProdPacks[{$T.index}].no_of_order_prod_pack" id="no_of_order_prod_pack_{$T.index}" style=" width:50px;" required="required" value="{$T.no_of_order_prod_pack}" onchange="viewJs.sumSellingPrice();"/> 份<span class="c_red">*</span>
 			                </td>
 			                <td width="15%"></td>
@@ -460,16 +466,23 @@ width: 92%;
 	 
 	 
 
+    <!-- 
+     -->
     <textarea id="businessTemplateBody" jTemplate="yes" style="display: none;">
         <tr index="{$T.index}" id="{$T.id}">
           {#if $T.id != null}
           <td style="text-align: left;" rowspan="{$T.rowSpan}">&nbsp;{$T.business_name}</td>
           <td style="padding-right: 5px;" rowspan="{$T.rowSpan}">
-            <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.id}"/>
+            <input type="hidden" name="orderProdPacks[{$T.index}].business_ids" value="{$T.business_id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].event_staff_ids" id="event_staff_ids_{$T.index}_{$T.id}"  />
           </td>
           {#/if}
-          <td style="text-align: left;">&nbsp;{$T.prod_name}</td>
+          <td style="text-align: left;">
+            &nbsp;{$T.prod_name}
+	        {#if !$T.isCustomerHolding}
+              <input type="hidden" name="orderProdPacks[{$T.index}].event_prod_types" value="P"/>
+	        {#/if}
+          </td>
           {#if $T.isCustomerHolding}
           <td style="text-align: center;">
             <%--
@@ -478,6 +491,7 @@ width: 92%;
             &nbsp;{$T.available_amount}
           </td>
           <td style="text-align: center;">
+            <input type="hidden" name="orderProdPacks[{$T.index}].event_prod_types" value="A"/>
             <input type="hidden" name="orderProdPacks[{$T.index}].product_ids" value="{$T.prod_id}"/>
             <input type="text" name="orderProdPacks[{$T.index}].amounts" id="amounts_{$T.index}_{$T.id}" onkeyup="viewJs.checkProductAmount({$T.index},{$T.id});" value="0" style="width: 80px;"/>
           </td>
