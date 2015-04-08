@@ -451,7 +451,7 @@ select d.prod_pack_id, group_concat(prod_name) as prod_names
             <value>
               <![CDATA[
 select cu.*, 
-(select car_no from car_info_rt c where c.psdo_cust_id=cu.psdo_cust_id group by c.psdo_cust_id) as car_no, 
+(select GROUP_CONCAT(c.car_no,'') from car_info_rt c where c.psdo_cust_id=cu.psdo_cust_id group by c.psdo_cust_id) as car_no, 
 (select member_login_id from member_info_rt m where cu.psdo_cust_id=m.psdo_cust_id ) as member_login_id 
   from cust_demo_rt cu where 1=1 
   	{and cu.cust_name like [cust_name] } 
