@@ -191,7 +191,6 @@ public class OrderAction extends BaseAction implements Preparable {
         
     }
     
-    @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String advanceSearch() throws Exception {  
 
         renderList(orderBO.query(orderSO)) ; 
@@ -209,7 +208,6 @@ public class OrderAction extends BaseAction implements Preparable {
         return null ;  
     }
 
-    @Pid(value=Pid.DO_NOT_CHECK)
     public String create()  throws Exception {        
 
         Object newOrder = orderBO.create(order) ;
@@ -219,7 +217,6 @@ public class OrderAction extends BaseAction implements Preparable {
         
     }
 
-    @Pid(value=Pid.DO_NOT_CHECK)
     public String update()  throws Exception {     
 
             	
@@ -231,7 +228,6 @@ public class OrderAction extends BaseAction implements Preparable {
         
     }
 
-    @Pid(value=Pid.DO_NOT_CHECK)
     public String delete()  throws Exception {
 
         if (this.ids == null) { 
@@ -257,6 +253,19 @@ public class OrderAction extends BaseAction implements Preparable {
         
         return null;    
     }*/
+
+
+
+    public String updateUrgentLevel() throws Exception {     
+
+            	
+        orderBO.updateUrgentLevel(order) ;
+
+        renderObject(order, ResponseMessage.KEY_UPDATE_OK) ;
+        
+        return null;    
+        
+    }
 
 
     public void setOrderBO(OrderBO orderBO) {

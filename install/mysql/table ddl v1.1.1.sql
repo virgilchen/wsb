@@ -434,3 +434,9 @@ CREATE TABLE `wsbd001`.`recommendation_dt` (
   `recmdt_detail` VARCHAR(2000) NULL,
   `recmdt_condition_operator` VARCHAR(5) NULL,
   PRIMARY KEY (`recmdt_id`));
+
+  
+  
+alter table order_prod_pack_event_rt add (event_prod_type char(1) comment 'event的产品类型，A:资产中扣除的，P:新购买的产品');
+  
+alter table order_rt add (urgent_levent int comment '级别越高，越紧急');

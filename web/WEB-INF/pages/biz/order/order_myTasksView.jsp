@@ -119,7 +119,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <td>
               <textarea id="templateBody" jTemplate="yes">
                   <tr id="{$T.id}" {#if $T.event_staff_id != null}ondblclick="viewJs.toFollowUpView({$T.order_id}, {$T.event_id});"{#/if}>
-                    <td>{$T.order_no}</td>
+                    <td>{$T.order_no}{#if $T.urgent_levent == 9}<img alt="紧急" src="<%=request.getContextPath()%>/images/urgent.jpg" width="20px" height="20px">{#/if}</td>
                     <td>{$T.business_name}</td>
 				    <td><a href="#">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>

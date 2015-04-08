@@ -1,5 +1,7 @@
 package com.wsb.biz.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 
 import com.globalwave.base.BaseSO;
@@ -25,6 +27,8 @@ public class OrderSO extends BaseSO {
     private String business_name ;
     private String order_type  ;
     private String order_by ;
+    
+    private Date order_prod_pack_expire_date_lt ;
     
 	public Long[] getIds() {
 		return ids;
@@ -138,6 +142,7 @@ public class OrderSO extends BaseSO {
 	public void setCust_phone_no(String cust_phone_no) {
 		this.cust_phone_no = cust_phone_no;
 	}
+
 	public String[] getOrder_cur_status_nq() {
 		return order_cur_status_nq;
 	}
@@ -145,6 +150,16 @@ public class OrderSO extends BaseSO {
 	public void setOrder_cur_status_nq(String[] order_cur_status_nq) {
 		this.order_cur_status_nq = order_cur_status_nq;
 	}
+	
+	public Date getOrder_prod_pack_expire_date_lt() {
+		return order_prod_pack_expire_date_lt;
+	}
+	
+	public void setOrder_prod_pack_expire_date_lt(
+			Date order_prod_pack_expire_date_lt) {
+		this.order_prod_pack_expire_date_lt = order_prod_pack_expire_date_lt;
+	}
+
 
 	@Override
 	public Class<?> getTableClass() {

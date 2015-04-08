@@ -333,6 +333,11 @@ public class OrderBO extends BaseServiceImpl {
         return result;
     }
 
+    public void updateUrgentLevel(Order order) {
+    	order.addInclusions("urgent_levent");
+    	//order.setUrgent_levent(level);
+    	jdbcDao.update(order);
+    }
 
     public Order get(Long id) {  
     	Order order = new Order() ;

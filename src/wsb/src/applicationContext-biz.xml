@@ -26,7 +26,7 @@ where o.order_id=e.order_id
   and e.event_status='R'
   and p.procs_step_no=e.procs_step_no
   and (e.event_staff_id=[event_staff_id] or e.event_staff_id is null and p.procs_staff_role_id=[procs_staff_role_id])
-order by o.order_id
+order by o.urgent_levent desc, o.order_id
               ]]>
             </value>
           </entry>

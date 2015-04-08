@@ -55,6 +55,19 @@ var g$v<%=view_id%> = $.extend(newView(), {
         );
     },
     
+    updateUrgentLevel:function(orderId, level) {
+        var _this = this ;
+        ajax(
+            root + "/biz/order_updateUrgentLevel.action", 
+            {"order.id":orderId, "order.urgent_levent":level},
+            function(data, textStatus){
+                if (data.code == "0") {
+                    _this.list();
+                }
+            }
+        );
+    },
+    
     toEditView:function(order_id) {
         openView(100003, '/biz/order_openView.action?readonly=true&order_id=' + order_id + '&parent_view_id=' + <%=view_id%>, '业务发起');
     }
@@ -156,6 +169,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td>{$T.order_init_time_stamp}</td>
 				    <td><span class="c_orange">{#if $T.order_cur_status == 'E'}完结{#else}{fmt.maxlen($T.procs_step_name, 100)}{#/if}</span></td>
 				    <td>
+				      {#if $T.order_cur_status != 'I' && $T.order_cur_status != 'E'}
+				        {#if $T.urgent_levent == 9}
+				        <a href="javascript:viewJs.updateUrgentLevel({$T.order_id}, 0)">撤销催单</a>|
+				        {#else}
+                        <a href="javascript:viewJs.updateUrgentLevel({$T.order_id}, 9)">催单</a>|
+				        {#/if}
+				      {#/if}
                       <a href="javascript:{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id});{#/if}">查看</a> 
 				    </td>
                   </tr>

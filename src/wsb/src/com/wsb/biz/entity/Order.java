@@ -47,6 +47,8 @@ public class Order extends BaseEntity {
     private String order_remark  ;
     private Double selling_price;
     
+    private Integer urgent_levent ;
+    
     
     @Transient
     private String order_init_staff_name;
@@ -158,6 +160,13 @@ public class Order extends BaseEntity {
 		this.selling_price = selling_price;
 	}
 
+	public Integer getUrgent_levent() {
+		return urgent_levent;
+	}
+	
+	public void setUrgent_levent(Integer urgent_levent) {
+		this.urgent_levent = urgent_levent;
+	}
 }
 
 
