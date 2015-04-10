@@ -40,7 +40,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     add:function() {
         this.addRows ("carInfosTB", [{index:this.size}], {forceClear:false});
 
-        E$("car_init_register_date" + this.size).datepicker();
+        E$("car_init_register_date" + this.size).datepicker({yearRange:"1900:2050"});
         fillOptions({id:"insurance_status" + this.size, dictName:"car.status", firstLabel:"请选择..."}) ;
         
         this.size ++;
@@ -73,7 +73,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             		elem.index = i;
             		_this.size = i;
                     _this.addRows ("carInfosTB", elem, {forceClear:i==0?true:false});
-                    E$("car_init_register_date" + _this.size).datepicker();
+                    E$("car_init_register_date" + _this.size).datepicker({yearRange:"1900:2050"});
                     fillOptions({id:"insurance_status" + _this.size, dictName:"car.status", firstLabel:"请选择...", value:elem.insurance_status}) ;
             	});
                 this.size = _this.size++;
@@ -290,13 +290,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td style="width:100px;">
              <input class=mg_r name="customerSO.prod_pack_name" value="" type="text" />
            </td>
-           <td style="width:100px;" >
-		   </td>
-           <td style="width:100px;">
-           </td>
-           <td style="width:100px;" >
-           </td>
-           <td style="width:100px;">
+           <td style="width:100px;">商品包到期时间：</td>
+           <td style="width:100px;" colspan="3">
+             <input class=mg_r name="customerSO.prod_pack_expire_date_year" value="" type="text" style="width: 100px;"/>年
+             <input class=mg_r name="customerSO.prod_pack_expire_date_month" value="" type="text" style="width: 50px;"/>月
+             <input class=mg_r name="customerSO.prod_pack_expire_date_day" value="" type="text" style="width: 50px;"/>日
            </td>
            <td style="width:100px;">
            </td>

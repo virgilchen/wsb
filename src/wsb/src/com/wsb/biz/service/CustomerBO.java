@@ -135,6 +135,28 @@ public class CustomerBO extends BaseServiceImpl {
         if("".equalsIgnoreCase(customerSO.getProd_pack_name())){
         	customerSO.setProd_pack_name(null);
         }
+        
+        if(!"".equalsIgnoreCase(customerSO.getProd_pack_expire_date_year())){
+        	if(!"".equalsIgnoreCase(customerSO.getProd_pack_expire_date_month())){
+        		if(!"".equalsIgnoreCase(customerSO.getProd_pack_expire_date_day())){
+                	customerSO.setProd_pack_expire_date_begin(customerSO.getProd_pack_expire_date_year()+"-"
+                			+customerSO.getProd_pack_expire_date_month()+"-"+customerSO.getProd_pack_expire_date_day());
+                	customerSO.setProd_pack_expire_date_end(customerSO.getProd_pack_expire_date_year()+"-"
+                			+customerSO.getProd_pack_expire_date_month()+"-"+customerSO.getProd_pack_expire_date_day());
+                }else{
+                	customerSO.setProd_pack_expire_date_begin(customerSO.getProd_pack_expire_date_year()+"-"
+                			+customerSO.getProd_pack_expire_date_month()+"-01");
+                	customerSO.setProd_pack_expire_date_end(customerSO.getProd_pack_expire_date_year()+"-"
+                			+customerSO.getProd_pack_expire_date_month()+"-31");
+                }
+            }else{
+            	customerSO.setProd_pack_expire_date_begin(customerSO.getProd_pack_expire_date_year()+"-01-01");
+            	customerSO.setProd_pack_expire_date_end(customerSO.getProd_pack_expire_date_year()+"-12-31");
+            }
+        }else{
+        	customerSO.setProd_pack_expire_date_begin(null);
+        	customerSO.setProd_pack_expire_date_end(null);
+        }
         //customerSO.addDesc("customer_timestamp") ;
         
         //ArrayPageList<Customer> result = (ArrayPageList<Customer>)jdbcDao.query(customerSO, Customer.class);

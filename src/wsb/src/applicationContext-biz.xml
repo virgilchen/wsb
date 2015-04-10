@@ -473,8 +473,13 @@ select cu.*,
   	{and exists ( select 1 from biz_assets_holding bah, product_pack_rt p 
 		where cu.psdo_cust_id=bah.customer_id 
 		and bah.pro_assets_id=p.prod_pack_id 
-		and assets_type=1 
+		and bah.assets_type=1 
 		and p.prod_pack_name like [prod_pack_name] ) }
+	{and exists ( select 1 from biz_assets_holding bah 
+		where cu.psdo_cust_id=bah.customer_id 
+		and bah.assets_type=1 
+		and bah.expire_date >= [prod_pack_expire_date_begin] 
+		and bah.expire_date <= [prod_pack_expire_date_end] ) }
     order by cu.psdo_cust_id desc
               ]]>
             </value>
