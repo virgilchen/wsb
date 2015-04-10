@@ -35,9 +35,36 @@ var g$v<%=view_id%> = $.extend(newView(), {
             textProperty:["prod_name"], 
             titleProperty:"prod_name"
         });
-        
+
         E("productSelection").onSelected = function (event, elem) {
-        	_this.addProduct(elem);
+            _this.addProduct(elem);
+        };
+        
+        E$("businessSelection").combotree({id:"businessSelection", 
+            data:g$dict.Business, 
+            //firstLabel:"请选择", 
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["business_name"], 
+            titleProperty:"business_name",
+            treeSetting:{
+                data: {
+                    key: {
+                        name: "business_name"
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: "PK_ID",
+                        pIdKey: "business_id_upper",
+                        rootPId: null
+                    }
+                }
+            }
+        });
+
+        
+        E("businessSelection").onSelected = function (event, elem) {
+        	E$("productSelection").combobox2("option", "data", filter(productsJson, {"business_id":elem.PK_ID}));
         };
         
         E$("eForm").validator();
@@ -258,8 +285,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       <TABLE border=0 width="100%" id="productsSelectedTB">
                         <thead>
                           <TR>
-                            <TH style="text-align: center;">基础商品</TH>
                             <TH style="text-align: center;">业务类型</TH>
+                            <TH style="text-align: center;">基础商品</TH>
                             <TH style="text-align: center;" width="100px">数量</TH>
                             <TH style="text-align: center;" width="100px">价格</TH>
                             <TH style="text-align: center;" width="100px">操作</TH>
@@ -270,7 +297,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         </tbody>
                         
                         <tr>
-                          <td colspan="2">
+                          <td>
+                            <div style="width: 230px;"><input id="businessSelection"/></div>
+                          </td>
+                          <td>
                             <div style="width: 230px;"><input id="productSelection"/></div>
                           </td>
                           <td></td>
@@ -283,8 +313,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                             <td>
                               <textarea id="templateBody" jTemplate="yes">
                                   <tr id="productTr_{$T.id}" product_original_price={$T.product_original_price} product_selling_price={$T.product_selling_price}>
-                                    <td>{$T.prod_name}</td>
                                     <td>{$T.business_name}</td>
+                                    <td>{$T.prod_name}</td>
                                     <td>
                                       <input type="hidden" name="product_ids" value="{$T.id}"/>
                                       <input type="text" name="product_quantitys" value="{$T.quantity}" maxlength="5" style="width: 100px;" onchange="viewJs.recaculatePrice();"/>

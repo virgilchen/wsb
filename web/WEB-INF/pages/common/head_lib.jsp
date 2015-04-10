@@ -34,6 +34,10 @@ var root = "<%=root%>";
 <script type="text/javascript" src="<%=root%>/plugin/jTemplates/jquery-jtemplates.<%=js_min %>js"></script>
 
 
+<link rel="stylesheet" type="text/css" href="<%=root%>/plugin/zTree_v3/zTreeStyle/zTreeStyle.css">
+<script type="text/javascript" src="<%=root%>/plugin/zTree_v3/jquery.ztree.all-3.5.<%=js_min %>js"></script>
+
+
 <%if(request.getAttribute("_noJqueryUI") == null) { %>
 <!-- jquery ui -->
 <link rel="stylesheet" type="text/css" href="<%=root%>/plugin/jquery-ui-1.9.0/css/custom-theme/jquery-ui-1.9.0.custom.<%=js_min %>css">
