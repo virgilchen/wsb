@@ -306,7 +306,7 @@ function selKey(obj){
 								<div>
 								<select class="mg_r" name="recmdtInventorys[0].recmdt_type" id="recmdt_type0" onchange="changeKeyVal(this)">
 								</select>
-								<select class="mg_r" name="recmdtInventorys[0].recmdt_key" id="recmdt_type0_key" onchange="selKey(this)">
+								<select class="mg_r" name="recmdtInventorys[0].recmdt_key" id="recmdt_type0_key" ">
 								</select>
 								<select class="mg_r" name="recmdtInventorys[0].recmdt_operator" id="recmdt_operator0" >
 								</select>
@@ -320,7 +320,7 @@ function selKey(obj){
 								<div>
 								<select class="mg_r" name="recmdtInventorys[1].recmdt_type" id="recmdt_type1" onchange="changeKeyVal(this)">
 								</select>
-								<select class="mg_r" name="recmdtInventorys[1].recmdt_key" id="recmdt_type1_key" onchange="selKey(this)">
+								<select class="mg_r" name="recmdtInventorys[1].recmdt_key" id="recmdt_type1_key" >
 								</select>
 								<select class="mg_r" name="recmdtInventorys[1].recmdt_operator" id="recmdt_operator1" >
 								</select>
@@ -334,7 +334,7 @@ function selKey(obj){
 								<div>
 								<select class="mg_r" name="recmdtInventorys[2].recmdt_type" id="recmdt_type2" onchange="changeKeyVal(this)">
 								</select>
-								<select class="mg_r" name="recmdtInventorys[2].recmdt_key" id="recmdt_type2_key" onchange="selKey(this)">
+								<select class="mg_r" name="recmdtInventorys[2].recmdt_key" id="recmdt_type2_key" >
 								</select>
 								<select class="mg_r" name="recmdtInventorys[2].recmdt_operator" id="recmdt_operator2" >
 								</select>
@@ -348,7 +348,7 @@ function selKey(obj){
 								<div>
 								<select class="mg_r" name="recmdtInventorys[3].recmdt_type" id="recmdt_type3" onchange="changeKeyVal(this)">
 								</select>
-								<select class="mg_r" name="recmdtInventorys[3].recmdt_key" id="recmdt_type3_key" onchange="selKey(this)">
+								<select class="mg_r" name="recmdtInventorys[3].recmdt_key" id="recmdt_type3_key" ">
 								</select>
 								<select class="mg_r" name="recmdtInventorys[3].recmdt_operator" id="recmdt_operator3" >
 								</select>
@@ -362,7 +362,7 @@ function selKey(obj){
 								<div>
 								<select class="mg_r" name="recmdtInventorys[4].recmdt_type" id="recmdt_type4" onchange="changeKeyVal(this)">
 								</select>
-								<select class="mg_r" name="recmdtInventorys[4].recmdt_key" id="recmdt_type4_key" onchange="selKey(this)">
+								<select class="mg_r" name="recmdtInventorys[4].recmdt_key" id="recmdt_type4_key" ">
 								</select>
 								<select class="mg_r" name="recmdtInventorys[4].recmdt_operator" id="recmdt_operator4" >
 								</select>
