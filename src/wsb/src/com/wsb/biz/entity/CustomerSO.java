@@ -24,9 +24,9 @@ public class CustomerSO extends BaseSO {
     
     private String prod_pack_expire_date_begin;//到期时间开始
     private String prod_pack_expire_date_end;//到期时间结束
-    private String prod_pack_expire_date_year;//到期年
-    private String prod_pack_expire_date_month;//到期月
-    private String prod_pack_expire_date_day;//到期日
+//    private String prod_pack_expire_date_year;//到期年
+//    private String prod_pack_expire_date_month;//到期月
+//    private String prod_pack_expire_date_day;//到期日
     
     
 
@@ -108,24 +108,24 @@ public class CustomerSO extends BaseSO {
 	public void setProd_pack_expire_date_end(String prod_pack_expire_date_end) {
 		this.prod_pack_expire_date_end = prod_pack_expire_date_end;
 	}
-	public String getProd_pack_expire_date_year() {
-		return prod_pack_expire_date_year;
-	}
-	public void setProd_pack_expire_date_year(String prod_pack_expire_date_year) {
-		this.prod_pack_expire_date_year = prod_pack_expire_date_year;
-	}
-	public String getProd_pack_expire_date_month() {
-		return prod_pack_expire_date_month;
-	}
-	public void setProd_pack_expire_date_month(String prod_pack_expire_date_month) {
-		this.prod_pack_expire_date_month = prod_pack_expire_date_month;
-	}
-	public String getProd_pack_expire_date_day() {
-		return prod_pack_expire_date_day;
-	}
-	public void setProd_pack_expire_date_day(String prod_pack_expire_date_day) {
-		this.prod_pack_expire_date_day = prod_pack_expire_date_day;
-	}
+//	public String getProd_pack_expire_date_year() {
+//		return prod_pack_expire_date_year;
+//	}
+//	public void setProd_pack_expire_date_year(String prod_pack_expire_date_year) {
+//		this.prod_pack_expire_date_year = prod_pack_expire_date_year;
+//	}
+//	public String getProd_pack_expire_date_month() {
+//		return prod_pack_expire_date_month;
+//	}
+//	public void setProd_pack_expire_date_month(String prod_pack_expire_date_month) {
+//		this.prod_pack_expire_date_month = prod_pack_expire_date_month;
+//	}
+//	public String getProd_pack_expire_date_day() {
+//		return prod_pack_expire_date_day;
+//	}
+//	public void setProd_pack_expire_date_day(String prod_pack_expire_date_day) {
+//		this.prod_pack_expire_date_day = prod_pack_expire_date_day;
+//	}
 	@Override
 	public Class<?> getTableClass() {
 		return Customer.class;

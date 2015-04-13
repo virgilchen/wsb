@@ -30,6 +30,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.initDataGrid("customerTB") ;
         
         E$("customer.cust_birthday").datepicker({defaultDate:"-30y",yearRange:"1900:2050"});
+        E$("prod_pack_expire_date_begin").datepicker({yearRange:"2000:2050"});
+        E$("prod_pack_expire_date_end").datepicker({yearRange:"2000:2050"});
         
         E$("eForm").validator();
         E$("sForm").validator();
@@ -292,9 +294,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
            </td>
            <td style="width:100px;">商品包到期时间：</td>
            <td style="width:100px;" colspan="3">
-             <input class=mg_r name="customerSO.prod_pack_expire_date_year" value="" type="text" style="width: 100px;"/>年
+             <!-- <input class=mg_r name="customerSO.prod_pack_expire_date_year" value="" type="text" style="width: 100px;"/>年
              <input class=mg_r name="customerSO.prod_pack_expire_date_month" value="" type="text" style="width: 50px;"/>月
-             <input class=mg_r name="customerSO.prod_pack_expire_date_day" value="" type="text" style="width: 50px;"/>日
+             <input class=mg_r name="customerSO.prod_pack_expire_date_day" value="" type="text" style="width: 50px;"/>日 -->
+             <input class="ipt_date" name="customerSO.prod_pack_expire_date_begin" value="" type="text" id="prod_pack_expire_date_begin" maxlength="10"/>
+             &nbsp;&nbsp;-&nbsp;&nbsp;
+             <input class="ipt_date" name="customerSO.prod_pack_expire_date_end" value="" type="text" id="prod_pack_expire_date_end" maxlength="10"/> 
            </td>
            <td style="width:100px;">
            </td>
