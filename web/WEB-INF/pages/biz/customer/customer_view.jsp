@@ -428,7 +428,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 					</tr>
 					<tr>
 					<th>其他联系方式：</th>
-					<td><textarea name="customer.other_contact_way" style="width: 100%;height: 80px;" maxlength="100"></textarea></td>
+					<td><textarea name="customer.other_contact_way" style="width: 100%;height: 80px;" maxlength="250"></textarea></td>
 					</tr>
 				</table>
 		    </div>
