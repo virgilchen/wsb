@@ -205,7 +205,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
         }
     }
 }) ;
-
+//$(function() {  
+    //$("#opWin").click(function() {  
+        //var a = $('a')[0];  
+        //var a = $("<a href='javascript:viewJs.toAdd();' target='_blank'>new</a>").get(0);  
+        //var e = document.createEvent('MouseEvents');  
+        //e.initEvent('click', true, true);  
+        //a.dispatchEvent(e);  
+        //console.log('event has been changed');  
+        //window.open(root+"/biz/customer_openNewView.action","NewPage");
+    //});  
+//});  
 </script>
     
 <div id="view_<%=view_id%>" style="height: 480px;" class="FrameMain">
@@ -217,6 +227,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <DIV class=main_title>
       <B>客户列表</B> 
       <DIV class="main_tt_right fr">
+      	<!-- <A class=blue id="opWin" >弹标签</A> -->
         <A class=blue href="javascript:viewJs.toAdd();">添加</A>
         <A class=blue href="javascript:viewJs.toEdit();">编辑</A>
         <A class=blue href="javascript:viewJs.toOrderOpen();">业务发起</A>

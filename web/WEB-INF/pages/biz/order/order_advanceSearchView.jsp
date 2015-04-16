@@ -32,6 +32,34 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //E$("eForm").validator();
         //E$("sForm").validator();
         //E("sForm").setFirstFocus();
+        
+        E$("businessSelection").combotree({id:"businessSelection", 
+            data:g$dict.Business, 
+            //firstLabel:"请选择",
+            editable:false,
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["business_name"], 
+            titleProperty:"business_name",
+            treeSetting:{
+                data: {
+                    key: {
+                        name: "business_name"
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: "PK_ID",
+                        pIdKey: "business_id_upper",
+                        rootPId: null
+                    }
+                }
+            }
+        });
+        
+        E("businessSelection").onSelected = function (event, elem) {
+        	document.getElementById("orderSO.business_name").value=elem.business_name;
+        };
+        
         this.first();
         
     },
@@ -106,7 +134,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
            </td>
            <td style="width:80px;" >业务类型：</td>
            <td>
-             <input class=mg_r name="orderSO.business_name" value="" type="text" />
+             <input class=mg_r id="businessSelection" value="" type="text" readonly="readonly" />
+             <input name="orderSO.business_name" id="orderSO.business_name" value="" type="hidden" />
            </td>
            <td style="width:80px;" >当前处理人：</td>
            <td>

@@ -82,10 +82,8 @@ var documentUploader = {
             <td>{$T.document_name}</td>
             <td>{fmt.maxlen($T.desc_,10000)}</td>
             <td>
-              <%--
               <a href="<%=request.getContextPath() %>/upload/{$T.folder_name}/{$T.file_uuid}" target="_blank" style="cursor:pointer;">查看 </a>
               &nbsp;
-               --%>
               <a href="<%=request.getContextPath() %>/biz/document_download.action?id={$T.id}" target="_blank" style="cursor:pointer;">下载</a>
               &nbsp;
               <a onclick="documentUploader.doDelete({$T.id}, $(this).parent());" style="cursor:pointer;">删除</a>

@@ -9,6 +9,7 @@ import com.globalwave.base.BaseAction;
 import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
+import com.globalwave.util.GsonUtil;
 import com.wsb.biz.entity.AssetsHoldingSO;
 import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
@@ -16,12 +17,15 @@ import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
 import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.entity.Staff;
+import com.wsb.biz.entity.StaffSO;
 import com.wsb.biz.service.AssetsHoldingBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
 import com.wsb.biz.service.DocumentBO;
 import com.wsb.biz.service.MemberBO;
 import com.wsb.biz.service.OrderBO;
+import com.wsb.biz.service.StaffBO;
 import com.opensymphony.xwork2.Preparable;
 
 @Service("biz_customerAction")
@@ -141,8 +145,28 @@ private static final long serialVersionUID = 7244882365197775441L;
         
         return null ;  
     }
+    
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String openNewView() throws Exception {
 
-
+    	Customer customer = customerBO.get(this.id) ;
+    	CarSO carso = new CarSO();
+    	carso.setPsdo_cust_id(customer.getId());
+    	customer.setCars(carBO.query(carso));
+    	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
+    	
+    	//如果是会员，查出会员信息
+    	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
+    		getRequest().setAttribute("mbid", customer.getMember_id());
+    		Member member = new Member();
+    		member = memberBO.get(customer.getMember_id());
+    		customer.setMember(member);
+    	}
+    	renderObject(customer, null) ; 
+    	
+        return null ;  
+    }
+    
 
     public void setCustomerBO(CustomerBO customerBO) {
 		this.customerBO = customerBO;
