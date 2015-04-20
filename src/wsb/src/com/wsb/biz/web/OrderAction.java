@@ -50,10 +50,16 @@ public class OrderAction extends BaseAction implements Preparable {
 	public String searchView() throws Exception {
 		return "jsp";
 	}
-	
+
 	public String advanceSearchView() throws Exception {
 		return "jsp";
 	}
+	
+	public String remindSearchView() throws Exception {
+		return "jsp";
+	}
+	
+	
     
     public String openView() throws Exception {
 
@@ -198,7 +204,16 @@ public class OrderAction extends BaseAction implements Preparable {
         return null ;  
         
     }
+    
+    public String remindSearch() throws Exception {  
 
+    	orderSO.setIs_remind(true);
+        renderList(orderBO.remindSearchOrders(orderSO)) ; 
+        
+        return null ;  
+        
+    }
+    
     @Pid(value=Pid.DO_NOT_CHECK,log=false)
     public String get() throws Exception {  
 

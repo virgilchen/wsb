@@ -93,11 +93,76 @@ where o.psdo_cust_id=c.psdo_cust_id
  
  {and exists (select 1 from order_prod_pack_event_rt ppe join staff_demo_rt st on ppe.event_staff_id=st.staff_id where ppe.order_id=o.order_id and st.staff_name like [event_staff_name])}
  {and exists (select 1 from order_prod_pack_event_rt ppe join business_rt biz on ppe.business_id=biz.business_id where ppe.order_id=o.order_id and biz.business_name like [business_name])}
-  
+ 
+ {#[is_remind]
+  and exists(
+       select 1 from order_prod_pack_rt opp, product_pack_detail_rt ppd, product_rt p
+        where opp.order_id=o.order_id
+          and opp.prod_pack_id=ppd.prod_pack_id
+          and ppd.prod_id=p.prod_id
+          and (opp.order_prod_pack_expire_date is null or opp.order_prod_pack_expire_date < sysdate())
+          and DATE_ADD(
+                 DATE_ADD(opp.order_prod_pack_purchase_date, INTERVAL p.no_of_product_effective_mth - p.no_of_mth_remind_advance month), 
+                 INTERVAL p.no_of_product_effective_day - p.no_of_day_remind_advance day
+              ) > sysdate()
+      )
+ }
 order by <<order_by>>
               ]]>
             </value>
           </entry>
+
+
+
+
+          <entry key="remindSearchOrders">
+            <value>
+              <![CDATA[
+select
+  o.*,
+  c.cust_name,
+  c.cust_phone_no,
+  s.staff_name as order_init_staff_name,
+  (select group_concat(b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id and e.event_status='R') procs_step_name,
+  p.prod_name
+ from 
+   order_rt o 
+     left join staff_demo_rt s on s.staff_id=o.order_init_staff_id
+     left join order_prod_pack_rt opp on opp.order_id=o.order_id
+     left join product_pack_detail_rt ppd on opp.prod_pack_id=ppd.prod_pack_id
+     left join product_rt p on ppd.prod_id=p.prod_id,
+   cust_demo_rt c
+where o.psdo_cust_id=c.psdo_cust_id
+  and o.order_cur_status not in ('I', 'C')
+ {and s.staff_name like [order_init_staff_name]}
+ {and c.cust_name like [psdo_cust_name]}
+ {and c.cust_phone_no like [cust_phone_no]}
+ {and o.order_no like [order_no]}
+ {and o.order_init_staff_id=[order_init_staff_id]}
+ {and o.psdo_cust_id=[psdo_cust_id]}
+ 
+ {and o.order_type=[order_type]}
+ {and o.order_cur_status=[order_cur_status]}
+ 
+ {and exists (select 1 from order_prod_pack_event_rt ppe join staff_demo_rt st on ppe.event_staff_id=st.staff_id where ppe.order_id=o.order_id and st.staff_name like [event_staff_name])}
+ {and exists (select 1 from order_prod_pack_event_rt ppe join business_rt biz on ppe.business_id=biz.business_id where ppe.order_id=o.order_id and biz.business_name like [business_name])}
+
+
+
+
+
+  and (opp.order_prod_pack_expire_date is null or opp.order_prod_pack_expire_date > sysdate())
+  and DATE_ADD(
+         DATE_ADD(opp.order_prod_pack_purchase_date, INTERVAL p.no_of_product_effective_mth - p.no_of_mth_remind_advance month), 
+         INTERVAL p.no_of_product_effective_day - p.no_of_day_remind_advance day
+      ) < sysdate()
+
+
+order by <<order_by>>
+              ]]>
+            </value>
+          </entry>
+
 
           <entry key="queryOrderHistories">
             <value>

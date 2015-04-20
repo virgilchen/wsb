@@ -319,6 +319,25 @@ public class OrderBO extends BaseServiceImpl {
         
         return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:advanceSearchOrders", orderSO, HashMap.class);
     }
+
+    public ArrayPageList<HashMap> remindSearchOrders(OrderSO orderSO) {
+
+        if (orderSO == null) {
+        	orderSO = new OrderSO() ;
+        }
+        
+        SessionUser sessionUser = SessionUser.get();
+        
+        //if (!sessionUser.isManager()) {
+        Long roleId = sessionUser.getStaff().getStaff_role_id();
+        if (CodeHelper.getString("Order.Permission.H", "desc_", String.valueOf(roleId)) != null){
+            orderSO.setOrder_init_staff_id(sessionUser.getStaff().getId());
+        } else {
+        	orderSO.setOrder_by(" o.order_id desc ");
+        }
+        
+        return (ArrayPageList<HashMap>)jdbcDao.queryName("bizSQLs:remindSearchOrders", orderSO, HashMap.class);
+    }
     
 
     public ArrayPageList<Order> queryOrderHistories(OrderSO orderSO) {

@@ -30,6 +30,8 @@ public class OrderSO extends BaseSO {
     
     private Date order_prod_pack_expire_date_lt ;
     
+    private Boolean is_remind ;
+    
 	public Long[] getIds() {
 		return ids;
 	}
@@ -160,6 +162,13 @@ public class OrderSO extends BaseSO {
 		this.order_prod_pack_expire_date_lt = order_prod_pack_expire_date_lt;
 	}
 
+	public Boolean getIs_remind() {
+		return is_remind;
+	}
+
+	public void setIs_remind(Boolean is_remind) {
+		this.is_remind = is_remind;
+	}
 
 	@Override
 	public Class<?> getTableClass() {
