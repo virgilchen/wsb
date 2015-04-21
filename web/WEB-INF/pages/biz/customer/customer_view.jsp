@@ -1,7 +1,9 @@
+<%@page import="com.wsb.biz.entity.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 String view_id=request.getParameter("view_id");
+Customer customer = (Customer)request.getAttribute("customer");
 %>
 <script>
 
@@ -36,8 +38,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
         E$("eForm").validator();
         E$("sForm").validator();
         E("sForm").setFirstFocus();
-        //var _id= <%=request.getParameter("customer.id")%>;
-        //viewJs.toEdit({value:_id});
+        
+        var custId= <%=customer == null?null:customer.getId()%>;
+
+        if (custId != null) {
+            viewJs.toEdit({value:custId});	
+            //V("customerSO.cust_code", custCode);
+            //this.list();
+        }
     },
     add:function() {
         this.addRows ("carInfosTB", [{index:this.size}], {forceClear:false});
@@ -203,6 +211,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	for ( var i = 1; i <= total; i++) {
             document.getElementById('condtype' + i).style.display = condType;
         }
+    },
+    toClose:function() {
+    	removeView(<%=view_id%>);
     }
 }) ;
 //$(function() {  
@@ -249,7 +260,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
            </td>
            <td style="width:100px;" >客户号：</td>
            <td style="width:100px;">
-             <input class=mg_r name="customerSO.cust_code" value="" type="text" />
+             <input class=mg_r name="customerSO.cust_code" id="customerSO.cust_code" value="" type="text" />
            </td>
            <td style="width:100px;" >电话：</td>
            <td style="width:100px;">
@@ -377,8 +388,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		<div class="main_tt_right fr">
 		 	<a href="#" class="blue">导出客户信息</a>
 		 	<a href="javascript:viewJs.isOpenOrderAfterSave=true;viewJs.save();" class="orange">保存并发起业务</a>
+		 	<%if (customer == null) {%>
 		 	<A class=orange href="javascript:viewJs.save();">保存</A>
 		 	<A class=blue href="javascript:viewJs.toSearch();">取消</A>
+		 	<%} else {%>
+            <A class=blue href="javascript:viewJs.toClose();">返回</A>
+		 	<%} %>
 		</div>
 	</div>
 	

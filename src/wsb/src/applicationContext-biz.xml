@@ -122,6 +122,7 @@ select
   o.*,
   c.cust_name,
   c.cust_phone_no,
+  c.cust_code,
   s.staff_name as order_init_staff_name,
   (select group_concat(b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id and e.event_status='R') procs_step_name,
   p.prod_name
