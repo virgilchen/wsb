@@ -16,12 +16,15 @@ import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
 import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.OrderSO;
+import com.wsb.biz.entity.RecommendationEngine;
+import com.wsb.biz.entity.RecommendationEngineSO;
 import com.wsb.biz.service.AssetsHoldingBO;
 import com.wsb.biz.service.CarBO;
 import com.wsb.biz.service.CustomerBO;
 import com.wsb.biz.service.DocumentBO;
 import com.wsb.biz.service.MemberBO;
 import com.wsb.biz.service.OrderBO;
+import com.wsb.biz.service.RecommendationEngineBO;
 import com.opensymphony.xwork2.Preparable;
 
 @Service("biz_customerAction")
@@ -41,6 +44,8 @@ private static final long serialVersionUID = 7244882365197775441L;
     private AssetsHoldingBO assetsHoldingBO;
     private AssetsHoldingSO assetsHoldingSO;
     private MemberBO memberBO;
+    private List<RecommendationEngine> recommendationEngines ;
+    private RecommendationEngine recommendationEngine ;
     
     public String execute() throws Exception { 
         return this.list(); 
@@ -66,6 +71,10 @@ private static final long serialVersionUID = 7244882365197775441L;
     	carso.setPsdo_cust_id(customer.getId());
     	customer.setCars(carBO.query(carso));
     	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
+    	
+    	RecommendationEngineSO recommendationEngineSO = new RecommendationEngineSO();
+    	recommendationEngineSO.setRecmdt_psdo_cust_id(customer.getId());
+    	customer.setRecommendationEngines(RecommendationEngineBO.getRecommendationEngineBO().query(recommendationEngineSO));
     	
     	//如果是会员，查出会员信息
     	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
@@ -234,5 +243,26 @@ private static final long serialVersionUID = 7244882365197775441L;
 	public void setMemberBO(MemberBO memberBO) {
 		this.memberBO = memberBO;
 	}
-	
+
+
+	public List<RecommendationEngine> getRecommendationEngines() {
+		return recommendationEngines;
+	}
+
+
+	public void setRecommendationEngines(
+			List<RecommendationEngine> recommendationEngines) {
+		this.recommendationEngines = recommendationEngines;
+	}
+
+
+	public RecommendationEngine getRecommendationEngine() {
+		return recommendationEngine;
+	}
+
+
+	public void setRecommendationEngine(RecommendationEngine recommendationEngine) {
+		this.recommendationEngine = recommendationEngine;
+	}
+
 }

@@ -57,6 +57,9 @@ public class Customer extends BaseEntity {
     @Transient
     private Member member;
     
+    @Transient
+    private ArrayPageList<RecommendationEngine> recommendationEngines;
+    
     //查询结果展示用的属性
     @Transient
     private String member_login_id;
@@ -225,6 +228,13 @@ public class Customer extends BaseEntity {
 	}
 	public void setCar_no(String car_no) {
 		this.car_no = car_no;
+	}
+	public ArrayPageList<RecommendationEngine> getRecommendationEngines() {
+		return recommendationEngines;
+	}
+	public void setRecommendationEngines(
+			ArrayPageList<RecommendationEngine> recommendationEngines) {
+		this.recommendationEngines = recommendationEngines;
 	}
 	
 }

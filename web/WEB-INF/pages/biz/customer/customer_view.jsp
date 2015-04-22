@@ -97,6 +97,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
                 
                 customerDocumentUploader.doShow(data.documents);
+                
+                //$(data.recommendationEngines).each(function (i, elem) {
+            		//alert(i + ": " + elem.recmdt_psdo_cust_id);
+            	//});
             }
         );
     },
