@@ -26,6 +26,16 @@ where o.order_id=e.order_id
   and e.event_status='R'
   and p.procs_step_no=e.procs_step_no
   and (e.event_staff_id=[event_staff_id] or e.event_staff_id is null and p.procs_staff_role_id=[procs_staff_role_id])
+  
+  {and c.cust_name like [psdo_cust_name]}
+  {and c.cust_phone_no like [cust_phone_no]}
+  {and o.order_no like [order_no]}
+ 
+  {and o.order_type=[order_type]}
+  {and o.order_cur_status=[order_cur_status]}
+  {and exists (select 1 from staff_demo_rt ss join order_rt oo on ss.staff_id=oo.order_init_staff_id where ss.staff_name like [order_init_staff_name])}
+  {and exists (select 1 from order_prod_pack_event_rt ppe join business_rt biz on ppe.business_id=biz.business_id where ppe.order_id=o.order_id and biz.business_name like [business_name])}
+  
 order by o.urgent_levent desc, o.order_id
               ]]>
             </value>

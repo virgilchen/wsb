@@ -20,14 +20,41 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //this.initSelect() ;
         this.pageIndex = E("orderSO.pageIndex") ;
         
-        //fillOptions({id:"order.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
-        //fillOptions({id:"orderSO.record_status", dictName:"CM.status", firstLabel:"全部"}) ;
+        fillOptions({id:"orderSO.order_type", dictName:"Order.type", firstLabel:"全部"}) ;// 改为字典取值
+        fillOptions({id:"orderSO.order_cur_status", dictName:"Order.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
         
         //E$("order.order_timestamp").datetimepicker({
         //    timeFormat: "HH:mm:ss"
         //});
+        
+        E$("businessSelection").combotree({id:"businessSelection", 
+            data:g$dict.Business, 
+            //firstLabel:"请选择",
+            editable:false,
+            valueProperty:"id", 
+            idProperty:"id", 
+            textProperty:["business_name"], 
+            titleProperty:"business_name",
+            treeSetting:{
+                data: {
+                    key: {
+                        name: "business_name"
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: "PK_ID",
+                        pIdKey: "business_id_upper",
+                        rootPId: null
+                    }
+                }
+            }
+        });
+        
+        E("businessSelection").onSelected = function (event, elem) {
+        	document.getElementById("orderSO.business_name").value=elem.business_name;
+        };
         
         //E$("eForm").validator();
         //E$("sForm").validator();
@@ -67,29 +94,54 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <DIV class=main_title>
       <B>待办业务单</B> 
       <DIV class="main_tt_right fr">
-        <A class=orange href="javascript:viewJs.first();">刷新</A>
+        <!-- <A class=orange href="javascript:viewJs.first();">刷新</A> -->
       </DIV>
     </DIV>
   
-    <DIV class="main_search" style="display: none;">
-      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0">
+    <DIV class="main_search" >
+      <form method="post" id="sForm" name="sForm" onsubmit="return false;" style="margin: 0 0 5px 0;">
         <input name="orderSO.pageIndex" id="orderSO.pageIndex" value="1" type="hidden" />
         <input name="orderSO.pageSize" id="orderSO.pageSize" value="10" type="hidden" />
-        <%--
         <table width="100%" >
           <tr>
-           <td style="width:60px;" >标题：</td>
-           <td style="width:100px;">
-             <input class=mg_r name="orderSO.order_subject" value="" type="text" />
+           <td style="width:80px;" >业务单号：</td>
+           <td>
+             <input class=mg_r name="orderSO.order_no" value="" type="text" />
            </td>
-           <td style="width:100px;">
-             <INPUT class="ipt_btn mg_r" value=搜索 type=button name=""  onclick="viewJs.first();">
+           <td style="width:80px;" >发起人：</td>
+           <td>
+             <input class=mg_r name="orderSO.order_init_staff_name" value="" type="text" />
            </td>
-           <td style="width:1000px;">
+           <td style="width:80px;" >业务类型：</td>
+           <td>
+             <input class=mg_r id="businessSelection" value="" type="text" readonly="readonly" />
+             <input name="orderSO.business_name" id="orderSO.business_name" value="" type="hidden" />
+           </td>
+           <td style="width:80px;" ></td>
+           <td>
+           </td>
+          </tr>
+          <tr>
+           <td>客户名称：</td>
+           <td>
+             <input class=mg_r name="orderSO.psdo_cust_name" value="" type="text" />
+           </td>
+           <td>客户电话：</td>
+           <td>
+             <input class=mg_r name="orderSO.cust_phone_no" value="" type="text" />
+           </td>
+           <td>订单类型：</td>
+           <td>
+             <select name="orderSO.order_type" id="orderSO.order_type"></select>
+           </td>
+           <td>订单状态：</td>
+           <td>
+             <select name="orderSO.order_cur_status" id="orderSO.order_cur_status"></select>
+             &nbsp;
+             <INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();">
            </td>
           </tr>
         </table>
-         --%>
       </form>
     </DIV>
     
