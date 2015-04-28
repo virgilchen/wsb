@@ -21,7 +21,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
         this.pageIndex = E("orderSO.pageIndex") ;
         
         fillOptions({id:"orderSO.order_type", dictName:"Order.type", firstLabel:"全部"}) ;// 改为字典取值
-        fillOptions({id:"orderSO.order_cur_status", dictName:"Order.status", firstLabel:"全部"}) ;
         
         //this.initDataGrid("orderTB", {height:"400px"}) ;
         
@@ -51,7 +50,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
             }
         });
-        
+        //E$("businessSelection").combotree("disable");
         E("businessSelection").onSelected = function (event, elem) {
         	document.getElementById("orderSO.business_name").value=elem.business_name;
         };
@@ -134,11 +133,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
            <td>
              <select name="orderSO.order_type" id="orderSO.order_type"></select>
            </td>
-           <td>订单状态：</td>
+           <td><INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();"></td>
            <td>
-             <select name="orderSO.order_cur_status" id="orderSO.order_cur_status"></select>
-             &nbsp;
-             <INPUT class="ipt_btn mg_r" value=搜索 type=button onclick="viewJs.first();">
+             
            </td>
           </tr>
         </table>

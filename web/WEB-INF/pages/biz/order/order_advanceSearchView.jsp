@@ -33,6 +33,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //E$("sForm").validator();
         //E("sForm").setFirstFocus();
         
+        
         E$("businessSelection").combotree({id:"businessSelection", 
             data:g$dict.Business, 
             //firstLabel:"请选择",
@@ -55,7 +56,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
             }
         });
-        
+        //E$("businessSelection").combotree("disable");
         E("businessSelection").onSelected = function (event, elem) {
         	document.getElementById("orderSO.business_name").value=elem.business_name;
         };
