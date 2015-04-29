@@ -98,9 +98,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 
                 customerDocumentUploader.doShow(data.documents);
                 
-                //$(data.recommendationEngines).each(function (i, elem) {
-            		//alert(i + ": " + elem.recmdt_psdo_cust_id);
-            	//});
+                //增加决策显示
+                $("#rcdInfos").html("");
+            	$("#rcdInfos").append("<p><b>根据客户的信息和过往的业务记录。建议：</b></p>");
+                $(data.recommendationEngines).each(function (i, elem) {
+                	$("#rcdInfos").append("<p>"+(i+1)+". "+elem.recmdt_engine_detail+"</p>");
+            	});
             }
         );
     },
@@ -403,9 +406,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	
 	
 	<div class="user_suggest" id="user_suggest">
-		<div class="content">
-		<p><b>根据客户的信息和过往的业务记录。建议：</b></p>
-		<p>1、决策1</p><p>2、决策2</p><p>3、决策3</p><p>4、决策5</p>
+		<div class="content" id="rcdInfos">
+			
 		</div>
 	</div>
 	<div class="user_detail_title" id="user_detail_title">

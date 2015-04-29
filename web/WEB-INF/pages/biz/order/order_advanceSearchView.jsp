@@ -178,6 +178,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		    <th>联系电话</th>
 		    <th>业务发起人 </th>
 		    <th>发起时间</th>
+		    <th>订单类型</th>
             <th>处理状态</th>
 		    <th>操作</th>
 		  <TR>
@@ -197,7 +198,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
 				    <td>{$T.cust_phone_no}</td>
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
 				    <td>{$T.order_init_time_stamp}</td>
-				    <td><span class="c_orange">{#if $T.order_cur_status == 'E'}完结{#else}{fmt.maxlen($T.procs_step_name, 100)}{#/if}</span></td>
+				    <td>{fmt.maxlen($T.procs_step_name, 100)}</td>
+				    <td><span class="c_orange">{dVal("Order.status", "name_", {PK_ID:$T.order_cur_status})}</span></td>
 				    <td>
 				      {#if $T.order_cur_status != 'I' && $T.order_cur_status != 'E'}
 				        {#if $T.urgent_levent == 9}

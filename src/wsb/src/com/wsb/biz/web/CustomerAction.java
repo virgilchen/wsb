@@ -2,6 +2,8 @@ package com.wsb.biz.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -155,6 +157,29 @@ private static final long serialVersionUID = 7244882365197775441L;
     public String openNewView() throws Exception {
 
     	Customer customer = customerBO.get(this.id) ;
+    	CarSO carso = new CarSO();
+    	carso.setPsdo_cust_id(customer.getId());
+    	customer.setCars(carBO.query(carso));
+    	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
+    	
+    	//如果是会员，查出会员信息
+    	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
+    		getRequest().setAttribute("mbid", customer.getMember_id());
+    		Member member = new Member();
+    		member = memberBO.get(customer.getMember_id());
+    		customer.setMember(member);
+    	}
+    	renderObject(customer, null) ; 
+    	
+        return null ;  
+    }
+    
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String to360View() throws Exception {
+    	
+    	HttpServletRequest request = getRequest();
+    	String customerId = request.getParameter("customerId");
+    	Customer customer = customerBO.get(Long.parseLong(customerId)) ;
     	CarSO carso = new CarSO();
     	carso.setPsdo_cust_id(customer.getId());
     	customer.setCars(carBO.query(carso));

@@ -85,7 +85,7 @@ select
   c.cust_name,
   c.cust_phone_no,
   s.staff_name as order_init_staff_name,
-  (select group_concat(b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id and e.event_status='R') procs_step_name
+  (select group_concat(b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id group by e.order_id) as procs_step_name
  from 
    order_rt o 
      left join staff_demo_rt s on s.staff_id=o.order_init_staff_id,

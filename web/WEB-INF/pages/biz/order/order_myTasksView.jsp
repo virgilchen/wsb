@@ -67,6 +67,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	openView(100701, url, '业务单业务处理');
     },
     
+    //查看客户信息
+    to360View:function(psdo_cust_id) {
+    	var url = '/biz/customer_view.action?customerId=' + psdo_cust_id;
+		openView(11001, url, '客户列表');
+    },
+    
     pickUp:function(orderId, eventId) {
     	var _this = this ;
         ajax(
@@ -170,6 +176,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <tr id="{$T.id}" {#if $T.event_staff_id != null}ondblclick="viewJs.toFollowUpView({$T.order_id}, {$T.event_id});"{#/if}>
                     <td>{$T.order_no}{#if $T.urgent_levent == 9}<img alt="紧急" src="<%=request.getContextPath()%>/images/urgent.jpg" width="20px" height="20px">{#/if}</td>
                     <td>{$T.business_name}</td>
+				    <!-- <td><a href="javascript:viewJs.to360View({$T.psdo_cust_id});">{$T.cust_name}</a></td> -->
 				    <td><a href="#">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
