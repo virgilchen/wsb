@@ -1,5 +1,9 @@
 package com.wsb.biz.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -41,6 +45,14 @@ public class CustomerBO extends BaseServiceImpl {
         	}
     	}
     	
+    	//String cmds = "/usr/local/apache-tomcat-wsb/webappsb/shelljob/script/rt_recmdt_engine_cust.sh "+newItem.getId();
+    	String cmds = "/rootb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+    	try{
+    		List<String> strList = this.callShell(cmds);
+    		System.out.println("================="+strList.size());
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
         
         return newItem;
     }
@@ -71,6 +83,15 @@ public class CustomerBO extends BaseServiceImpl {
 		if(cars != null){
 			CarBO.getCarBO().update(cars, customer.getId());
 		}
+		
+		//String cmds = "/usr/local/apache-tomcat-wsb/webappsb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+		String cmds = "/rootb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+    	try{
+    		List<String> strList = this.callShell(cmds);
+    		System.out.println("================="+strList.size());
+    	}catch (Exception e){
+    		e.printStackTrace();
+    	}
     }
     
     public void update(Customer customer) {
@@ -219,8 +240,36 @@ public class CustomerBO extends BaseServiceImpl {
         return customer;
     }
     
+    public static List callShell(String cmds) throws Exception {  
+    	Process p = Runtime.getRuntime().exec(cmds); 
+    	
+    	List<String> strList = new ArrayList<String>();
+    	InputStreamReader ir = new InputStreamReader(p.getInputStream());  
+        LineNumberReader input = new LineNumberReader(ir);  
+        String line;  
+        p.waitFor();  
+        while ((line = input.readLine()) != null){  
+            strList.add(line);  
+        }
+        return strList; 
+    }
+    
 
     public static CustomerBO getCustomerBO() {
     	return (CustomerBO)CodeHelper.getAppContext().getBean("customerBO");
     }
+    
+    public static void main(String[] args) throws Exception{  
+        String cmd = "cmd /c dir";  
+
+        Process p = Runtime.getRuntime().exec(cmd);  
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));  
+        String s = "";                  
+        while((s=in.readLine()) != null){  
+                System.out.println(s);  
+        }  
+        System.out.println("finished...");  
+
+    } 
+    
 }
