@@ -57,6 +57,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     toEditView:function(order_id) {
         openView(100003, '/biz/order_openView.action?order_id=' + order_id + '&parent_view_id=' + <%=view_id%>, '业务发起');
+    },
+    
+  	//查看360视图
+    toCustomerView:function(custId) {
+    	if (typeof(g$views[100004]) != "undefined") {
+    		removeView(100004);
+    	}
+        openView(100004, '/biz/customer_view.action?customer.id=' + custId, '客户360');
     }
 }) ;
 
@@ -140,7 +148,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                   <tr id="{$T.id}" ondblclick="{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id}, {$T.event_id});{#/if}">
                     <td>{$T.order_no}</td>
                     <td>{fmt.maxlen($T.business_name, 100)}</td>
-				    <td><a href="#">{$T.cust_name}</a></td>
+				    <td><a href="javascript:viewJs.toCustomerView({$T.psdo_cust_id});">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
 				    <td>{$T.order_init_time_stamp}</td>

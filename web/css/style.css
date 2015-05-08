@@ -196,7 +196,7 @@ a.btn_orange{display:inline-block; font-size:14px; font-weight:bold; height:28px
 .main_userinfo table{border:0; text-align:center; padding:10px;}
 .main_order_detail .title{ background:#e0e8ed; height:38px; line-height:38px; border-bottom:1px #cedde7 solid; padding:0 10px;}
 .main_order_detail .title_right{ float:right; position:absolute; top:5px; right:0px;}
-.main_order_detail .title_right li{ float: left;padding: 0 40px;margin-right: 10px;cursor: pointer;height: 32px;line-height: 32px;}
+.main_order_detail .title_right li{ float: left;padding: 0 40px;margin-right: 10px;cursor: pointer;height: 32px;line-height: 32px;text-decoration: underline;color: blue;}
 .main_order_detail .title_right li.selected{ background:#fff;border:1px #cedde7 solid;border-bottom:1px #fff solid;}
 .main_order_detail .content{ padding:20px;}
 .main_order_detail .content ul{ height:32px; line-height:32px; border-bottom:1px #cedde7 solid; margin-bottom:10px;}

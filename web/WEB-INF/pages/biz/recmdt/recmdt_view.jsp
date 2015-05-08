@@ -53,7 +53,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
     } */
     get:function(id) {
-
+    	if (id == -1) {
+            viewJs.entity = this.eFormInitData;
+            if(viewJs.onGet != undefined && viewJs.onGet) {
+            	var getEvent = {isHandled:false};
+            	viewJs.onGet(this.eFormInitData, getEvent);
+            	if (getEvent.isHandled) {
+            		return ;
+            	}
+            }
+   		 formDeserialize("eForm", this.eFormInitData, {}) ;// reset form;
+   		 return ;
+   		}
     	var idProperty = (this.idName==null?"id":this.idName) ;
     	var params = {} ;
     	params[idProperty] = id ;
@@ -81,7 +92,6 @@ function tabSteps(stepNo) {
 	var recmdt_name = document.getElementById("recmdt_name");
 	if(recmdt_name.value == null || recmdt_name.value == ''){
 		recmdt_name.focus();
-		//alert("请输入决策名称");
 		return;
 	}
 	
@@ -104,9 +114,6 @@ var cleanRecmdt = function(val){
     fillOptions({id:"recmdt_type"+val+"_key", dictName:'', firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
     document.getElementById("recmdt_value"+val).value = "";
 };
-function selKey(obj){
-	//alert(obj.value);
-}
 
 </script>
 

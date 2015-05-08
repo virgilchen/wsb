@@ -587,6 +587,17 @@ select p.* from recommendation_opr_map_dim p
             </value>
           </entry>
           
+          <entry key="businessChkOrders">
+            <value>
+              <![CDATA[
+select * from order_rt o   
+	where exists ( select 1 from order_prod_pack_event_rt t, business_rt b 
+		where t.business_id = b.business_id and b.business_id=[id] and o.order_id=t.order_id) group by o.order_id
+
+              ]]>
+            </value>
+          </entry>
+          
         </map>
       </property>
     </bean>
