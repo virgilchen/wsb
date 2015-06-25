@@ -45,11 +45,12 @@ public class CustomerBO extends BaseServiceImpl {
         	}
     	}
     	
-    	//String cmds = "/usr/local/apache-tomcat-wsb/webappsb/shelljob/script/rt_recmdt_engine_cust.sh "+newItem.getId();
-    	String cmds = "/rootb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+    	String cmds = "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust.sh "+newItem.getId();
+//    	String cmds = "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust_test.sh"+newItem.getId();
     	try{
-    		List<String> strList = this.callShell(cmds);
-    		System.out.println("================="+strList.size());
+    		System.out.println("=========Start Engine========["+cmds+"]");
+    		this.callShell(cmds);
+    		System.out.println("=========End Engine========");
     	}catch (Exception e){
     		e.printStackTrace();
     	}
@@ -84,11 +85,12 @@ public class CustomerBO extends BaseServiceImpl {
 			CarBO.getCarBO().update(cars, customer.getId());
 		}
 		
-		//String cmds = "/usr/local/apache-tomcat-wsb/webappsb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
-		String cmds = "/rootb/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+		String cmds = "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust.sh "+customer.getId();
+//		String cmds = "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust_test.sh"+customer.getId();
     	try{
-    		List<String> strList = this.callShell(cmds);
-    		System.out.println("================="+strList.size());
+    		System.out.println("=========Start Engine========["+cmds+"]");
+    		this.callShell(cmds);
+    		System.out.println("=========End Engine========");
     	}catch (Exception e){
     		e.printStackTrace();
     	}
@@ -240,18 +242,12 @@ public class CustomerBO extends BaseServiceImpl {
         return customer;
     }
     
-    public static List callShell(String cmds) throws Exception {  
+    public boolean callShell(String cmds) throws Exception {  
+//    	String cmd = "d:\\java.bat";  
     	Process p = Runtime.getRuntime().exec(cmds); 
     	
-    	List<String> strList = new ArrayList<String>();
-    	InputStreamReader ir = new InputStreamReader(p.getInputStream());  
-        LineNumberReader input = new LineNumberReader(ir);  
-        String line;  
         p.waitFor();  
-        while ((line = input.readLine()) != null){  
-            strList.add(line);  
-        }
-        return strList; 
+        return true; 
     }
     
 

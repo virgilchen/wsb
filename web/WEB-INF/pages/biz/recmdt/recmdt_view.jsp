@@ -42,16 +42,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
         
         this.first();
     },
-    /* addInfos:function() {
+    addInfos:function() {
         this.addRows ("recmdtInfosTB", [{index:this.size}], {forceClear:false});
 
         fillOptions({id:"recmdt_operator"+ this.size, dictName:"RecmdtOpr", firstLabel:"请选择...", textProperty:"recommendation_opr_symbol",titleProperty:"recommendation_opr_symbol"}) ;// 改为字典取值
         fillOptions({id:"recmdt_type"+ this.size, dictName:"RecmdtKeyType", firstLabel:"请选择...", textProperty:"recmdt_key_type",titleProperty:"recmdt_key_type"}) ;// 改为字典取值
-        
+        fillOptions({id:"recmdt_type"+this.size+"_key", dictName:'', firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
         this.size ++;
         this.refreshTableList();
         
-    } */
+    },
     get:function(id) {
     	if (id == -1) {
             viewJs.entity = this.eFormInitData;
@@ -103,6 +103,7 @@ function tabSteps(stepNo) {
 }
 
 var changeKeyVal = function(obj){
+	
 	var recmdt_type_id=$(obj).attr('id');
 	var recmdt_type_val=$(obj).val();
 	fillOptions({id:recmdt_type_id+"_key", dictName:recmdt_type_val, firstLabel:"请选择...", textProperty:"recmdt_key_in_inventory",titleProperty:"recmdt_key_in_inventory"}) ;// 改为字典取值
@@ -292,11 +293,11 @@ var cleanRecmdt = function(val){
 										<div>
 										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_type" id="recmdt_type{$T.index}" value="{$T.recmdt_type}" onchange="changeKeyVal(this)">
 										</select>
-										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_key" id="recmdt_key_recmdt_type{$T.index}" value="{$T.recmdt_key}" onchange="selKey(this)">
+										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_key" id="recmdt_type{$T.index}_key" value="{$T.recmdt_key}" onchange="selKey(this)">
 										</select>
 										<select class="mg_r" name="recmdtInventorys[{$T.index}].recmdt_operator" id="recmdt_operator{$T.index}" value="{$T.recmdt_operator}">
 										</select>
-										<input class="long_ipt" name="recmdtInventorys[{$T.index}].recmdt_value" type="text" value="{$T.recmdt_value}">
+										<input class="long_ipt" name="recmdtInventorys[{$T.index}].recmdt_value" id="recmdt_value{$T.index}" type="text" value="{$T.recmdt_value}">
 										</div>
 										<a class="de_del" href="#">×</a>
 									</li>
@@ -304,8 +305,6 @@ var cleanRecmdt = function(val){
 			      			</textarea>
 			      			</td></tr>
 			      		</tbody>
-			      		
-						
 						</table> -->
 						
 						<ul>

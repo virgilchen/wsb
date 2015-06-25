@@ -33,11 +33,22 @@ public class RecmdtBO extends BaseServiceImpl {
     		for(int i=0;i<recmdtInventorys.size();i++){
     			recmdtInventorys.get(i).setRecmdt_code(newItem.getId());
     			recmdtInventorys.get(i).setRecmdt_name(newItem.getRecmdt_name());
-    			recmdtInventorys.get(i).setRecmdt_status(newItem.getRecmdt_status());
     			recmdtInventorys.get(i).setRecmdt_remark(newItem.getRecmdt_remark());
     			recmdtInventorys.get(i).setRecmdt_detail(newItem.getRecmdt_detail());
     			recmdtInventorys.get(i).setRecmdt_condition_operator(newItem.getRecmdt_condition_operator());
     			recmdtInventorys.get(i).setRecmdt_condition_no(new Long(i));
+    			if(newItem.getRecmdt_status()!=null && newItem.getRecmdt_status().equals("A")){
+    				if(recmdtInventorys.get(i).getRecmdt_type()!=null && !recmdtInventorys.get(i).getRecmdt_type().equals("")
+    						&& recmdtInventorys.get(i).getRecmdt_key()!=null && !recmdtInventorys.get(i).getRecmdt_key().equals("")
+    						&& recmdtInventorys.get(i).getRecmdt_operator()!=null && !recmdtInventorys.get(i).getRecmdt_operator().equals("")){
+    					recmdtInventorys.get(i).setRecmdt_status("active");
+    				}else{
+    					recmdtInventorys.get(i).setRecmdt_status(newItem.getRecmdt_status());
+    				}
+    			}else{
+    				recmdtInventorys.get(i).setRecmdt_status(newItem.getRecmdt_status());
+    			}
+    			
     			jdbcDao.insert(recmdtInventorys.get(i));
         	}
     	}
@@ -57,11 +68,21 @@ public class RecmdtBO extends BaseServiceImpl {
     		for(int i=0;i<recmdtInventorys.size();i++){
     			recmdtInventorys.get(i).setRecmdt_code(recmdt.getId());
     			recmdtInventorys.get(i).setRecmdt_name(recmdt.getRecmdt_name());
-    			recmdtInventorys.get(i).setRecmdt_status(recmdt.getRecmdt_status());
     			recmdtInventorys.get(i).setRecmdt_remark(recmdt.getRecmdt_remark());
     			recmdtInventorys.get(i).setRecmdt_detail(recmdt.getRecmdt_detail());
     			recmdtInventorys.get(i).setRecmdt_condition_operator(recmdt.getRecmdt_condition_operator());
     			recmdtInventorys.get(i).setRecmdt_condition_no(new Long(i));
+    			if(recmdt.getRecmdt_status()!=null && recmdt.getRecmdt_status().equals("A")){
+    				if(recmdtInventorys.get(i).getRecmdt_type()!=null && !recmdtInventorys.get(i).getRecmdt_type().equals("")
+    						&& recmdtInventorys.get(i).getRecmdt_key()!=null && !recmdtInventorys.get(i).getRecmdt_key().equals("")
+    						&& recmdtInventorys.get(i).getRecmdt_operator()!=null && !recmdtInventorys.get(i).getRecmdt_operator().equals("")){
+    					recmdtInventorys.get(i).setRecmdt_status("active");
+    				}else{
+    					recmdtInventorys.get(i).setRecmdt_status(recmdt.getRecmdt_status());
+    				}
+    			}else{
+    				recmdtInventorys.get(i).setRecmdt_status(recmdt.getRecmdt_status());
+    			}
     			jdbcDao.insert(recmdtInventorys.get(i));
         	}
     	}
