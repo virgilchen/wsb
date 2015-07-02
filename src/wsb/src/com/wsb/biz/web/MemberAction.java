@@ -80,11 +80,6 @@ private static final long serialVersionUID = 7244882365197775441L;
     	member.setMember_status("1");//会员状态，默认0不是会员，1是会员，2会员过期
         Object newMember = memberBO.create(member,questions) ;
         
-        Customer customer = customerBO.get(member.getPsdo_cust_id()) ;
-        customer.setMember_id(member.getId());
-        customer.setMember_idc("1");//是否会员，0不是会员，1是会员，2会员过期
-        customerBO.update(customer);
-        
         renderObject(newMember, ResponseMessage.KEY_CREATE_OK) ;
         return null;    
         

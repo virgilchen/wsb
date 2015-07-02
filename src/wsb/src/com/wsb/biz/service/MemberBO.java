@@ -12,6 +12,7 @@ import com.globalwave.common.Util;
 import com.globalwave.common.cache.CodeHelper;
 import com.globalwave.common.exception.BusinessException;
 import com.wsb.biz.entity.Answer;
+import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.Member;
 import com.wsb.biz.entity.MemberAppl;
 import com.wsb.biz.entity.MemberApplSO;
@@ -49,7 +50,13 @@ public class MemberBO extends BaseServiceImpl{
             	}
             }
     	}
-        
+    	
+    	Customer customer = new Customer();
+    	customer = CustomerBO.getCustomerBO().get(newItem.getPsdo_cust_id());
+    	customer.setMember_id(newItem.getId());
+    	customer.setMember_idc("1");//是否会员，0不是会员，1是会员，2会员过期
+    	CustomerBO.getCustomerBO().update(customer);
+    	
         return newItem;
     }
     
