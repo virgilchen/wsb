@@ -46,38 +46,8 @@ public class CustomerBO extends BaseServiceImpl {
 			}
 		}
 
-		String cmds = "sh /usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust.sh "
-				+ newItem.getId();
-//		String[] cmd = {
-//				"/usr/local/apache-tomcat-wsb/webapps/shelljob/script/", "-c",
-//				"rt_recmdt_engine_cust_test.sh" +newItem.getId()};
-		// String cmds =
-		// "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust_test.sh"+newItem.getId();
-		try {
-			
-			boolean flag = this.ExeShell(cmds);
-			if(flag){
-				System.out.println("=========Engine finish!========");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		return newItem;
 	}
-
-	/*
-	 * public void update(Customer customer, List<Car> cars) { CarSO carSO = new
-	 * CarSO(); carSO.setPsdo_cust_id(customer.getId());
-	 * jdbcDao.delete(Car.class, carSO);
-	 * 
-	 * if(cars != null){ jdbcDao.update(customer) ;
-	 * 
-	 * for(int i=0;i<cars.size();i++){ if(cars.get(i) != null){
-	 * cars.get(i).setPsdo_cust_id(customer.getId());
-	 * jdbcDao.insert(cars.get(i)); } } } }
-	 */
 
 	public void update(Customer customer, List<Car> cars) {
 
@@ -85,22 +55,6 @@ public class CustomerBO extends BaseServiceImpl {
 
 		if (cars != null) {
 			CarBO.getCarBO().update(cars, customer.getId());
-		}
-
-		String cmds = "sh /usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust.sh "
-				+ customer.getId();
-//		String[] cmd = {
-//				"/usr/local/apache-tomcat-wsb/webapps/shelljob/script/", "-c",
-//				"rt_recmdt_engine_cust_test.sh" +customer.getId()};
-		// String cmds =
-		// "/usr/local/apache-tomcat-wsb/webapps/shelljob/script/rt_recmdt_engine_cust_test.sh"+customer.getId();
-		try {
-			boolean flag = this.ExeShell(cmds);
-			if(flag){
-				System.out.println("=========Engine finish!========");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -251,73 +205,8 @@ public class CustomerBO extends BaseServiceImpl {
 		return customer;
 	}
 
-	public boolean callShell(String[] cmds) throws Exception {
-		
-		// String cmd = "d:\\java.bat";
-		System.out.println("=========Start Engine========[" + cmds + "]");
-		Process p = Runtime.getRuntime().exec(cmds);
-		
-		p.waitFor();
-		return true;
-	}
-
-	public static boolean ExeShell(String shellPath){  
-//      String cmd = "/usr/bin/rsync -av /var/log/www.solive.kv/access_log testuser@10.0.1.219::store --password-file=/etc/client/rsync.pwd";
-//        String cmd = "sh /www/www.itvpad.com/www/manager/synRes.sh";
-		String cmd = shellPath;
-        System.out.println("===============>"+cmd);
-        Runtime run = Runtime.getRuntime();
-        String result = "";
-        BufferedReader br=null;
-        BufferedInputStream in=null;
-        try {
-        	System.out.println(">>>>>>>>>>>>Start Engin<<<<<<<<<<<<<");
-        	Process p = run.exec(cmd);
-        	if(p.waitFor() != 0){  
-        		result+="No process ID";
-                return false;  
-        	}    
-        	in = new BufferedInputStream(p.getInputStream());
-        	br = new BufferedReader(new InputStreamReader(in));
-        	String lineStr;
-        	while ((lineStr = br.readLine()) != null) {
-        		result += lineStr;
-        	}
-        	System.out.println(">>>>>>>>>>>>End Engin<<<<<<<<<<<<<");
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	return false;
-        }finally{
-        	if(br!=null){
-        		try {
-        			br.close();
-        			in.close();
-        		} catch (IOException e) {
-        			e.printStackTrace();
-        		}
-        	}
-//        	logger.info("ShellUtil.ExeShell=>"+result);
-        	System.out.println(">>>>>>>>>>>>result:<<<<<<<<<<<<<"+result);
-        }
-        return true;
-    }
-
 	public static CustomerBO getCustomerBO() {
 		return (CustomerBO) CodeHelper.getAppContext().getBean("customerBO");
-	}
-
-	public static void main(String[] args) throws Exception {
-		String cmd = "cmd /c dir";
-
-		Process p = Runtime.getRuntime().exec(cmd);
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				p.getInputStream()));
-		String s = "";
-		while ((s = in.readLine()) != null) {
-			System.out.println(s);
-		}
-		System.out.println("finished...");
-
 	}
 
 }
