@@ -125,6 +125,7 @@ public class DocumentBO extends BaseServiceImpl {
     public ArrayPageList<Document> query(Long order_id, String document_type) {
 
         DocumentSO documentSO = new DocumentSO() ;
+        documentSO.setPageIndex(ArrayPageList.PAGEINDEX_NO_PAGE);
         documentSO.setDocument_type(document_type);
         documentSO.setOrder_id(order_id);
         
