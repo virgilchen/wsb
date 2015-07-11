@@ -1,5 +1,9 @@
 package com.wsb.biz.web;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import com.globalwave.base.web.ResponseMessage;
 import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.wsb.biz.entity.CarSO;
+import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.Recmdt;
 import com.wsb.biz.entity.RecmdtInventory;
 import com.wsb.biz.entity.RecmdtInventorySO;
@@ -83,6 +88,18 @@ public class RecmdtAction extends BaseAction implements Preparable {
         Object newRecmdt = recmdtBO.create(recmdt,recmdtInventorys) ;
 
         renderObject(newRecmdt, ResponseMessage.KEY_CREATE_OK) ;
+        
+        Recmdt recmdt = (Recmdt) newRecmdt;
+        String cmds = "rt_recmdt_engine_rule.sh " + recmdt.getId();
+		try {
+			boolean flag = this.ExeShell(cmds);
+			if(flag){
+				System.out.println("=========Engine finish!========");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
         return null;    
         
     }
@@ -95,6 +112,18 @@ public class RecmdtAction extends BaseAction implements Preparable {
     	recmdtBO.update(recmdt,recmdtInventorys) ;
 
         renderObject(recmdt, ResponseMessage.KEY_UPDATE_OK) ;
+        
+        String cmds = "rt_recmdt_engine_rule.sh " + recmdt.getId();
+		try {
+			
+			boolean flag = this.ExeShell(cmds);
+			if(flag){
+				System.out.println("=========Operation succeeded!========");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
         return null;    
         
@@ -116,7 +145,46 @@ public class RecmdtAction extends BaseAction implements Preparable {
         return null;    
         
     }
-
+    
+    public static boolean ExeShell(String cmd){  
+		String shellPath = "/usr/local/apache-tomcat-wsb/webapps/wsb/shelljob/script/";
+		cmd = shellPath + cmd;
+        System.out.println("===============>"+cmd);
+        Runtime run = Runtime.getRuntime();
+        String result = "";
+        BufferedReader br=null;
+        BufferedInputStream in=null;
+        try {
+        	System.out.println(">>>>>>>>>>>>Start Engin<<<<<<<<<<<<<");
+        	Process p = run.exec(cmd);
+        	if(p.waitFor() != 0){  
+        		result+="No process ID";
+                return false;  
+        	}    
+        	in = new BufferedInputStream(p.getInputStream());
+        	br = new BufferedReader(new InputStreamReader(in));
+        	String lineStr;
+        	while ((lineStr = br.readLine()) != null) {
+        		result += lineStr;
+        	}
+        	System.out.println(">>>>>>>>>>>>End Engin<<<<<<<<<<<<<");
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	return false;
+        }finally{
+        	if(br!=null){
+        		try {
+        			br.close();
+        			in.close();
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
+//        	logger.info("ShellUtil.ExeShell=>"+result);
+        	System.out.println(">>>>>>>>>>>>result:<<<<<<<<<<<<<"+result);
+        }
+        return true;
+    }
 
 	public Recmdt getRecmdt() {
 		return recmdt;
