@@ -84,11 +84,15 @@ select
   o.*,
   c.cust_name,
   c.cust_phone_no,
-  s.staff_name as order_init_staff_name,
-  (select group_concat(distinct b.business_name) from order_prod_pack_event_rt e left join business_rt b on b.business_id=e.business_id where o.order_id=e.order_id group by e.order_id) as procs_step_name
+  b.business_name,
+  p.procs_step_name,
+  s.staff_name as order_init_staff_name 
  from 
    order_rt o 
-     left join staff_demo_rt s on s.staff_id=o.order_init_staff_id,
+     left join staff_demo_rt s on s.staff_id=o.order_init_staff_id
+     left join order_prod_pack_event_rt e on o.order_id=e.order_id and e.event_status='R'
+     left join business_rt b on b.business_id=e.business_id
+     left join order_procs_rt p on p.business_id=e.business_id and p.procs_step_no=e.procs_step_no,
    cust_demo_rt c
 where o.psdo_cust_id=c.psdo_cust_id
  {and s.staff_name like [order_init_staff_name]}
@@ -117,6 +121,7 @@ where o.psdo_cust_id=c.psdo_cust_id
               ) > sysdate()
       )
  }
+
 order by <<order_by>>
               ]]>
             </value>

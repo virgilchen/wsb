@@ -132,7 +132,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 		    <th>业务发起人 </th>
 		    <th>发起时间</th>
 		    <th>当前处理人</th>
-		    <th>处理状态</th>
+		    <th>处理环节</th>
 		    <th>操作</th>
 		  <TR>
         </thead>

@@ -149,3 +149,39 @@ create table biz_document
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `wsbd001`.`wf_key_info` (
+  `wf_key_info_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `wf_key_info_type` VARCHAR(2) NULL DEFAULT NULL COMMENT '关键信息类型：0单选，1多选，2填空',
+  `wf_key_info_name` VARCHAR(100) NULL DEFAULT NULL COMMENT '关键信息名称',
+  `isRequired` VARCHAR(2) NULL DEFAULT NULL COMMENT '是否必填：0是，1不是',
+  `isActive` VARCHAR(2) NULL DEFAULT NULL COMMENT '是否有效：0是，1不是',
+  `version_id` BIGINT(20) NULL DEFAULT NULL COMMENT '版本号，保留，数据更新时，用于“乐观锁”，放置时间的long(java)形式',
+  `created_by` VARCHAR(50) NULL DEFAULT NULL COMMENT '创建的操作员Login_ID',
+  `created_on` DATETIME NULL DEFAULT NULL COMMENT '创建的时间',
+  `updated_by` VARCHAR(50) NULL DEFAULT NULL COMMENT '更新的操作员Login_ID',
+  `updated_on` DATETIME NULL DEFAULT NULL COMMENT '更新的时间，同时用作version_id',
+  PRIMARY KEY (`wf_key_info_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '环节管理:关键信息';
+
+CREATE TABLE `wsbd001`.`wf_key_info_details` (
+  `wf_key_info_details_id` INT(11) NOT NULL COMMENT '主键',
+  `wf_key_info_id` INT(11) NOT NULL COMMENT '外键关联关键信息主表',
+  `detail_name` VARCHAR(100) NULL COMMENT '选项名称',
+  `can_input` VARCHAR(2) NULL DEFAULT NULL COMMENT '可否填空：0可，1否',
+  `detail_val` VARCHAR(1000) NULL DEFAULT NULL COMMENT '选项值',
+  `detail_sn` INT(11) NULL DEFAULT 0 COMMENT '选项顺序',
+  `max_length` INT(11) NULL DEFAULT 0 COMMENT '最大字数',
+  `min_length` INT(11) NULL DEFAULT 0 COMMENT '最小字数',
+  `isActive` VARCHAR(2) NULL DEFAULT NULL COMMENT '是否有效：0是，1否',
+  `version_id` BIGINT(20) NULL DEFAULT NULL COMMENT '版本号，保留，数据更新时，用于“乐观锁”，放置时间的long(java)形式',
+  `created_by` VARCHAR(50) NULL DEFAULT NULL COMMENT '创建的操作员Login_ID',
+  `created_on` DATETIME NULL DEFAULT NULL COMMENT '创建的时间',
+  `updated_by` VARCHAR(50) NULL DEFAULT NULL COMMENT '更新的操作员Login_ID',
+  `updated_on` DATETIME NULL DEFAULT NULL COMMENT '更新的时间，同时用作version_id',
+  PRIMARY KEY (`wf_key_info_details_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '关键信息明细表';
+

@@ -117,7 +117,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
   <div id="listDiv">
   
     <DIV class=main_title>
-      <B>业务单流查看</B> 
+      <B>订单查询</B> 
       <DIV class="main_tt_right fr">
         <!-- 
         <A class=orange href="javascript:viewJs.first();">刷新</A>
@@ -181,12 +181,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
         <thead>
           <TR>
 		    <th>业务单号</th>
+		    <th>业务类型</th>
 		    <th>姓名</th>
 		    <th>联系电话</th>
 		    <th>业务发起人 </th>
 		    <th>发起时间</th>
-		    <th>订单类型</th>
-            <th>处理状态</th>
+            <th>处理环节</th>
 		    <th>操作</th>
 		  <TR>
         </thead>
@@ -201,12 +201,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <textarea id="templateBody" jTemplate="yes">
                   <tr id="{$T.id}" ondblclick="{#if $T.order_cur_status == 'I'}viewJs.toEditView({$T.order_id});{#else}viewJs.toFollowUpView({$T.order_id});{#/if}">
                     <td>{$T.order_no}</td>
+                    <td>{fmt.maxlen($T.business_name, 100)}</td>
 				    <td><a href="javascript:viewJs.toCustomerView({$T.psdo_cust_id});">{$T.cust_name}</a></td>
 				    <td>{$T.cust_phone_no}</td>
 				    <td>{fmt.maxlen($T.order_init_staff_name, 20)}</td>
 				    <td>{$T.order_init_time_stamp}</td>
-				    <td>{fmt.maxlen($T.procs_step_name, 100)}</td>
-				    <td><span class="c_orange">{dVal("Order.status", "name_", {PK_ID:$T.order_cur_status})}</span></td>
+				    <td><span class="c_orange">{fmt.maxlen($T.procs_step_name, 100)}{#if $T.order_cur_status == 'E'}完结{#/if}</span></td>
 				    <td>
 				      {#if $T.order_cur_status != 'I' && $T.order_cur_status != 'E'}
 				        {#if $T.urgent_levent == 9}

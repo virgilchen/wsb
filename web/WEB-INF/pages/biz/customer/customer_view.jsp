@@ -198,18 +198,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
     	}
     	
     },
-    toAssetsHolding:function(){
-    	var custId = document.getElementById("customer.id").value;
-    	if(custId == ''){
-    		alert("请先完整填写客户资料！");
-    		return;
-    	}else{
-    		
-    		var str = '/biz/member_view.action?customerId='+custId;
-    		openView(11005, str, '会员列表');
-    		return;
-    	}
-    },
     displayConditions:function(total){
     	var condType = "";
     	if(document.getElementById('condtype1').style.display != "none"){
