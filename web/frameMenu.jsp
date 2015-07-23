@@ -103,6 +103,7 @@ findMyTaskCount();
                 <li <%=showOrNot(sessionUser, new short[]{(short)12001}) %>><a href="javascript:removeAll();openView(12001, '/biz/business_view.action', '业务管理');">业务管理</a></li>
                 <li <%=showOrNot(sessionUser, new short[]{(short)12003}) %>><a href="javascript:removeAll();openView(12003, '/biz/product_view.action', '基础商品管理');">基础商品管理</a></li>
                 <li <%=showOrNot(sessionUser, new short[]{(short)12004}) %>><a href="javascript:removeAll();openView(12004, '/biz/productPack_view.action', '商品包管理');">商品包管理</a></li>
+                <li <%=showOrNot(sessionUser, new short[]{(short)12005}) %>><a href="javascript:removeAll();openView(12005, '/biz/wfKeyInfo_view.action', '流程关键信息管理');">流程关键信息管理</a></li>
             </ul>
         </dd>
     </dl>

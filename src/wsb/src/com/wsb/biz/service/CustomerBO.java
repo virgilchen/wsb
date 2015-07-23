@@ -1,11 +1,5 @@
 package com.wsb.biz.service;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -22,8 +16,8 @@ import com.wsb.biz.entity.Car;
 import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
-import com.wsb.biz.entity.MemberSO;
 import com.wsb.biz.entity.Member;
+import com.wsb.biz.entity.MemberSO;
 
 @Service("customerBO")
 @Scope("prototype")
