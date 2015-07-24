@@ -57,12 +57,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 	if(data.wf_key_info_type == 0){
                     	$(data.wfKeyInfoDetailsList).each(function (i, elem) {
                     		$("#infoDetails").append("<tr id='row_"+rowId+"'><td>选项名称"+
-                        			"<input name='details["+rowId+"].detail_name' value='"+elem.detail_name+"'/></td>"+
+                        			"<input name='details["+rowId+"].detail_name' value='"+elem.detail_name+"' id='detail_name"+rowId+"'/></td>"+
+                        			"<td>  序号<input name='details["+rowId+"].detail_sn' id='detail_sn"+rowId+
+                        			"' value='"+elem.detail_sn+"'  onkeyup='javascript:viewJs.checkNum(this);' maxlength='9'/>"+
+                        			"</td>"+
                         			"<td>"+
                         			"<a href='javascript:viewJs.addDetails("+data.wf_key_info_type+");'>添加    </a>"+
                         			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
-                        			"<a href='javascript:viewJs.test1("+rowId+");'>上移    </a>"+
-                        			"<a href='#' >下移    </a>"+
+                        			/* "<a href='javascript:viewJs.moveUp("+rowId+");'>上移    </a>"+
+                        			"<a href='#' >下移    </a>"+ */
                         			"</td></tr>");
                     		rowId++;
                         });
@@ -73,6 +76,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     				    			"    <td><input id='can_input"+rowId+"'"+
     				    			" type='checkbox' onclick='javascript:viewJs.getCheck("+rowId+");'/></td>    "+
     				    			"<input type='hidden' name='details["+rowId+"].can_input' id='details["+rowId+"].can_input' value='"+elem.can_input+"'/>"+
+    				    			"<td>  序号<input name='details["+rowId+"].detail_sn' id='detail_sn"+rowId+
+    				    			"' value='"+elem.detail_sn+"'  onkeyup='javascript:viewJs.checkNum(this);' maxlength='9'/>"+
+                        			"</td>"+
     				    			"    <td>"+
     				    			"<a href='javascript:viewJs.addDetails("+data.wf_key_info_type+");'>添加    </a>"+
     				    			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
@@ -107,12 +113,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
     addDetails:function(infoType){
     	if(infoType == '0'){
     		$("#infoDetails").append("<tr id='row_"+rowId+"'><td>选项名称"+
-        			"<input name='details["+rowId+"].detail_name'/></td>"+
+        			"<input name='details["+rowId+"].detail_name' id='detail_name"+rowId+"'/></td>"+
+        			"<td>  序号<input name='details["+rowId+"].detail_sn' id='detail_sn"+rowId+
+        			"' onkeyup='javascript:viewJs.checkNum(this);' maxlength='9'/>"+
+        			"</td>"+
         			"<td>"+
         			"<a href='javascript:viewJs.addDetails("+infoType+");'>添加    </a>"+
         			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
-        			"<a href='javascript:viewJs.test1("+rowId+");'>上移    </a>"+
-        			"<a href='#' >下移    </a>"+
+        			/* "<a href='javascript:viewJs.moveUp("+rowId+");'>上移    </a>"+
+        			"<a href='#' >下移    </a>"+ */
+        			
         			"</td></tr>");
 		}else if(infoType == '1'){
 			$("#infoDetails").append("<tr id='row_"+rowId+"'><td>选项内容"+
@@ -120,6 +130,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    			"    <td><input id='can_input"+rowId+"'"+
 	    			" type='checkbox' onclick='javascript:viewJs.getCheck("+rowId+");' checked='checked'/></td>    "+
 	    			"<input type='hidden' name='details["+rowId+"].can_input' id='details["+rowId+"].can_input' value='0'/>"+
+	    			"<td>  序号<input name='details["+rowId+"].detail_sn' id='detail_sn"+rowId+
+	    			"' onkeyup='javascript:viewJs.checkNum(this);' maxlength='9'/>"+
+        			"</td>"+
 	    			"    <td>"+
 	    			"<a href='javascript:viewJs.addDetails("+infoType+");'>添加    </a>"+
 	    			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
@@ -147,21 +160,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		document.getElementById("details["+objId+"].can_input").value='1';
     	}
     },
-    test1:function(id){
+    moveUp:function(id){
     	var row = document.getElementById("row_"+id).rowIndex;
     	if(row==0){
     		alert(' 当前最大值，无需上移');
     	}else{
     		//上一行的名称列值
     		var htm1=document.getElementById("infoDetails").rows[row-1].innerHTML;
-    		alert(htm1);
+    		var row1=row-1;
+    		var val1=document.getElementById("detail_name"+row1).value;
+    		alert(val1);
     		// 当前行的名称列值
     		var htm2=document.getElementById("infoDetails").rows[row].innerHTML;
     		document.getElementById("infoDetails").rows[row-1].innerHTML=htm2;
     		document.getElementById("infoDetails").rows[row].innerHTML=htm1;
     	}
     },
-    test2:function(id){
+    moveDown:function(id){
     	//或得到当前行的行号
     	var row = document.getElementById(id).parentElement.parentElement.rowIndex;
     	//或 得到table的总行数
@@ -178,6 +193,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		document.getElementById("tab").rows[row+1].cells[1].innerHTML=htm2;
     		// 下一行的值被赋值为当前行的值
     		document.getElementById(id).parentElement.parentElement.cells[1].innerHTML=htm1;
+    	}
+    },
+    checkNum:function(obj) {
+    	var vNum = obj.value;
+    	var reg1 =  /^\d+$/;
+    	if(vNum != null && vNum != ''){
+    		if(vNum.trim().match(reg1) == null){
+    			alert("序号必须是正整数");
+    			obj.value = "";
+    			return;
+    		}
+    		
     	}
     }
     
@@ -287,7 +314,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <table width="100%" border="0">
               <tr>
                 <th width="15%">信息名称：</th>
-                <td><input type="text" name="wfKeyInfo.wf_key_info_name" id="wfKeyInfo.wf_key_info_name" maxlength="50"/></td>
+                <td><input type="text" name="wfKeyInfo.wf_key_info_name" id="wfKeyInfo.wf_key_info_name" maxlength="50" /></td>
               </tr>
               <tr>
                 <th>信息类型：</th>

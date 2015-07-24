@@ -39,9 +39,7 @@ public class WfKeyInfoDetailsBO extends BaseServiceImpl{
     		if (details.get(i) == null) {
     			continue ;
     		}
-    		
 			details.get(i).setWf_key_info_id(wf_key_info_id);
-			details.get(i).setDetail_sn(new Long(i));
 			jdbcDao.insert(details.get(i));
 		}
     }

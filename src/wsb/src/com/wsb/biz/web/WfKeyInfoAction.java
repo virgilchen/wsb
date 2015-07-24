@@ -54,6 +54,7 @@ private static final long serialVersionUID = 7244882365197775441L;
     	WfKeyInfo wfKeyInfo = wfKeyInfoBO.get(this.id) ;
     	WfKeyInfoDetailsSO wfKeyInfoDetailsSO = new WfKeyInfoDetailsSO();
     	wfKeyInfoDetailsSO.setWf_key_info_id(wfKeyInfo.getId());
+    	wfKeyInfoDetailsSO.addAsc("detail_sn");
     	wfKeyInfo.setWfKeyInfoDetailsList(wfKeyInfoDetailsBO.query(wfKeyInfoDetailsSO));
     	
     	renderObject(wfKeyInfo, null) ; 
