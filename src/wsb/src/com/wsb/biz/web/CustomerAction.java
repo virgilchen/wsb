@@ -21,6 +21,7 @@ import com.wsb.biz.entity.CarSO;
 import com.wsb.biz.entity.Customer;
 import com.wsb.biz.entity.CustomerSO;
 import com.wsb.biz.entity.Member;
+import com.wsb.biz.entity.MemberSO;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.entity.RecommendationEngine;
 import com.wsb.biz.entity.RecommendationEngineSO;
@@ -83,12 +84,14 @@ private static final long serialVersionUID = 7244882365197775441L;
     	customer.setRecommendationEngines(RecommendationEngineBO.getRecommendationEngineBO().query(recommendationEngineSO));
     	
     	//如果是会员，查出会员信息
-    	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
-    		getRequest().setAttribute("mbid", customer.getMember_id());
-    		Member member = new Member();
-    		member = memberBO.get(customer.getMember_id());
-    		customer.setMember(member);
+    	MemberSO memberSO = new MemberSO();
+    	memberSO.setPsdo_cust_id(customer.getId().toString());
+    	ArrayPageList<Member> pageList = memberBO.query(memberSO);
+    	Member member = new Member();
+    	if(pageList.size()>0){
+    		member = (Member) pageList.get(0);
     	}
+    	customer.setMember(member);
     	renderObject(customer, null) ; 
     	
         return null ;  
@@ -189,12 +192,14 @@ private static final long serialVersionUID = 7244882365197775441L;
     	customer.setDocuments(DocumentBO.getDocumentBO().query(customer.getId(), "C"));
     	
     	//如果是会员，查出会员信息
-    	if(customer.getMember_id() != null && !customer.getMember_id().equals("")){
-    		getRequest().setAttribute("mbid", customer.getMember_id());
-    		Member member = new Member();
-    		member = memberBO.get(customer.getMember_id());
-    		customer.setMember(member);
+    	MemberSO memberSO = new MemberSO();
+    	memberSO.setPsdo_cust_id(customer.getId().toString());
+    	ArrayPageList<Member> pageList = memberBO.query(memberSO);
+    	Member member = new Member();
+    	if(pageList.size()>0){
+    		member = (Member) pageList.get(0);
     	}
+    	customer.setMember(member);
     	renderObject(customer, null) ; 
     	
         return null ;  
