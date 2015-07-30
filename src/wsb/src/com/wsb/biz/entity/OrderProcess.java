@@ -2,6 +2,7 @@ package com.wsb.biz.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.globalwave.base.BaseEntity;
 
@@ -22,6 +23,9 @@ public class OrderProcess extends BaseEntity {
     private Integer procs_step_no;
     private String procs_step_name;
     private Long procs_staff_role_id;
+    
+    @Transient
+    private String wf_key_info_id;
 	
 	public Long getBusiness_id() {
 		return business_id;
@@ -47,6 +51,13 @@ public class OrderProcess extends BaseEntity {
 	public void setProcs_staff_role_id(Long procs_staff_role_id) {
 		this.procs_staff_role_id = procs_staff_role_id;
 	}
+	public String getWf_key_info_id() {
+		return wf_key_info_id;
+	}
+	public void setWf_key_info_id(String wf_key_info_id) {
+		this.wf_key_info_id = wf_key_info_id;
+	}
+	
 }
 
 

@@ -201,6 +201,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             <TH width="80px">排序</TH>
             <TH>处理环节</TH>
             <TH>处理角色</TH>
+            <TH>配置</TH>
             <TH width="80px">操作</TH>
           <TR>
         </thead>
@@ -243,6 +244,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         <option value="<%=role.get("id") %>" {#if $T.procs_staff_role_id == <%=role.get("id") %>}selected="selected"{#/if}><%=role.get("staff_role_name") %></option>
                         <%}%>
                       </select>
+                    </td>
+                    <td>
+                      <input name="orderProcesses[{$T.procs_step_no}].wf_key_info_id" value="{$T.wf_key_info_id}"/>
                     </td>
                     <td>
                       <a href="javascript:viewJs.deleteMe({$T.procs_step_no})">删除</a>

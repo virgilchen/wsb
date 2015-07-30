@@ -10,6 +10,8 @@ import com.globalwave.base.BaseServiceImpl;
 import com.globalwave.common.ArrayPageList;
 import com.wsb.biz.entity.OrderProcess;
 import com.wsb.biz.entity.OrderProcessSO;
+import com.wsb.biz.entity.WfKeyInfoRel;
+import com.wsb.biz.entity.WfKeyInfoRelSO;
 
 
 @Service("orderProcessBO")
@@ -24,6 +26,11 @@ public class OrderProcessBO extends BaseServiceImpl {
     	
     	jdbcDao.delete(OrderProcess.class, so) ;
     	
+    	WfKeyInfoRel rel = new WfKeyInfoRel();
+    	rel.setBusiness_id(businessId);
+    	jdbcDao.delete(WfKeyInfoRel.class, rel);
+    	
+    	
     	if (orderProcesses != null) {
 	    	for (OrderProcess op : orderProcesses) {
 	    		if (op == null) {
@@ -31,6 +38,26 @@ public class OrderProcessBO extends BaseServiceImpl {
 	    		}
 	    		
 	    	    jdbcDao.insert(op) ;
+	    	    
+	    	    if(op.getWf_key_info_id() != null && !op.getWf_key_info_id().trim().equals("")){
+	    	    	if(op.getWf_key_info_id().indexOf(",")>0){
+	    	    		String[] keyIds = op.getWf_key_info_id().split(",");
+	    	    		for(int i=0; i<keyIds.length; i++){
+	    	    			String keyid = keyIds[i];
+	    	    			WfKeyInfoRel wfKeyInfoRel = new WfKeyInfoRel();
+	    	    			wfKeyInfoRel.setBusiness_id(businessId);
+	    	    			wfKeyInfoRel.setProcs_step_no(op.getProcs_step_no());
+	    	    			wfKeyInfoRel.setWf_key_info_id(new Long(keyid));
+	    	    			jdbcDao.insert(wfKeyInfoRel);
+	    	    		}
+	    	    	}else{
+	    	    		WfKeyInfoRel wfKeyInfoRel = new WfKeyInfoRel();
+    	    			wfKeyInfoRel.setBusiness_id(businessId);
+    	    			wfKeyInfoRel.setProcs_step_no(op.getProcs_step_no());
+    	    			wfKeyInfoRel.setWf_key_info_id(new Long(op.getWf_key_info_id()));
+    	    			jdbcDao.insert(wfKeyInfoRel);
+	    	    	}
+	    	    }
 	    	}
     	}
         
@@ -65,7 +92,26 @@ public class OrderProcessBO extends BaseServiceImpl {
         }
         orderProcessSO.addAsc("procs_step_no") ;
         
-        return (ArrayPageList<OrderProcess>)jdbcDao.query(orderProcessSO, OrderProcess.class);
+        ArrayPageList<OrderProcess> opList = (ArrayPageList<OrderProcess>)jdbcDao.query(orderProcessSO, OrderProcess.class);
+        if(opList != null && opList.size()>0){
+        	for(OrderProcess op : opList){
+        		WfKeyInfoRelSO wfKeyInfoRelSO = new WfKeyInfoRelSO();
+        		wfKeyInfoRelSO.setBusiness_id(op.getBusiness_id());
+        		wfKeyInfoRelSO.setProcs_step_no(op.getProcs_step_no());
+        		ArrayPageList<WfKeyInfoRel> relList = new ArrayPageList<WfKeyInfoRel>();
+        		relList = WfKeyInfoRelBO.getWfKeyInfoRelBO().query(wfKeyInfoRelSO);
+        		String keyIds = "";
+        		if(relList != null && relList.size()>0){
+        			for(WfKeyInfoRel wfKeyInfoRel : relList){
+        				keyIds += wfKeyInfoRel.getWf_key_info_id() + ",";
+        			}
+        			keyIds = keyIds.substring(0,keyIds.lastIndexOf(","));
+        		}
+        		op.setWf_key_info_id(keyIds);
+        	}
+        }
+        
+        return opList;
     }
 
 
