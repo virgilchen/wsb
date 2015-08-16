@@ -80,6 +80,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var orderProdPacks = data.orderProdPacks;
                 var products = data.products;
                 var orderProdPackEvents = data.orderProdPackEvents;
+                var wfKeyInfos = data.wfKeyInfos;
+                var wfKeyInfoResults = data.wfKeyInfoResults;
                 
                 var titleTemplate = "<li onclick=\"viewJs.setSelectedEventEditForm({$T.prod_pack_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.prod_pack_name}（{$T.no_of_order_prod_pack}份）</li>";
                 var buinessTitleTemplate = "<li onclick=\"viewJs.setEventEditForm({$T.prod_pack_id}, {$T.last_event_id}, {$T.event_staff_id});tabShow('menu{$T._name_}_','con{$T._name_}_',{$T._index_},{$T._length_});\" id=\"menu{$T._name_}_{$T._index_}\">{$T.business_name}</li>";
@@ -176,6 +178,76 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 }
                 
                 documentUploader.doShow(data.documents);
+                var keyInfoStr="";
+                var resultIndex = 0;
+                
+                if(wfKeyInfoResults != null && wfKeyInfoResults != undefined){
+                	keyInfoStr += "<tr><th>历史信息：</th> <td colspan='5'>";
+                	for(var i = 0 ; i < wfKeyInfoResults.length ; i ++) {
+                		var wfKeyInfoResult = wfKeyInfoResults[i];
+                		keyInfoStr += wfKeyInfoResult.wf_key_info_name+": ";
+                		if(wfKeyInfoResult.detail_name != null){
+                			keyInfoStr += wfKeyInfoResult.detail_name;
+                			if(wfKeyInfoResult.detail_val != null){
+                				keyInfoStr += "("+wfKeyInfoResult.detail_val+")";
+                			}
+                		}else{
+                			keyInfoStr += wfKeyInfoResult.detail_val;
+                		}
+                		keyInfoStr += "; ";
+                	}
+                	keyInfoStr += "</td> </tr>";
+                }
+                if(wfKeyInfos != null && wfKeyInfos != undefined){
+                	for(var i = 0 ; i < wfKeyInfos.length ; i ++) {
+                    	var wfKeyInfo = wfKeyInfos[i];
+                    	keyInfoStr += "<tr><th>"+wfKeyInfo.wf_key_info_name+"：</th> <td colspan='5'>";
+                    	var infoDetails = wfKeyInfo.wfKeyInfoDetailsList;
+                    	if(wfKeyInfo.wf_key_info_type == '0'){
+                    		for(var j = 0 ; j < infoDetails.length ; j ++){
+                        		var infoDetail = infoDetails[j];
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_id' type='hidden' value='"+wfKeyInfo.id+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_details_id' type='hidden' value='"+infoDetail.id+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='radio' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].isChk' id='wfKeyInfoResults["+resultIndex+"].isChk' type='hidden' value='0' />";
+                        		resultIndex++;
+                        	}
+                    	}else if(wfKeyInfo.wf_key_info_type == '1'){
+                    		for(var j = 0 ; j < infoDetails.length ; j ++){
+                        		var infoDetail = infoDetails[j];
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_id' type='hidden' value='"+wfKeyInfo.id+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_details_id' type='hidden' value='"+infoDetail.id+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='checkbox' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
+                        		if(infoDetail.can_input == '0'){
+                        			keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='text' />";
+                        		}
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].isChk' id='wfKeyInfoResults["+resultIndex+"].isChk' type='hidden' value='0' />";
+                        		resultIndex++;
+                        	}
+                    	}else{
+                    		var infoDetail = infoDetails[0];
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_id' type='hidden' value='"+wfKeyInfo.id+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_details_id' type='hidden' value='"+infoDetail.id+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='text' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].max_length' type='hidden' value='"+infoDetail.max_length+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].min_length' type='hidden' value='"+infoDetail.min_length+"' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].isChk' type='hidden' value='1' />";
+                    		resultIndex++;
+                    	}
+                    	
+                    	keyInfoStr += "</td> </tr>";
+                    }
+                }
+                E$("keyInfo").append(keyInfoStr);
             }
         );
     },
@@ -283,7 +355,21 @@ var g$v<%=view_id%> = $.extend(newView(), {
         if (!window.confirm("是否确定要保存？")) {
             return ;
         }
-        
+        $("input[type='radio']").each(function(){
+            if($(this).is(':checked')){
+            	
+            	var chkId = $(this).attr('id')+".isChk";
+            	document.getElementById(chkId).value="1";
+            }
+            
+        });
+        $("input[type='checkbox']").each(function(){
+            if($(this).is(':checked')){
+            	var chkId = $(this).attr('id')+".isChk";
+            	document.getElementById(chkId).value="1";
+            }
+            
+        });
         ajax(
             this.create_url, 
             E$("eForm").serialize(),
@@ -505,7 +591,13 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <input type="hidden" name="orderProdPackEvent.prod_pack_id" id="orderProdPackEvent.prod_pack_id"/>
 	          <input type="hidden" name="orderProdPackEvent.version_id" id="orderProdPackEvent.version_id"/>
 	          
-	          
+	          <div class="order_result">
+                <p><b>关键信息记录</b></p>
+                <table width="80%" border="0" id="keyInfo">
+                  
+                </table>
+              </div>
+            
               <div class="order_result">
                 <p><b>处理结果记录</b></p>
                 <table width="80%" border="0">

@@ -68,6 +68,12 @@ public class Order extends BaseEntity {
     @Transient
     private ArrayPageList<Document> documents;
     
+    @Transient
+    private ArrayPageList<WfKeyInfo> wfKeyInfos ;
+    
+    @Transient
+    private ArrayPageList<WfKeyInfoResult> wfKeyInfoResults;
+    
 	public Long getId() {
 		return id;
 	}
@@ -167,6 +173,19 @@ public class Order extends BaseEntity {
 	public void setUrgent_levent(Integer urgent_levent) {
 		this.urgent_levent = urgent_levent;
 	}
+	public ArrayPageList<WfKeyInfo> getWfKeyInfos() {
+		return wfKeyInfos;
+	}
+	public void setWfKeyInfos(ArrayPageList<WfKeyInfo> wfKeyInfos) {
+		this.wfKeyInfos = wfKeyInfos;
+	}
+	public ArrayPageList<WfKeyInfoResult> getWfKeyInfoResults() {
+		return wfKeyInfoResults;
+	}
+	public void setWfKeyInfoResults(ArrayPageList<WfKeyInfoResult> wfKeyInfoResults) {
+		this.wfKeyInfoResults = wfKeyInfoResults;
+	}
+	
 }
 
 

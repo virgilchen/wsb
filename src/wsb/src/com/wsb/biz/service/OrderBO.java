@@ -23,6 +23,13 @@ import com.wsb.biz.entity.OrderProdPackSO;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.entity.ProductSO;
 import com.wsb.biz.entity.Staff;
+import com.wsb.biz.entity.WfKeyInfo;
+import com.wsb.biz.entity.WfKeyInfoDetails;
+import com.wsb.biz.entity.WfKeyInfoDetailsSO;
+import com.wsb.biz.entity.WfKeyInfoRel;
+import com.wsb.biz.entity.WfKeyInfoRelSO;
+import com.wsb.biz.entity.WfKeyInfoResult;
+import com.wsb.biz.entity.WfKeyInfoResultSO;
 
 
 @Service("orderBO")
@@ -205,10 +212,40 @@ public class OrderBO extends BaseServiceImpl {
     	result.setOrderProdPackEvents(OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(orderId));
     	result.setDocuments(DocumentBO.getDocumentBO().query(orderId, "O"));
     	
+    	ArrayPageList<HashMap> eventList = new ArrayPageList<HashMap>();
+    	eventList = OrderProdPackEventBO.getOrderProdPackEventBO().queryByOrderId(orderId);
+    	if(eventList.size()>0){
+    		ArrayList<WfKeyInfoRel> relList = new ArrayList<WfKeyInfoRel>();
+    		ArrayPageList<WfKeyInfo> wfKeyInfos = new ArrayPageList<WfKeyInfo>();
+    		for(int i=0; i<eventList.size(); i++){
+    			if(eventList.get(i).get("event_status").equals("R")){
+    				WfKeyInfoRelSO wfKeyInfoRelSO = new WfKeyInfoRelSO();
+    				wfKeyInfoRelSO.setBusiness_id(Long.parseLong(eventList.get(0).get("business_id").toString()));
+    				wfKeyInfoRelSO.setProcs_step_no(Integer.parseInt(eventList.get(0).get("procs_step_no").toString()));
+    				relList = WfKeyInfoRelBO.getWfKeyInfoRelBO().query(wfKeyInfoRelSO);
+    				break;
+    			}
+    		}
+    		if(relList.size()>0){
+    			for(WfKeyInfoRel wfKeyInfoRelVo : relList){
+    				WfKeyInfo wfKeyInfoVo = WfKeyInfoBO.getWfKeyInfoBO().get(wfKeyInfoRelVo.getWf_key_info_id());
+    				WfKeyInfoDetailsSO wfKeyInfoDetailsSO = new WfKeyInfoDetailsSO();
+    				wfKeyInfoDetailsSO.setWf_key_info_id(wfKeyInfoRelVo.getWf_key_info_id());
+    				ArrayPageList<WfKeyInfoDetails> wfKeyInfoDetailsList = WfKeyInfoDetailsBO.getWfKeyInfoDetailsBO().query(wfKeyInfoDetailsSO);
+    				wfKeyInfoVo.setWfKeyInfoDetailsList(wfKeyInfoDetailsList);
+    				wfKeyInfos.add(wfKeyInfoVo);
+    			}
+    		}
+    		result.setWfKeyInfos(wfKeyInfos);
+    	}
+    	WfKeyInfoResultSO wfKeyInfoResultSO = new WfKeyInfoResultSO();
+    	wfKeyInfoResultSO.setOrder_id(orderId);
+    	ArrayPageList<WfKeyInfoResult> wfKeyInfoResults =  WfKeyInfoResultBO.getWfKeyInfoResultBO().query(wfKeyInfoResultSO);
+    	result.setWfKeyInfoResults(wfKeyInfoResults);
     	return result;
     }
 
-    public OrderProdPackEvent followUp(OrderProdPackEvent event) {
+    public OrderProdPackEvent followUp(OrderProdPackEvent event,List<WfKeyInfoResult> wfKeyInfoResults) {
     	OrderProdPackEvent result = OrderProdPackEventBO.getOrderProdPackEventBO().followUp(event);
     	
     	if (result == null) {
@@ -225,6 +262,15 @@ public class OrderBO extends BaseServiceImpl {
         	    
         	    AssetsHoldingBO.getAssetsHoldingBO().confirmProductAmount(orderId);
     	    }
+    	}
+    	
+    	if(wfKeyInfoResults != null && wfKeyInfoResults.size()>0){
+    		for(WfKeyInfoResult wfKeyInfoResult : wfKeyInfoResults){
+    			if(wfKeyInfoResult.getIsChk() != null && wfKeyInfoResult.getIsChk().equals("1")){
+    				wfKeyInfoResult.setOrder_id(event.getOrder_id());
+    				WfKeyInfoResultBO.getWfKeyInfoResultBO().create(wfKeyInfoResult);
+    			}
+    		}
     	}
     	
     	return result ;

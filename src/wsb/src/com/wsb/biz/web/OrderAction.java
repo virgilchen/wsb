@@ -16,6 +16,7 @@ import com.wsb.biz.entity.OrderProdPackEvent;
 import com.wsb.biz.entity.OrderSO;
 import com.wsb.biz.entity.Staff;
 import com.wsb.biz.entity.StaffSO;
+import com.wsb.biz.entity.WfKeyInfoResult;
 import com.wsb.biz.service.OrderBO;
 import com.wsb.biz.service.OrderProdPackEventBO;
 import com.wsb.biz.service.StaffBO;
@@ -33,6 +34,8 @@ public class OrderAction extends BaseAction implements Preparable {
     private OrderSO orderSO ; 
     private Long customer_id;
     private OrderProdPackEvent orderProdPackEvent;
+    private WfKeyInfoResult wfKeyInfoResult;
+    private List<WfKeyInfoResult> wfKeyInfoResults;
    
     
     public Long getCustomer_id() {
@@ -155,8 +158,7 @@ public class OrderAction extends BaseAction implements Preparable {
 
     public String followUp() throws Exception {
 
-
-    	OrderProdPackEvent newOrder = orderBO.followUp(orderProdPackEvent) ;
+    	OrderProdPackEvent newOrder = orderBO.followUp(orderProdPackEvent,wfKeyInfoResults) ;
 
         renderObject(newOrder, ResponseMessage.KEY_UPDATE_OK) ;
         return null;  
@@ -317,6 +319,22 @@ public class OrderAction extends BaseAction implements Preparable {
 
 	public void setOrderProdPackEvent(OrderProdPackEvent orderProdPackEvent) {
 		this.orderProdPackEvent = orderProdPackEvent;
+	}
+
+	public WfKeyInfoResult getWfKeyInfoResult() {
+		return wfKeyInfoResult;
+	}
+
+	public void setWfKeyInfoResult(WfKeyInfoResult wfKeyInfoResult) {
+		this.wfKeyInfoResult = wfKeyInfoResult;
+	}
+
+	public List<WfKeyInfoResult> getWfKeyInfoResults() {
+		return wfKeyInfoResults;
+	}
+
+	public void setWfKeyInfoResults(List<WfKeyInfoResult> wfKeyInfoResults) {
+		this.wfKeyInfoResults = wfKeyInfoResults;
 	}
 
 }
