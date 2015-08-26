@@ -29,12 +29,23 @@ var g$v<%=view_id%> = $.extend(newView(), {
         //fillOptions({id:"orderProcess.record_status", dictName:"CM.status", firstLabel:"请选择..."}) ;// 改为字典取值
         this.initDataGrid("orderProcessTB") ;
         
+        //this.initDataGrid("wfKeyInfoTB") ;
         
         //E$("eForm").validator();
         //E$("sForm").validator();
         //E("eForm").setFirstFocus();
         
         this.list();
+
+        // 初始化对话框
+        /* $("#dialog-confirm").dialog(
+    		{
+        		modal: true,             // 创建模式对话框
+        		autoOpen: false,         // 只初始化，不显示
+        		height:380, 
+        		width:800
+        	}		
+        ); */
         
     },
     
@@ -90,10 +101,18 @@ var g$v<%=view_id%> = $.extend(newView(), {
     
     deleteMe:function(id) {
         $("#orderProcessTB #listBody #orderProcessRow_" + id, viewJs.view).remove();
+    },
+    
+    openWfKeyInfoSearchView:function(index) {
+    	this.selectedIndex = index ;
+    	this.wfKeyInfoSearchView.open();
+    },
+    selectWfKeyInfo:function(id) {
+        E$("wf_key_info_id" + this.selectedIndex).val(id);
     }
     
-    
 }) ;
+
 
 
 </script>
@@ -197,12 +216,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
       <TABLE border=0 width="100%" id="orderProcessTB">
         <thead>
           <TR>
-            <TH width="80px">处理顺序</TH>
-            <TH width="80px">排序</TH>
+            <TH>处理顺序</TH>
+            <TH>排序</TH>
             <TH>处理环节</TH>
             <TH>处理角色</TH>
             <TH>配置</TH>
-            <TH width="80px">操作</TH>
+            <TH>操作</TH>
           <TR>
         </thead>
         
@@ -246,10 +265,11 @@ var g$v<%=view_id%> = $.extend(newView(), {
                       </select>
                     </td>
                     <td>
-                      <input name="orderProcesses[{$T.procs_step_no}].wf_key_info_id" value="{$T.wf_key_info_id}"/>
+                      <input name="orderProcesses[{$T.procs_step_no}].wf_key_info_id" id="wf_key_info_id{$T.procs_step_no}" value="{$T.wf_key_info_id}" readonly="readonly"/>
                     </td>
                     <td>
-                      <a href="javascript:viewJs.deleteMe({$T.procs_step_no})">删除</a>
+                      <a href="javascript:viewJs.deleteMe({$T.procs_step_no})">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="javascript:viewJs.openWfKeyInfoSearchView({$T.procs_step_no});">配置</a>
                     </td>
                   </tr>
               </textarea>
@@ -260,8 +280,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
       </TABLE>
     </form>
     </DIV>
-    
-    
-    
+    <%@include file="/WEB-INF/pages/biz/wfKeyInfo/wfKeyInfo_SearchView.jsp" %>
   </div>
 </div>

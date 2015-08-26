@@ -202,6 +202,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 	for(var i = 0 ; i < wfKeyInfos.length ; i ++) {
                     	var wfKeyInfo = wfKeyInfos[i];
                     	keyInfoStr += "<tr><th>"+wfKeyInfo.wf_key_info_name+"：</th> <td colspan='5'>";
+                    	if(wfKeyInfo.is_required == '0'){
+                    		keyInfoStr += "<input type='hidden' name='"+wfKeyInfo.wf_key_info_name+"' reqObj='yes' id='req"+i+"' value=''>";
+                    	}
+                    	
                     	var infoDetails = wfKeyInfo.wfKeyInfoDetailsList;
                     	if(wfKeyInfo.wf_key_info_type == '0'){
                     		for(var j = 0 ; j < infoDetails.length ; j ++){
@@ -211,7 +215,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
-                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='radio' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='radio' isReq='req"+i+"' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].isChk' id='wfKeyInfoResults["+resultIndex+"].isChk' type='hidden' value='0' />";
                         		resultIndex++;
                         	}
@@ -223,7 +227,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
-                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='checkbox' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
+                        		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='checkbox' isReq='req"+i+"' value='"+infoDetail.detail_name+"' />"+infoDetail.detail_name;
                         		if(infoDetail.can_input == '0'){
                         			keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='text' />";
                         		}
@@ -237,7 +241,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' />";
-                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='text' />";
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' isReq='req"+i+"' type='text' ";
+                    		if(wfKeyInfo.is_required == '0'){
+                        		keyInfoStr += " reqInput='yes'/>";
+                        	}else{
+                        		keyInfoStr += " />";
+                        	}
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].max_length' type='hidden' value='"+infoDetail.max_length+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].min_length' type='hidden' value='"+infoDetail.min_length+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].isChk' type='hidden' value='1' />";
@@ -352,14 +361,21 @@ var g$v<%=view_id%> = $.extend(newView(), {
             return ;
         }
         
-        if (!window.confirm("是否确定要保存？")) {
-            return ;
-        }
+        $("input[reqObj='yes']").each(function(){
+        	$(this).attr('value','');
+        });
+        
         $("input[type='radio']").each(function(){
             if($(this).is(':checked')){
             	
             	var chkId = $(this).attr('id')+".isChk";
             	document.getElementById(chkId).value="1";
+            	
+            	var reqId = $(this).attr('isReq');
+            	var reqObj = document.getElementById(reqId);
+            	if(reqObj!=null && reqObj!=undefined){
+            		document.getElementById(reqId).value="1";
+            	}
             }
             
         });
@@ -367,9 +383,39 @@ var g$v<%=view_id%> = $.extend(newView(), {
             if($(this).is(':checked')){
             	var chkId = $(this).attr('id')+".isChk";
             	document.getElementById(chkId).value="1";
+            	
+            	var reqId = $(this).attr('isReq');
+            	var reqObj = document.getElementById(reqId);
+            	if(reqObj!=null && reqObj!=undefined){
+            		document.getElementById(reqId).value="1";
+            	}
             }
-            
         });
+        $("input[reqInput='yes']").each(function(){
+            if($(this).val()!=''){
+            	var reqId = $(this).attr('isReq');
+            	var reqObj = document.getElementById(reqId);
+            	if(reqObj!=null && reqObj!=undefined){
+            		document.getElementById(reqId).value="1";
+            	}
+            }
+        });
+        
+        var canSub = true;
+        $("input[reqObj='yes']").each(function(){
+        	if($(this).val()==''){
+        		alert($(this).attr('name')+"不能为空！");
+        		canSub = false;
+        	}
+        });
+		if(!canSub){
+			return ;
+        }
+        if (!window.confirm("是否确定要保存？")) {
+            return ;
+        }
+        
+        
         ajax(
             this.create_url, 
             E$("eForm").serialize(),

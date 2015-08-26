@@ -11,6 +11,7 @@ import com.globalwave.common.ArrayPageList;
 import com.globalwave.system.web.annotations.Pid;
 import com.opensymphony.xwork2.Preparable;
 import com.wsb.biz.entity.Car;
+import com.wsb.biz.entity.ProductPack;
 import com.wsb.biz.entity.WfKeyInfoDetails;
 import com.wsb.biz.entity.WfKeyInfoDetailsSO;
 import com.wsb.biz.entity.WfKeyInfo;
@@ -42,6 +43,17 @@ private static final long serialVersionUID = 7244882365197775441L;
 
         ArrayPageList<WfKeyInfo> pageList = wfKeyInfoBO.query(wfKeyInfoSO) ;
         
+        renderList(pageList) ; 
+        
+        return null ;  
+        
+    }
+    
+    @Pid(value=Pid.DO_NOT_CHECK,log=false)
+    public String query4Selection() throws Exception {  
+
+        ArrayPageList<WfKeyInfo> pageList = wfKeyInfoBO.query(wfKeyInfoSO) ;
+
         renderList(pageList) ; 
         
         return null ;  

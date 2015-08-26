@@ -220,8 +220,8 @@ public class OrderBO extends BaseServiceImpl {
     		for(int i=0; i<eventList.size(); i++){
     			if(eventList.get(i).get("event_status").equals("R")){
     				WfKeyInfoRelSO wfKeyInfoRelSO = new WfKeyInfoRelSO();
-    				wfKeyInfoRelSO.setBusiness_id(Long.parseLong(eventList.get(0).get("business_id").toString()));
-    				wfKeyInfoRelSO.setProcs_step_no(Integer.parseInt(eventList.get(0).get("procs_step_no").toString()));
+    				wfKeyInfoRelSO.setBusiness_id(Long.parseLong(eventList.get(i).get("business_id").toString()));
+    				wfKeyInfoRelSO.setProcs_step_no(Integer.parseInt(eventList.get(i).get("procs_step_no").toString()));
     				relList = WfKeyInfoRelBO.getWfKeyInfoRelBO().query(wfKeyInfoRelSO);
     				break;
     			}

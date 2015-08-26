@@ -65,7 +65,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         			"<a href='javascript:viewJs.addDetails("+data.wf_key_info_type+");'>添加    </a>"+
                         			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
                         			/* "<a href='javascript:viewJs.moveUp("+rowId+");'>上移    </a>"+
-                        			"<a href='#' >下移    </a>"+ */
+                        			"<a href='#' >下移    </a>"+  */
                         			"</td></tr>");
                     		rowId++;
                         });
@@ -121,7 +121,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
         			"<a href='javascript:viewJs.addDetails("+infoType+");'>添加    </a>"+
         			"<a href='javascript:viewJs.delDetails("+rowId+");'>删除    </a>"+
         			/* "<a href='javascript:viewJs.moveUp("+rowId+");'>上移    </a>"+
-        			"<a href='#' >下移    </a>"+ */
+        			"<a href='#' >下移    </a>"+  */
         			
         			"</td></tr>");
 		}else if(infoType == '1'){
@@ -172,8 +172,12 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		alert(val1);
     		// 当前行的名称列值
     		var htm2=document.getElementById("infoDetails").rows[row].innerHTML;
+    		var val2=document.getElementById("detail_name"+row).value;
+    		alert(val2);
     		document.getElementById("infoDetails").rows[row-1].innerHTML=htm2;
     		document.getElementById("infoDetails").rows[row].innerHTML=htm1;
+    		document.getElementById("detail_name"+row).value=val2;
+    		document.getElementById("detail_name"+row1).value=val1;
     	}
     },
     moveDown:function(id){
