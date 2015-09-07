@@ -22,19 +22,14 @@ public class WfKeyInfoResult extends BaseEntity{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="wf_key_info_result_id")
 	private Long id;
-	private Long wf_key_info_id;
-	private Long wf_key_info_details_id;
+	private String wf_key_info_id;
+	private String wf_key_info_details_id;
 	private String wf_key_info_type;
     private String wf_key_info_name;
     private String is_required;
     private String detail_name;
     private String detail_val;
-    private Long max_length;
-    private Long min_length;
     private Long order_id;
-    
-    @Transient
-    private String isChk;
     
 	public Long getId() {
 		return id;
@@ -42,16 +37,16 @@ public class WfKeyInfoResult extends BaseEntity{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getWf_key_info_id() {
+	public String getWf_key_info_id() {
 		return wf_key_info_id;
 	}
-	public void setWf_key_info_id(Long wf_key_info_id) {
+	public void setWf_key_info_id(String wf_key_info_id) {
 		this.wf_key_info_id = wf_key_info_id;
 	}
-	public Long getWf_key_info_details_id() {
+	public String getWf_key_info_details_id() {
 		return wf_key_info_details_id;
 	}
-	public void setWf_key_info_details_id(Long wf_key_info_details_id) {
+	public void setWf_key_info_details_id(String wf_key_info_details_id) {
 		this.wf_key_info_details_id = wf_key_info_details_id;
 	}
 	public String getWf_key_info_type() {
@@ -83,24 +78,6 @@ public class WfKeyInfoResult extends BaseEntity{
 	}
 	public void setDetail_val(String detail_val) {
 		this.detail_val = detail_val;
-	}
-	public Long getMax_length() {
-		return max_length;
-	}
-	public void setMax_length(Long max_length) {
-		this.max_length = max_length;
-	}
-	public Long getMin_length() {
-		return min_length;
-	}
-	public void setMin_length(Long min_length) {
-		this.min_length = min_length;
-	}
-	public String getIsChk() {
-		return isChk;
-	}
-	public void setIsChk(String isChk) {
-		this.isChk = isChk;
 	}
 	public Long getOrder_id() {
 		return order_id;

@@ -266,10 +266,8 @@ public class OrderBO extends BaseServiceImpl {
     	
     	if(wfKeyInfoResults != null && wfKeyInfoResults.size()>0){
     		for(WfKeyInfoResult wfKeyInfoResult : wfKeyInfoResults){
-    			if(wfKeyInfoResult.getIsChk() != null && wfKeyInfoResult.getIsChk().equals("1")){
-    				wfKeyInfoResult.setOrder_id(event.getOrder_id());
-    				WfKeyInfoResultBO.getWfKeyInfoResultBO().create(wfKeyInfoResult);
-    			}
+    			wfKeyInfoResult.setOrder_id(event.getOrder_id());
+    			WfKeyInfoResultBO.getWfKeyInfoResultBO().create(wfKeyInfoResult);
     		}
     	}
     	
