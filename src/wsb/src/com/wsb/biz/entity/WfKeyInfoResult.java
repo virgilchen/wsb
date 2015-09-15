@@ -31,6 +31,11 @@ public class WfKeyInfoResult extends BaseEntity{
     private String detail_val;
     private Long order_id;
     
+    @Transient
+    private String detail_ids;
+    @Transient
+    private String detail_vals;
+    
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +89,18 @@ public class WfKeyInfoResult extends BaseEntity{
 	}
 	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
+	}
+	public String getDetail_ids() {
+		return detail_ids;
+	}
+	public void setDetail_ids(String detail_ids) {
+		this.detail_ids = detail_ids;
+	}
+	public String getDetail_vals() {
+		return detail_vals;
+	}
+	public void setDetail_vals(String detail_vals) {
+		this.detail_vals = detail_vals;
 	}
 
 }

@@ -5,7 +5,6 @@ String view_id=request.getParameter("view_id");
 %>
 
 <script>
-var infoType;
 var rowId = 0;
 var g$v<%=view_id%> = $.extend(newView(), {
     view:document.getElementById("view_<%=view_id%>"), 
@@ -91,9 +90,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
                         });
                     }else if(data.wf_key_info_type == 2){
                     	$("#infoDetails").append("<tr id='row_"+rowId+"'><td>最小字数："+
-                    			"<input name='details["+rowId+"].min_length' maxlength='6' value='"+data.wfKeyInfoDetailsList[0].min_length+"'/></td>"+
+                    			"<input name='details["+rowId+"].min_length' maxlength='6' onkeyup='javascript:viewJs.checkNum(this);' value='"+data.wfKeyInfoDetailsList[0].min_length+"'/></td>"+
                     			"<td>    最大字数："+
-                    			"<input name='details["+rowId+"].max_length' maxlength='6' value='"+data.wfKeyInfoDetailsList[0].max_length+"'/></td>"+
+                    			"<input name='details["+rowId+"].max_length' maxlength='6' onkeyup='javascript:viewJs.checkNum(this);' value='"+data.wfKeyInfoDetailsList[0].max_length+"'/></td>"+
                     			"</tr>");
                     }
                 }
@@ -102,12 +101,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     },
     
     displayConditions:function(selectType){
-    	if(selectType.value != infoType){
-    		infoType = selectType.value;
-    		$("#infoDetails").html("");
-    		rowId = 0;
-    		this.addDetails(infoType);
-    	}
+   		$("#infoDetails").html("");
+   		rowId = 0;
+   		this.addDetails(selectType.value);
     },
     
     addDetails:function(infoType){
@@ -129,7 +125,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    			"<input name='details["+rowId+"].detail_name'/></td>"+
 	    			"    <td><input id='can_input"+rowId+"'"+
 	    			" type='checkbox' onclick='javascript:viewJs.getCheck("+rowId+");' checked='checked'/></td>    "+
-	    			"<input type='hidden' name='details["+rowId+"].can_input' id='details["+rowId+"].can_input' value='0'/>"+
+	    			"<input type='hidden' name='details["+rowId+"].can_input' id='details["+rowId+"].can_input' value='1'/>"+
 	    			"<td>  序号<input name='details["+rowId+"].detail_sn' id='detail_sn"+rowId+
 	    			"' onkeyup='javascript:viewJs.checkNum(this);' maxlength='9'/>"+
         			"</td>"+
@@ -139,9 +135,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
 	    			"</td></tr>");
 		}else if(infoType == '2'){
 			$("#infoDetails").append("<tr id='row_"+rowId+"'><td>最小字数："+
-        			"<input name='details["+rowId+"].min_length' maxlength='6'/></td>"+
+        			"<input name='details["+rowId+"].min_length' onkeyup='javascript:viewJs.checkNum(this);' maxlength='6'/></td>"+
         			"<td>    最大字数："+
-        			"<input name='details["+rowId+"].max_length' maxlength='6'/></td>"+
+        			"<input name='details["+rowId+"].max_length' onkeyup='javascript:viewJs.checkNum(this);' maxlength='6'/></td>"+
         			"</tr>");
 		}
     	
@@ -155,9 +151,9 @@ var g$v<%=view_id%> = $.extend(newView(), {
     getCheck:function(objId){
     	var rowObj = document.getElementById("can_input"+objId);
     	if(rowObj.checked){
-    		document.getElementById("details["+objId+"].can_input").value='0';
-    	}else{
     		document.getElementById("details["+objId+"].can_input").value='1';
+    	}else{
+    		document.getElementById("details["+objId+"].can_input").value='0';
     	}
     },
     moveUp:function(id){
@@ -210,6 +206,28 @@ var g$v<%=view_id%> = $.extend(newView(), {
     		}
     		
     	}
+    },
+    checkSave:function() {
+    	if(document.getElementById("wfKeyInfo.wf_key_info_name").value == null 
+    			|| document.getElementById("wfKeyInfo.wf_key_info_name").value == ''){
+    		alert("关键信息名称不能为空！");
+    		return;
+    	}
+    	var canSub = "false";
+    	$("input[name='wfKeyInfo.wf_key_info_type']").each(function(){
+            if($(this).is(':checked')){
+            	canSub = "true";
+            }
+            
+        });
+    	
+    	if(canSub == "true"){
+    		this.save();
+    	}else{
+    		alert("请选择一种关键信息类型");
+    		return;
+    	}
+    	
     }
     
 }) ;
@@ -279,8 +297,8 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     <td>{$T.id}</td>
                     <td>{$T.wf_key_info_name}</td>
                     <td>{#if $T.wf_key_info_type == '0'}单选{#/if}{#if $T.wf_key_info_type == '1'}多选{#/if}{#if $T.wf_key_info_type == '2'}填空{#/if}</td>
-                    <td>{#if $T.is_required == '0'}是{#/if}{#if $T.is_required == '1'}否{#/if}</td>
-                    <td>{#if $T.is_active == '0'}是{#/if}{#if $T.is_active == '1'}否{#/if}</td>
+                    <td>{#if $T.is_required == '1'}是{#/if}{#if $T.is_required == '0'}否{#/if}</td>
+                    <td>{#if $T.is_active == '1'}是{#/if}{#if $T.is_active == '0'}否{#/if}</td>
                   </tr>
               </textarea>
             </td>
@@ -301,7 +319,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
     <DIV class=main_title>
       <B>流程关键信息编辑</B> 
       <DIV class="main_tt_right fr">
-        <A class=orange href="javascript:viewJs.save();">保存</A>
+        <A class=orange href="javascript:viewJs.checkSave();">保存</A>
         <A class=blue href="javascript:viewJs.toSearch();">取消</A>
       </DIV>
     </DIV>
@@ -331,15 +349,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <tr>
                 <th>是否必填：</th>
                 <td>
-                	<input type="radio" name="wfKeyInfo.is_required" value="0"/><label>是</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                	<input type="radio" name="wfKeyInfo.is_required" value="1"/><label>否</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input type="radio" name="wfKeyInfo.is_required" value="1"/><label>是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input type="radio" name="wfKeyInfo.is_required" value="0"/><label>否</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
               </tr>
               <tr>
                 <th>是否有效：</th>
                 <td>
-                	<input type="radio" name="wfKeyInfo.is_active" value="0"/><label>是</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                	<input type="radio" name="wfKeyInfo.is_active" value="1"/><label>否</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input type="radio" name="wfKeyInfo.is_active" value="1"/><label>是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input type="radio" name="wfKeyInfo.is_active" value="0"/><label>否</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
               </tr>
             </table> 

@@ -12,6 +12,8 @@ import com.globalwave.common.cache.CodeHelper;
 import com.wsb.biz.entity.WfKeyInfo;
 import com.wsb.biz.entity.WfKeyInfoDetails;
 import com.wsb.biz.entity.WfKeyInfoDetailsSO;
+import com.wsb.biz.entity.WfKeyInfoRel;
+import com.wsb.biz.entity.WfKeyInfoRelSO;
 import com.wsb.biz.entity.WfKeyInfoSO;
 
 @Service("wfKeyInfoBO")
@@ -20,7 +22,15 @@ import com.wsb.biz.entity.WfKeyInfoSO;
 public class WfKeyInfoBO extends BaseServiceImpl{
 	
 	public WfKeyInfo create(WfKeyInfo wfKeyInfo,List<WfKeyInfoDetails> details) {  
-
+		//缺省值默认为非必填
+		if(wfKeyInfo.getIs_required() == null){
+			wfKeyInfo.setIs_required("0");
+		}
+		//缺省值默认为有效
+		if(wfKeyInfo.getIs_active() == null){
+			wfKeyInfo.setIs_active("1");
+		}
+		
     	WfKeyInfo newItem = (WfKeyInfo) jdbcDao.insert(wfKeyInfo) ;
     	
     	if (details != null) {
@@ -47,6 +57,10 @@ public class WfKeyInfoBO extends BaseServiceImpl{
     	
         jdbcDao.delete(wfKeyInfo) ;
         
+        WfKeyInfoRelSO wfKeyInfoRelSO = new WfKeyInfoRelSO();
+        wfKeyInfoRelSO.setWf_key_info_id(wfKeyInfo.getId());
+        jdbcDao.delete(WfKeyInfoRel.class, wfKeyInfoRelSO) ;
+        
     }
 
     public void deleteAll(Long[] wfKeyInfoIds) {
@@ -54,6 +68,13 @@ public class WfKeyInfoBO extends BaseServiceImpl{
         WfKeyInfoSO wfKeyInfo = new WfKeyInfoSO() ;
         wfKeyInfo.setIds(wfKeyInfoIds) ;
         jdbcDao.delete(WfKeyInfo.class, wfKeyInfo) ;
+        
+        for(int i=0; i<wfKeyInfoIds.length; i++){
+        	WfKeyInfoRelSO wfKeyInfoRelSO = new WfKeyInfoRelSO();
+            wfKeyInfoRelSO.setWf_key_info_id(wfKeyInfoIds[i]);
+            jdbcDao.delete(WfKeyInfoRel.class, wfKeyInfoRelSO) ;
+        }
+        
         
     }
     

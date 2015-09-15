@@ -27,7 +27,7 @@ public class WfKeyInfoDetails extends BaseEntity{
 	private Long id;
 	private Long wf_key_info_id;
 	private String detail_name;
-    private String can_input;//可否填空：0可，1否
+    private String can_input;//可否填空：0否，1可
     private String detail_val;
     private Long detail_sn;
     private Long max_length;

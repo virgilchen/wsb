@@ -181,22 +181,20 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 var keyInfoStr="";
                 var resultIndex = 0;
                 
-                if(wfKeyInfoResults != null && wfKeyInfoResults != undefined){
-                	keyInfoStr += "<tr><th>历史信息：</th> <td colspan='5'>";
+                if(wfKeyInfoResults != null && wfKeyInfoResults.length > 0){
+                	keyInfoStr += "<tr><th>历史信息：</th> <td colspan='5'><textarea cols='46' rows='5' readonly='readonly'>";
                 	for(var i = 0 ; i < wfKeyInfoResults.length ; i ++) {
                 		var wfKeyInfoResult = wfKeyInfoResults[i];
-                		keyInfoStr += wfKeyInfoResult.wf_key_info_name+": ";
-                		if(wfKeyInfoResult.detail_name != null){
-                			keyInfoStr += wfKeyInfoResult.detail_name;
-                			if(wfKeyInfoResult.detail_val != null){
-                				keyInfoStr += "("+wfKeyInfoResult.detail_val+")";
-                			}
-                		}else{
+                		keyInfoStr +=""+(i+1)+"、"+ wfKeyInfoResult.wf_key_info_name+": ";
+                		if(wfKeyInfoResult.wf_key_info_type == '1'){
+                			//是多选信息就显示组装的值
                 			keyInfoStr += wfKeyInfoResult.detail_val;
+                		}else{
+                			keyInfoStr += wfKeyInfoResult.detail_name+ "; ";
                 		}
-                		keyInfoStr += "; ";
+                		keyInfoStr += "\n";
                 	}
-                	keyInfoStr += "</td> </tr>";
+                	keyInfoStr += "</textarea></td> </tr>";
                 }
                 if(wfKeyInfos != null && wfKeyInfos != undefined){
                 	for(var i = 0 ; i < wfKeyInfos.length ; i ++) {
@@ -209,7 +207,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_id' type='hidden' value='"+wfKeyInfo.id+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
-                    		//is_required为0表示必填
+                    		//is_required为1表示必填
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' isReq='req"+i+"' reqObj='yes' reqMsg='"+wfKeyInfo.wf_key_info_name+"'/>";
                     		for(var j = 0 ; j < infoDetails.length ; j ++){
                         		var infoDetail = infoDetails[j];
@@ -221,16 +219,15 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_id' type='hidden' value='"+wfKeyInfo.id+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
-                    		//is_required为0表示必填
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='hidden' value='' id='req"+i+"_val' needChk='yes'/>";
+                    		//is_required为1表示必填
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' isReq='req"+i+"' reqObj='yes' reqMsg='"+wfKeyInfo.wf_key_info_name+"'/>";
                     		for(var j = 0 ; j < infoDetails.length ; j ++){
                         		var infoDetail = infoDetails[j];
                         		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='wfKeyInfoResults["+resultIndex+"]' type='checkbox' isReq='req"+i+"' value='"+infoDetail.detail_name+"' valueId='"+infoDetail.id+"'/>"+infoDetail.detail_name;
-                        		//if(infoDetail.can_input == '0'){
-                        		//	keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='text' />";
-                        		//}else{
-                        		//	keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_val' type='hidden' />";
-                        		//}
+                        		if(infoDetail.can_input == '0'){
+                        			keyInfoStr += "<input id='detail_val"+infoDetail.id+"' type='text' value=''/>";
+                        		}
                         	}
                     	}else{
                     		var infoDetail = infoDetails[0];
@@ -238,9 +235,16 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_details_id' type='hidden' value='"+infoDetail.id+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_name' type='hidden' value='"+wfKeyInfo.wf_key_info_name+"' />";
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].wf_key_info_type' type='hidden' value='"+wfKeyInfo.wf_key_info_type+"' />";
-                    		//is_required为0表示必填
+                    		//is_required为1表示必填
                     		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].is_required' type='hidden' value='"+wfKeyInfo.is_required+"' isReq='req"+i+"' reqObj='yes' reqMsg='"+wfKeyInfo.wf_key_info_name+"'/>";
-                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='req"+i+"' type='text' maxlength='"+infoDetail.max_length+"' minlength='"+infoDetail.min_length+"'/>";
+                    		var infoLen="";
+                    		if(infoDetail.max_length != null){
+                    			infoLen+=" maxlength='"+infoDetail.max_length+"'";
+                    		}
+                    		if(infoDetail.min_length != null){
+                    			infoLen+=" minlength='"+infoDetail.min_length+"'";
+                    		}
+                    		keyInfoStr += "<input name='wfKeyInfoResults["+resultIndex+"].detail_name' id='req"+i+"' type='text' "+infoLen+" />";
                     	}
                     	
                     	keyInfoStr += "</td> </tr>";
@@ -368,18 +372,30 @@ var g$v<%=view_id%> = $.extend(newView(), {
         });
         
         $("input[type='checkbox']").each(function(){
+        	
             if($(this).is(':checked')){
             	var reqId = $(this).attr('isReq');
             	var valueId = $(this).attr('valueId');
             	var reqObj = document.getElementById(reqId);
             	document.getElementById(reqId).value+=valueId+",";
+            	
+            	//组装显示所有的多选信息包括可输入框的信息
+            	document.getElementById(reqId+"_val").value+=$(this).val();
+            	var valObj = document.getElementById("detail_val"+valueId);
+            	if(valObj != null && valObj != undefined){
+            		document.getElementById(reqId+"_val").value+="( "+valObj.value+" ); ";
+            	}else{
+            		document.getElementById(reqId+"_val").value+="; ";
+            	}
             }
+            
+        	
         });
         var canSub = true;
         $("input[reqObj='yes']").each(function(){
         	if(canSub){
         		var reqId = $(this).attr('isReq');
-            	if($(this).val()=='0'){
+            	if($(this).val()=='1'){
             		var reqId = $(this).attr('isReq');
             		var reqObj = document.getElementById(reqId);
             		if(reqObj.value==null || reqObj.value==''){
@@ -387,7 +403,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             			canSub = false;
                 	}else if($("#"+reqId).attr('type')=='text'){
             			var minLen = $("#"+reqId).attr('minlength');
-            			if(minLen > $("#"+reqId).val().length){
+            			if(minLen != undefined && minLen > $("#"+reqId).val().length){
             				alert($(this).attr('reqMsg')+"不能少于"+minLen+"个字！");
             				canSub = false;
             			}
@@ -617,6 +633,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 </table>
             </div>
         </textarea>
+        
+        <div class="content">
+	    
+	          <div class="order_result">
+                <p><b>关键信息记录</b></p>
+                <table width="80%" border="0" id="keyInfo">
+                  
+                </table>
+              </div>
+            
+        </div>
 	    
 	    <div class="content" id="orderFollowUpContent">
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
@@ -626,13 +653,6 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <input type="hidden" name="orderProdPackEvent.prod_pack_id" id="orderProdPackEvent.prod_pack_id"/>
 	          <input type="hidden" name="orderProdPackEvent.version_id" id="orderProdPackEvent.version_id"/>
 	          
-	          <div class="order_result">
-                <p><b>关键信息记录</b></p>
-                <table width="80%" border="0" id="keyInfo">
-                  
-                </table>
-              </div>
-            
               <div class="order_result">
                 <p><b>处理结果记录</b></p>
                 <table width="80%" border="0">
