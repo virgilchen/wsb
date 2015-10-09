@@ -88,7 +88,7 @@ var g$v<%=view_id%> = $.extend(newView(), {
             	});
                 this.size = _this.size++;
                 if(data.cars.length>0){
-                	if(data.member_id == null || data.member_id == '' ){
+                	if(data.member.id == null || data.member.id == '' ){
     					$("#memberDisplay").html("<a href='javascript:viewJs.toMember();'>发展为会员</a>");
     				}else{
     					$("#memberDisplay2").html("[会员]");
