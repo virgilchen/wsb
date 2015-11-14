@@ -24,7 +24,7 @@
 	  <target name="make" depends="cleanup,init">
 	  	<copy todir="${dest}/src">
 	  	  <fileset dir="${common.src}" includes="**/*.java" />
-	  	  <fileset dir="${system.src}" includes="**/*.java" />
+	      <fileset dir="${system.src}" includes="**/*.java" />
 	  	  <fileset dir="${biz.src}" includes="**/*.java" />
 	    </copy>
 	    <javac encoding="utf-8" srcdir="${dest}/src" destdir="${dest}/classes" includes="**/*.java" debug="on" source="${jdk.version}">
@@ -46,7 +46,15 @@
 		<jar destfile="${dest}/${project.name}.jar">
 		  <fileset dir="${dest}/classes" includes="**/*.class,**/*.properties,**/*.xml*,**/*.xls*" excludes="**/log4j*,**/*hibernate.xml" />
 		</jar>
-	  	
+
+        <delete failonerror="false" includeemptydirs="true">
+          <fileset dir="${dest}/classes"/>
+        </delete>
+
+        <delete failonerror="false" includeemptydirs="true">
+          <fileset dir="${dest}/src"/>
+        </delete>
+	  	<!--
 	  	<copy todir="${lib}">
 	  	  <fileset dir="${dest}" includes="*.jar" />
 	    </copy>
@@ -58,6 +66,7 @@
 	  	<copy todir="${classes}">
 	  		 <fileset dir="${resource.src}" includes="applicationContext-hibernate.xml,log4j.properties" />
 	  	</copy>	
+        -->
 	  		
 	  </target>
 
