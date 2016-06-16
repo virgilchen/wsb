@@ -179,22 +179,25 @@ var g$v<%=view_id%> = $.extend(newView(), {
                 
                 documentUploader.doShow(data.documents);
                 var keyInfoStr="";
+                var keyInfoHisStr="";
                 var resultIndex = 0;
                 
                 if(wfKeyInfoResults != null && wfKeyInfoResults.length > 0){
-                	keyInfoStr += "<tr><th>历史信息：</th> <td colspan='5'><textarea cols='46' rows='5' readonly='readonly'>";
+                	
                 	for(var i = 0 ; i < wfKeyInfoResults.length ; i ++) {
                 		var wfKeyInfoResult = wfKeyInfoResults[i];
-                		keyInfoStr +=""+(i+1)+"、"+ wfKeyInfoResult.wf_key_info_name+": ";
+                		keyInfoHisStr += "<tr><td>";
+                		keyInfoHisStr +=""+(i+1)+"、"+ wfKeyInfoResult.wf_key_info_name+": ";
                 		if(wfKeyInfoResult.wf_key_info_type == '1'){
                 			//是多选信息就显示组装的值
-                			keyInfoStr += wfKeyInfoResult.detail_val;
+                			keyInfoHisStr += wfKeyInfoResult.detail_val;
                 		}else{
-                			keyInfoStr += wfKeyInfoResult.detail_name+ "; ";
+                			keyInfoHisStr += wfKeyInfoResult.detail_name+ "; ";
                 		}
-                		keyInfoStr += "\n";
+                		keyInfoHisStr += "</td> </tr>";
                 	}
-                	keyInfoStr += "</textarea></td> </tr>";
+                	E$("keyInfoHis").append(keyInfoHisStr);
+                	E$("keyInfoHisDiv").show();
                 }
                 if(wfKeyInfos != null && wfKeyInfos != undefined){
                 	for(var i = 0 ; i < wfKeyInfos.length ; i ++) {
@@ -250,9 +253,10 @@ var g$v<%=view_id%> = $.extend(newView(), {
                     	keyInfoStr += "</td> </tr>";
                     	resultIndex++;
                     }
-                	
+                	E$("keyInfo").append(keyInfoStr);
+                	E$("keyInfoDiv").show();
                 }
-                E$("keyInfo").append(keyInfoStr);
+                
             }
         );
     },
@@ -634,17 +638,17 @@ var g$v<%=view_id%> = $.extend(newView(), {
             </div>
         </textarea>
         
-        <div class="content">
+	    <div class="content" id="keyInfoHisDiv" style="display: none;">
 	    
 	          <div class="order_result">
-                <p><b>关键信息记录</b></p>
-                <table width="80%" border="0" id="keyInfo">
+                <p><b>历史关键信息记录</b></p>
+                <table width="80%" border="0" id="keyInfoHis">
                   
                 </table>
               </div>
             
         </div>
-	    
+        
 	    <div class="content" id="orderFollowUpContent">
 	      <form method="post" id="eForm" name="eForm" onsubmit="return false;" style="margin: 0" >
               <input type="hidden" name="orderProdPackEvent.id" id="orderProdPackEvent.id"/>
@@ -652,6 +656,14 @@ var g$v<%=view_id%> = $.extend(newView(), {
               <input type="hidden" name="orderProdPackEvent.order_id" id="orderProdPackEvent.order_id"/>
               <input type="hidden" name="orderProdPackEvent.prod_pack_id" id="orderProdPackEvent.prod_pack_id"/>
 	          <input type="hidden" name="orderProdPackEvent.version_id" id="orderProdPackEvent.version_id"/>
+	          
+	          <div class="order_result" id="keyInfoDiv" style="display: none;">
+                <p><b>关键信息记录</b></p>
+                <table width="80%" border="0" id="keyInfo">
+                  
+                </table>
+              </div>
+	          
 	          
               <div class="order_result">
                 <p><b>处理结果记录</b></p>
